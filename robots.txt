@@ -1,1 +1,1 @@
-Sitemap: https://my-math-notes.example.com/sitemap.xml
+Sitemap: https://jerryleung16.github.io/my-math-notes/sitemap.xml

@@ -6,14 +6,42 @@
       version="2.0">
 <channel>
 <title>My Math Notes</title>
-<link>https://my-math-notes.example.com/</link>
-<atom:link href="https://my-math-notes.example.com/index.xml" rel="self" type="application/rss+xml"/>
+<link>https://jerryleung16.github.io/my-math-notes/</link>
+<atom:link href="https://jerryleung16.github.io/my-math-notes/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sat, 25 Jul 2026 16:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 26 Jul 2026 16:00:00 GMT</lastBuildDate>
+<item>
+  <title>Insertion Sort</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/insertion-sort/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Insertion sort works exactly like sorting a hand of playing cards: you pick up cards one by one from an unsorted pile and slide each new card into its correct position among the cards you are already holding.</p>
+<p>To see this in action, let’s sort five numbers from smallest to largest: [5, 3, 8, 4, 2].</p>
+<p>Imagine dividing the list into two sections separated by a vertical bar: a sorted section on the left, and an unsorted section on the right.</p>
+<p>The Step-by-Step Trace Starting Position: [5 | 3, 8, 4, 2] We start by looking at the very first number, 5. Since it is the only number in our “sorted hand,” it is already sorted by default.</p>
+<p>Step 1: Pick up 3 We look at the first unsorted number (3) and compare it to the sorted section on the left. Since 3 is smaller than 5, we shift 5 one spot to the right and drop 3 into the empty space at the front. Current state: [3, 5 | 8, 4, 2]</p>
+<p>Step 2: Pick up 8 We take the next unsorted number (8) and compare it moving from right to left in our sorted section. Is 8 smaller than 5? No.&nbsp;Since it is already larger than the biggest number in our hand, we don’t need to shift anything — it simply locks into place on the end. Current state: [3, 5, 8 | 4, 2]</p>
+<p>Step 3: Pick up 4 We take 4 and compare it moving leftwards:</p>
+<p>Smaller than 8? Yes — shift 8 to the right.</p>
+<p>Smaller than 5? Yes — shift 5 to the right.</p>
+<p>Smaller than 3? No! We stop here and insert 4 into the spot right between 3 and 5. Current state: [3, 4, 5, 8 | 2]</p>
+<p>Step 4: Pick up 2 Finally, we take 2 and compare it against our sorted hand. Since 2 is smaller than 8, 5, 4, and 3, all four of those numbers shift one position to the right, opening up the very first spot for 2. Final sorted list: [2, 3, 4, 5, 8]</p>
+
+
+
+ ]]></description>
+  <category>Algorithms</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/insertion-sort/</guid>
+  <pubDate>Sun, 26 Jul 2026 16:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Eigenvalues and Eigenvectors</title>
-  <link>https://my-math-notes.example.com/posts/linear-algebra/</link>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/linear-algebra/</link>
   <description><![CDATA[ 
 
 
@@ -30,7 +58,7 @@
 <p>When a matrix scales a vector without changing its fundamental direction, that vector is an eigenvector. Here is a geometric representation showing an original vector <img src="https://latex.codecogs.com/png.latex?v"> and its transformation <img src="https://latex.codecogs.com/png.latex?Av">:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://my-math-notes.example.com/posts/linear-algebra/eigenvector-viz.svg" class="img-fluid figure-img" width="400"></p>
+<p><img src="https://jerryleung16.github.io/my-math-notes/posts/linear-algebra/eigenvector-viz.svg" class="img-fluid figure-img" width="400"></p>
 <figcaption>Eigenvector transformation diagram</figcaption>
 </figure>
 </div>
@@ -80,7 +108,7 @@
 
  ]]></description>
   <category>Linear Algebra</category>
-  <guid>https://my-math-notes.example.com/posts/linear-algebra/</guid>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/linear-algebra/</guid>
   <pubDate>Sat, 25 Jul 2026 16:00:00 GMT</pubDate>
 </item>
 </channel>

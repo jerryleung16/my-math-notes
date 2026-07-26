@@ -6,10 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Tristan O’Malley">
-<meta name="dcterms.date" content="2026-07-23">
+<meta name="dcterms.date" content="2026-07-27">
 
-<title>Welcome To My Blog – My Math Notes</title>
+<title>Insertion Sort – My Math Notes</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -75,8 +74,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<link rel="stylesheet" href="https://tikzjax.com/v1/fonts.css">
-<script src="https://tikzjax.com/v1/tikzjax.js"></script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -118,9 +115,9 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Welcome To My Blog</h1>
+      <h1 class="title">Insertion Sort</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">news</div>
+                <div class="quarto-category">Algorithms</div>
               </div>
                   </div>
   </div>
@@ -128,17 +125,11 @@ ul.task-list li input[type="checkbox"] {
   
   <div class="quarto-title-meta">
 
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Tristan O’Malley </p>
-            </div>
-    </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 23, 2026</p>
+        <p class="date">July 27, 2026</p>
       </div>
     </div>
     
@@ -159,9 +150,17 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>This is the first post in a Quarto blog. Welcome!</p>
-<p><img src="thumbnail.jpg" class="img-fluid"></p>
-<p>Since this post doesn’t specify an explicit <code>image</code>, the first image in the post will be used in the listing page of posts.</p>
+<p>Insertion sort works exactly like sorting a hand of playing cards: you pick up cards one by one from an unsorted pile and slide each new card into its correct position among the cards you are already holding.</p>
+<p>To see this in action, let’s sort five numbers from smallest to largest: [5, 3, 8, 4, 2].</p>
+<p>Imagine dividing the list into two sections separated by a vertical bar: a sorted section on the left, and an unsorted section on the right.</p>
+<p>The Step-by-Step Trace Starting Position: [5 | 3, 8, 4, 2] We start by looking at the very first number, 5. Since it is the only number in our “sorted hand,” it is already sorted by default.</p>
+<p>Step 1: Pick up 3 We look at the first unsorted number (3) and compare it to the sorted section on the left. Since 3 is smaller than 5, we shift 5 one spot to the right and drop 3 into the empty space at the front. Current state: [3, 5 | 8, 4, 2]</p>
+<p>Step 2: Pick up 8 We take the next unsorted number (8) and compare it moving from right to left in our sorted section. Is 8 smaller than 5? No.&nbsp;Since it is already larger than the biggest number in our hand, we don’t need to shift anything — it simply locks into place on the end. Current state: [3, 5, 8 | 4, 2]</p>
+<p>Step 3: Pick up 4 We take 4 and compare it moving leftwards:</p>
+<p>Smaller than 8? Yes — shift 8 to the right.</p>
+<p>Smaller than 5? Yes — shift 5 to the right.</p>
+<p>Smaller than 3? No! We stop here and insert 4 into the spot right between 3 and 5. Current state: [3, 4, 5, 8 | 2]</p>
+<p>Step 4: Pick up 2 Finally, we take 2 and compare it against our sorted hand. Since 2 is smaller than 8, 5, 4, and 3, all four of those numbers shift one position to the right, opening up the very first spot for 2. Final sorted list: [2, 3, 4, 5, 8]</p>
 
 
 
@@ -239,7 +238,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/my-math-notes\.example\.com");
+        var filterRegex = new RegExp("https:\/\/jerryleung16\.github\.io\/my-math-notes\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
