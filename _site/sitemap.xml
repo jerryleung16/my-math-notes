@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://my-math-notes.example.com/posts/welcome/index.html</loc>
+    <lastmod>2026-07-26T14:13:53.059Z</lastmod>
+  </url>
+  <url>
+    <loc>https://my-math-notes.example.com/posts/linear-algebra/index.html</loc>
+    <lastmod>2026-07-26T15:10:35.121Z</lastmod>
+  </url>
+  <url>
+    <loc>https://my-math-notes.example.com/about.html</loc>
+    <lastmod>2026-07-26T12:23:33.507Z</lastmod>
+  </url>
+  <url>
+    <loc>https://my-math-notes.example.com/index.html</loc>
+    <lastmod>2026-07-26T12:23:33.494Z</lastmod>
+  </url>
+  <url>
+    <loc>https://my-math-notes.example.com/posts/post-with-code/index.html</loc>
+    <lastmod>2026-07-26T12:23:33.503Z</lastmod>
+  </url>
+</urlset>

@@ -1,0 +1,12 @@
+{
+  "hash": "555f389b79a397fd76a46963b6753c18",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"Eigenvalues and Eigenvectors\"\ndate: \"2026-07-26\"\ncategories: [Linear Algebra]\n---\n\n## The Core Concept\n\nAn **eigenvector** of a square matrix $A$ is a non-zero vector $v$ that changes at most by a scalar factor when that linear transformation is applied to it. The corresponding scalar factor $\\lambda$ is called the **eigenvalue**.\n\nThe defining equation is:\n$$\nA v = \\lambda v\n$$\n\n## Visualizing the Transformation\n\nWhen a matrix scales a vector without changing its fundamental direction, that vector is an eigenvector. Here is a geometric representation showing an original vector $v$ and its transformation $Av$:\n\n```{tikz}\n%%| filename: eigenvector-viz\n%%| width: 400\n\\begin{tikzpicture}[scale=1.5]\n  % Transformed vector Av (which is 2v)\n  \\draw[thick, red, ->] (0,0) -- (2,2) node[anchor=south east] {$A v = \\lambda v$};\n\n  % Dashed line to show they are collinear\n  \\draw[dashed] (0,0) -- (2.5,2.5);\n\\end{tikzpicture}\n```\n\n## Common 2D Transformations\n\nQuarto handles Markdown tables beautifully for web output while still letting you use full LaTeX syntax inside the cells. Here are common 2D transformation matrices and their properties:\n\n| Transformation Matrix $A$ | Geometric Effect | Eigenvalue(s) $\\lambda$ | Eigenvector(s) $v$ |\n|:---|:---|:---:|:---:|\n| $\\begin{bmatrix} c & 0 \\\\ 0 & c \\end{bmatrix}$ | Uniform scaling by $c$ | $\\lambda_1 = \\lambda_2 = c$ | Any non-zero vector |\n| $\\begin{bmatrix} 1 & 0 \\\\ 0 & 0 \\end{bmatrix}$ | Projection onto x-axis | $\\lambda_1 = 1$, $\\lambda_2 = 0$ | $\\begin{bmatrix} 1 \\\\ 0 \\end{bmatrix}$, $\\begin{bmatrix} 0 \\\\ 1 \\end{bmatrix}$ |\n| $\\begin{bmatrix} 0 & -1 \\\\ 1 & 0 \\end{bmatrix}$ | $90^\\circ$ Rotation | None (in $\\mathbb{R}$) | None (in $\\mathbb{R}$) |\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
