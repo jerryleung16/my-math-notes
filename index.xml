@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>My Math Notes</title>
+<link>https://my-math-notes.example.com/</link>
+<atom:link href="https://my-math-notes.example.com/index.xml" rel="self" type="application/rss+xml"/>
+<description></description>
+<generator>quarto-1.10.18</generator>
+<lastBuildDate>Sat, 25 Jul 2026 16:00:00 GMT</lastBuildDate>
+<item>
+  <title>Eigenvalues and Eigenvectors</title>
+  <link>https://my-math-notes.example.com/posts/linear-algebra/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="the-core-concept" class="level2">
+<h2 class="anchored" data-anchor-id="the-core-concept">The Core Concept</h2>
+<p>An <strong>eigenvector</strong> of a square matrix <img src="https://latex.codecogs.com/png.latex?A"> is a non-zero vector <img src="https://latex.codecogs.com/png.latex?v"> that changes at most by a scalar factor when that linear transformation is applied to it. The corresponding scalar factor <img src="https://latex.codecogs.com/png.latex?%5Clambda"> is called the <strong>eigenvalue</strong>.</p>
+<p>The defining equation is: <img src="https://latex.codecogs.com/png.latex?%0AA%20v%20=%20%5Clambda%20v%0A"></p>
+</section>
+<section id="visualizing-the-transformation" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-the-transformation">Visualizing the Transformation</h2>
+<p>When a matrix scales a vector without changing its fundamental direction, that vector is an eigenvector. Here is a geometric representation showing an original vector <img src="https://latex.codecogs.com/png.latex?v"> and its transformation <img src="https://latex.codecogs.com/png.latex?Av">:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://my-math-notes.example.com/posts/linear-algebra/eigenvector-viz.svg" class="img-fluid figure-img" width="400"></p>
+<figcaption>Eigenvector transformation diagram</figcaption>
+</figure>
+</div>
+</section>
+<section id="common-2d-transformations" class="level2">
+<h2 class="anchored" data-anchor-id="common-2d-transformations">Common 2D Transformations</h2>
+<p>Quarto handles Markdown tables beautifully for web output while still letting you use full LaTeX syntax inside the cells. Here are common 2D transformation matrices and their properties:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 27%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Transformation Matrix <img src="https://latex.codecogs.com/png.latex?A"></th>
+<th style="text-align: left;">Geometric Effect</th>
+<th style="text-align: center;">Eigenvalue(s) <img src="https://latex.codecogs.com/png.latex?%5Clambda"></th>
+<th style="text-align: center;">Eigenvector(s) <img src="https://latex.codecogs.com/png.latex?v"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20c%20&amp;%200%20%5C%5C%200%20&amp;%20c%20%5Cend%7Bbmatrix%7D"></td>
+<td style="text-align: left;">Uniform scaling by <img src="https://latex.codecogs.com/png.latex?c"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Clambda_1%20=%20%5Clambda_2%20=%20c"></td>
+<td style="text-align: center;">Any non-zero vector</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%201%20&amp;%200%20%5C%5C%200%20&amp;%200%20%5Cend%7Bbmatrix%7D"></td>
+<td style="text-align: left;">Projection onto x-axis</td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Clambda_1%20=%201">, <img src="https://latex.codecogs.com/png.latex?%5Clambda_2%20=%200"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%201%20%5C%5C%200%20%5Cend%7Bbmatrix%7D">, <img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%200%20%5C%5C%201%20%5Cend%7Bbmatrix%7D"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%200%20&amp;%20-1%20%5C%5C%201%20&amp;%200%20%5Cend%7Bbmatrix%7D"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?90%5E%5Ccirc"> Rotation</td>
+<td style="text-align: center;">None (in <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D">)</td>
+<td style="text-align: center;">None (in <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D">)</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+
+ ]]></description>
+  <category>Linear Algebra</category>
+  <guid>https://my-math-notes.example.com/posts/linear-algebra/</guid>
+  <pubDate>Sat, 25 Jul 2026 16:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

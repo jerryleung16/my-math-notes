@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "posts/linear-algebra/index.html",
+    "href": "posts/linear-algebra/index.html",
+    "title": "Eigenvalues and Eigenvectors",
+    "section": "",
+    "text": "An eigenvector of a square matrix \\(A\\) is a non-zero vector \\(v\\) that changes at most by a scalar factor when that linear transformation is applied to it. The corresponding scalar factor \\(\\lambda\\) is called the eigenvalue.\nThe defining equation is: \\[\nA v = \\lambda v\n\\]"
+  },
+  {
+    "objectID": "posts/linear-algebra/index.html#the-core-concept",
+    "href": "posts/linear-algebra/index.html#the-core-concept",
+    "title": "Eigenvalues and Eigenvectors",
+    "section": "",
+    "text": "An eigenvector of a square matrix \\(A\\) is a non-zero vector \\(v\\) that changes at most by a scalar factor when that linear transformation is applied to it. The corresponding scalar factor \\(\\lambda\\) is called the eigenvalue.\nThe defining equation is: \\[\nA v = \\lambda v\n\\]"
+  },
+  {
+    "objectID": "posts/linear-algebra/index.html#visualizing-the-transformation",
+    "href": "posts/linear-algebra/index.html#visualizing-the-transformation",
+    "title": "Eigenvalues and Eigenvectors",
+    "section": "Visualizing the Transformation",
+    "text": "Visualizing the Transformation\nWhen a matrix scales a vector without changing its fundamental direction, that vector is an eigenvector. Here is a geometric representation showing an original vector \\(v\\) and its transformation \\(Av\\):\n\n\n\nEigenvector transformation diagram"
+  },
+  {
+    "objectID": "posts/linear-algebra/index.html#common-2d-transformations",
+    "href": "posts/linear-algebra/index.html#common-2d-transformations",
+    "title": "Eigenvalues and Eigenvectors",
+    "section": "Common 2D Transformations",
+    "text": "Common 2D Transformations\nQuarto handles Markdown tables beautifully for web output while still letting you use full LaTeX syntax inside the cells. Here are common 2D transformation matrices and their properties:\n\n\n\n\n\n\n\n\n\nTransformation Matrix \\(A\\)\nGeometric Effect\nEigenvalue(s) \\(\\lambda\\)\nEigenvector(s) \\(v\\)\n\n\n\n\n\\(\\begin{bmatrix} c & 0 \\\\ 0 & c \\end{bmatrix}\\)\nUniform scaling by \\(c\\)\n\\(\\lambda_1 = \\lambda_2 = c\\)\nAny non-zero vector\n\n\n\\(\\begin{bmatrix} 1 & 0 \\\\ 0 & 0 \\end{bmatrix}\\)\nProjection onto x-axis\n\\(\\lambda_1 = 1\\), \\(\\lambda_2 = 0\\)\n\\(\\begin{bmatrix} 1 \\\\ 0 \\end{bmatrix}\\), \\(\\begin{bmatrix} 0 \\\\ 1 \\end{bmatrix}\\)\n\n\n\\(\\begin{bmatrix} 0 & -1 \\\\ 1 & 0 \\end{bmatrix}\\)\n\\(90^\\circ\\) Rotation\nNone (in \\(\\mathbb{R}\\))\nNone (in \\(\\mathbb{R}\\))"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this blog"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "my-math-notes",
+    "section": "",
+    "text": "Eigenvalues and Eigenvectors\n\n\n\nLinear Algebra\n\n\n\n\n\n\n\n\n\nJul 26, 2026\n\n\n\n\n\nNo matching items"
+  }
+]
