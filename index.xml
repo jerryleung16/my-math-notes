@@ -20,22 +20,48 @@
 
 
 
-<p>Insertion sort works exactly like sorting a hand of playing cards: you pick up cards one by one from an unsorted pile and slide each new card into its correct position among the cards you are already holding.</p>
-<p>To see this in action, let’s sort five numbers from smallest to largest: [5, 3, 8, 4, 2].</p>
-<p>Imagine dividing the list into two sections separated by a vertical bar: a sorted section on the left, and an unsorted section on the right.</p>
-<p>The Step-by-Step Trace Starting Position: [5 | 3, 8, 4, 2] We start by looking at the very first number, 5. Since it is the only number in our “sorted hand,” it is already sorted by default.</p>
-<p>Step 1: Pick up 3 We look at the first unsorted number (3) and compare it to the sorted section on the left. Since 3 is smaller than 5, we shift 5 one spot to the right and drop 3 into the empty space at the front. Current state: [3, 5 | 8, 4, 2]</p>
-<p>Step 2: Pick up 8 We take the next unsorted number (8) and compare it moving from right to left in our sorted section. Is 8 smaller than 5? No.&nbsp;Since it is already larger than the biggest number in our hand, we don’t need to shift anything — it simply locks into place on the end. Current state: [3, 5, 8 | 4, 2]</p>
-<p>Step 3: Pick up 4 We take 4 and compare it moving leftwards:</p>
-<p>Smaller than 8? Yes — shift 8 to the right.</p>
-<p>Smaller than 5? Yes — shift 5 to the right.</p>
-<p>Smaller than 3? No! We stop here and insert 4 into the spot right between 3 and 5. Current state: [3, 4, 5, 8 | 2]</p>
-<p>Step 4: Pick up 2 Finally, we take 2 and compare it against our sorted hand. Since 2 is smaller than 8, 5, 4, and 3, all four of those numbers shift one position to the right, opening up the very first spot for 2. Final sorted list: [2, 3, 4, 5, 8]</p>
+<section id="the-core-concept" class="level2">
+<h2 class="anchored" data-anchor-id="the-core-concept">The Core Concept</h2>
+<p>An <strong>insertion sort</strong> works exactly like sorting a hand of playing cards: you pick up cards one by one from an unsorted pile and slide each new card into its correct position among the cards you are already holding.</p>
+</section>
+<section id="visualizing-the-partition" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-the-partition">Visualizing the Partition</h2>
+<p>To see this in action, let’s sort five numbers from smallest to largest: <code>[5, 3, 8, 4, 2]</code>.</p>
+<p>Imagine dividing the list into two sections separated by a vertical bar: a <strong>sorted section</strong> on the left, and an <strong>unsorted section</strong> on the right.</p>
+</section>
+<section id="the-step-by-step-trace" class="level2">
+<h2 class="anchored" data-anchor-id="the-step-by-step-trace">The Step-by-Step Trace</h2>
+<section id="starting-position-5-3-8-4-2" class="level3">
+<h3 class="anchored" data-anchor-id="starting-position-5-3-8-4-2">Starting Position: <code>[5 | 3, 8, 4, 2]</code></h3>
+<p>We start by looking at the very first number, <code>5</code>. Since it is the only number in our “sorted hand,” it is already sorted by default.</p>
+</section>
+<section id="step-1-pick-up-3" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-pick-up-3">Step 1: Pick up <code>3</code></h3>
+<p>We look at the first unsorted number (<code>3</code>) and compare it to the sorted section on the left. Since <code>3</code> is smaller than <code>5</code>, we shift <code>5</code> one spot to the right and drop <code>3</code> into the empty space at the front.</p>
+<p><strong>Current state:</strong> <code>[3, 5 | 8, 4, 2]</code></p>
+</section>
+<section id="step-2-pick-up-8" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-pick-up-8">Step 2: Pick up <code>8</code></h3>
+<p>We take the next unsorted number (<code>8</code>) and compare it moving from right to left in our sorted section. Is <code>8</code> smaller than <code>5</code>? No.&nbsp;Since it is already larger than the biggest number in our hand, we don’t need to shift anything — it simply locks into place on the end.</p>
+<p><strong>Current state:</strong> <code>[3, 5, 8 | 4, 2]</code></p>
+</section>
+<section id="step-3-pick-up-4" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-pick-up-4">Step 3: Pick up <code>4</code></h3>
+<p>We take <code>4</code> and compare it moving leftwards:</p>
+<p><strong>Smaller than 8?</strong> Yes — shift <code>8</code> to the right. <strong>Smaller than 5?</strong> Yes — shift <code>5</code> to the right. <strong>Smaller than 3?</strong> No! We stop here and insert <code>4</code> into the spot right between <code>3</code> and <code>5</code>. <strong>Current state:</strong> <code>[3, 4, 5, 8 | 2]</code></p>
+</section>
+<section id="step-4-pick-up-2" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-pick-up-2">Step 4: Pick up <code>2</code></h3>
+<p>Finally, we take <code>2</code> and compare it against our sorted hand. Since <code>2</code> is smaller than <code>8</code>, <code>5</code>, <code>4</code>, and <code>3</code>, all four of those numbers shift one position to the right, opening up the very first spot for <code>2</code>.</p>
+<p><strong>Final sorted list:</strong> <code>[2, 3, 4, 5, 8]</code></p>
 
 
+</section>
+</section>
 
  ]]></description>
   <category>Algorithms</category>
+  <category>Sorting</category>
   <guid>https://jerryleung16.github.io/my-math-notes/posts/insertion-sort/</guid>
   <pubDate>Sun, 26 Jul 2026 16:00:00 GMT</pubDate>
 </item>

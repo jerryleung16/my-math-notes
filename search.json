@@ -32,20 +32,41 @@
     "href": "index.html",
     "title": "my-math-notes",
     "section": "",
-    "text": "Insertion Sort\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEigenvalues and Eigenvectors\n\n\n\nLinear Algebra\n\n\n\n\n\n\n\n\n\nJul 26, 2026\n\n\n\n\n\nNo matching items"
+    "text": "Insertion Sort\n\n\n\nAlgorithms\n\nSorting\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEigenvalues and Eigenvectors\n\n\n\nLinear Algebra\n\n\n\n\n\n\n\n\n\nJul 26, 2026\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "About",
+    "title": "Jerry’s Notes",
     "section": "",
-    "text": "About this blog"
+    "text": "This is a personal website for my notes on mathematics, computer science, and other topics. The content is written in Markdown and rendered using Quarto. You can find the source code for this website on GitHub."
   },
   {
     "objectID": "posts/insertion-sort/index.html",
     "href": "posts/insertion-sort/index.html",
     "title": "Insertion Sort",
     "section": "",
-    "text": "Insertion sort works exactly like sorting a hand of playing cards: you pick up cards one by one from an unsorted pile and slide each new card into its correct position among the cards you are already holding.\nTo see this in action, let’s sort five numbers from smallest to largest: [5, 3, 8, 4, 2].\nImagine dividing the list into two sections separated by a vertical bar: a sorted section on the left, and an unsorted section on the right.\nThe Step-by-Step Trace Starting Position: [5 | 3, 8, 4, 2] We start by looking at the very first number, 5. Since it is the only number in our “sorted hand,” it is already sorted by default.\nStep 1: Pick up 3 We look at the first unsorted number (3) and compare it to the sorted section on the left. Since 3 is smaller than 5, we shift 5 one spot to the right and drop 3 into the empty space at the front. Current state: [3, 5 | 8, 4, 2]\nStep 2: Pick up 8 We take the next unsorted number (8) and compare it moving from right to left in our sorted section. Is 8 smaller than 5? No. Since it is already larger than the biggest number in our hand, we don’t need to shift anything — it simply locks into place on the end. Current state: [3, 5, 8 | 4, 2]\nStep 3: Pick up 4 We take 4 and compare it moving leftwards:\nSmaller than 8? Yes — shift 8 to the right.\nSmaller than 5? Yes — shift 5 to the right.\nSmaller than 3? No! We stop here and insert 4 into the spot right between 3 and 5. Current state: [3, 4, 5, 8 | 2]\nStep 4: Pick up 2 Finally, we take 2 and compare it against our sorted hand. Since 2 is smaller than 8, 5, 4, and 3, all four of those numbers shift one position to the right, opening up the very first spot for 2. Final sorted list: [2, 3, 4, 5, 8]"
+    "text": "An insertion sort works exactly like sorting a hand of playing cards: you pick up cards one by one from an unsorted pile and slide each new card into its correct position among the cards you are already holding."
+  },
+  {
+    "objectID": "posts/insertion-sort/index.html#the-core-concept",
+    "href": "posts/insertion-sort/index.html#the-core-concept",
+    "title": "Insertion Sort",
+    "section": "",
+    "text": "An insertion sort works exactly like sorting a hand of playing cards: you pick up cards one by one from an unsorted pile and slide each new card into its correct position among the cards you are already holding."
+  },
+  {
+    "objectID": "posts/insertion-sort/index.html#visualizing-the-partition",
+    "href": "posts/insertion-sort/index.html#visualizing-the-partition",
+    "title": "Insertion Sort",
+    "section": "Visualizing the Partition",
+    "text": "Visualizing the Partition\nTo see this in action, let’s sort five numbers from smallest to largest: [5, 3, 8, 4, 2].\nImagine dividing the list into two sections separated by a vertical bar: a sorted section on the left, and an unsorted section on the right."
+  },
+  {
+    "objectID": "posts/insertion-sort/index.html#the-step-by-step-trace",
+    "href": "posts/insertion-sort/index.html#the-step-by-step-trace",
+    "title": "Insertion Sort",
+    "section": "The Step-by-Step Trace",
+    "text": "The Step-by-Step Trace\n\nStarting Position: [5 | 3, 8, 4, 2]\nWe start by looking at the very first number, 5. Since it is the only number in our “sorted hand,” it is already sorted by default.\n\n\nStep 1: Pick up 3\nWe look at the first unsorted number (3) and compare it to the sorted section on the left. Since 3 is smaller than 5, we shift 5 one spot to the right and drop 3 into the empty space at the front.\nCurrent state: [3, 5 | 8, 4, 2]\n\n\nStep 2: Pick up 8\nWe take the next unsorted number (8) and compare it moving from right to left in our sorted section. Is 8 smaller than 5? No. Since it is already larger than the biggest number in our hand, we don’t need to shift anything — it simply locks into place on the end.\nCurrent state: [3, 5, 8 | 4, 2]\n\n\nStep 3: Pick up 4\nWe take 4 and compare it moving leftwards:\nSmaller than 8? Yes — shift 8 to the right. Smaller than 5? Yes — shift 5 to the right. Smaller than 3? No! We stop here and insert 4 into the spot right between 3 and 5. Current state: [3, 4, 5, 8 | 2]\n\n\nStep 4: Pick up 2\nFinally, we take 2 and compare it against our sorted hand. Since 2 is smaller than 8, 5, 4, and 3, all four of those numbers shift one position to the right, opening up the very first spot for 2.\nFinal sorted list: [2, 3, 4, 5, 8]"
   }
 ]
