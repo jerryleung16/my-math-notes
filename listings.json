@@ -2,8 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/insertion-sort/index.html",
-      "/posts/linear-algebra/index.html"
+      "/posts/insertion-sort/index.html"
     ]
   }
 ]
