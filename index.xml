@@ -12,7 +12,7 @@
 <generator>quarto-1.10.18</generator>
 <lastBuildDate>Sun, 26 Jul 2026 16:00:00 GMT</lastBuildDate>
 <item>
-  <title>Insertion Sort</title>
+  <title>Insertion Sort Algorithm</title>
   <link>https://jerryleung16.github.io/my-math-notes/posts/insertion-sort/</link>
   <description><![CDATA[ 
 
@@ -63,6 +63,190 @@
   <category>Algorithms</category>
   <category>Sorting</category>
   <guid>https://jerryleung16.github.io/my-math-notes/posts/insertion-sort/</guid>
+  <pubDate>Sun, 26 Jul 2026 16:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Theoretical Analysis of Insertion Sort</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/insertion-sort-running-time/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="theoretical-running-time-formulation" class="level2">
+<h2 class="anchored" data-anchor-id="theoretical-running-time-formulation">1. Theoretical Running Time Formulation</h2>
+<p>The running time of the Insertion Sort algorithm is determined by calculating the time spent executing each individual line of pseudocode.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 27%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Line</th>
+<th style="text-align: left;"><code>Insertion-Sort(A)</code></th>
+<th style="text-align: center;"><em>cost</em></th>
+<th style="text-align: center;"><em>times</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;"><strong>for</strong> <img src="https://latex.codecogs.com/png.latex?j%20=%202"> <strong>to</strong> <img src="https://latex.codecogs.com/png.latex?A.length"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?c_1"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?n"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://latex.codecogs.com/png.latex?key%20=%20A%5Bj%5D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?c_2"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?n%20-%201"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<code>// Insert</code> <img src="https://latex.codecogs.com/png.latex?A%5Bj%5D"> <code>into the sorted sequence</code> <img src="https://latex.codecogs.com/png.latex?A%5B1%20%5Cdots%20j%20-%201%5D">.</td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?n%20-%201"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://latex.codecogs.com/png.latex?i%20=%20j%20-%201"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?c_4"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?n%20-%201"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<strong>while</strong> <img src="https://latex.codecogs.com/png.latex?i%20%3E%200"> <strong>and</strong> <img src="https://latex.codecogs.com/png.latex?A%5Bi%5D%20%3E%20key"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?c_5"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bj=2%7D%5En%20t_j"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://latex.codecogs.com/png.latex?A%5Bi%20+%201%5D%20=%20A%5Bi%5D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?c_6"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bj=2%7D%5En%20(t_j%20-%201)"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://latex.codecogs.com/png.latex?i%20=%20i%20-%201"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?c_7"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bj=2%7D%5En%20(t_j%20-%201)"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://latex.codecogs.com/png.latex?A%5Bi%20+%201%5D%20=%20key"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?c_8"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?n%20-%201"></td>
+</tr>
+</tbody>
+</table>
+<section id="constant-time-cost-c_i" class="level3">
+<h3 class="anchored" data-anchor-id="constant-time-cost-c_i">Constant Time Cost (<img src="https://latex.codecogs.com/png.latex?c_i">)</h3>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?c_i"> represents the <strong>constant time cost</strong> to execute line <img src="https://latex.codecogs.com/png.latex?i"> exactly once.</li>
+<li>Different operations (math, assignments, conditional checks) require slightly different processing times, hence unique costs (<img src="https://latex.codecogs.com/png.latex?c_1,%20c_2,%20%5Cdots">).</li>
+<li>Comments (e.g., Line 3) are ignored by the computer, resulting in a cost of <img src="https://latex.codecogs.com/png.latex?0">.</li>
+</ul>
+</section>
+<section id="execution-frequency-the-times-column" class="level3">
+<h3 class="anchored" data-anchor-id="execution-frequency-the-times-column">Execution Frequency (The <code>times</code> column)</h3>
+<p>For an input array of size <img src="https://latex.codecogs.com/png.latex?n">:</p>
+<ul>
+<li><strong>Outer loop header (Line 1):</strong> Runs <img src="https://latex.codecogs.com/png.latex?n"> times (once per item, plus the final exit check).</li>
+<li><strong>Outer loop body (Lines 2, 4, 8):</strong> Runs <img src="https://latex.codecogs.com/png.latex?n%20-%201"> times (one less than the header).</li>
+<li><strong>Inner <code>while</code> loop condition (Line 5):</strong> Runs <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bj=2%7D%5En%20t_j"> times, where <img src="https://latex.codecogs.com/png.latex?t_j"> is the number of condition checks during the <img src="https://latex.codecogs.com/png.latex?j">-th pass.</li>
+<li><strong>Inner <code>while</code> loop body (Lines 6, 7):</strong> Runs <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bj=2%7D%5En%20(t_j%20-%201)"> times.</li>
+</ul>
+</section>
+<section id="total-running-time-tn" class="level3">
+<h3 class="anchored" data-anchor-id="total-running-time-tn">Total Running Time <img src="https://latex.codecogs.com/png.latex?T(n)"></h3>
+<p>To find the total running time, multiply the cost (<img src="https://latex.codecogs.com/png.latex?c_i">) by the execution frequency for each line, and sum the results:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AT(n)%20=%20c_1n%20+%20c_2(n-1)%20+%20c_4(n-1)%20+%20c_5%20%5Csum_%7Bj=2%7D%5En%20t_j%20+%20c_6%20%5Csum_%7Bj=2%7D%5En%20(t_j%20-%201)%20+%20c_7%20%5Csum_%7Bj=2%7D%5En%20(t_j%20-%201)%20+%20c_8(n-1)%0A"></p>
+<hr>
+</section>
+</section>
+<section id="concrete-example-trace-a-3-1-2" class="level2">
+<h2 class="anchored" data-anchor-id="concrete-example-trace-a-3-1-2">2. Concrete Example Trace: <img src="https://latex.codecogs.com/png.latex?A%20=%20%5B3,%201,%202%5D"></h2>
+<p>Let us trace the algorithm using an input size of <img src="https://latex.codecogs.com/png.latex?n=3"> and hypothetical execution cycles for each <img src="https://latex.codecogs.com/png.latex?c_i">.</p>
+<section id="step-a-setting-up-constants" class="level3">
+<h3 class="anchored" data-anchor-id="step-a-setting-up-constants">Step A: Setting up Constants</h3>
+<p>Assume the following clock cycle costs per execution:</p>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?c_1%20=%202"> cycles (checking <code>for</code> loop, incrementing <img src="https://latex.codecogs.com/png.latex?j">)</li>
+<li><img src="https://latex.codecogs.com/png.latex?c_2%20=%201"> cycle (reading and assigning <code>key</code>)</li>
+<li><img src="https://latex.codecogs.com/png.latex?c_4%20=%201"> cycle (assigning <img src="https://latex.codecogs.com/png.latex?i">)</li>
+<li><img src="https://latex.codecogs.com/png.latex?c_5%20=%203"> cycles (checking <code>while</code> conditions)</li>
+<li><img src="https://latex.codecogs.com/png.latex?c_6%20=%202"> cycles (shifting element right)</li>
+<li><img src="https://latex.codecogs.com/png.latex?c_7%20=%201"> cycle (decrementing <img src="https://latex.codecogs.com/png.latex?i">)</li>
+<li><img src="https://latex.codecogs.com/png.latex?c_8%20=%201"> cycle (inserting <code>key</code>)</li>
+</ul>
+</section>
+<section id="step-b-tracing-the-loops-to-find-t_j" class="level3">
+<h3 class="anchored" data-anchor-id="step-b-tracing-the-loops-to-find-t_j">Step B: Tracing the Loops to Find <img src="https://latex.codecogs.com/png.latex?t_j"></h3>
+<ul>
+<li><p><strong>Pass <img src="https://latex.codecogs.com/png.latex?j%20=%202"> (Inserting 1 into <img src="https://latex.codecogs.com/png.latex?%5B3%5D">):</strong> The condition is checked once successfully, and once failing (<img src="https://latex.codecogs.com/png.latex?3%3E1">, then <img src="https://latex.codecogs.com/png.latex?0%3E0"> fails). <strong>Result:</strong> <img src="https://latex.codecogs.com/png.latex?t_2%20=%202"> (loop body runs <img src="https://latex.codecogs.com/png.latex?1"> time).</p></li>
+<li><p><strong>Pass <img src="https://latex.codecogs.com/png.latex?j%20=%203"> (Inserting 2 into <img src="https://latex.codecogs.com/png.latex?%5B1,%203%5D">):</strong> The condition is checked once successfully, and once failing (<img src="https://latex.codecogs.com/png.latex?3%3E2">, then <img src="https://latex.codecogs.com/png.latex?1%3E2"> fails). <strong>Result:</strong> <img src="https://latex.codecogs.com/png.latex?t_3%20=%202"> (loop body runs <img src="https://latex.codecogs.com/png.latex?1"> time).</p></li>
+</ul>
+</section>
+<section id="step-c-computing-total-time-t3" class="level3">
+<h3 class="anchored" data-anchor-id="step-c-computing-total-time-t3">Step C: Computing Total Time <img src="https://latex.codecogs.com/png.latex?T(3)"></h3>
+<p>Substituting <img src="https://latex.codecogs.com/png.latex?n=3,%20t_2=2,%20t_3=2"> into our frequencies:</p>
+<ul>
+<li><strong>Line 1:</strong> <img src="https://latex.codecogs.com/png.latex?n%20=%203"> times</li>
+<li><strong>Lines 2, 4, 8:</strong> <img src="https://latex.codecogs.com/png.latex?n-1%20=%202"> times each</li>
+<li><strong>Line 5:</strong> <img src="https://latex.codecogs.com/png.latex?t_2%20+%20t_3%20=%204"> times</li>
+<li><strong>Lines 6, 7:</strong> <img src="https://latex.codecogs.com/png.latex?(t_2-1)%20+%20(t_3-1)%20=%202"> times each</li>
+</ul>
+<p>Multiplying by the <img src="https://latex.codecogs.com/png.latex?c_i"> costs and summing:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0AT(3)%20&amp;=%20(c_1%20%5Ctimes%203)%20+%20(c_2%20%5Ctimes%202)%20+%20(c_4%20%5Ctimes%202)%20+%20(c_5%20%5Ctimes%204)%20+%20(c_6%20%5Ctimes%202)%20+%20(c_7%20%5Ctimes%202)%20+%20(c_8%20%5Ctimes%202)%20%5C%5C%0A%20%20%20%20%20&amp;=%20(2%20%5Ctimes%203)%20+%20(1%20%5Ctimes%202)%20+%20(1%20%5Ctimes%202)%20+%20(3%20%5Ctimes%204)%20+%20(2%20%5Ctimes%202)%20+%20(1%20%5Ctimes%202)%20+%20(1%20%5Ctimes%202)%20%5C%5C%0A%20%20%20%20%20&amp;=%206%20+%202%20+%202%20+%2012%20+%204%20+%202%20+%202%20%5C%5C%0A%20%20%20%20%20&amp;=%20%5Cmathbf%7B30%20%5Ctext%7B%20cycles%7D%7D%0A%5Cend%7Baligned%7D%0A"></p>
+<p><strong>Conclusion:</strong> For this unsorted array, it takes 30 cycles. If the array were already sorted (e.g., <img src="https://latex.codecogs.com/png.latex?%5B1,%202,%203%5D">), the inner loop would fail immediately (<img src="https://latex.codecogs.com/png.latex?t_2=1,%20t_3=1">). This eliminates Lines 6 and 7, dropping the total running time to a much faster <strong>18 cycles</strong>.</p>
+<hr>
+</section>
+</section>
+<section id="best-case-and-worst-case-scenarios" class="level2">
+<h2 class="anchored" data-anchor-id="best-case-and-worst-case-scenarios">3. Best-Case and Worst-Case Scenarios</h2>
+<p>Even for inputs of the exact same size <img src="https://latex.codecogs.com/png.latex?n">, the algorithm’s running time can vary drastically depending on how the initial items are arranged.</p>
+<section id="the-best-case-already-sorted" class="level3">
+<h3 class="anchored" data-anchor-id="the-best-case-already-sorted">The Best-Case: Already Sorted</h3>
+<ul>
+<li><strong>Scenario:</strong> The input array is already in the correct sorted order.</li>
+<li><strong>What happens:</strong> When the inner <code>while</code> loop checks if it needs to shift elements, it immediately finds they are in order (<img src="https://latex.codecogs.com/png.latex?A%5Bi%5D%20%5Cle%20key">).</li>
+<li><strong>Math impact:</strong> The condition is checked exactly once per pass (<img src="https://latex.codecogs.com/png.latex?t_j%20=%201">). The inner loop body never runs (<img src="https://latex.codecogs.com/png.latex?t_j%20-%201%20=%200">).</li>
+<li><strong>Calculation:</strong> Substituting <img src="https://latex.codecogs.com/png.latex?t_j%20=%201"> into our <img src="https://latex.codecogs.com/png.latex?T(n)"> formula gives:</li>
+</ul>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0AT(n)%20&amp;=%20c_1n%20+%20c_2(n-1)%20+%20c_4(n-1)%20+%20c_5(n-1)%20+%20c_8(n-1)%20%5C%5C%0A%20%20%20%20%20&amp;=%20(c_1%20+%20c_2%20+%20c_4%20+%20c_5%20+%20c_8)n%20-%20(c_2%20+%20c_4%20+%20c_5%20+%20c_8)%0A%5Cend%7Baligned%7D%0A"></p>
+<ul>
+<li><strong>Resulting Time:</strong> We can express this running time as <img src="https://latex.codecogs.com/png.latex?T(n)%20=%20%5Cmathbf%7Ban%20+%20b%7D"> (where <img src="https://latex.codecogs.com/png.latex?a"> and <img src="https://latex.codecogs.com/png.latex?b"> are constants), which is a fast, <strong>linear function</strong> of <img src="https://latex.codecogs.com/png.latex?n">.</li>
+</ul>
+</section>
+<section id="the-worst-case-reverse-sorted" class="level3">
+<h3 class="anchored" data-anchor-id="the-worst-case-reverse-sorted">The Worst-Case: Reverse Sorted</h3>
+<ul>
+<li><strong>Scenario:</strong> The input array is completely backward (decreasing order).</li>
+<li><strong>What happens:</strong> The inner <code>while</code> loop must shift every new element all the way to the very front, comparing it against every single item in the already-sorted portion.</li>
+<li><strong>Math impact:</strong> The loop condition is checked <img src="https://latex.codecogs.com/png.latex?j"> times per pass (<img src="https://latex.codecogs.com/png.latex?t_j%20=%20j">).</li>
+<li><strong>Applying Summations:</strong> We replace the sums in our <img src="https://latex.codecogs.com/png.latex?T(n)"> formula using standard math rules:</li>
+</ul>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Csum_%7Bj=2%7D%5En%20j%20=%20%5Cfrac%7Bn(n+1)%7D%7B2%7D%20-%201%20%5Cquad%20%5Ctext%7Band%7D%20%5Cquad%20%5Csum_%7Bj=2%7D%5En%20(j-1)%20=%20%5Cfrac%7Bn(n-1)%7D%7B2%7D%0A"></p>
+<ul>
+<li><strong>Calculation:</strong> Substituting these formulas into our <img src="https://latex.codecogs.com/png.latex?T(n)"> equation gives:</li>
+</ul>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0AT(n)%20&amp;=%20c_1n%20+%20c_2(n-1)%20+%20c_4(n-1)%20+%20c_5%5Cleft(%5Cfrac%7Bn(n+1)%7D%7B2%7D%20-%201%5Cright)%20%5C%5C%0A%20%20%20%20%20&amp;%5Cquad%20+%20c_6%5Cleft(%5Cfrac%7Bn(n-1)%7D%7B2%7D%5Cright)%20+%20c_7%5Cleft(%5Cfrac%7Bn(n-1)%7D%7B2%7D%5Cright)%20+%20c_8(n-1)%20%5C%5C%0A%20%20%20%20%20&amp;=%20%5Cleft(%5Cfrac%7Bc_5%7D%7B2%7D%20+%20%5Cfrac%7Bc_6%7D%7B2%7D%20+%20%5Cfrac%7Bc_7%7D%7B2%7D%5Cright)n%5E2%20+%20%5Cleft(c_1%20+%20c_2%20+%20c_4%20+%20%5Cfrac%7Bc_5%7D%7B2%7D%20-%20%5Cfrac%7Bc_6%7D%7B2%7D%20-%20%5Cfrac%7Bc_7%7D%7B2%7D%20+%20c_8%5Cright)n%20-%20(c_2%20+%20c_4%20+%20c_5%20+%20c_8)%0A%5Cend%7Baligned%7D%0A"></p>
+<ul>
+<li><strong>Resulting Time:</strong> We can express this worst-case time as <img src="https://latex.codecogs.com/png.latex?T(n)%20=%20%5Cmathbf%7Ban%5E2%20+%20bn%20+%20c%7D"> (where <img src="https://latex.codecogs.com/png.latex?a,%20b,"> and <img src="https://latex.codecogs.com/png.latex?c"> are constants), which is a significantly slower, <strong>quadratic function</strong> of <img src="https://latex.codecogs.com/png.latex?n">.</li>
+</ul>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Algorithms</category>
+  <category>Complexity Analysis</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/insertion-sort-running-time/</guid>
   <pubDate>Sun, 26 Jul 2026 16:00:00 GMT</pubDate>
 </item>
 </channel>

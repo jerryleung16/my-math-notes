@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2026-07-27">
 
-<title>my-math-notes – My Math Notes</title>
+<title>Theoretical Analysis of Insertion Sort – My Math Notes</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -29,25 +30,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-172ba59bd5e0b52282274ba0c0cc16fc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-172ba59bd5e0b52282274ba0c0cc16fc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -75,35 +74,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
@@ -135,8 +105,8 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="My Math Notes" href="index.xml" data-external="1"></head>
+<link rel="stylesheet" href="../../styles.css">
+</head>
 
 <body class="nav-fixed quarto-light">
 
@@ -145,7 +115,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">My Math Notes</span>
     </a>
   </div>
@@ -156,11 +126,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">Jerry’s Notes</span></a>
   </li>  
 </ul>
@@ -173,100 +143,257 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">my-math-notes</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Theoretical Analysis of Insertion Sort</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Algorithms</div>
+                <div class="quarto-category">Complexity Analysis</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 27, 2026</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="QWxnb3JpdGhtcw==">Algorithms <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Q29tcGxleGl0eSUyMEFuYWx5c2lz">Complexity Analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U29ydGluZw==">Sorting <span class="quarto-category-count">(1)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#theoretical-running-time-formulation" id="toc-theoretical-running-time-formulation" class="nav-link active" data-scroll-target="#theoretical-running-time-formulation">1. Theoretical Running Time Formulation</a>
+  <ul class="collapse">
+  <li><a href="#constant-time-cost-c_i" id="toc-constant-time-cost-c_i" class="nav-link" data-scroll-target="#constant-time-cost-c_i">Constant Time Cost (<span class="math inline">\(c_i\)</span>)</a></li>
+  <li><a href="#execution-frequency-the-times-column" id="toc-execution-frequency-the-times-column" class="nav-link" data-scroll-target="#execution-frequency-the-times-column">Execution Frequency (The <code>times</code> column)</a></li>
+  <li><a href="#total-running-time-tn" id="toc-total-running-time-tn" class="nav-link" data-scroll-target="#total-running-time-tn">Total Running Time <span class="math inline">\(T(n)\)</span></a></li>
+  </ul></li>
+  <li><a href="#concrete-example-trace-a-3-1-2" id="toc-concrete-example-trace-a-3-1-2" class="nav-link" data-scroll-target="#concrete-example-trace-a-3-1-2">2. Concrete Example Trace: <span class="math inline">\(A = [3, 1, 2]\)</span></a>
+  <ul class="collapse">
+  <li><a href="#step-a-setting-up-constants" id="toc-step-a-setting-up-constants" class="nav-link" data-scroll-target="#step-a-setting-up-constants">Step A: Setting up Constants</a></li>
+  <li><a href="#step-b-tracing-the-loops-to-find-t_j" id="toc-step-b-tracing-the-loops-to-find-t_j" class="nav-link" data-scroll-target="#step-b-tracing-the-loops-to-find-t_j">Step B: Tracing the Loops to Find <span class="math inline">\(t_j\)</span></a></li>
+  <li><a href="#step-c-computing-total-time-t3" id="toc-step-c-computing-total-time-t3" class="nav-link" data-scroll-target="#step-c-computing-total-time-t3">Step C: Computing Total Time <span class="math inline">\(T(3)\)</span></a></li>
+  </ul></li>
+  <li><a href="#best-case-and-worst-case-scenarios" id="toc-best-case-and-worst-case-scenarios" class="nav-link" data-scroll-target="#best-case-and-worst-case-scenarios">3. Best-Case and Worst-Case Scenarios</a>
+  <ul class="collapse">
+  <li><a href="#the-best-case-already-sorted" id="toc-the-best-case-already-sorted" class="nav-link" data-scroll-target="#the-best-case-already-sorted">The Best-Case: Already Sorted</a></li>
+  <li><a href="#the-worst-case-reverse-sorted" id="toc-the-worst-case-reverse-sorted" class="nav-link" data-scroll-target="#the-worst-case-reverse-sorted">The Worst-Case: Reverse Sorted</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<section id="theoretical-running-time-formulation" class="level2">
+<h2 class="anchored" data-anchor-id="theoretical-running-time-formulation">1. Theoretical Running Time Formulation</h2>
+<p>The running time of the Insertion Sort algorithm is determined by calculating the time spent executing each individual line of pseudocode.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 27%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Line</th>
+<th style="text-align: left;"><code>Insertion-Sort(A)</code></th>
+<th style="text-align: center;"><em>cost</em></th>
+<th style="text-align: center;"><em>times</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;"><strong>for</strong> <span class="math inline">\(j = 2\)</span> <strong>to</strong> <span class="math inline">\(A.length\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(c_1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<span class="math inline">\(key = A[j]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(c_2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n - 1\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<code>// Insert</code> <span class="math inline">\(A[j]\)</span> <code>into the sorted sequence</code> <span class="math inline">\(A[1 \dots j - 1]\)</span>.</td>
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n - 1\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<span class="math inline">\(i = j - 1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(c_4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n - 1\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<strong>while</strong> <span class="math inline">\(i &gt; 0\)</span> <strong>and</strong> <span class="math inline">\(A[i] &gt; key\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(c_5\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sum_{j=2}^n t_j\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="math inline">\(A[i + 1] = A[i]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(c_6\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sum_{j=2}^n (t_j - 1)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="math inline">\(i = i - 1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(c_7\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sum_{j=2}^n (t_j - 1)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<span class="math inline">\(A[i + 1] = key\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(c_8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n - 1\)</span></td>
+</tr>
+</tbody>
+</table>
+<section id="constant-time-cost-c_i" class="level3">
+<h3 class="anchored" data-anchor-id="constant-time-cost-c_i">Constant Time Cost (<span class="math inline">\(c_i\)</span>)</h3>
+<ul>
+<li><span class="math inline">\(c_i\)</span> represents the <strong>constant time cost</strong> to execute line <span class="math inline">\(i\)</span> exactly once.</li>
+<li>Different operations (math, assignments, conditional checks) require slightly different processing times, hence unique costs (<span class="math inline">\(c_1, c_2, \dots\)</span>).</li>
+<li>Comments (e.g., Line 3) are ignored by the computer, resulting in a cost of <span class="math inline">\(0\)</span>.</li>
+</ul>
+</section>
+<section id="execution-frequency-the-times-column" class="level3">
+<h3 class="anchored" data-anchor-id="execution-frequency-the-times-column">Execution Frequency (The <code>times</code> column)</h3>
+<p>For an input array of size <span class="math inline">\(n\)</span>:</p>
+<ul>
+<li><strong>Outer loop header (Line 1):</strong> Runs <span class="math inline">\(n\)</span> times (once per item, plus the final exit check).</li>
+<li><strong>Outer loop body (Lines 2, 4, 8):</strong> Runs <span class="math inline">\(n - 1\)</span> times (one less than the header).</li>
+<li><strong>Inner <code>while</code> loop condition (Line 5):</strong> Runs <span class="math inline">\(\sum_{j=2}^n t_j\)</span> times, where <span class="math inline">\(t_j\)</span> is the number of condition checks during the <span class="math inline">\(j\)</span>-th pass.</li>
+<li><strong>Inner <code>while</code> loop body (Lines 6, 7):</strong> Runs <span class="math inline">\(\sum_{j=2}^n (t_j - 1)\)</span> times.</li>
+</ul>
+</section>
+<section id="total-running-time-tn" class="level3">
+<h3 class="anchored" data-anchor-id="total-running-time-tn">Total Running Time <span class="math inline">\(T(n)\)</span></h3>
+<p>To find the total running time, multiply the cost (<span class="math inline">\(c_i\)</span>) by the execution frequency for each line, and sum the results:</p>
+<p><span class="math display">\[
+T(n) = c_1n + c_2(n-1) + c_4(n-1) + c_5 \sum_{j=2}^n t_j + c_6 \sum_{j=2}^n (t_j - 1) + c_7 \sum_{j=2}^n (t_j - 1) + c_8(n-1)
+\]</span></p>
+<hr>
+</section>
+</section>
+<section id="concrete-example-trace-a-3-1-2" class="level2">
+<h2 class="anchored" data-anchor-id="concrete-example-trace-a-3-1-2">2. Concrete Example Trace: <span class="math inline">\(A = [3, 1, 2]\)</span></h2>
+<p>Let us trace the algorithm using an input size of <span class="math inline">\(n=3\)</span> and hypothetical execution cycles for each <span class="math inline">\(c_i\)</span>.</p>
+<section id="step-a-setting-up-constants" class="level3">
+<h3 class="anchored" data-anchor-id="step-a-setting-up-constants">Step A: Setting up Constants</h3>
+<p>Assume the following clock cycle costs per execution:</p>
+<ul>
+<li><span class="math inline">\(c_1 = 2\)</span> cycles (checking <code>for</code> loop, incrementing <span class="math inline">\(j\)</span>)</li>
+<li><span class="math inline">\(c_2 = 1\)</span> cycle (reading and assigning <code>key</code>)</li>
+<li><span class="math inline">\(c_4 = 1\)</span> cycle (assigning <span class="math inline">\(i\)</span>)</li>
+<li><span class="math inline">\(c_5 = 3\)</span> cycles (checking <code>while</code> conditions)</li>
+<li><span class="math inline">\(c_6 = 2\)</span> cycles (shifting element right)</li>
+<li><span class="math inline">\(c_7 = 1\)</span> cycle (decrementing <span class="math inline">\(i\)</span>)</li>
+<li><span class="math inline">\(c_8 = 1\)</span> cycle (inserting <code>key</code>)</li>
+</ul>
+</section>
+<section id="step-b-tracing-the-loops-to-find-t_j" class="level3">
+<h3 class="anchored" data-anchor-id="step-b-tracing-the-loops-to-find-t_j">Step B: Tracing the Loops to Find <span class="math inline">\(t_j\)</span></h3>
+<ul>
+<li><p><strong>Pass <span class="math inline">\(j = 2\)</span> (Inserting 1 into <span class="math inline">\([3]\)</span>):</strong> The condition is checked once successfully, and once failing (<span class="math inline">\(3&gt;1\)</span>, then <span class="math inline">\(0&gt;0\)</span> fails). <strong>Result:</strong> <span class="math inline">\(t_2 = 2\)</span> (loop body runs <span class="math inline">\(1\)</span> time).</p></li>
+<li><p><strong>Pass <span class="math inline">\(j = 3\)</span> (Inserting 2 into <span class="math inline">\([1, 3]\)</span>):</strong> The condition is checked once successfully, and once failing (<span class="math inline">\(3&gt;2\)</span>, then <span class="math inline">\(1&gt;2\)</span> fails). <strong>Result:</strong> <span class="math inline">\(t_3 = 2\)</span> (loop body runs <span class="math inline">\(1\)</span> time).</p></li>
+</ul>
+</section>
+<section id="step-c-computing-total-time-t3" class="level3">
+<h3 class="anchored" data-anchor-id="step-c-computing-total-time-t3">Step C: Computing Total Time <span class="math inline">\(T(3)\)</span></h3>
+<p>Substituting <span class="math inline">\(n=3, t_2=2, t_3=2\)</span> into our frequencies:</p>
+<ul>
+<li><strong>Line 1:</strong> <span class="math inline">\(n = 3\)</span> times</li>
+<li><strong>Lines 2, 4, 8:</strong> <span class="math inline">\(n-1 = 2\)</span> times each</li>
+<li><strong>Line 5:</strong> <span class="math inline">\(t_2 + t_3 = 4\)</span> times</li>
+<li><strong>Lines 6, 7:</strong> <span class="math inline">\((t_2-1) + (t_3-1) = 2\)</span> times each</li>
+</ul>
+<p>Multiplying by the <span class="math inline">\(c_i\)</span> costs and summing:</p>
+<p><span class="math display">\[
+\begin{aligned}
+T(3) &amp;= (c_1 \times 3) + (c_2 \times 2) + (c_4 \times 2) + (c_5 \times 4) + (c_6 \times 2) + (c_7 \times 2) + (c_8 \times 2) \\
+     &amp;= (2 \times 3) + (1 \times 2) + (1 \times 2) + (3 \times 4) + (2 \times 2) + (1 \times 2) + (1 \times 2) \\
+     &amp;= 6 + 2 + 2 + 12 + 4 + 2 + 2 \\
+     &amp;= \mathbf{30 \text{ cycles}}
+\end{aligned}
+\]</span></p>
+<p><strong>Conclusion:</strong> For this unsorted array, it takes 30 cycles. If the array were already sorted (e.g., <span class="math inline">\([1, 2, 3]\)</span>), the inner loop would fail immediately (<span class="math inline">\(t_2=1, t_3=1\)</span>). This eliminates Lines 6 and 7, dropping the total running time to a much faster <strong>18 cycles</strong>.</p>
+<hr>
+</section>
+</section>
+<section id="best-case-and-worst-case-scenarios" class="level2">
+<h2 class="anchored" data-anchor-id="best-case-and-worst-case-scenarios">3. Best-Case and Worst-Case Scenarios</h2>
+<p>Even for inputs of the exact same size <span class="math inline">\(n\)</span>, the algorithm’s running time can vary drastically depending on how the initial items are arranged.</p>
+<section id="the-best-case-already-sorted" class="level3">
+<h3 class="anchored" data-anchor-id="the-best-case-already-sorted">The Best-Case: Already Sorted</h3>
+<ul>
+<li><strong>Scenario:</strong> The input array is already in the correct sorted order.</li>
+<li><strong>What happens:</strong> When the inner <code>while</code> loop checks if it needs to shift elements, it immediately finds they are in order (<span class="math inline">\(A[i] \le key\)</span>).</li>
+<li><strong>Math impact:</strong> The condition is checked exactly once per pass (<span class="math inline">\(t_j = 1\)</span>). The inner loop body never runs (<span class="math inline">\(t_j - 1 = 0\)</span>).</li>
+<li><strong>Calculation:</strong> Substituting <span class="math inline">\(t_j = 1\)</span> into our <span class="math inline">\(T(n)\)</span> formula gives:</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+T(n) &amp;= c_1n + c_2(n-1) + c_4(n-1) + c_5(n-1) + c_8(n-1) \\
+     &amp;= (c_1 + c_2 + c_4 + c_5 + c_8)n - (c_2 + c_4 + c_5 + c_8)
+\end{aligned}
+\]</span></p>
+<ul>
+<li><strong>Resulting Time:</strong> We can express this running time as <span class="math inline">\(T(n) = \mathbf{an + b}\)</span> (where <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are constants), which is a fast, <strong>linear function</strong> of <span class="math inline">\(n\)</span>.</li>
+</ul>
+</section>
+<section id="the-worst-case-reverse-sorted" class="level3">
+<h3 class="anchored" data-anchor-id="the-worst-case-reverse-sorted">The Worst-Case: Reverse Sorted</h3>
+<ul>
+<li><strong>Scenario:</strong> The input array is completely backward (decreasing order).</li>
+<li><strong>What happens:</strong> The inner <code>while</code> loop must shift every new element all the way to the very front, comparing it against every single item in the already-sorted portion.</li>
+<li><strong>Math impact:</strong> The loop condition is checked <span class="math inline">\(j\)</span> times per pass (<span class="math inline">\(t_j = j\)</span>).</li>
+<li><strong>Applying Summations:</strong> We replace the sums in our <span class="math inline">\(T(n)\)</span> formula using standard math rules:</li>
+</ul>
+<p><span class="math display">\[
+\sum_{j=2}^n j = \frac{n(n+1)}{2} - 1 \quad \text{and} \quad \sum_{j=2}^n (j-1) = \frac{n(n-1)}{2}
+\]</span></p>
+<ul>
+<li><strong>Calculation:</strong> Substituting these formulas into our <span class="math inline">\(T(n)\)</span> equation gives:</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+T(n) &amp;= c_1n + c_2(n-1) + c_4(n-1) + c_5\left(\frac{n(n+1)}{2} - 1\right) \\
+     &amp;\quad + c_6\left(\frac{n(n-1)}{2}\right) + c_7\left(\frac{n(n-1)}{2}\right) + c_8(n-1) \\
+     &amp;= \left(\frac{c_5}{2} + \frac{c_6}{2} + \frac{c_7}{2}\right)n^2 + \left(c_1 + c_2 + c_4 + \frac{c_5}{2} - \frac{c_6}{2} - \frac{c_7}{2} + c_8\right)n - (c_2 + c_4 + c_5 + c_8)
+\end{aligned}
+\]</span></p>
+<ul>
+<li><strong>Resulting Time:</strong> We can express this worst-case time as <span class="math inline">\(T(n) = \mathbf{an^2 + bn + c}\)</span> (where <span class="math inline">\(a, b,\)</span> and <span class="math inline">\(c\)</span> are constants), which is a significantly slower, <strong>quadratic function</strong> of <span class="math inline">\(n\)</span>.</li>
+</ul>
 
 
+</section>
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="QWxnb3JpdGhtcyUyQ1NvcnRpbmc=" data-listing-date-sort="1785081600000" data-listing-file-modified-sort="1785146933029" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="340">
-<div class="thumbnail"><a href="./posts/insertion-sort/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/insertion-sort/index.html" class="no-external">Insertion Sort Algorithm</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('QWxnb3JpdGhtcw=='); return false;">Algorithms</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('U29ydGluZw=='); return false;">Sorting</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/insertion-sort/index.html" class="no-external">
-An <strong>insertion sort</strong> works exactly like sorting a hand of playing cards: you pick up cards one by one from an unsorted pile and slide each new card into its correct position…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/insertion-sort/index.html" class="no-external">
-<div class="listing-date">
-Jul 27, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="QWxnb3JpdGhtcyUyQ0NvbXBsZXhpdHklMjBBbmFseXNpcw==" data-listing-date-sort="1785081600000" data-listing-file-modified-sort="1785147007493" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1016">
-<div class="thumbnail"><a href="./posts/insertion-sort-running-time/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/insertion-sort-running-time/index.html" class="no-external">Theoretical Analysis of Insertion Sort</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('QWxnb3JpdGhtcw=='); return false;">Algorithms</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q29tcGxleGl0eSUyMEFuYWx5c2lz'); return false;">Complexity Analysis</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/insertion-sort-running-time/index.html" class="no-external">
-The running time of the Insertion Sort algorithm is determined by calculating the time spent executing each individual line of pseudocode.
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/insertion-sort-running-time/index.html" class="no-external">
-<div class="listing-date">
-Jul 27, 2026
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
