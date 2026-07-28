@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/merge sort/index.html",
       "/posts/insertion-sort/index.html",
       "/posts/insertion-sort-running-time/index.html"
     ]

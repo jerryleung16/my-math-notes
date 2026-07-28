@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-07-29">
+
+<title>Designing Algorithms &amp; Divide-and-Conquer – My Math Notes</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-172ba59bd5e0b52282274ba0c0cc16fc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">My Math Notes</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">Jerry’s Notes</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Designing Algorithms &amp; Divide-and-Conquer</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Algorithms</div>
+                <div class="quarto-category">Divide-and-Conquer</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 29, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#algorithm-design-approaches" id="toc-algorithm-design-approaches" class="nav-link active" data-scroll-target="#algorithm-design-approaches">1. Algorithm Design Approaches</a></li>
+  <li><a href="#the-divide-and-conquer-paradigm" id="toc-the-divide-and-conquer-paradigm" class="nav-link" data-scroll-target="#the-divide-and-conquer-paradigm">2. The Divide-and-Conquer Paradigm</a></li>
+  <li><a href="#merge-sort" id="toc-merge-sort" class="nav-link" data-scroll-target="#merge-sort">3. Merge Sort</a></li>
+  <li><a href="#the-merge-procedure" id="toc-the-merge-procedure" class="nav-link" data-scroll-target="#the-merge-procedure">4. The <code>MERGE</code> Procedure</a></li>
+  <li><a href="#merge-pseudocode" id="toc-merge-pseudocode" class="nav-link" data-scroll-target="#merge-pseudocode">5. <code>MERGE</code> Pseudocode</a></li>
+  <li><a href="#concrete-example-tracing-merge-sort" id="toc-concrete-example-tracing-merge-sort" class="nav-link" data-scroll-target="#concrete-example-tracing-merge-sort">6. Concrete Example: Tracing Merge Sort</a>
+  <ul class="collapse">
+  <li><a href="#step-1-the-divide-phase" id="toc-step-1-the-divide-phase" class="nav-link" data-scroll-target="#step-1-the-divide-phase">Step 1: The Divide Phase</a></li>
+  <li><a href="#step-2-the-combine-phase-merging" id="toc-step-2-the-combine-phase-merging" class="nav-link" data-scroll-target="#step-2-the-combine-phase-merging">Step 2: The Combine Phase (Merging)</a></li>
+  <li><a href="#detailed-trace-of-the-final-merge-call" id="toc-detailed-trace-of-the-final-merge-call" class="nav-link" data-scroll-target="#detailed-trace-of-the-final-merge-call">Detailed Trace of the Final <code>MERGE</code> Call</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="algorithm-design-approaches" class="level2">
+<h2 class="anchored" data-anchor-id="algorithm-design-approaches">1. Algorithm Design Approaches</h2>
+<p>Algorithms can be designed using various fundamental approaches. Two primary techniques are:</p>
+<ul>
+<li><strong>Incremental Approach:</strong> Used by algorithms like Insertion Sort. It builds the solution one element at a time (e.g., inserting a single element into an already sorted subarray).</li>
+<li><strong>Divide-and-Conquer Approach:</strong> A highly recursive alternative that often yields significantly faster worst-case running times. It solves problems by breaking them down into smaller, manageable pieces.</li>
+</ul>
+<hr>
+</section>
+<section id="the-divide-and-conquer-paradigm" class="level2">
+<h2 class="anchored" data-anchor-id="the-divide-and-conquer-paradigm">2. The Divide-and-Conquer Paradigm</h2>
+<p>This recursive approach involves three distinct steps at each level of the recursion:</p>
+<ol type="1">
+<li><strong>Divide:</strong> Break the original problem into a number of smaller subproblems that are just smaller instances of the exact same problem.</li>
+<li><strong>Conquer:</strong> Solve the subproblems recursively. However, if the subproblem size is small enough (the recursion “bottoms out”), solve it in a straightforward, direct manner.</li>
+<li><strong>Combine:</strong> Merge the solutions of the smaller subproblems together to formulate the solution to the original, overarching problem.</li>
+</ol>
+<hr>
+</section>
+<section id="merge-sort" class="level2">
+<h2 class="anchored" data-anchor-id="merge-sort">3. Merge Sort</h2>
+<p>Merge Sort is a classic algorithm that strictly follows the divide-and-conquer paradigm to sort an <span class="math inline">\(n\)</span>-element sequence:</p>
+<ul>
+<li><strong>Divide:</strong> Split the <span class="math inline">\(n\)</span>-element sequence into two separate subsequences, each containing <span class="math inline">\(n/2\)</span> elements.</li>
+<li><strong>Conquer:</strong> Recursively sort both subsequences using Merge Sort. This process bottoms out when a sequence hits a length of 1, as a single element is already inherently sorted.</li>
+<li><strong>Combine:</strong> Merge the two sorted subsequences back together to produce the final, fully sorted answer.</li>
+</ul>
+<hr>
+</section>
+<section id="the-merge-procedure" class="level2">
+<h2 class="anchored" data-anchor-id="the-merge-procedure">4. The <code>MERGE</code> Procedure</h2>
+<p>The crucial operation in Merge Sort is the “combine” step, handled by an auxiliary procedure called <code>MERGE(A, p, q, r)</code>.</p>
+<ul>
+<li><strong>Function:</strong> It assumes that the two subarrays <span class="math inline">\(A[p \dots q]\)</span> and <span class="math inline">\(A[q+1 \dots r]\)</span> are already sorted. It merges them into a single sorted subarray that replaces <span class="math inline">\(A[p \dots r]\)</span>.</li>
+<li><strong>Card Analogy:</strong> Imagine two sorted piles of cards face up on a table. You compare the top two cards, remove the smaller one, and place it face down in a new output pile. You repeat this constant-time comparison step until all cards are merged.</li>
+<li><strong>Time Complexity:</strong> Because each basic step compares two cards and takes constant time, merging <span class="math inline">\(n\)</span> total elements takes <span class="math inline">\(\Theta(n)\)</span> time.</li>
+<li><strong>Sentinels:</strong> To prevent the algorithm from constantly needing to check if either pile is completely empty, a special “sentinel” card containing the value infinity (<span class="math inline">\(\infty\)</span>) is placed at the bottom of each pile. This guarantees that the core sorting logic stops exactly when all real data has been merged.</li>
+</ul>
+<hr>
+</section>
+<section id="merge-pseudocode" class="level2">
+<h2 class="anchored" data-anchor-id="merge-pseudocode">5. <code>MERGE</code> Pseudocode</h2>
+<p>Below is the pseudocode for the merging process, demonstrating the use of the new temporary arrays (<span class="math inline">\(L\)</span> and <span class="math inline">\(R\)</span>) and the sentinel values.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Line</th>
+<th style="text-align: left;"><code>MERGE(A, p, q, r)</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;"><span class="math inline">\(n_1 = q - p + 1\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;"><span class="math inline">\(n_2 = r - q\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">let <span class="math inline">\(L[1 \dots n_1 + 1]\)</span> and <span class="math inline">\(R[1 \dots n_2 + 1]\)</span> be new arrays</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: left;"><strong>for</strong> <span class="math inline">\(i = 1\)</span> <strong>to</strong> <span class="math inline">\(n_1\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<span class="math inline">\(L[i] = A[p + i - 1]\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: left;"><strong>for</strong> <span class="math inline">\(j = 1\)</span> <strong>to</strong> <span class="math inline">\(n_2\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<span class="math inline">\(R[j] = A[q + j]\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td style="text-align: left;"><span class="math inline">\(L[n_1 + 1] = \infty\)</span> &nbsp;&nbsp;&nbsp;&nbsp;<code>// Sentinel value</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td style="text-align: left;"><span class="math inline">\(R[n_2 + 1] = \infty\)</span> &nbsp;&nbsp;&nbsp;&nbsp;<code>// Sentinel value</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td style="text-align: left;"><span class="math inline">\(i = 1\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td style="text-align: left;"><span class="math inline">\(j = 1\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td style="text-align: left;"><strong>for</strong> <span class="math inline">\(k = p\)</span> <strong>to</strong> <span class="math inline">\(r\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<strong>if</strong> <span class="math inline">\(L[i] \le R[j]\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="math inline">\(A[k] = L[i]\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="math inline">\(i = i + 1\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<strong>else</strong> <span class="math inline">\(A[k] = R[j]\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">17</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="math inline">\(j = j + 1\)</span></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="concrete-example-tracing-merge-sort" class="level2">
+<h2 class="anchored" data-anchor-id="concrete-example-tracing-merge-sort">6. Concrete Example: Tracing Merge Sort</h2>
+<p>To understand how Merge Sort operates in practice, let us trace the algorithm on an unsorted 8-element array:</p>
+<p><span class="math display">\[
+A = [5, 2, 4, 7, 1, 3, 2, 6]
+\]</span></p>
+<section id="step-1-the-divide-phase" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-the-divide-phase">Step 1: The Divide Phase</h3>
+<p>The algorithm recursively splits the array in half until every subsequence contains only a single element:</p>
+<ul>
+<li><strong>Split 1:</strong> <span class="math inline">\([5, 2, 4, 7]\)</span> and <span class="math inline">\([1, 3, 2, 6]\)</span></li>
+<li><strong>Split 2:</strong> <span class="math inline">\([5, 2]\)</span>, <span class="math inline">\([4, 7]\)</span>, <span class="math inline">\([1, 3]\)</span>, and <span class="math inline">\([2, 6]\)</span></li>
+<li><strong>Base Case (Length 1):</strong> <span class="math inline">\([5]\)</span>, <span class="math inline">\([2]\)</span>, <span class="math inline">\([4]\)</span>, <span class="math inline">\([7]\)</span>, <span class="math inline">\([1]\)</span>, <span class="math inline">\([3]\)</span>, <span class="math inline">\([2]\)</span>, and <span class="math inline">\([6]\)</span></li>
+</ul>
+<p>At this point, the recursion bottoms out because sequences of length 1 are trivially sorted.</p>
+</section>
+<section id="step-2-the-combine-phase-merging" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-the-combine-phase-merging">Step 2: The Combine Phase (Merging)</h3>
+<p>The auxiliary procedure <code>MERGE</code> combines the small sorted subarrays back together level-by-level:</p>
+<ul>
+<li><strong>Merge to size 2:</strong> <span class="math inline">\([2, 5]\)</span>, <span class="math inline">\([4, 7]\)</span>, <span class="math inline">\([1, 3]\)</span>, and <span class="math inline">\([2, 6]\)</span></li>
+<li><strong>Merge to size 4:</strong> <span class="math inline">\([2, 4, 5, 7]\)</span> and <span class="math inline">\([1, 2, 3, 6]\)</span></li>
+<li><strong>Final Merge to size 8:</strong> We call <code>MERGE</code> on the two halves <span class="math inline">\(L = [2, 4, 5, 7]\)</span> and <span class="math inline">\(R = [1, 2, 3, 6]\)</span>.</li>
+</ul>
+</section>
+<section id="detailed-trace-of-the-final-merge-call" class="level3">
+<h3 class="anchored" data-anchor-id="detailed-trace-of-the-final-merge-call">Detailed Trace of the Final <code>MERGE</code> Call</h3>
+<p>To see how sentinels and pointers work during the final merge, we set up arrays <span class="math inline">\(L\)</span> and <span class="math inline">\(R\)</span> with <span class="math inline">\(\infty\)</span> at the end:</p>
+<p><span class="math display">\[
+L = [2, 4, 5, 7, \infty], \quad R = [1, 2, 3, 6, \infty]
+\]</span></p>
+<p>We initialize pointers <span class="math inline">\(i = 1\)</span> (for <span class="math inline">\(L\)</span>) and <span class="math inline">\(j = 1\)</span> (for <span class="math inline">\(R\)</span>). For each step <span class="math inline">\(k\)</span> from 1 to 8, we compare <span class="math inline">\(L[i]\)</span> and <span class="math inline">\(R[j]\)</span>, copy the smaller value to <span class="math inline">\(A[k]\)</span>, and advance the corresponding pointer:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Step (<span class="math inline">\(k\)</span>)</th>
+<th style="text-align: center;"><span class="math inline">\(L[i]\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(R[j]\)</span></th>
+<th style="text-align: left;">Comparison</th>
+<th style="text-align: left;">Action</th>
+<th style="text-align: left;">Output Array (<span class="math inline">\(A[1 \dots k]\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;"><span class="math inline">\(1 &lt; 2 \implies R[1]\)</span> is smaller</td>
+<td style="text-align: left;"><span class="math inline">\(A[1] = 1, \; j \to 2\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([1]\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"><span class="math inline">\(2 \le 2 \implies L[1]\)</span> is smaller/equal</td>
+<td style="text-align: left;"><span class="math inline">\(A[2] = 2, \; i \to 2\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([1, 2]\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"><span class="math inline">\(2 &lt; 4 \implies R[2]\)</span> is smaller</td>
+<td style="text-align: left;"><span class="math inline">\(A[3] = 2, \; j \to 3\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([1, 2, 2]\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;"><span class="math inline">\(3 &lt; 4 \implies R[3]\)</span> is smaller</td>
+<td style="text-align: left;"><span class="math inline">\(A[4] = 3, \; j \to 4\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([1, 2, 2, 3]\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;"><span class="math inline">\(4 \le 6 \implies L[2]\)</span> is smaller</td>
+<td style="text-align: left;"><span class="math inline">\(A[5] = 4, \; i \to 3\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([1, 2, 2, 3, 4]\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;"><span class="math inline">\(5 \le 6 \implies L[3]\)</span> is smaller</td>
+<td style="text-align: left;"><span class="math inline">\(A[6] = 5, \; i \to 4\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([1, 2, 2, 3, 4, 5]\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;"><span class="math inline">\(6 &lt; 7 \implies R[4]\)</span> is smaller</td>
+<td style="text-align: left;"><span class="math inline">\(A[7] = 6, \; j \to 5\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([1, 2, 2, 3, 4, 5, 6]\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;"><span class="math inline">\(\infty\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(7 \le \infty \implies L[4]\)</span> is smaller</td>
+<td style="text-align: left;"><span class="math inline">\(A[8] = 7, \; i \to 5\)</span></td>
+<td style="text-align: left;"><span class="math inline">\([1, 2, 2, 3, 4, 5, 6, 7]\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Once step 8 completes, all 8 elements are sorted. Notice how the sentinel <span class="math inline">\(\infty\)</span> at <span class="math inline">\(R[5]\)</span> ensured that <span class="math inline">\(L[4]\)</span> was selected without requiring an explicit check for an empty array.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/jerryleung16\.github\.io\/my-math-notes\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
