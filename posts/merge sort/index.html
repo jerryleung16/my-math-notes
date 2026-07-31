@@ -263,19 +263,19 @@ window.Quarto = {
 <p>Let us trace the overarching <code>MERGE-SORT</code> logic on a 4-element array to see how it traces indices before merging.</p>
 <p><strong>Initial Array:</strong> <code>[5, 2, 4, 1]</code></p>
 <pre class="text"><code>MERGE-SORT(A, 1, 4)
-if 1 &lt; 4 (ok)
+if 1 &lt; 4 (#ok)
  q = floor((1 + 4)/2) = 2
  
  MERGE-SORT(A, 1, 2)
-  if 1 &lt; 2 (ok)
+  if 1 &lt; 2 (#ok)
   q = floor((1 + 2)/2) = 1
   
   MERGE-SORT(A, 1, 1)
-   if 1 &lt; 1 (no)
+   if 1 &lt; 1 (#no)
    end
    
   MERGE-SORT(A, 2, 2)
-   if 2 &lt; 2 (no)
+   if 2 &lt; 2 (#no)
    end
    
   MERGE(A, 1, 1, 2)
@@ -286,11 +286,11 @@ if 1 &lt; 4 (ok)
   q = floor((3 + 4)/2) = 3
   
   MERGE-SORT(A, 3, 3)
-   if 3 &lt; 3 (no)
+   if 3 &lt; 3 (#no)
    end
    
   MERGE-SORT(A, 4, 4)
-   if 4 &lt; 4 (no)
+   if 4 &lt; 4 (#no)
    end
    
   MERGE(A, 3, 3, 4)
@@ -298,6 +298,7 @@ if 1 &lt; 4 (ok)
   
  MERGE(A, 1, 2, 4)
  # Array A becomes [1, 2, 4, 5]</code></pre>
+<hr>
 <p>## 6. The <code>MERGE</code> Procedure</p>
 <p>The crucial operation in Merge Sort is the “combine” step, handled by the auxiliary procedure <code>MERGE(A, p, q, r)</code>.</p>
 <ul>
