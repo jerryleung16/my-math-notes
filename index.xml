@@ -12,7 +12,7 @@
 <generator>quarto-1.10.18</generator>
 <lastBuildDate>Tue, 28 Jul 2026 16:00:00 GMT</lastBuildDate>
 <item>
-  <title>Designing Algorithms &amp; Divide-and-Conquer</title>
+  <title>Merge Sort: A Divide-and-Conquer Algorithm</title>
   <link>https://jerryleung16.github.io/my-math-notes/posts/merge sort/</link>
   <description><![CDATA[ 
 
@@ -39,29 +39,78 @@
 </ol>
 <hr>
 </section>
-<section id="merge-sort" class="level2">
-<h2 class="anchored" data-anchor-id="merge-sort">3. Merge Sort</h2>
-<p>Merge Sort is a classic algorithm that strictly follows the divide-and-conquer paradigm to sort an <img src="https://latex.codecogs.com/png.latex?n">-element sequence:</p>
+<section id="merge-sort-overview" class="level2">
+<h2 class="anchored" data-anchor-id="merge-sort-overview">3. Merge Sort Overview</h2>
+<p>Merge Sort is a classic algorithm that strictly follows the divide-and-conquer paradigm to sort a sequence of elements:</p>
 <ul>
-<li><strong>Divide:</strong> Split the <img src="https://latex.codecogs.com/png.latex?n">-element sequence into two separate subsequences, each containing <img src="https://latex.codecogs.com/png.latex?n/2"> elements.</li>
+<li><strong>Divide:</strong> Split the sequence into two separate subsequences of equal (or near-equal) size.</li>
 <li><strong>Conquer:</strong> Recursively sort both subsequences using Merge Sort. This process bottoms out when a sequence hits a length of 1, as a single element is already inherently sorted.</li>
 <li><strong>Combine:</strong> Merge the two sorted subsequences back together to produce the final, fully sorted answer.</li>
 </ul>
+<p><strong>The Brief Idea:</strong> The algorithm works by recursively tracing the array indices all the way down to the base cases (single elements) first, and only then performs the merging process on the way back up the call stack.</p>
 <hr>
 </section>
-<section id="the-merge-procedure" class="level2">
-<h2 class="anchored" data-anchor-id="the-merge-procedure">4. The <code>MERGE</code> Procedure</h2>
-<p>The crucial operation in Merge Sort is the “combine” step, handled by an auxiliary procedure called <code>MERGE(A, p, q, r)</code>.</p>
+<section id="the-merge-sort-pseudocode" class="level2">
+<h2 class="anchored" data-anchor-id="the-merge-sort-pseudocode">4. The <code>MERGE-SORT</code> Pseudocode</h2>
+<p>To sort an array, we need a function that drives the divide-and-conquer process. You can refer to the provided file <strong>image.png</strong> for the standard textbook representation of this algorithm.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Line</th>
+<th style="text-align: left;"><code>MERGE-SORT(A, p, r)</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;"><strong>if</strong> <img src="https://latex.codecogs.com/png.latex?p%20%3C%20r"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://latex.codecogs.com/png.latex?q%20=%20%5Clfloor(p%20+%20r)/2%5Crfloor"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<code>MERGE-SORT(A, p, q)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<code>MERGE-SORT(A, q + 1, r)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<code>MERGE(A, p, q, r)</code></td>
+</tr>
+</tbody>
+</table>
+<p>To sort an entire sequence <img src="https://latex.codecogs.com/png.latex?A%20=%20%5Clangle%20A%5B1%5D,%20A%5B2%5D,%20%5Cdots,%20A%5Bn%5D%20%5Crangle">, we make the initial call <code>MERGE-SORT(A, 1, A.length)</code>. The algorithm consists of repeatedly merging pairs of smaller sorted sequences to form larger ones until the final sorted sequence is formulated.</p>
+<hr>
+</section>
+<section id="concrete-example-tracing-merge-sort" class="level2">
+<h2 class="anchored" data-anchor-id="concrete-example-tracing-merge-sort">5. Concrete Example: Tracing <code>MERGE-SORT</code></h2>
+<p>Let us trace the overarching <code>MERGE-SORT</code> logic on a 4-element array to see how it traces indices before merging.</p>
+<p><strong>Initial Array:</strong> <code>[5, 2, 4, 1]</code></p>
+<p>```text MERGE-SORT(A, 1, 4) if 1 &lt; 4 (ok) q = floor((1 + 4)/2) = 2</p>
+<p>MERGE-SORT(A, 1, 2) if 1 &lt; 2 (ok) q = floor((1 + 2)/2) = 1</p>
+<p>MERGE-SORT(A, 1, 1) if 1 &lt; 1 (no) end</p>
+<p>MERGE-SORT(A, 2, 2) if 2 &lt; 2 (no) end</p>
+<p>MERGE(A, 1, 1, 2) # Array A becomes [2, 5, 4, 1]</p>
+<p>MERGE-SORT(A, 3, 4) if 3 &lt; 4 (ok) q = floor((3 + 4)/2) = 3</p>
+<p>MERGE-SORT(A, 3, 3) if 3 &lt; 3 (no) end</p>
+<p>MERGE-SORT(A, 4, 4) if 4 &lt; 4 (no) end</p>
+<p>MERGE(A, 3, 3, 4) # Array A becomes [2, 5, 1, 4]</p>
+<p>MERGE(A, 1, 2, 4) # Array A becomes [1, 2, 4, 5]</p>
+<p>## 6. The <code>MERGE</code> Procedure</p>
+<p>The crucial operation in Merge Sort is the “combine” step, handled by the auxiliary procedure <code>MERGE(A, p, q, r)</code>.</p>
 <ul>
 <li><strong>Function:</strong> It assumes that the two subarrays <img src="https://latex.codecogs.com/png.latex?A%5Bp%20%5Cdots%20q%5D"> and <img src="https://latex.codecogs.com/png.latex?A%5Bq+1%20%5Cdots%20r%5D"> are already sorted. It merges them into a single sorted subarray that replaces <img src="https://latex.codecogs.com/png.latex?A%5Bp%20%5Cdots%20r%5D">.</li>
 <li><strong>Card Analogy:</strong> Imagine two sorted piles of cards face up on a table. You compare the top two cards, remove the smaller one, and place it face down in a new output pile. You repeat this constant-time comparison step until all cards are merged.</li>
-<li><strong>Time Complexity:</strong> Because each basic step compares two cards and takes constant time, merging <img src="https://latex.codecogs.com/png.latex?n"> total elements takes <img src="https://latex.codecogs.com/png.latex?%5CTheta(n)"> time.</li>
 <li><strong>Sentinels:</strong> To prevent the algorithm from constantly needing to check if either pile is completely empty, a special “sentinel” card containing the value infinity (<img src="https://latex.codecogs.com/png.latex?%5Cinfty">) is placed at the bottom of each pile. This guarantees that the core sorting logic stops exactly when all real data has been merged.</li>
 </ul>
 <hr>
 </section>
 <section id="merge-pseudocode" class="level2">
-<h2 class="anchored" data-anchor-id="merge-pseudocode">5. <code>MERGE</code> Pseudocode</h2>
+<h2 class="anchored" data-anchor-id="merge-pseudocode">7. <code>MERGE</code> Pseudocode</h2>
 <p>Below is the pseudocode for the merging process, demonstrating the use of the new temporary arrays (<img src="https://latex.codecogs.com/png.latex?L"> and <img src="https://latex.codecogs.com/png.latex?R">) and the sentinel values.</p>
 <table class="caption-top table">
 <colgroup>
@@ -147,32 +196,10 @@
 </table>
 <hr>
 </section>
-<section id="concrete-example-tracing-merge-sort" class="level2">
-<h2 class="anchored" data-anchor-id="concrete-example-tracing-merge-sort">6. Concrete Example: Tracing Merge Sort</h2>
-<p>To understand how Merge Sort operates in practice, let us trace the algorithm on an unsorted 8-element array:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%0AA%20=%20%5B5,%202,%204,%207,%201,%203,%202,%206%5D%0A"></p>
-<section id="step-1-the-divide-phase" class="level3">
-<h3 class="anchored" data-anchor-id="step-1-the-divide-phase">Step 1: The Divide Phase</h3>
-<p>The algorithm recursively splits the array in half until every subsequence contains only a single element:</p>
-<ul>
-<li><strong>Split 1:</strong> <img src="https://latex.codecogs.com/png.latex?%5B5,%202,%204,%207%5D"> and <img src="https://latex.codecogs.com/png.latex?%5B1,%203,%202,%206%5D"></li>
-<li><strong>Split 2:</strong> <img src="https://latex.codecogs.com/png.latex?%5B5,%202%5D">, <img src="https://latex.codecogs.com/png.latex?%5B4,%207%5D">, <img src="https://latex.codecogs.com/png.latex?%5B1,%203%5D">, and <img src="https://latex.codecogs.com/png.latex?%5B2,%206%5D"></li>
-<li><strong>Base Case (Length 1):</strong> <img src="https://latex.codecogs.com/png.latex?%5B5%5D">, <img src="https://latex.codecogs.com/png.latex?%5B2%5D">, <img src="https://latex.codecogs.com/png.latex?%5B4%5D">, <img src="https://latex.codecogs.com/png.latex?%5B7%5D">, <img src="https://latex.codecogs.com/png.latex?%5B1%5D">, <img src="https://latex.codecogs.com/png.latex?%5B3%5D">, <img src="https://latex.codecogs.com/png.latex?%5B2%5D">, and <img src="https://latex.codecogs.com/png.latex?%5B6%5D"></li>
-</ul>
-<p>At this point, the recursion bottoms out because sequences of length 1 are trivially sorted.</p>
-</section>
-<section id="step-2-the-combine-phase-merging" class="level3">
-<h3 class="anchored" data-anchor-id="step-2-the-combine-phase-merging">Step 2: The Combine Phase (Merging)</h3>
-<p>The auxiliary procedure <code>MERGE</code> combines the small sorted subarrays back together level-by-level:</p>
-<ul>
-<li><strong>Merge to size 2:</strong> <img src="https://latex.codecogs.com/png.latex?%5B2,%205%5D">, <img src="https://latex.codecogs.com/png.latex?%5B4,%207%5D">, <img src="https://latex.codecogs.com/png.latex?%5B1,%203%5D">, and <img src="https://latex.codecogs.com/png.latex?%5B2,%206%5D"></li>
-<li><strong>Merge to size 4:</strong> <img src="https://latex.codecogs.com/png.latex?%5B2,%204,%205,%207%5D"> and <img src="https://latex.codecogs.com/png.latex?%5B1,%202,%203,%206%5D"></li>
-<li><strong>Final Merge to size 8:</strong> We call <code>MERGE</code> on the two halves <img src="https://latex.codecogs.com/png.latex?L%20=%20%5B2,%204,%205,%207%5D"> and <img src="https://latex.codecogs.com/png.latex?R%20=%20%5B1,%202,%203,%206%5D">.</li>
-</ul>
-</section>
-<section id="detailed-trace-of-the-final-merge-call" class="level3">
-<h3 class="anchored" data-anchor-id="detailed-trace-of-the-final-merge-call">Detailed Trace of the Final <code>MERGE</code> Call</h3>
-<p>To see how sentinels and pointers work during the final merge, we set up arrays <img src="https://latex.codecogs.com/png.latex?L"> and <img src="https://latex.codecogs.com/png.latex?R"> with <img src="https://latex.codecogs.com/png.latex?%5Cinfty"> at the end:</p>
+<section id="detailed-trace-of-the-final-merge-call" class="level2">
+<h2 class="anchored" data-anchor-id="detailed-trace-of-the-final-merge-call">8. Detailed Trace of the Final <code>MERGE</code> Call</h2>
+<p>To see how sentinels and pointers work during a merge, let’s look at the final combination step of a larger 8-element array where the left half is <code>[2, 4, 5, 7]</code> and the right half is <code>[1, 2, 3, 6]</code>.</p>
+<p>We set up arrays <img src="https://latex.codecogs.com/png.latex?L"> and <img src="https://latex.codecogs.com/png.latex?R"> with <img src="https://latex.codecogs.com/png.latex?%5Cinfty"> at the end:</p>
 <p><img src="https://latex.codecogs.com/png.latex?%0AL%20=%20%5B2,%204,%205,%207,%20%5Cinfty%5D,%20%5Cquad%20R%20=%20%5B1,%202,%203,%206,%20%5Cinfty%5D%0A"></p>
 <p>We initialize pointers <img src="https://latex.codecogs.com/png.latex?i%20=%201"> (for <img src="https://latex.codecogs.com/png.latex?L">) and <img src="https://latex.codecogs.com/png.latex?j%20=%201"> (for <img src="https://latex.codecogs.com/png.latex?R">). For each step <img src="https://latex.codecogs.com/png.latex?k"> from 1 to 8, we compare <img src="https://latex.codecogs.com/png.latex?L%5Bi%5D"> and <img src="https://latex.codecogs.com/png.latex?R%5Bj%5D">, copy the smaller value to <img src="https://latex.codecogs.com/png.latex?A%5Bk%5D">, and advance the corresponding pointer:</p>
 <table class="caption-top table">
@@ -199,72 +226,71 @@
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">2</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?1%20%3C%202%20%5Cimplies%20R%5B1%5D"> is smaller</td>
+<td style="text-align: left;">Right is smaller</td>
 <td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?A%5B1%5D%20=%201,%20%5C;%20j%20%5Cto%202"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5B1%5D"></td>
+<td style="text-align: left;"><code>[1]</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">2</td>
 <td style="text-align: center;">2</td>
 <td style="text-align: center;">2</td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?2%20%5Cle%202%20%5Cimplies%20L%5B1%5D"> is smaller/equal</td>
+<td style="text-align: left;">Left is smaller/equal</td>
 <td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?A%5B2%5D%20=%202,%20%5C;%20i%20%5Cto%202"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5B1,%202%5D"></td>
+<td style="text-align: left;"><code>[1, 2]</code></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">3</td>
 <td style="text-align: center;">4</td>
 <td style="text-align: center;">2</td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?2%20%3C%204%20%5Cimplies%20R%5B2%5D"> is smaller</td>
+<td style="text-align: left;">Right is smaller</td>
 <td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?A%5B3%5D%20=%202,%20%5C;%20j%20%5Cto%203"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5B1,%202,%202%5D"></td>
+<td style="text-align: left;"><code>[1, 2, 2]</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">4</td>
 <td style="text-align: center;">4</td>
 <td style="text-align: center;">3</td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?3%20%3C%204%20%5Cimplies%20R%5B3%5D"> is smaller</td>
+<td style="text-align: left;">Right is smaller</td>
 <td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?A%5B4%5D%20=%203,%20%5C;%20j%20%5Cto%204"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5B1,%202,%202,%203%5D"></td>
+<td style="text-align: left;"><code>[1, 2, 2, 3]</code></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">5</td>
 <td style="text-align: center;">4</td>
 <td style="text-align: center;">6</td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?4%20%5Cle%206%20%5Cimplies%20L%5B2%5D"> is smaller</td>
+<td style="text-align: left;">Left is smaller</td>
 <td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?A%5B5%5D%20=%204,%20%5C;%20i%20%5Cto%203"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5B1,%202,%202,%203,%204%5D"></td>
+<td style="text-align: left;"><code>[1, 2, 2, 3, 4]</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">6</td>
 <td style="text-align: center;">5</td>
 <td style="text-align: center;">6</td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?5%20%5Cle%206%20%5Cimplies%20L%5B3%5D"> is smaller</td>
+<td style="text-align: left;">Left is smaller</td>
 <td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?A%5B6%5D%20=%205,%20%5C;%20i%20%5Cto%204"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5B1,%202,%202,%203,%204,%205%5D"></td>
+<td style="text-align: left;"><code>[1, 2, 2, 3, 4, 5]</code></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">7</td>
 <td style="text-align: center;">7</td>
 <td style="text-align: center;">6</td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?6%20%3C%207%20%5Cimplies%20R%5B4%5D"> is smaller</td>
+<td style="text-align: left;">Right is smaller</td>
 <td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?A%5B7%5D%20=%206,%20%5C;%20j%20%5Cto%205"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5B1,%202,%202,%203,%204,%205,%206%5D"></td>
+<td style="text-align: left;"><code>[1, 2, 2, 3, 4, 5, 6]</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">8</td>
 <td style="text-align: center;">7</td>
 <td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Cinfty"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?7%20%5Cle%20%5Cinfty%20%5Cimplies%20L%5B4%5D"> is smaller</td>
+<td style="text-align: left;">Left is smaller</td>
 <td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?A%5B8%5D%20=%207,%20%5C;%20i%20%5Cto%205"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5B1,%202,%202,%203,%204,%205,%206,%207%5D"></td>
+<td style="text-align: left;"><code>[1, 2, 2, 3, 4, 5, 6, 7]</code></td>
 </tr>
 </tbody>
 </table>
 <p>Once step 8 completes, all 8 elements are sorted. Notice how the sentinel <img src="https://latex.codecogs.com/png.latex?%5Cinfty"> at <img src="https://latex.codecogs.com/png.latex?R%5B5%5D"> ensured that <img src="https://latex.codecogs.com/png.latex?L%5B4%5D"> was selected without requiring an explicit check for an empty array.</p>
 
 
-</section>
 </section>
 
  ]]></description>

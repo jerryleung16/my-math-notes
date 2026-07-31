@@ -2,51 +2,58 @@
   {
     "objectID": "posts/merge sort/index.html",
     "href": "posts/merge sort/index.html",
-    "title": "Designing Algorithms & Divide-and-Conquer",
+    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
     "section": "",
     "text": "Algorithms can be designed using various fundamental approaches. Two primary techniques are:\n\nIncremental Approach: Used by algorithms like Insertion Sort. It builds the solution one element at a time (e.g., inserting a single element into an already sorted subarray).\nDivide-and-Conquer Approach: A highly recursive alternative that often yields significantly faster worst-case running times. It solves problems by breaking them down into smaller, manageable pieces."
   },
   {
     "objectID": "posts/merge sort/index.html#algorithm-design-approaches",
     "href": "posts/merge sort/index.html#algorithm-design-approaches",
-    "title": "Designing Algorithms & Divide-and-Conquer",
+    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
     "section": "",
     "text": "Algorithms can be designed using various fundamental approaches. Two primary techniques are:\n\nIncremental Approach: Used by algorithms like Insertion Sort. It builds the solution one element at a time (e.g., inserting a single element into an already sorted subarray).\nDivide-and-Conquer Approach: A highly recursive alternative that often yields significantly faster worst-case running times. It solves problems by breaking them down into smaller, manageable pieces."
   },
   {
     "objectID": "posts/merge sort/index.html#the-divide-and-conquer-paradigm",
     "href": "posts/merge sort/index.html#the-divide-and-conquer-paradigm",
-    "title": "Designing Algorithms & Divide-and-Conquer",
+    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
     "section": "2. The Divide-and-Conquer Paradigm",
     "text": "2. The Divide-and-Conquer Paradigm\nThis recursive approach involves three distinct steps at each level of the recursion:\n\nDivide: Break the original problem into a number of smaller subproblems that are just smaller instances of the exact same problem.\nConquer: Solve the subproblems recursively. However, if the subproblem size is small enough (the recursion “bottoms out”), solve it in a straightforward, direct manner.\nCombine: Merge the solutions of the smaller subproblems together to formulate the solution to the original, overarching problem."
   },
   {
-    "objectID": "posts/merge sort/index.html#merge-sort",
-    "href": "posts/merge sort/index.html#merge-sort",
-    "title": "Designing Algorithms & Divide-and-Conquer",
-    "section": "3. Merge Sort",
-    "text": "3. Merge Sort\nMerge Sort is a classic algorithm that strictly follows the divide-and-conquer paradigm to sort an \\(n\\)-element sequence:\n\nDivide: Split the \\(n\\)-element sequence into two separate subsequences, each containing \\(n/2\\) elements.\nConquer: Recursively sort both subsequences using Merge Sort. This process bottoms out when a sequence hits a length of 1, as a single element is already inherently sorted.\nCombine: Merge the two sorted subsequences back together to produce the final, fully sorted answer."
+    "objectID": "posts/merge sort/index.html#merge-sort-overview",
+    "href": "posts/merge sort/index.html#merge-sort-overview",
+    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
+    "section": "3. Merge Sort Overview",
+    "text": "3. Merge Sort Overview\nMerge Sort is a classic algorithm that strictly follows the divide-and-conquer paradigm to sort a sequence of elements:\n\nDivide: Split the sequence into two separate subsequences of equal (or near-equal) size.\nConquer: Recursively sort both subsequences using Merge Sort. This process bottoms out when a sequence hits a length of 1, as a single element is already inherently sorted.\nCombine: Merge the two sorted subsequences back together to produce the final, fully sorted answer.\n\nThe Brief Idea: The algorithm works by recursively tracing the array indices all the way down to the base cases (single elements) first, and only then performs the merging process on the way back up the call stack."
   },
   {
-    "objectID": "posts/merge sort/index.html#the-merge-procedure",
-    "href": "posts/merge sort/index.html#the-merge-procedure",
-    "title": "Designing Algorithms & Divide-and-Conquer",
-    "section": "4. The MERGE Procedure",
-    "text": "4. The MERGE Procedure\nThe crucial operation in Merge Sort is the “combine” step, handled by an auxiliary procedure called MERGE(A, p, q, r).\n\nFunction: It assumes that the two subarrays \\(A[p \\dots q]\\) and \\(A[q+1 \\dots r]\\) are already sorted. It merges them into a single sorted subarray that replaces \\(A[p \\dots r]\\).\nCard Analogy: Imagine two sorted piles of cards face up on a table. You compare the top two cards, remove the smaller one, and place it face down in a new output pile. You repeat this constant-time comparison step until all cards are merged.\nTime Complexity: Because each basic step compares two cards and takes constant time, merging \\(n\\) total elements takes \\(\\Theta(n)\\) time.\nSentinels: To prevent the algorithm from constantly needing to check if either pile is completely empty, a special “sentinel” card containing the value infinity (\\(\\infty\\)) is placed at the bottom of each pile. This guarantees that the core sorting logic stops exactly when all real data has been merged."
-  },
-  {
-    "objectID": "posts/merge sort/index.html#merge-pseudocode",
-    "href": "posts/merge sort/index.html#merge-pseudocode",
-    "title": "Designing Algorithms & Divide-and-Conquer",
-    "section": "5. MERGE Pseudocode",
-    "text": "5. MERGE Pseudocode\nBelow is the pseudocode for the merging process, demonstrating the use of the new temporary arrays (\\(L\\) and \\(R\\)) and the sentinel values.\n\n\n\n\n\n\n\nLine\nMERGE(A, p, q, r)\n\n\n\n\n1\n\\(n_1 = q - p + 1\\)\n\n\n2\n\\(n_2 = r - q\\)\n\n\n3\nlet \\(L[1 \\dots n_1 + 1]\\) and \\(R[1 \\dots n_2 + 1]\\) be new arrays\n\n\n4\nfor \\(i = 1\\) to \\(n_1\\)\n\n\n5\n    \\(L[i] = A[p + i - 1]\\)\n\n\n6\nfor \\(j = 1\\) to \\(n_2\\)\n\n\n7\n    \\(R[j] = A[q + j]\\)\n\n\n8\n\\(L[n_1 + 1] = \\infty\\)     // Sentinel value\n\n\n9\n\\(R[n_2 + 1] = \\infty\\)     // Sentinel value\n\n\n10\n\\(i = 1\\)\n\n\n11\n\\(j = 1\\)\n\n\n12\nfor \\(k = p\\) to \\(r\\)\n\n\n13\n    if \\(L[i] \\le R[j]\\)\n\n\n14\n        \\(A[k] = L[i]\\)\n\n\n15\n        \\(i = i + 1\\)\n\n\n16\n    else \\(A[k] = R[j]\\)\n\n\n17\n        \\(j = j + 1\\)"
+    "objectID": "posts/merge sort/index.html#the-merge-sort-pseudocode",
+    "href": "posts/merge sort/index.html#the-merge-sort-pseudocode",
+    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
+    "section": "4. The MERGE-SORT Pseudocode",
+    "text": "4. The MERGE-SORT Pseudocode\nTo sort an array, we need a function that drives the divide-and-conquer process. You can refer to the provided file image.png for the standard textbook representation of this algorithm.\n\n\n\nLine\nMERGE-SORT(A, p, r)\n\n\n\n\n1\nif \\(p &lt; r\\)\n\n\n2\n    \\(q = \\lfloor(p + r)/2\\rfloor\\)\n\n\n3\n    MERGE-SORT(A, p, q)\n\n\n4\n    MERGE-SORT(A, q + 1, r)\n\n\n5\n    MERGE(A, p, q, r)\n\n\n\nTo sort an entire sequence \\(A = \\langle A[1], A[2], \\dots, A[n] \\rangle\\), we make the initial call MERGE-SORT(A, 1, A.length). The algorithm consists of repeatedly merging pairs of smaller sorted sequences to form larger ones until the final sorted sequence is formulated."
   },
   {
     "objectID": "posts/merge sort/index.html#concrete-example-tracing-merge-sort",
     "href": "posts/merge sort/index.html#concrete-example-tracing-merge-sort",
-    "title": "Designing Algorithms & Divide-and-Conquer",
-    "section": "6. Concrete Example: Tracing Merge Sort",
-    "text": "6. Concrete Example: Tracing Merge Sort\nTo understand how Merge Sort operates in practice, let us trace the algorithm on an unsorted 8-element array:\n\\[\nA = [5, 2, 4, 7, 1, 3, 2, 6]\n\\]\n\nStep 1: The Divide Phase\nThe algorithm recursively splits the array in half until every subsequence contains only a single element:\n\nSplit 1: \\([5, 2, 4, 7]\\) and \\([1, 3, 2, 6]\\)\nSplit 2: \\([5, 2]\\), \\([4, 7]\\), \\([1, 3]\\), and \\([2, 6]\\)\nBase Case (Length 1): \\([5]\\), \\([2]\\), \\([4]\\), \\([7]\\), \\([1]\\), \\([3]\\), \\([2]\\), and \\([6]\\)\n\nAt this point, the recursion bottoms out because sequences of length 1 are trivially sorted.\n\n\nStep 2: The Combine Phase (Merging)\nThe auxiliary procedure MERGE combines the small sorted subarrays back together level-by-level:\n\nMerge to size 2: \\([2, 5]\\), \\([4, 7]\\), \\([1, 3]\\), and \\([2, 6]\\)\nMerge to size 4: \\([2, 4, 5, 7]\\) and \\([1, 2, 3, 6]\\)\nFinal Merge to size 8: We call MERGE on the two halves \\(L = [2, 4, 5, 7]\\) and \\(R = [1, 2, 3, 6]\\).\n\n\n\nDetailed Trace of the Final MERGE Call\nTo see how sentinels and pointers work during the final merge, we set up arrays \\(L\\) and \\(R\\) with \\(\\infty\\) at the end:\n\\[\nL = [2, 4, 5, 7, \\infty], \\quad R = [1, 2, 3, 6, \\infty]\n\\]\nWe initialize pointers \\(i = 1\\) (for \\(L\\)) and \\(j = 1\\) (for \\(R\\)). For each step \\(k\\) from 1 to 8, we compare \\(L[i]\\) and \\(R[j]\\), copy the smaller value to \\(A[k]\\), and advance the corresponding pointer:\n\n\n\n\n\n\n\n\n\n\n\nStep (\\(k\\))\n\\(L[i]\\)\n\\(R[j]\\)\nComparison\nAction\nOutput Array (\\(A[1 \\dots k]\\))\n\n\n\n\n1\n2\n1\n\\(1 &lt; 2 \\implies R[1]\\) is smaller\n\\(A[1] = 1, \\; j \\to 2\\)\n\\([1]\\)\n\n\n2\n2\n2\n\\(2 \\le 2 \\implies L[1]\\) is smaller/equal\n\\(A[2] = 2, \\; i \\to 2\\)\n\\([1, 2]\\)\n\n\n3\n4\n2\n\\(2 &lt; 4 \\implies R[2]\\) is smaller\n\\(A[3] = 2, \\; j \\to 3\\)\n\\([1, 2, 2]\\)\n\n\n4\n4\n3\n\\(3 &lt; 4 \\implies R[3]\\) is smaller\n\\(A[4] = 3, \\; j \\to 4\\)\n\\([1, 2, 2, 3]\\)\n\n\n5\n4\n6\n\\(4 \\le 6 \\implies L[2]\\) is smaller\n\\(A[5] = 4, \\; i \\to 3\\)\n\\([1, 2, 2, 3, 4]\\)\n\n\n6\n5\n6\n\\(5 \\le 6 \\implies L[3]\\) is smaller\n\\(A[6] = 5, \\; i \\to 4\\)\n\\([1, 2, 2, 3, 4, 5]\\)\n\n\n7\n7\n6\n\\(6 &lt; 7 \\implies R[4]\\) is smaller\n\\(A[7] = 6, \\; j \\to 5\\)\n\\([1, 2, 2, 3, 4, 5, 6]\\)\n\n\n8\n7\n\\(\\infty\\)\n\\(7 \\le \\infty \\implies L[4]\\) is smaller\n\\(A[8] = 7, \\; i \\to 5\\)\n\\([1, 2, 2, 3, 4, 5, 6, 7]\\)\n\n\n\nOnce step 8 completes, all 8 elements are sorted. Notice how the sentinel \\(\\infty\\) at \\(R[5]\\) ensured that \\(L[4]\\) was selected without requiring an explicit check for an empty array."
+    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
+    "section": "5. Concrete Example: Tracing MERGE-SORT",
+    "text": "5. Concrete Example: Tracing MERGE-SORT\nLet us trace the overarching MERGE-SORT logic on a 4-element array to see how it traces indices before merging.\nInitial Array: [5, 2, 4, 1]\n```text MERGE-SORT(A, 1, 4) if 1 &lt; 4 (ok) q = floor((1 + 4)/2) = 2\nMERGE-SORT(A, 1, 2) if 1 &lt; 2 (ok) q = floor((1 + 2)/2) = 1\nMERGE-SORT(A, 1, 1) if 1 &lt; 1 (no) end\nMERGE-SORT(A, 2, 2) if 2 &lt; 2 (no) end\nMERGE(A, 1, 1, 2) # Array A becomes [2, 5, 4, 1]\nMERGE-SORT(A, 3, 4) if 3 &lt; 4 (ok) q = floor((3 + 4)/2) = 3\nMERGE-SORT(A, 3, 3) if 3 &lt; 3 (no) end\nMERGE-SORT(A, 4, 4) if 4 &lt; 4 (no) end\nMERGE(A, 3, 3, 4) # Array A becomes [2, 5, 1, 4]\nMERGE(A, 1, 2, 4) # Array A becomes [1, 2, 4, 5]\n## 6. The MERGE Procedure\nThe crucial operation in Merge Sort is the “combine” step, handled by the auxiliary procedure MERGE(A, p, q, r).\n\nFunction: It assumes that the two subarrays \\(A[p \\dots q]\\) and \\(A[q+1 \\dots r]\\) are already sorted. It merges them into a single sorted subarray that replaces \\(A[p \\dots r]\\).\nCard Analogy: Imagine two sorted piles of cards face up on a table. You compare the top two cards, remove the smaller one, and place it face down in a new output pile. You repeat this constant-time comparison step until all cards are merged.\nSentinels: To prevent the algorithm from constantly needing to check if either pile is completely empty, a special “sentinel” card containing the value infinity (\\(\\infty\\)) is placed at the bottom of each pile. This guarantees that the core sorting logic stops exactly when all real data has been merged."
+  },
+  {
+    "objectID": "posts/merge sort/index.html#merge-pseudocode",
+    "href": "posts/merge sort/index.html#merge-pseudocode",
+    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
+    "section": "7. MERGE Pseudocode",
+    "text": "7. MERGE Pseudocode\nBelow is the pseudocode for the merging process, demonstrating the use of the new temporary arrays (\\(L\\) and \\(R\\)) and the sentinel values.\n\n\n\n\n\n\n\nLine\nMERGE(A, p, q, r)\n\n\n\n\n1\n\\(n_1 = q - p + 1\\)\n\n\n2\n\\(n_2 = r - q\\)\n\n\n3\nlet \\(L[1 \\dots n_1 + 1]\\) and \\(R[1 \\dots n_2 + 1]\\) be new arrays\n\n\n4\nfor \\(i = 1\\) to \\(n_1\\)\n\n\n5\n    \\(L[i] = A[p + i - 1]\\)\n\n\n6\nfor \\(j = 1\\) to \\(n_2\\)\n\n\n7\n    \\(R[j] = A[q + j]\\)\n\n\n8\n\\(L[n_1 + 1] = \\infty\\)     // Sentinel value\n\n\n9\n\\(R[n_2 + 1] = \\infty\\)     // Sentinel value\n\n\n10\n\\(i = 1\\)\n\n\n11\n\\(j = 1\\)\n\n\n12\nfor \\(k = p\\) to \\(r\\)\n\n\n13\n    if \\(L[i] \\le R[j]\\)\n\n\n14\n        \\(A[k] = L[i]\\)\n\n\n15\n        \\(i = i + 1\\)\n\n\n16\n    else \\(A[k] = R[j]\\)\n\n\n17\n        \\(j = j + 1\\)"
+  },
+  {
+    "objectID": "posts/merge sort/index.html#detailed-trace-of-the-final-merge-call",
+    "href": "posts/merge sort/index.html#detailed-trace-of-the-final-merge-call",
+    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
+    "section": "8. Detailed Trace of the Final MERGE Call",
+    "text": "8. Detailed Trace of the Final MERGE Call\nTo see how sentinels and pointers work during a merge, let’s look at the final combination step of a larger 8-element array where the left half is [2, 4, 5, 7] and the right half is [1, 2, 3, 6].\nWe set up arrays \\(L\\) and \\(R\\) with \\(\\infty\\) at the end:\n\\[\nL = [2, 4, 5, 7, \\infty], \\quad R = [1, 2, 3, 6, \\infty]\n\\]\nWe initialize pointers \\(i = 1\\) (for \\(L\\)) and \\(j = 1\\) (for \\(R\\)). For each step \\(k\\) from 1 to 8, we compare \\(L[i]\\) and \\(R[j]\\), copy the smaller value to \\(A[k]\\), and advance the corresponding pointer:\n\n\n\n\n\n\n\n\n\n\n\nStep (\\(k\\))\n\\(L[i]\\)\n\\(R[j]\\)\nComparison\nAction\nOutput Array (\\(A[1 \\dots k]\\))\n\n\n\n\n1\n2\n1\nRight is smaller\n\\(A[1] = 1, \\; j \\to 2\\)\n[1]\n\n\n2\n2\n2\nLeft is smaller/equal\n\\(A[2] = 2, \\; i \\to 2\\)\n[1, 2]\n\n\n3\n4\n2\nRight is smaller\n\\(A[3] = 2, \\; j \\to 3\\)\n[1, 2, 2]\n\n\n4\n4\n3\nRight is smaller\n\\(A[4] = 3, \\; j \\to 4\\)\n[1, 2, 2, 3]\n\n\n5\n4\n6\nLeft is smaller\n\\(A[5] = 4, \\; i \\to 3\\)\n[1, 2, 2, 3, 4]\n\n\n6\n5\n6\nLeft is smaller\n\\(A[6] = 5, \\; i \\to 4\\)\n[1, 2, 2, 3, 4, 5]\n\n\n7\n7\n6\nRight is smaller\n\\(A[7] = 6, \\; j \\to 5\\)\n[1, 2, 2, 3, 4, 5, 6]\n\n\n8\n7\n\\(\\infty\\)\nLeft is smaller\n\\(A[8] = 7, \\; i \\to 5\\)\n[1, 2, 2, 3, 4, 5, 6, 7]\n\n\n\nOnce step 8 completes, all 8 elements are sorted. Notice how the sentinel \\(\\infty\\) at \\(R[5]\\) ensured that \\(L[4]\\) was selected without requiring an explicit check for an empty array."
   },
   {
     "objectID": "posts/insertion-sort/index.html",
@@ -88,7 +95,7 @@
     "href": "index.html",
     "title": "my-math-notes",
     "section": "",
-    "text": "Designing Algorithms & Divide-and-Conquer\n\n\n\nAlgorithms\n\nDivide-and-Conquer\n\n\n\n\n\n\n\n\n\nJul 29, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nInsertion Sort Algorithm\n\n\n\nAlgorithms\n\nSorting\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTheoretical Analysis of Insertion Sort\n\n\n\nAlgorithms\n\nComplexity Analysis\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\nNo matching items"
+    "text": "Merge Sort: A Divide-and-Conquer Algorithm\n\n\n\nAlgorithms\n\nDivide-and-Conquer\n\n\n\n\n\n\n\n\n\nJul 29, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nInsertion Sort Algorithm\n\n\n\nAlgorithms\n\nSorting\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTheoretical Analysis of Insertion Sort\n\n\n\nAlgorithms\n\nComplexity Analysis\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/insertion-sort-running-time/index.html",

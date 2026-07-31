@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2026-07-29">
 
-<title>Designing Algorithms &amp; Divide-and-Conquer – My Math Notes</title>
+<title>Merge Sort: A Divide-and-Conquer Algorithm – My Math Notes</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -144,7 +144,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Designing Algorithms &amp; Divide-and-Conquer</h1>
+      <h1 class="title">Merge Sort: A Divide-and-Conquer Algorithm</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Algorithms</div>
                 <div class="quarto-category">Divide-and-Conquer</div>
@@ -177,15 +177,11 @@ window.Quarto = {
   <ul>
   <li><a href="#algorithm-design-approaches" id="toc-algorithm-design-approaches" class="nav-link active" data-scroll-target="#algorithm-design-approaches">1. Algorithm Design Approaches</a></li>
   <li><a href="#the-divide-and-conquer-paradigm" id="toc-the-divide-and-conquer-paradigm" class="nav-link" data-scroll-target="#the-divide-and-conquer-paradigm">2. The Divide-and-Conquer Paradigm</a></li>
-  <li><a href="#merge-sort" id="toc-merge-sort" class="nav-link" data-scroll-target="#merge-sort">3. Merge Sort</a></li>
-  <li><a href="#the-merge-procedure" id="toc-the-merge-procedure" class="nav-link" data-scroll-target="#the-merge-procedure">4. The <code>MERGE</code> Procedure</a></li>
-  <li><a href="#merge-pseudocode" id="toc-merge-pseudocode" class="nav-link" data-scroll-target="#merge-pseudocode">5. <code>MERGE</code> Pseudocode</a></li>
-  <li><a href="#concrete-example-tracing-merge-sort" id="toc-concrete-example-tracing-merge-sort" class="nav-link" data-scroll-target="#concrete-example-tracing-merge-sort">6. Concrete Example: Tracing Merge Sort</a>
-  <ul class="collapse">
-  <li><a href="#step-1-the-divide-phase" id="toc-step-1-the-divide-phase" class="nav-link" data-scroll-target="#step-1-the-divide-phase">Step 1: The Divide Phase</a></li>
-  <li><a href="#step-2-the-combine-phase-merging" id="toc-step-2-the-combine-phase-merging" class="nav-link" data-scroll-target="#step-2-the-combine-phase-merging">Step 2: The Combine Phase (Merging)</a></li>
-  <li><a href="#detailed-trace-of-the-final-merge-call" id="toc-detailed-trace-of-the-final-merge-call" class="nav-link" data-scroll-target="#detailed-trace-of-the-final-merge-call">Detailed Trace of the Final <code>MERGE</code> Call</a></li>
-  </ul></li>
+  <li><a href="#merge-sort-overview" id="toc-merge-sort-overview" class="nav-link" data-scroll-target="#merge-sort-overview">3. Merge Sort Overview</a></li>
+  <li><a href="#the-merge-sort-pseudocode" id="toc-the-merge-sort-pseudocode" class="nav-link" data-scroll-target="#the-merge-sort-pseudocode">4. The <code>MERGE-SORT</code> Pseudocode</a></li>
+  <li><a href="#concrete-example-tracing-merge-sort" id="toc-concrete-example-tracing-merge-sort" class="nav-link" data-scroll-target="#concrete-example-tracing-merge-sort">5. Concrete Example: Tracing <code>MERGE-SORT</code></a></li>
+  <li><a href="#merge-pseudocode" id="toc-merge-pseudocode" class="nav-link" data-scroll-target="#merge-pseudocode">7. <code>MERGE</code> Pseudocode</a></li>
+  <li><a href="#detailed-trace-of-the-final-merge-call" id="toc-detailed-trace-of-the-final-merge-call" class="nav-link" data-scroll-target="#detailed-trace-of-the-final-merge-call">8. Detailed Trace of the Final <code>MERGE</code> Call</a></li>
   </ul>
 </nav>
     </div>
@@ -215,29 +211,78 @@ window.Quarto = {
 </ol>
 <hr>
 </section>
-<section id="merge-sort" class="level2">
-<h2 class="anchored" data-anchor-id="merge-sort">3. Merge Sort</h2>
-<p>Merge Sort is a classic algorithm that strictly follows the divide-and-conquer paradigm to sort an <span class="math inline">\(n\)</span>-element sequence:</p>
+<section id="merge-sort-overview" class="level2">
+<h2 class="anchored" data-anchor-id="merge-sort-overview">3. Merge Sort Overview</h2>
+<p>Merge Sort is a classic algorithm that strictly follows the divide-and-conquer paradigm to sort a sequence of elements:</p>
 <ul>
-<li><strong>Divide:</strong> Split the <span class="math inline">\(n\)</span>-element sequence into two separate subsequences, each containing <span class="math inline">\(n/2\)</span> elements.</li>
+<li><strong>Divide:</strong> Split the sequence into two separate subsequences of equal (or near-equal) size.</li>
 <li><strong>Conquer:</strong> Recursively sort both subsequences using Merge Sort. This process bottoms out when a sequence hits a length of 1, as a single element is already inherently sorted.</li>
 <li><strong>Combine:</strong> Merge the two sorted subsequences back together to produce the final, fully sorted answer.</li>
 </ul>
+<p><strong>The Brief Idea:</strong> The algorithm works by recursively tracing the array indices all the way down to the base cases (single elements) first, and only then performs the merging process on the way back up the call stack.</p>
 <hr>
 </section>
-<section id="the-merge-procedure" class="level2">
-<h2 class="anchored" data-anchor-id="the-merge-procedure">4. The <code>MERGE</code> Procedure</h2>
-<p>The crucial operation in Merge Sort is the “combine” step, handled by an auxiliary procedure called <code>MERGE(A, p, q, r)</code>.</p>
+<section id="the-merge-sort-pseudocode" class="level2">
+<h2 class="anchored" data-anchor-id="the-merge-sort-pseudocode">4. The <code>MERGE-SORT</code> Pseudocode</h2>
+<p>To sort an array, we need a function that drives the divide-and-conquer process. You can refer to the provided file <strong>image.png</strong> for the standard textbook representation of this algorithm.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Line</th>
+<th style="text-align: left;"><code>MERGE-SORT(A, p, r)</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;"><strong>if</strong> <span class="math inline">\(p &lt; r\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<span class="math inline">\(q = \lfloor(p + r)/2\rfloor\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<code>MERGE-SORT(A, p, q)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<code>MERGE-SORT(A, q + 1, r)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<code>MERGE(A, p, q, r)</code></td>
+</tr>
+</tbody>
+</table>
+<p>To sort an entire sequence <span class="math inline">\(A = \langle A[1], A[2], \dots, A[n] \rangle\)</span>, we make the initial call <code>MERGE-SORT(A, 1, A.length)</code>. The algorithm consists of repeatedly merging pairs of smaller sorted sequences to form larger ones until the final sorted sequence is formulated.</p>
+<hr>
+</section>
+<section id="concrete-example-tracing-merge-sort" class="level2">
+<h2 class="anchored" data-anchor-id="concrete-example-tracing-merge-sort">5. Concrete Example: Tracing <code>MERGE-SORT</code></h2>
+<p>Let us trace the overarching <code>MERGE-SORT</code> logic on a 4-element array to see how it traces indices before merging.</p>
+<p><strong>Initial Array:</strong> <code>[5, 2, 4, 1]</code></p>
+<p>```text MERGE-SORT(A, 1, 4) if 1 &lt; 4 (ok) q = floor((1 + 4)/2) = 2</p>
+<p>MERGE-SORT(A, 1, 2) if 1 &lt; 2 (ok) q = floor((1 + 2)/2) = 1</p>
+<p>MERGE-SORT(A, 1, 1) if 1 &lt; 1 (no) end</p>
+<p>MERGE-SORT(A, 2, 2) if 2 &lt; 2 (no) end</p>
+<p>MERGE(A, 1, 1, 2) # Array A becomes [2, 5, 4, 1]</p>
+<p>MERGE-SORT(A, 3, 4) if 3 &lt; 4 (ok) q = floor((3 + 4)/2) = 3</p>
+<p>MERGE-SORT(A, 3, 3) if 3 &lt; 3 (no) end</p>
+<p>MERGE-SORT(A, 4, 4) if 4 &lt; 4 (no) end</p>
+<p>MERGE(A, 3, 3, 4) # Array A becomes [2, 5, 1, 4]</p>
+<p>MERGE(A, 1, 2, 4) # Array A becomes [1, 2, 4, 5]</p>
+<p>## 6. The <code>MERGE</code> Procedure</p>
+<p>The crucial operation in Merge Sort is the “combine” step, handled by the auxiliary procedure <code>MERGE(A, p, q, r)</code>.</p>
 <ul>
 <li><strong>Function:</strong> It assumes that the two subarrays <span class="math inline">\(A[p \dots q]\)</span> and <span class="math inline">\(A[q+1 \dots r]\)</span> are already sorted. It merges them into a single sorted subarray that replaces <span class="math inline">\(A[p \dots r]\)</span>.</li>
 <li><strong>Card Analogy:</strong> Imagine two sorted piles of cards face up on a table. You compare the top two cards, remove the smaller one, and place it face down in a new output pile. You repeat this constant-time comparison step until all cards are merged.</li>
-<li><strong>Time Complexity:</strong> Because each basic step compares two cards and takes constant time, merging <span class="math inline">\(n\)</span> total elements takes <span class="math inline">\(\Theta(n)\)</span> time.</li>
 <li><strong>Sentinels:</strong> To prevent the algorithm from constantly needing to check if either pile is completely empty, a special “sentinel” card containing the value infinity (<span class="math inline">\(\infty\)</span>) is placed at the bottom of each pile. This guarantees that the core sorting logic stops exactly when all real data has been merged.</li>
 </ul>
 <hr>
 </section>
 <section id="merge-pseudocode" class="level2">
-<h2 class="anchored" data-anchor-id="merge-pseudocode">5. <code>MERGE</code> Pseudocode</h2>
+<h2 class="anchored" data-anchor-id="merge-pseudocode">7. <code>MERGE</code> Pseudocode</h2>
 <p>Below is the pseudocode for the merging process, demonstrating the use of the new temporary arrays (<span class="math inline">\(L\)</span> and <span class="math inline">\(R\)</span>) and the sentinel values.</p>
 <table class="caption-top table">
 <colgroup>
@@ -323,34 +368,10 @@ window.Quarto = {
 </table>
 <hr>
 </section>
-<section id="concrete-example-tracing-merge-sort" class="level2">
-<h2 class="anchored" data-anchor-id="concrete-example-tracing-merge-sort">6. Concrete Example: Tracing Merge Sort</h2>
-<p>To understand how Merge Sort operates in practice, let us trace the algorithm on an unsorted 8-element array:</p>
-<p><span class="math display">\[
-A = [5, 2, 4, 7, 1, 3, 2, 6]
-\]</span></p>
-<section id="step-1-the-divide-phase" class="level3">
-<h3 class="anchored" data-anchor-id="step-1-the-divide-phase">Step 1: The Divide Phase</h3>
-<p>The algorithm recursively splits the array in half until every subsequence contains only a single element:</p>
-<ul>
-<li><strong>Split 1:</strong> <span class="math inline">\([5, 2, 4, 7]\)</span> and <span class="math inline">\([1, 3, 2, 6]\)</span></li>
-<li><strong>Split 2:</strong> <span class="math inline">\([5, 2]\)</span>, <span class="math inline">\([4, 7]\)</span>, <span class="math inline">\([1, 3]\)</span>, and <span class="math inline">\([2, 6]\)</span></li>
-<li><strong>Base Case (Length 1):</strong> <span class="math inline">\([5]\)</span>, <span class="math inline">\([2]\)</span>, <span class="math inline">\([4]\)</span>, <span class="math inline">\([7]\)</span>, <span class="math inline">\([1]\)</span>, <span class="math inline">\([3]\)</span>, <span class="math inline">\([2]\)</span>, and <span class="math inline">\([6]\)</span></li>
-</ul>
-<p>At this point, the recursion bottoms out because sequences of length 1 are trivially sorted.</p>
-</section>
-<section id="step-2-the-combine-phase-merging" class="level3">
-<h3 class="anchored" data-anchor-id="step-2-the-combine-phase-merging">Step 2: The Combine Phase (Merging)</h3>
-<p>The auxiliary procedure <code>MERGE</code> combines the small sorted subarrays back together level-by-level:</p>
-<ul>
-<li><strong>Merge to size 2:</strong> <span class="math inline">\([2, 5]\)</span>, <span class="math inline">\([4, 7]\)</span>, <span class="math inline">\([1, 3]\)</span>, and <span class="math inline">\([2, 6]\)</span></li>
-<li><strong>Merge to size 4:</strong> <span class="math inline">\([2, 4, 5, 7]\)</span> and <span class="math inline">\([1, 2, 3, 6]\)</span></li>
-<li><strong>Final Merge to size 8:</strong> We call <code>MERGE</code> on the two halves <span class="math inline">\(L = [2, 4, 5, 7]\)</span> and <span class="math inline">\(R = [1, 2, 3, 6]\)</span>.</li>
-</ul>
-</section>
-<section id="detailed-trace-of-the-final-merge-call" class="level3">
-<h3 class="anchored" data-anchor-id="detailed-trace-of-the-final-merge-call">Detailed Trace of the Final <code>MERGE</code> Call</h3>
-<p>To see how sentinels and pointers work during the final merge, we set up arrays <span class="math inline">\(L\)</span> and <span class="math inline">\(R\)</span> with <span class="math inline">\(\infty\)</span> at the end:</p>
+<section id="detailed-trace-of-the-final-merge-call" class="level2">
+<h2 class="anchored" data-anchor-id="detailed-trace-of-the-final-merge-call">8. Detailed Trace of the Final <code>MERGE</code> Call</h2>
+<p>To see how sentinels and pointers work during a merge, let’s look at the final combination step of a larger 8-element array where the left half is <code>[2, 4, 5, 7]</code> and the right half is <code>[1, 2, 3, 6]</code>.</p>
+<p>We set up arrays <span class="math inline">\(L\)</span> and <span class="math inline">\(R\)</span> with <span class="math inline">\(\infty\)</span> at the end:</p>
 <p><span class="math display">\[
 L = [2, 4, 5, 7, \infty], \quad R = [1, 2, 3, 6, \infty]
 \]</span></p>
@@ -379,72 +400,71 @@ L = [2, 4, 5, 7, \infty], \quad R = [1, 2, 3, 6, \infty]
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">2</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: left;"><span class="math inline">\(1 &lt; 2 \implies R[1]\)</span> is smaller</td>
+<td style="text-align: left;">Right is smaller</td>
 <td style="text-align: left;"><span class="math inline">\(A[1] = 1, \; j \to 2\)</span></td>
-<td style="text-align: left;"><span class="math inline">\([1]\)</span></td>
+<td style="text-align: left;"><code>[1]</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">2</td>
 <td style="text-align: center;">2</td>
 <td style="text-align: center;">2</td>
-<td style="text-align: left;"><span class="math inline">\(2 \le 2 \implies L[1]\)</span> is smaller/equal</td>
+<td style="text-align: left;">Left is smaller/equal</td>
 <td style="text-align: left;"><span class="math inline">\(A[2] = 2, \; i \to 2\)</span></td>
-<td style="text-align: left;"><span class="math inline">\([1, 2]\)</span></td>
+<td style="text-align: left;"><code>[1, 2]</code></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">3</td>
 <td style="text-align: center;">4</td>
 <td style="text-align: center;">2</td>
-<td style="text-align: left;"><span class="math inline">\(2 &lt; 4 \implies R[2]\)</span> is smaller</td>
+<td style="text-align: left;">Right is smaller</td>
 <td style="text-align: left;"><span class="math inline">\(A[3] = 2, \; j \to 3\)</span></td>
-<td style="text-align: left;"><span class="math inline">\([1, 2, 2]\)</span></td>
+<td style="text-align: left;"><code>[1, 2, 2]</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">4</td>
 <td style="text-align: center;">4</td>
 <td style="text-align: center;">3</td>
-<td style="text-align: left;"><span class="math inline">\(3 &lt; 4 \implies R[3]\)</span> is smaller</td>
+<td style="text-align: left;">Right is smaller</td>
 <td style="text-align: left;"><span class="math inline">\(A[4] = 3, \; j \to 4\)</span></td>
-<td style="text-align: left;"><span class="math inline">\([1, 2, 2, 3]\)</span></td>
+<td style="text-align: left;"><code>[1, 2, 2, 3]</code></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">5</td>
 <td style="text-align: center;">4</td>
 <td style="text-align: center;">6</td>
-<td style="text-align: left;"><span class="math inline">\(4 \le 6 \implies L[2]\)</span> is smaller</td>
+<td style="text-align: left;">Left is smaller</td>
 <td style="text-align: left;"><span class="math inline">\(A[5] = 4, \; i \to 3\)</span></td>
-<td style="text-align: left;"><span class="math inline">\([1, 2, 2, 3, 4]\)</span></td>
+<td style="text-align: left;"><code>[1, 2, 2, 3, 4]</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">6</td>
 <td style="text-align: center;">5</td>
 <td style="text-align: center;">6</td>
-<td style="text-align: left;"><span class="math inline">\(5 \le 6 \implies L[3]\)</span> is smaller</td>
+<td style="text-align: left;">Left is smaller</td>
 <td style="text-align: left;"><span class="math inline">\(A[6] = 5, \; i \to 4\)</span></td>
-<td style="text-align: left;"><span class="math inline">\([1, 2, 2, 3, 4, 5]\)</span></td>
+<td style="text-align: left;"><code>[1, 2, 2, 3, 4, 5]</code></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">7</td>
 <td style="text-align: center;">7</td>
 <td style="text-align: center;">6</td>
-<td style="text-align: left;"><span class="math inline">\(6 &lt; 7 \implies R[4]\)</span> is smaller</td>
+<td style="text-align: left;">Right is smaller</td>
 <td style="text-align: left;"><span class="math inline">\(A[7] = 6, \; j \to 5\)</span></td>
-<td style="text-align: left;"><span class="math inline">\([1, 2, 2, 3, 4, 5, 6]\)</span></td>
+<td style="text-align: left;"><code>[1, 2, 2, 3, 4, 5, 6]</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">8</td>
 <td style="text-align: center;">7</td>
 <td style="text-align: center;"><span class="math inline">\(\infty\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(7 \le \infty \implies L[4]\)</span> is smaller</td>
+<td style="text-align: left;">Left is smaller</td>
 <td style="text-align: left;"><span class="math inline">\(A[8] = 7, \; i \to 5\)</span></td>
-<td style="text-align: left;"><span class="math inline">\([1, 2, 2, 3, 4, 5, 6, 7]\)</span></td>
+<td style="text-align: left;"><code>[1, 2, 2, 3, 4, 5, 6, 7]</code></td>
 </tr>
 </tbody>
 </table>
 <p>Once step 8 completes, all 8 elements are sorted. Notice how the sentinel <span class="math inline">\(\infty\)</span> at <span class="math inline">\(R[5]\)</span> ensured that <span class="math inline">\(L[4]\)</span> was selected without requiring an explicit check for an empty array.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
