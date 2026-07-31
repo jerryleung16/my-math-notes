@@ -262,42 +262,72 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="concrete-example-tracing-merge-sort">5. Concrete Example: Tracing <code>MERGE-SORT</code></h2>
 <p>Let us trace the overarching <code>MERGE-SORT</code> logic on a 4-element array to see how it traces indices before merging.</p>
 <p><strong>Initial Array:</strong> <code>[5, 2, 4, 1]</code></p>
-<pre class="text"><code>MERGE-SORT(A, 1, 4)
-if 1 &lt; 4 (#ok)
- q = floor((1 + 4)/2) = 2
- 
- MERGE-SORT(A, 1, 2)
-  if 1 &lt; 2 (#ok)
-  q = floor((1 + 2)/2) = 1
-  
-  MERGE-SORT(A, 1, 1)
-   if 1 &lt; 1 (#no)
-   end
-   
-  MERGE-SORT(A, 2, 2)
-   if 2 &lt; 2 (#no)
-   end
-   
-  MERGE(A, 1, 1, 2)
-  # Array A becomes [2, 5, 4, 1]
-  
- MERGE-SORT(A, 3, 4)
-  if 3 &lt; 4 (ok)
-  q = floor((3 + 4)/2) = 3
-  
-  MERGE-SORT(A, 3, 3)
-   if 3 &lt; 3 (#no)
-   end
-   
-  MERGE-SORT(A, 4, 4)
-   if 4 &lt; 4 (#no)
-   end
-   
-  MERGE(A, 3, 3, 4)
-  # Array A becomes [2, 5, 1, 4]
-  
- MERGE(A, 1, 2, 4)
- # Array A becomes [1, 2, 4, 5]</code></pre>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Function Call</th>
+<th style="text-align: left;">Condition</th>
+<th style="text-align: left;">Action / Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>MERGE-SORT(A, 1, 4)</code></td>
+<td style="text-align: left;"><code>if 1 &lt; 4</code> (ok)</td>
+<td style="text-align: left;"><span class="math inline">\(q = \lfloor(1 + 4)/2\rfloor = 2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<code>MERGE-SORT(A, 1, 2)</code></td>
+<td style="text-align: left;"><code>if 1 &lt; 2</code> (ok)</td>
+<td style="text-align: left;"><span class="math inline">\(q = \lfloor(1 + 2)/2\rfloor = 1\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>MERGE-SORT(A, 1, 1)</code></td>
+<td style="text-align: left;"><code>if 1 &lt; 1</code> (no)</td>
+<td style="text-align: left;"><code>end</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>MERGE-SORT(A, 2, 2)</code></td>
+<td style="text-align: left;"><code>if 2 &lt; 2</code> (no)</td>
+<td style="text-align: left;"><code>end</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<code>MERGE(A, 1, 1, 2)</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Array <span class="math inline">\(A\)</span> becomes <code>[2, 5, 4, 1]</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<code>MERGE-SORT(A, 3, 4)</code></td>
+<td style="text-align: left;"><code>if 3 &lt; 4</code> (ok)</td>
+<td style="text-align: left;"><span class="math inline">\(q = \lfloor(3 + 4)/2\rfloor = 3\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>MERGE-SORT(A, 3, 3)</code></td>
+<td style="text-align: left;"><code>if 3 &lt; 3</code> (no)</td>
+<td style="text-align: left;"><code>end</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>MERGE-SORT(A, 4, 4)</code></td>
+<td style="text-align: left;"><code>if 4 &lt; 4</code> (no)</td>
+<td style="text-align: left;"><code>end</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<code>MERGE(A, 3, 3, 4)</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Array <span class="math inline">\(A\)</span> becomes <code>[2, 5, 1, 4]</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>MERGE(A, 1, 2, 4)</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Array <span class="math inline">\(A\)</span> becomes <code>[1, 2, 4, 5]</code></td>
+</tr>
+</tbody>
+</table>
 <hr>
 <p>## 6. The <code>MERGE</code> Procedure</p>
 <p>The crucial operation in Merge Sort is the “combine” step, handled by the auxiliary procedure <code>MERGE(A, p, q, r)</code>.</p>
