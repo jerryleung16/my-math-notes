@@ -10,9 +10,9 @@
 <atom:link href="https://jerryleung16.github.io/my-math-notes/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Tue, 28 Jul 2026 16:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 30 Jul 2026 16:00:00 GMT</lastBuildDate>
 <item>
-  <title>日文生字字典（廣東話解釋）</title>
+  <title>日文生字字典（廣東話解釋）Day 1</title>
   <link>https://jerryleung16.github.io/my-math-notes/posts/japanese_1/</link>
   <description><![CDATA[ 
 
@@ -327,11 +327,9 @@
 </section>
 
  ]]></description>
-  <category>日文學習</category>
-  <category>生字</category>
-  <category>廣東話</category>
+  <category>Japanese</category>
   <guid>https://jerryleung16.github.io/my-math-notes/posts/japanese_1/</guid>
-  <pubDate>Tue, 28 Jul 2026 16:00:00 GMT</pubDate>
+  <pubDate>Thu, 30 Jul 2026 16:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Merge Sort: A Divide-and-Conquer Algorithm</title>
@@ -1547,7 +1545,7 @@ Note
 
  ]]></description>
   <guid>https://jerryleung16.github.io/my-math-notes/posts/english_1/</guid>
-  <pubDate>Fri, 31 Jul 2026 06:43:51 GMT</pubDate>
+  <pubDate>Fri, 31 Jul 2026 06:46:38 GMT</pubDate>
 </item>
 </channel>
 </rss>
