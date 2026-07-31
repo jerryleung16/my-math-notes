@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2026-08-01">
 
-<title>my-math-notes – My Math Notes</title>
+<title>Deep Learning with Python Ch.1 Summary – My Math Notes</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -29,25 +30,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-172ba59bd5e0b52282274ba0c0cc16fc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-172ba59bd5e0b52282274ba0c0cc16fc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -75,35 +74,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
@@ -135,8 +105,8 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="My Math Notes" href="index.xml" data-external="1"></head>
+<link rel="stylesheet" href="../../../styles.css">
+</head>
 
 <body class="nav-fixed quarto-light">
 
@@ -145,7 +115,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">My Math Notes</span>
     </a>
   </div>
@@ -156,11 +126,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../../about.html"> 
 <span class="menu-text">Jerry’s Notes</span></a>
   </li>  
 </ul>
@@ -173,231 +143,136 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">my-math-notes</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Deep Learning with Python Ch.1 Summary</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Deep Learning</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 1, 2026</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(7)</span></div><div class="category" data-category="QWxnb3JpdGhtcw==">Algorithms <span class="quarto-category-count">(3)</span></div><div class="category" data-category="RGVlcCUyMExlYXJuaW5n">Deep Learning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RW5nbGlzaA==">English <span class="quarto-category-count">(2)</span></div><div class="category" data-category="SmFwYW5lc2U=">Japanese <span class="quarto-category-count">(1)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#acronyms" id="toc-acronyms" class="nav-link active" data-scroll-target="#acronyms">Acronyms</a></li>
+  <li><a href="#the-hierarchy-dl-subset-ml-subset-ai" id="toc-the-hierarchy-dl-subset-ml-subset-ai" class="nav-link" data-scroll-target="#the-hierarchy-dl-subset-ml-subset-ai">1. The Hierarchy: DL <span class="math inline">\(\subset\)</span> ML <span class="math inline">\(\subset\)</span> AI</a></li>
+  <li><a href="#symbolic-ai" id="toc-symbolic-ai" class="nav-link" data-scroll-target="#symbolic-ai">2. Symbolic AI</a></li>
+  <li><a href="#machine-learning-ml" id="toc-machine-learning-ml" class="nav-link" data-scroll-target="#machine-learning-ml">3. Machine Learning (ML)</a></li>
+  <li><a href="#requirements-for-ml" id="toc-requirements-for-ml" class="nav-link" data-scroll-target="#requirements-for-ml">4. Requirements for ML</a></li>
+  <li><a href="#the-deep-in-deep-learning" id="toc-the-deep-in-deep-learning" class="nav-link" data-scroll-target="#the-deep-in-deep-learning">5. The “Deep” in Deep Learning</a></li>
+  <li><a href="#weights-and-parameterization" id="toc-weights-and-parameterization" class="nav-link" data-scroll-target="#weights-and-parameterization">6. Weights and Parameterization</a></li>
+  <li><a href="#the-flow-of-training" id="toc-the-flow-of-training" class="nav-link" data-scroll-target="#the-flow-of-training">7. The Flow of Training</a></li>
+  <li><a href="#advantages-of-dl" id="toc-advantages-of-dl" class="nav-link" data-scroll-target="#advantages-of-dl">8. Advantages of DL</a></li>
+  <li><a href="#generative-ai" id="toc-generative-ai" class="nav-link" data-scroll-target="#generative-ai">9. Generative AI</a></li>
+  <li><a href="#achievements-in-dl" id="toc-achievements-in-dl" class="nav-link" data-scroll-target="#achievements-in-dl">10. Achievements in DL</a></li>
+  <li><a href="#limitations-of-ai" id="toc-limitations-of-ai" class="nav-link" data-scroll-target="#limitations-of-ai">11. Limitations of AI</a></li>
+  <li><a href="#the-hype-cycle-and-ai-winter" id="toc-the-hype-cycle-and-ai-winter" class="nav-link" data-scroll-target="#the-hype-cycle-and-ai-winter">12. The Hype Cycle and “AI Winter”</a></li>
+  <li><a href="#additional-context-the-ada-lovelace-objection" id="toc-additional-context-the-ada-lovelace-objection" class="nav-link" data-scroll-target="#additional-context-the-ada-lovelace-objection">13. Additional Context: The Ada Lovelace Objection</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="RGVlcCUyMExlYXJuaW5n" data-listing-date-sort="1785513600000" data-listing-file-modified-sort="1785512912992" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="753">
-<div class="thumbnail"><a href="./posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html" class="no-external">Deep Learning with Python Ch.1 Summary</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('RGVlcCUyMExlYXJuaW5n'); return false;">Deep Learning</div>
-
+<section id="acronyms" class="level2">
+<h2 class="anchored" data-anchor-id="acronyms">Acronyms</h2>
+<ul>
+<li><strong>DL:</strong> Deep Learning</li>
+<li><strong>ML:</strong> Machine Learning</li>
+<li><strong>AI:</strong> Artificial Intelligence</li>
+</ul>
+</section>
+<section id="the-hierarchy-dl-subset-ml-subset-ai" class="level2">
+<h2 class="anchored" data-anchor-id="the-hierarchy-dl-subset-ml-subset-ai">1. The Hierarchy: DL <span class="math inline">\(\subset\)</span> ML <span class="math inline">\(\subset\)</span> AI</h2>
+<p>AI is the broad effort to automate intellectual tasks normally performed by humans. Machine learning is a subfield of AI, and deep learning is a specific subfield of machine learning.</p>
+</section>
+<section id="symbolic-ai" class="level2">
+<h2 class="anchored" data-anchor-id="symbolic-ai">2. Symbolic AI</h2>
+<p>The dominant paradigm in AI from the 1950s to the late 1980s. Experts believed human-level artificial intelligence could be achieved by having programmers handcraft a sufficiently large set of explicit rules for manipulating knowledge stored in explicit databases.</p>
+</section>
+<section id="machine-learning-ml" class="level2">
+<h2 class="anchored" data-anchor-id="machine-learning-ml">3. Machine Learning (ML)</h2>
+<p>Unlike classical programming where a computer executes step-by-step rules, ML systems are <strong>trained rather than explicitly programmed</strong>. The system looks at input data and the corresponding answers to automatically figure out what the rules should be.</p>
+</section>
+<section id="requirements-for-ml" class="level2">
+<h2 class="anchored" data-anchor-id="requirements-for-ml">4. Requirements for ML</h2>
+<p>To do machine learning, three things are required: 1. <strong>Input data points:</strong> (e.g., sound files, images). This requires finding useful <em>representations</em> of the data (such as RGB vs.&nbsp;HSV color formats) that make it more amenable to the task. 2. <strong>Examples of the expected output:</strong> (e.g., human-generated transcripts or image tags). 3. <strong>A way to measure whether the algorithm is doing a good job:</strong> A feedback signal used to adjust how the algorithm works.</p>
+</section>
+<section id="the-deep-in-deep-learning" class="level2">
+<h2 class="anchored" data-anchor-id="the-deep-in-deep-learning">5. The “Deep” in Deep Learning</h2>
+<p>“Deep” does not mean a deeper understanding; rather, it refers to the idea of <strong>successive layers of representations</strong>. Modern DL often involves tens or hundreds of layers learned automatically, acting as a multistage <em>information-distillation</em> process. This contrasts with <em>shallow learning</em>, which typically involves only one or two representation layers.</p>
+</section>
+<section id="weights-and-parameterization" class="level2">
+<h2 class="anchored" data-anchor-id="weights-and-parameterization">6. Weights and Parameterization</h2>
+<p>The specification of what a layer does to its input data is stored in the layer’s <strong>weights</strong> (essentially a bunch of numbers). The transformation implemented by a layer is parameterized by these weights.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://deeplearningwithpython.io/chapters/chapter01_what-is-deep-learning/#figure-1-7.png" class="img-fluid figure-img"></p>
+<figcaption>A neural network is parameterized by its weights.</figcaption>
+</figure>
 </div>
-<div class="delink listing-description"><a href="./posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html" class="no-external">
-AI is the broad effort to automate intellectual tasks normally performed by humans. Machine learning is a subfield of AI, and deep learning is a specific subfield of machine…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html" class="no-external">
-<div class="listing-date">
-Aug 1, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="RW5nbGlzaA==" data-listing-date-sort="1785513600000" data-listing-file-modified-sort="1785512720587" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1163">
-<div class="thumbnail"><a href="./posts/english/english_2/index.html" class="no-external">
+</section>
+<section id="the-flow-of-training" class="level2">
+<h2 class="anchored" data-anchor-id="the-flow-of-training">7. The Flow of Training</h2>
+<ul>
+<li><strong>Prediction:</strong> The network processes input data to generate an output.</li>
+<li><strong>Loss Function:</strong> The network calculates the distance between its prediction and the expected target to measure performance (a loss score).</li>
+<li><strong>Optimizer &amp; Backpropagation:</strong> Based on the loss function, the optimizer adjusts the weights slightly in the correct direction to lower the loss score. This is done via the central deep learning algorithm called <em>Backpropagation</em>.</li>
+<li><strong>Training Loop:</strong> By repeating this cycle for a sufficient number of times (over thousands of examples), the network finds a set of weights that minimizes the loss function.</li>
+</ul>
+</section>
+<section id="advantages-of-dl" class="level2">
+<h2 class="anchored" data-anchor-id="advantages-of-dl">8. Advantages of DL</h2>
+<p>Deep learning’s prevalence and status as a revolution are justified by three properties: * <strong>Simplicity:</strong> It automates <em>feature engineering</em>, learning all necessary features in one pass rather than relying on humans to manually engineer good data representations. * <strong>Scalability:</strong> It is highly amenable to parallelization on GPUs (benefiting from Moore’s law) and trains over small batches, allowing for datasets of arbitrary size. * <strong>Versatility and Reusability:</strong> Models can be trained on new data without restarting from scratch (continuous online learning) and can be repurposed across new tasks (e.g., foundation models).</p>
+</section>
+<section id="generative-ai" class="level2">
+<h2 class="anchored" data-anchor-id="generative-ai">9. Generative AI</h2>
+<p>A major breakthrough where models can reconstruct a sharp image from a noisy version, predict the next word in a sentence, and more. This relies heavily on self-supervised learning, meaning the expected targets are derived directly from the input itself.</p>
+</section>
+<section id="achievements-in-dl" class="level2">
+<h2 class="anchored" data-anchor-id="achievements-in-dl">10. Achievements in DL</h2>
+<p>As of the mid-2020s, AI is reshaping the world: * Tens of millions rely daily on AI chatbots (ChatGPT, Gemini, Claude). * Hundreds of thousands interact with AI personas (Character.ai). * Fully autonomous driving is deployed at scale in cities like Phoenix, San Francisco, Los Angeles, and Austin. * DeepMind’s AlphaFold predicts protein structures with unprecedented accuracy, accelerating science and mathematics.</p>
+</section>
+<section id="limitations-of-ai" class="level2">
+<h2 class="anchored" data-anchor-id="limitations-of-ai">11. Limitations of AI</h2>
+<p>Despite the “magic,” today’s machine learning systems fundamentally rely on statistical patterns; they are generally restricted to handling situations and distributions they have been specifically trained on or programmed for.</p>
+</section>
+<section id="the-hype-cycle-and-ai-winter" class="level2">
+<h2 class="anchored" data-anchor-id="the-hype-cycle-and-ai-winter">12. The Hype Cycle and “AI Winter”</h2>
+<p>While the AI revolution is rapidly unfolding, the field may face short-term setbacks. Just as the early internet was overhyped in 1998–1999 and experienced a crash that dried up investment in the early 2000s, AI could experience its own temporary pullbacks before reaching its full potential.</p>
+</section>
+<section id="additional-context-the-ada-lovelace-objection" class="level2">
+<h2 class="anchored" data-anchor-id="additional-context-the-ada-lovelace-objection">13. Additional Context: The Ada Lovelace Objection</h2>
+<p>The chapter notes a historical perspective from Ada Lovelace in 1843, who remarked that mechanical computers have “no pretensions whatever to originate anything” and can only do what we order them to perform. This prompted early pioneers like Alan Turing to question if computers could learn from experience or show creativity—questions that machine learning is finally answering today. As the authors conclude: <em>“Don’t believe the short-term hype, but do believe in the long-term vision.”</em></p>
 
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
 
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/english/english_2/index.html" class="no-external">English Word Dictionary Day 2</a>
-</h3>
-<div class="listing-categories">
+</section>
 
-<div class="listing-category" onclick="window.quartoListingCategory('RW5nbGlzaA=='); return false;">English</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/english/english_2/index.html" class="no-external">
-Source: https://deeplearningwithpython.io/chapters/chapter01_what-is-deep-learning/#artificial-intelligence-machine-learning-and-deep-learning
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/english/english_2/index.html" class="no-external">
-<div class="listing-date">
-Aug 1, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="RW5nbGlzaA==" data-listing-date-sort="1785427200000" data-listing-file-modified-sort="1785509618324" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1202">
-<div class="thumbnail"><a href="./posts/english/english_1/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/english/english_1/index.html" class="no-external">English Word Dictionary Day 1</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('RW5nbGlzaA=='); return false;">English</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/english/english_1/index.html" class="no-external">
-💡 <strong>使用說明</strong>：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/english/english_1/index.html" class="no-external">
-<div class="listing-date">
-Jul 31, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="SmFwYW5lc2U=" data-listing-date-sort="1785427200000" data-listing-file-modified-sort="1785480368397" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="456">
-<div class="thumbnail"><a href="./posts/japanese/japanese_1/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/japanese/japanese_1/index.html" class="no-external">日文生字字典（廣東話解釋）Day 1</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('SmFwYW5lc2U='); return false;">Japanese</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/japanese/japanese_1/index.html" class="no-external">
-呢個字典專門用最地道嘅廣東話嚟解釋日文生字，幫大家更快掌握日文嘅真正語感。
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/japanese/japanese_1/index.html" class="no-external">
-<div class="listing-date">
-Jul 31, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="QWxnb3JpdGhtcw==" data-listing-date-sort="1785254400000" data-listing-file-modified-sort="1785481298985" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1115">
-<div class="thumbnail"><a href="./posts/algorithms/merge sort/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/algorithms/merge sort/index.html" class="no-external">Merge Sort: A Divide-and-Conquer Algorithm</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('QWxnb3JpdGhtcw=='); return false;">Algorithms</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/algorithms/merge sort/index.html" class="no-external">
-Algorithms can be designed using various fundamental approaches. Two primary techniques are:
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/algorithms/merge sort/index.html" class="no-external">
-<div class="listing-date">
-Jul 29, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="QWxnb3JpdGhtcw==" data-listing-date-sort="1785081600000" data-listing-file-modified-sort="1785481286684" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="340">
-<div class="thumbnail"><a href="./posts/algorithms/insertion-sort/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/algorithms/insertion-sort/index.html" class="no-external">Insertion Sort Algorithm</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('QWxnb3JpdGhtcw=='); return false;">Algorithms</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/algorithms/insertion-sort/index.html" class="no-external">
-An <strong>insertion sort</strong> works exactly like sorting a hand of playing cards: you pick up cards one by one from an unsorted pile and slide each new card into its correct position…
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/algorithms/insertion-sort/index.html" class="no-external">
-<div class="listing-date">
-Jul 27, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="QWxnb3JpdGhtcw==" data-listing-date-sort="1785081600000" data-listing-file-modified-sort="1785481291838" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1016">
-<div class="thumbnail"><a href="./posts/algorithms/insertion-sort-running-time/index.html" class="no-external">
-
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/algorithms/insertion-sort-running-time/index.html" class="no-external">Theoretical Analysis of Insertion Sort</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('QWxnb3JpdGhtcw=='); return false;">Algorithms</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/algorithms/insertion-sort-running-time/index.html" class="no-external">
-The running time of the Insertion Sort algorithm is determined by calculating the time spent executing each individual line of pseudocode.
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/algorithms/insertion-sort-running-time/index.html" class="no-external">
-<div class="listing-date">
-Jul 27, 2026
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

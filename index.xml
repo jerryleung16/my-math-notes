@@ -10,9 +10,855 @@
 <atom:link href="https://jerryleung16.github.io/my-math-notes/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Thu, 30 Jul 2026 16:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 31 Jul 2026 16:00:00 GMT</lastBuildDate>
 <item>
-  <title>English Word Dictionary (Cantonese Explanation) Day 1</title>
+  <title>Deep Learning with Python Ch.1 Summary</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/deep learning/Deep Learning with Python Ch.1 Summary/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="acronyms" class="level2">
+<h2 class="anchored" data-anchor-id="acronyms">Acronyms</h2>
+<ul>
+<li><strong>DL:</strong> Deep Learning</li>
+<li><strong>ML:</strong> Machine Learning</li>
+<li><strong>AI:</strong> Artificial Intelligence</li>
+</ul>
+</section>
+<section id="the-hierarchy-dl-subset-ml-subset-ai" class="level2">
+<h2 class="anchored" data-anchor-id="the-hierarchy-dl-subset-ml-subset-ai">1. The Hierarchy: DL <img src="https://latex.codecogs.com/png.latex?%5Csubset"> ML <img src="https://latex.codecogs.com/png.latex?%5Csubset"> AI</h2>
+<p>AI is the broad effort to automate intellectual tasks normally performed by humans. Machine learning is a subfield of AI, and deep learning is a specific subfield of machine learning.</p>
+</section>
+<section id="symbolic-ai" class="level2">
+<h2 class="anchored" data-anchor-id="symbolic-ai">2. Symbolic AI</h2>
+<p>The dominant paradigm in AI from the 1950s to the late 1980s. Experts believed human-level artificial intelligence could be achieved by having programmers handcraft a sufficiently large set of explicit rules for manipulating knowledge stored in explicit databases.</p>
+</section>
+<section id="machine-learning-ml" class="level2">
+<h2 class="anchored" data-anchor-id="machine-learning-ml">3. Machine Learning (ML)</h2>
+<p>Unlike classical programming where a computer executes step-by-step rules, ML systems are <strong>trained rather than explicitly programmed</strong>. The system looks at input data and the corresponding answers to automatically figure out what the rules should be.</p>
+</section>
+<section id="requirements-for-ml" class="level2">
+<h2 class="anchored" data-anchor-id="requirements-for-ml">4. Requirements for ML</h2>
+<p>To do machine learning, three things are required: 1. <strong>Input data points:</strong> (e.g., sound files, images). This requires finding useful <em>representations</em> of the data (such as RGB vs.&nbsp;HSV color formats) that make it more amenable to the task. 2. <strong>Examples of the expected output:</strong> (e.g., human-generated transcripts or image tags). 3. <strong>A way to measure whether the algorithm is doing a good job:</strong> A feedback signal used to adjust how the algorithm works.</p>
+</section>
+<section id="the-deep-in-deep-learning" class="level2">
+<h2 class="anchored" data-anchor-id="the-deep-in-deep-learning">5. The “Deep” in Deep Learning</h2>
+<p>“Deep” does not mean a deeper understanding; rather, it refers to the idea of <strong>successive layers of representations</strong>. Modern DL often involves tens or hundreds of layers learned automatically, acting as a multistage <em>information-distillation</em> process. This contrasts with <em>shallow learning</em>, which typically involves only one or two representation layers.</p>
+</section>
+<section id="weights-and-parameterization" class="level2">
+<h2 class="anchored" data-anchor-id="weights-and-parameterization">6. Weights and Parameterization</h2>
+<p>The specification of what a layer does to its input data is stored in the layer’s <strong>weights</strong> (essentially a bunch of numbers). The transformation implemented by a layer is parameterized by these weights.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://deeplearningwithpython.io/chapters/chapter01_what-is-deep-learning/#figure-1-7.png" class="img-fluid figure-img"></p>
+<figcaption>A neural network is parameterized by its weights.</figcaption>
+</figure>
+</div>
+</section>
+<section id="the-flow-of-training" class="level2">
+<h2 class="anchored" data-anchor-id="the-flow-of-training">7. The Flow of Training</h2>
+<ul>
+<li><strong>Prediction:</strong> The network processes input data to generate an output.</li>
+<li><strong>Loss Function:</strong> The network calculates the distance between its prediction and the expected target to measure performance (a loss score).</li>
+<li><strong>Optimizer &amp; Backpropagation:</strong> Based on the loss function, the optimizer adjusts the weights slightly in the correct direction to lower the loss score. This is done via the central deep learning algorithm called <em>Backpropagation</em>.</li>
+<li><strong>Training Loop:</strong> By repeating this cycle for a sufficient number of times (over thousands of examples), the network finds a set of weights that minimizes the loss function.</li>
+</ul>
+</section>
+<section id="advantages-of-dl" class="level2">
+<h2 class="anchored" data-anchor-id="advantages-of-dl">8. Advantages of DL</h2>
+<p>Deep learning’s prevalence and status as a revolution are justified by three properties: * <strong>Simplicity:</strong> It automates <em>feature engineering</em>, learning all necessary features in one pass rather than relying on humans to manually engineer good data representations. * <strong>Scalability:</strong> It is highly amenable to parallelization on GPUs (benefiting from Moore’s law) and trains over small batches, allowing for datasets of arbitrary size. * <strong>Versatility and Reusability:</strong> Models can be trained on new data without restarting from scratch (continuous online learning) and can be repurposed across new tasks (e.g., foundation models).</p>
+</section>
+<section id="generative-ai" class="level2">
+<h2 class="anchored" data-anchor-id="generative-ai">9. Generative AI</h2>
+<p>A major breakthrough where models can reconstruct a sharp image from a noisy version, predict the next word in a sentence, and more. This relies heavily on self-supervised learning, meaning the expected targets are derived directly from the input itself.</p>
+</section>
+<section id="achievements-in-dl" class="level2">
+<h2 class="anchored" data-anchor-id="achievements-in-dl">10. Achievements in DL</h2>
+<p>As of the mid-2020s, AI is reshaping the world: * Tens of millions rely daily on AI chatbots (ChatGPT, Gemini, Claude). * Hundreds of thousands interact with AI personas (Character.ai). * Fully autonomous driving is deployed at scale in cities like Phoenix, San Francisco, Los Angeles, and Austin. * DeepMind’s AlphaFold predicts protein structures with unprecedented accuracy, accelerating science and mathematics.</p>
+</section>
+<section id="limitations-of-ai" class="level2">
+<h2 class="anchored" data-anchor-id="limitations-of-ai">11. Limitations of AI</h2>
+<p>Despite the “magic,” today’s machine learning systems fundamentally rely on statistical patterns; they are generally restricted to handling situations and distributions they have been specifically trained on or programmed for.</p>
+</section>
+<section id="the-hype-cycle-and-ai-winter" class="level2">
+<h2 class="anchored" data-anchor-id="the-hype-cycle-and-ai-winter">12. The Hype Cycle and “AI Winter”</h2>
+<p>While the AI revolution is rapidly unfolding, the field may face short-term setbacks. Just as the early internet was overhyped in 1998–1999 and experienced a crash that dried up investment in the early 2000s, AI could experience its own temporary pullbacks before reaching its full potential.</p>
+</section>
+<section id="additional-context-the-ada-lovelace-objection" class="level2">
+<h2 class="anchored" data-anchor-id="additional-context-the-ada-lovelace-objection">13. Additional Context: The Ada Lovelace Objection</h2>
+<p>The chapter notes a historical perspective from Ada Lovelace in 1843, who remarked that mechanical computers have “no pretensions whatever to originate anything” and can only do what we order them to perform. This prompted early pioneers like Alan Turing to question if computers could learn from experience or show creativity—questions that machine learning is finally answering today. As the authors conclude: <em>“Don’t believe the short-term hype, but do believe in the long-term vision.”</em></p>
+
+
+</section>
+
+ ]]></description>
+  <category>Deep Learning</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/deep learning/Deep Learning with Python Ch.1 Summary/</guid>
+  <pubDate>Fri, 31 Jul 2026 16:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>English Word Dictionary Day 2</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/english/english_2/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Source: https://deeplearningwithpython.io/chapters/chapter01_what-is-deep-learning/#artificial-intelligence-machine-learning-and-deep-learning</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>💡 <strong>使用說明</strong>：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。</p>
+</div>
+</div>
+<section id="生字快速索引" class="level2">
+<h2 class="anchored" data-anchor-id="生字快速索引">🔍 生字快速索引</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">英文生字</th>
+<th style="text-align: left;">音標 (IPA)</th>
+<th style="text-align: left;">詞性</th>
+<th style="text-align: left;">廣東話地道意思</th>
+<th style="text-align: center;">難度/常用度</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>encompass</strong></td>
+<td style="text-align: left;">/ɪnˈkʌm.pəs/</td>
+<td style="text-align: left;"><em>v.</em></td>
+<td style="text-align: left;">涵蓋、包含埋、包羅</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>paradigm</strong></td>
+<td style="text-align: left;">/ˈpær.ə.daɪm/</td>
+<td style="text-align: left;"><em>n.</em></td>
+<td style="text-align: left;">典範、模式、思考框架</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>pretensions</strong></td>
+<td style="text-align: left;">/prɪˈten.ʃənz/</td>
+<td style="text-align: left;"><em>n.</em></td>
+<td style="text-align: left;">野心、架子、妄想 / 自命不凡</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>province</strong></td>
+<td style="text-align: left;">/ˈprɒv.ɪns/</td>
+<td style="text-align: left;"><em>n.</em></td>
+<td style="text-align: left;">職責範圍、專屬領域</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>acquainted with</strong></td>
+<td style="text-align: left;">/əˈkweɪn.tɪd wɪð/</td>
+<td style="text-align: left;"><em>phr.</em></td>
+<td style="text-align: left;">熟悉、認識、搞清楚</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>arresting</strong></td>
+<td style="text-align: left;">/əˈres.tɪŋ/</td>
+<td style="text-align: left;"><em>adj.</em></td>
+<td style="text-align: left;">震撼、好吸睛、引人注目</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>provocative</strong></td>
+<td style="text-align: left;">/prəˈvɒk.ə.tɪv/</td>
+<td style="text-align: left;"><em>adj.</em></td>
+<td style="text-align: left;">具挑釁性、引人爭議/思考</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>shroud of</strong></td>
+<td style="text-align: left;">/ʃraʊd əv/</td>
+<td style="text-align: left;"><em>phr. n.</em></td>
+<td style="text-align: left;">一層籠罩住嘅（神秘/面紗）</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>mystique</strong></td>
+<td style="text-align: left;">/mɪˈstiːk/</td>
+<td style="text-align: left;"><em>n.</em></td>
+<td style="text-align: left;">神秘感、光環</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>amenable</strong></td>
+<td style="text-align: left;">/əˈmiː.nə.bəl/</td>
+<td style="text-align: left;"><em>adj.</em></td>
+<td style="text-align: left;">易於處理/配合、順從</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>culminating with</strong></td>
+<td style="text-align: left;">/ˈkʌl.mɪ.neɪ.tɪŋ wɪð/</td>
+<td style="text-align: left;"><em>phr. v.</em></td>
+<td style="text-align: left;">以…告終、最終達致</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>eluded</strong></td>
+<td style="text-align: left;">/ɪˈluː.dɪd/</td>
+<td style="text-align: left;"><em>v.</em></td>
+<td style="text-align: left;">逃過、困擾/令人摸唔透</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>grounded</strong></td>
+<td style="text-align: left;">/ˈɡraʊn.dɪd/</td>
+<td style="text-align: left;"><em>adj.</em></td>
+<td style="text-align: left;">踏實、有根有據、接地氣</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>pundits</strong></td>
+<td style="text-align: left;">/ˈpʌn.dɪts/</td>
+<td style="text-align: left;"><em>n.</em></td>
+<td style="text-align: left;">專家、評論員、名嘴</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>dent</strong></td>
+<td style="text-align: left;">/dent/</td>
+<td style="text-align: left;"><em>n.&nbsp;/ v.</em></td>
+<td style="text-align: left;">削弱、打擊、凹痕</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>pales</strong></td>
+<td style="text-align: left;">/peɪlz/</td>
+<td style="text-align: left;"><em>v.</em></td>
+<td style="text-align: left;">相形見絀、比落去差得遠</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>ample</strong></td>
+<td style="text-align: left;">/ˈæm.pəl/</td>
+<td style="text-align: left;"><em>adj.</em></td>
+<td style="text-align: left;">充足、大量、大把</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>robust</strong></td>
+<td style="text-align: left;">/rəʊˈbʌst/</td>
+<td style="text-align: left;"><em>adj.</em></td>
+<td style="text-align: left;">穩健、完善、強健/襟用</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>sentient</strong></td>
+<td style="text-align: left;">/ˈsen.ʃənt/</td>
+<td style="text-align: left;"><em>adj.</em></td>
+<td style="text-align: left;">有意識嘅、有知覺嘅</td>
+<td style="text-align: center;">⭐⭐⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>on the verge of</strong></td>
+<td style="text-align: left;">/ɒn ðə vɜːdʒ əv/</td>
+<td style="text-align: left;"><em>phr.</em></td>
+<td style="text-align: left;">喺…嘅邊緣、就快、爭啲</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="生字詳細解析" class="level2">
+<h2 class="anchored" data-anchor-id="生字詳細解析">📚 生字詳細解析</h2>
+<section id="encompass" class="level3">
+<h3 class="anchored" data-anchor-id="encompass">1. encompass</h3>
+<ul>
+<li><strong>詞性</strong>：動詞 (Verb)</li>
+<li><strong>讀音</strong>：/ɪnˈkʌm.pəs/</li>
+<li><strong>廣東話解法</strong>：指包涵、涵蓋或者包含咗唔同嘅領域或內容。廣東話通常會講「涵蓋」、「包羅」或者「包含埋」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: AI is a general field that encompasses machine learning and deep learning.</p></li>
+<li><p><strong>廣東話口語</strong>: 人工智能係一個大範疇，涵蓋咗（包含埋）機器學習同深度學習。</p></li>
+<li><p><strong>English</strong>: The course encompasses a wide range of topics.</p></li>
+<li><p><strong>廣東話口語</strong>: 呢個課程包含咗好廣泛嘅課題。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>encompass a wide range of...</code>：涵蓋好廣泛嘅… * <code>encompass everything</code>：包含埋所有嘢</p>
+<hr>
+</section>
+<section id="paradigm" class="level3">
+<h3 class="anchored" data-anchor-id="paradigm">2. paradigm</h3>
+<ul>
+<li><strong>詞性</strong>：名詞 (Noun)</li>
+<li><strong>讀音</strong>：/ˈpær.ə.daɪm/</li>
+<li><strong>廣東話解法</strong>：指一種主導嘅模式、思考框架或者典型範例。廣東話會講「主流模式」、「典範」或者「一套玩法」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: Symbolic AI was the dominant paradigm from the 1950s to the 1980s.</p></li>
+<li><p><strong>廣東話口語</strong>: 喺 1950 至 1980 年代，符號化 AI（Symbolic AI）係當時嘅主流模式（ dominant paradigm）。</p></li>
+<li><p><strong>English</strong>: The internet caused a paradigm shift in how we work.</p></li>
+<li><p><strong>廣東話口語</strong>: 互聯網帶來咗工作模式上嘅重大轉變（Paradigm shift）。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>paradigm shift</code>：模式轉變 / 典範轉移 * <code>dominant paradigm</code>：主流模式 / 主導框架</p>
+<hr>
+</section>
+<section id="pretensions-pretension-嘅眾數" class="level3">
+<h3 class="anchored" data-anchor-id="pretensions-pretension-嘅眾數">3. pretensions (pretension 嘅眾數)</h3>
+<ul>
+<li><strong>詞性</strong>：名詞 (Noun)</li>
+<li><strong>讀音</strong>：/prɪˈten.ʃənz/</li>
+<li><strong>廣東話解法</strong>：指自命不凡、吹噓、裝模作樣，或者指某種高遠（甚至不切實際）嘅意圖同野心。廣東話會講「擺架子」、「吹噓」、「妄想」或者「意圖」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: The engine has no pretensions whatever to originate anything.</p></li>
+<li><p><strong>廣東話口語</strong>: 呢部引擎完全冇妄想 / 意圖去原創任何新嘢。</p></li>
+<li><p><strong>English</strong>: He has pretensions of being a great writer.</p></li>
+<li><p><strong>廣東話口語</strong>: 佢自命（妄想）自己係個偉大嘅作家。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>have pretensions to / of being...</code>：自命係… / 妄想成為… * <code>without any pretensions</code>：完全冇架子 / 唔吹噓</p>
+<hr>
+</section>
+<section id="province" class="level3">
+<h3 class="anchored" data-anchor-id="province">4. province</h3>
+<ul>
+<li><strong>詞性</strong>：名詞 (Noun)</li>
+<li><strong>讀音</strong>：/ˈprɒv.ɪns/</li>
+<li><strong>廣東話解法</strong>：除咗解作「省份」之外，引申意思係指某人或某領域嘅「職責範圍」、「專屬領域」或者「管轄範圍」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: Its province is to assist us in making available what we’re already acquainted with.</p></li>
+<li><p><strong>廣東話口語</strong>: 佢嘅職責範圍（角色），只係幫我哋活用已經掌握咗嘅嘢。</p></li>
+<li><p><strong>English</strong>: Marketing is not really my province; you should ask Sarah.</p></li>
+<li><p><strong>廣東話口語</strong>: 市場推廣唔太算係我嘅專長 / 範疇，你問 Sarah 啦。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>outside one's province</code>：超出某人嘅職責/專業範圍 * <code>the province of (experts)</code>：…嘅專屬領域</p>
+<hr>
+</section>
+<section id="acquainted-with" class="level3">
+<h3 class="anchored" data-anchor-id="acquainted-with">5. acquainted with</h3>
+<ul>
+<li><strong>詞性</strong>：片語 (Phrase)</li>
+<li><strong>讀音</strong>：/əˈkweɪn.tɪd wɪð/</li>
+<li><strong>廣東話解法</strong>：指對某樣嘢有所認識、了解或者熟悉；亦可指認識某個人。廣東話通常講「熟悉」、「搞清楚」或者「認識」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: Are you acquainted with the basic principles of machine learning?</p></li>
+<li><p><strong>廣東話口語</strong>: 你熟唔熟悉機器學習嘅基本原理？</p></li>
+<li><p><strong>English</strong>: I need to get acquainted with the new office rules.</p></li>
+<li><p><strong>廣東話口語</strong>: 我要盡快搞清楚（熟悉）公司新嘅規矩。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>be acquainted with (something)</code>：熟悉某事 * <code>get acquainted with</code>：去了解 / 搞熟</p>
+<hr>
+</section>
+<section id="arresting" class="level3">
+<h3 class="anchored" data-anchor-id="arresting">6. arresting</h3>
+<ul>
+<li><strong>詞性</strong>：形容詞 (Adjective)</li>
+<li><strong>讀音</strong>：/əˈres.tɪŋ/</li>
+<li><strong>廣東話解法</strong>：字面係逮捕，但作形容詞時指非常吸引人注意、令人印象深刻或者極具震撼力。廣東話會講「好吸睛」、「好震撼」或者「極引人注目」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: Lady Lovelace’s observation remains arresting even today.</p></li>
+<li><p><strong>廣東話口語</strong>: 愛達·勒芙蕾絲嘅觀察，就算到咗今日依然係好震撼 / 咁引人注目。</p></li>
+<li><p><strong>English</strong>: She has an arresting smile that captures everyone’s attention.</p></li>
+<li><p><strong>廣東話口語</strong>: 佢有個好吸睛嘅笑容，吸引咗所有人嘅注意。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>arresting image / performance</code>：好吸睛嘅畫面 / 演出 * <code>arresting observation</code>：令人印象深刻嘅觀察</p>
+<hr>
+</section>
+<section id="provocative" class="level3">
+<h3 class="anchored" data-anchor-id="provocative">7. provocative</h3>
+<ul>
+<li><strong>詞性</strong>：形容詞 (Adjective)</li>
+<li><strong>讀音</strong>：/prəˈvɒk.ə.tɪv/</li>
+<li><strong>廣東話解法</strong>：指能夠引發爭議、激起思考，或者帶有挑釁意味嘅。廣東話通常講「具挑釁性」、「引人爭議」或者「好衝擊/引人深思」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: Turing’s opinion was highly provocative at the time.</p></li>
+<li><p><strong>廣東話口語</strong>: 圖靈嘅觀點喺當時嚟講係極具爭議（震撼/衝擊）嘅。</p></li>
+<li><p><strong>English</strong>: He made a provocative speech to spark a debate.</p></li>
+<li><p><strong>廣東話口語</strong>: 佢發表咗一段極具挑釁性 / 激發思考嘅演講嚟引起討論。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>provocative statement / question</code>：引人爭議/深思嘅言論 / 問題 * <code>provocative behavior</code>：挑釁行為</p>
+<hr>
+</section>
+<section id="shroud-of" class="level3">
+<h3 class="anchored" data-anchor-id="shroud-of">8. shroud of</h3>
+<ul>
+<li><strong>詞性</strong>：名詞片語 (Noun Phrase)</li>
+<li><strong>讀音</strong>：/ʃraʊd əv/</li>
+<li><strong>廣東話解法</strong>：shroud 原意係裹屍布或遮蓋物。<code>shroud of</code> 指籠罩住某樣嘢嘅「一層面紗」或者「一層陰影/迷霧」。廣東話會講「一層…嘅面紗」或者「籠罩住」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: You don’t need that shroud of mystique and mystery around AI.</p></li>
+<li><p><strong>廣東話口語</strong>: 你唔需要喺 AI 圍繞住嗰層「神秘嘅面紗」。</p></li>
+<li><p><strong>English</strong>: The event was hidden under a shroud of secrecy.</p></li>
+<li><p><strong>廣東話口語</strong>: 呢件事被籠罩喺一層嚴密嘅保密面紗之下。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>a shroud of secrecy / mystery</code>：一層保密 / 神秘嘅面紗 * <code>shrouded in darkness</code>：籠罩喺黑暗之中</p>
+<hr>
+</section>
+<section id="mystique" class="level3">
+<h3 class="anchored" data-anchor-id="mystique">9. mystique</h3>
+<ul>
+<li><strong>詞性</strong>：名詞 (Noun)</li>
+<li><strong>讀音</strong>：/mɪˈstiːk/</li>
+<li><strong>廣東話解法</strong>：指某樣嘢因為神秘、特殊或不可思議而產生嘅「神秘感」、「神秘色彩」或者「光環」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: Deep learning is just mathematics; forget the pop-science mystique.</p></li>
+<li><p><strong>廣東話口語</strong>: 深度學習只係數學，唔好理大眾科學包裝出嚟嘅神秘光環。</p></li>
+<li><p><strong>English</strong>: The brand lost its mystique over time.</p></li>
+<li><p><strong>廣東話口語</strong>: 呢個品牌隨住時間流逝失去咗以前嗰種神秘吸引力（光環）。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>air of mystique</code>：神秘嘅氛圍 * <code>remove / debunk the mystique</code>：揭開神秘面紗 / 打破光環</p>
+<hr>
+</section>
+<section id="amenable" class="level3">
+<h3 class="anchored" data-anchor-id="amenable">10. amenable</h3>
+<ul>
+<li><strong>詞性</strong>：形容詞 (Adjective)</li>
+<li><strong>讀音</strong>：/əˈmiː.nə.bəl/</li>
+<li><strong>廣東話解法</strong>：形容人時指「聽話、順從」；形容事物時指「易於處理、適合…嘅、好配合嘅」。廣東話會講「好配合」、「方便處理/適應」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: Transform data into representations that are more amenable to the task.</p></li>
+<li><p><strong>廣東話口語</strong>: 將數據轉化成更加方便（易於）處理嗰項任務嘅形式。</p></li>
+<li><p><strong>English</strong>: He was amenable to the proposed changes.</p></li>
+<li><p><strong>廣東話口語</strong>: 佢好配合（接受）所提議嘅改動。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>amenable to change / advice</code>：接受改變 / 聽勸 * <code>amenable to processing</code>：易於 / 方便處理</p>
+<hr>
+</section>
+<section id="culminating-with-或-culminating-in" class="level3">
+<h3 class="anchored" data-anchor-id="culminating-with-或-culminating-in">11. culminating with (或 culminating in)</h3>
+<ul>
+<li><strong>詞性</strong>：片語動詞 (Phrasal Verb)</li>
+<li><strong>讀音</strong>：/ˈkʌl.mɪ.neɪ.tɪŋ wɪð/</li>
+<li><strong>廣東話解法</strong>：指經過一段時間嘅發展，最後以某個成果、高潮或結局作結。廣東話通常講「以…告終」、「最終達致」或者「最後以…作結」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: A months-long investigation culminated with several arrests.</p></li>
+<li><p><strong>廣東話口語</strong>: 經過幾個月嘅調查，最終以逮捕幾個人告終。</p></li>
+<li><p><strong>English</strong>: Years of research culminated in a major discovery.</p></li>
+<li><p><strong>廣東話口語</strong>: 多年嘅研究，最後以一個重大發現作為完美結尾。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>culminate in success</code>：最終以成功告終 * <code>culminate with a presentation</code>：最後以簡報畫上句號</p>
+<hr>
+</section>
+<section id="eluded-elude-嘅過去式" class="level3">
+<h3 class="anchored" data-anchor-id="eluded-elude-嘅過去式">12. eluded (elude 嘅過去式)</h3>
+<ul>
+<li><strong>詞性</strong>：動詞 (Verb)</li>
+<li><strong>讀音</strong>：/ɪˈluː.dɪd/</li>
+<li><strong>廣東話解法</strong>：可以指「避開/逃過」；如果指目標、理解或記憶，指「得唔到」、「令人摸唔透」或者「諗唔起」。廣東話會講「逃過」、「摸唔透」或者「得唔到手」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: A satisfactory answer to this question has eluded scientists for decades.</p></li>
+<li><p><strong>廣東話口語</strong>: 幾十年嚟，科學家一直都摸唔透（搵唔到）呢個問題嘅滿意答案。</p></li>
+<li><p><strong>English</strong>: The thief eluded the police by hiding in the crowd.</p></li>
+<li><p><strong>廣東話口語</strong>: 個賊匿喺人群入面逃過咗警察嘅追捕。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>elude capture</code>：逃過捕獵 / 抓捕 * <code>elude one's understanding</code>：令人理解唔到 / 摸唔透</p>
+<hr>
+</section>
+<section id="grounded" class="level3">
+<h3 class="anchored" data-anchor-id="grounded">13. grounded</h3>
+<ul>
+<li><strong>詞性</strong>：形容詞 (Adjective)</li>
+<li><strong>讀音</strong>：/ˈɡraʊn.dɪd/</li>
+<li><strong>廣東話解法</strong>：指一個人好踏實、理性；或者指某種理論/想法「有根有據」、「扎根於現實」。廣東話會講「踏實」、「有根有據」或者「接地氣」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: Good AI research should be grounded in empirical evidence.</p></li>
+<li><p><strong>廣東話口語</strong>: 好嘅 AI 研究應該要有根有據（扎根於實驗數據）。</p></li>
+<li><p><strong>English</strong>: Despite his fame, he remains very grounded.</p></li>
+<li><p><strong>廣東話口語</strong>: 雖然佢好出名，但佢個人依然好踏實（無飄）。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>grounded in reality / fact</code>：基於現實 / 事實 * <code>keep someone grounded</code>：令某人保持踏實</p>
+<hr>
+</section>
+<section id="pundits-pundit-嘅眾數" class="level3">
+<h3 class="anchored" data-anchor-id="pundits-pundit-嘅眾數">14. pundits (pundit 嘅眾數)</h3>
+<ul>
+<li><strong>詞性</strong>：名詞 (Noun)</li>
+<li><strong>讀音</strong>：/ˈpʌn.dɪts/</li>
+<li><strong>廣東話解法</strong>：指經常喺媒體上發表意見嘅專家、評論員或者「名嘴」。廣東話通常講「專家」、「時事評論員」或者「名嘴」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: Tech pundits are constantly debating the future of generative AI.</p></li>
+<li><p><strong>廣東話口語</strong>: 科技名嘴（評論員）成日喺度爭論生成式 AI 嘅未來。</p></li>
+<li><p><strong>English</strong>: Political pundits predicted a different outcome.</p></li>
+<li><p><strong>廣東話口語</strong>: 政治評論員預測咗個完全唔同嘅結果。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>industry / tech pundits</code>：行業 / 科技專家評論員 * <code>political pundits</code>：政治名嘴</p>
+<hr>
+</section>
+<section id="dent" class="level3">
+<h3 class="anchored" data-anchor-id="dent">15. dent</h3>
+<ul>
+<li><strong>詞性</strong>：名詞 (Noun) / 動詞 (Verb)</li>
+<li><strong>讀音</strong>：/dent/</li>
+<li><strong>廣東話解法</strong>：字面係「凹痕」。比喻上指對某樣嘢（如信心、數量、進度）造成「打擊」、「削弱」或者「減少」。廣東話會講「削弱」、「打擊」或者「凹咗一塊」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: The high cost barely made a dent in his massive fortune.</p></li>
+<li><p><strong>廣東話口語</strong>: 咁昂貴嘅開支，對佢龐大嘅財產嚟講根本微不足道（傷唔到佢筋骨 / 凹都冇凹過）。</p></li>
+<li><p><strong>English</strong>: Failure didn’t dent her confidence at all.</p></li>
+<li><p><strong>廣東話口語</strong>: 失敗完全冇打擊（削弱）到佢嘅信心。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>make a dent in (something)</code>：削弱 / 減少 / 造成打擊 * <code>dent someone's confidence</code>：打擊某人嘅信心</p>
+<hr>
+</section>
+<section id="pales-pale-in-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="pales-pale-in-comparison">16. pales (pale in comparison)</h3>
+<ul>
+<li><strong>詞性</strong>：動詞 (Verb)</li>
+<li><strong>讀音</strong>：/peɪlz/</li>
+<li><strong>廣東話解法</strong>：通常配搭 <code>pale in comparison to</code> 使用，指同另一樣嘢相比之下「相形見絀」、「顯得微不足道」或者「差幾班」。廣東話會講「比起嚟差得遠」、「顯得好微不足道」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: Early AI achievements pale in comparison to what modern deep learning can do.</p></li>
+<li><p><strong>廣東話口語</strong>: 早期 AI 嘅成就，同現代深度學習做得到嘅嘢比起嚟，簡直係相形見絀（差得遠）。</p></li>
+<li><p><strong>English</strong>: My problem pales in comparison to yours.</p></li>
+<li><p><strong>廣東話口語</strong>: 同你嗰個問題比起嚟，我嗰個根本微不足道。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>pale in comparison to / with</code>：同…相比顯得微不足道 / 相形見絀</p>
+<hr>
+</section>
+<section id="ample" class="level3">
+<h3 class="anchored" data-anchor-id="ample">17. ample</h3>
+<ul>
+<li><strong>詞性</strong>：形容詞 (Adjective)</li>
+<li><strong>讀音</strong>：/ˈæm.pəl/</li>
+<li><strong>廣東話解法</strong>：指數量上非常足夠，甚至多過你需要嘅。廣東話通常會講「充足」、「大量」或者「大把」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: AI excels at solving problems where ample precise examples are available.</p></li>
+<li><p><strong>廣東話口語</strong>: AI 最擅長解決嗰啲有<strong>大量（大把）</strong>精確例子可以參考嘅問題。</p></li>
+<li><p><strong>English</strong>: There is ample evidence to support his theory.</p></li>
+<li><p><strong>廣東話口語</strong>: 有<strong>充足嘅</strong>證據去支持佢嘅理論。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>ample evidence / time / space</code>：充足嘅證據 / 時間 / 空間 * <code>ample opportunity</code>：大把機會</p>
+<hr>
+</section>
+<section id="robust" class="level3">
+<h3 class="anchored" data-anchor-id="robust">18. robust</h3>
+<ul>
+<li><strong>詞性</strong>：形容詞 (Adjective)</li>
+<li><strong>讀音</strong>：/rəʊˈbʌst/</li>
+<li><strong>廣東話解法</strong>：形容人時指「強健」；形容系統、機制或數據時指「穩健」、「完善」、「經得起考驗」或者「好襟用 / 唔易壞」。廣東話通常會講「穩健」、「紮實」或者「完善」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: We need a robust security system to protect our data.</p></li>
+<li><p><strong>廣東話口語</strong>: 我哋需要一個<strong>穩健（完善）嘅</strong>保安系統嚟保護啲數據。</p></li>
+<li><p><strong>English</strong>: The company showed robust growth this quarter.</p></li>
+<li><p><strong>廣東話口語</strong>: 間公司今季展現咗<strong>強勁（紮實）嘅</strong>增長。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>robust system / framework</code>：穩健嘅系統 / 框架 * <code>robust economic growth</code>：強勁嘅經濟增長</p>
+<hr>
+</section>
+<section id="sentient" class="level3">
+<h3 class="anchored" data-anchor-id="sentient">19. sentient</h3>
+<ul>
+<li><strong>詞性</strong>：形容詞 (Adjective)</li>
+<li><strong>讀音</strong>：/ˈsen.ʃənt/</li>
+<li><strong>廣東話解法</strong>：指有知覺、能夠感受事物同埋有自我意識嘅。喺討論 AI 嘅時候經常出現。廣東話通常會講「有意識嘅」、「有知覺嘅」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: Some people fear that AI will eventually become sentient.</p></li>
+<li><p><strong>廣東話口語</strong>: 有啲人擔心 AI 遲早會變成<strong>有自我意識</strong>。</p></li>
+<li><p><strong>English</strong>: Humans and animals are sentient beings.</p></li>
+<li><p><strong>廣東話口語</strong>: 人類同動物都係<strong>有知覺嘅（有情）</strong>眾生。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>sentient being</code>：有感知能力嘅生物 / 有情眾生 * <code>become sentient</code>：變得有自我意識</p>
+<hr>
+</section>
+<section id="on-the-verge-of" class="level3">
+<h3 class="anchored" data-anchor-id="on-the-verge-of">20. on the verge of</h3>
+<ul>
+<li><strong>詞性</strong>：片語 (Phrase)</li>
+<li><strong>讀音</strong>：/ɒn ðə vɜːdʒ əv/</li>
+<li><strong>廣東話解法</strong>：指非常接近某個狀態或者即將發生某件事。廣東話通常會講「喺…嘅邊緣」、「就快…」或者「爭啲就…」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: Scientists are on the verge of a major breakthrough in cancer research.</p></li>
+<li><p><strong>廣東話口語</strong>: 科學家喺癌症研究上<strong>就快（去到邊緣）</strong>有重大突破。</p></li>
+<li><p><strong>English</strong>: She was on the verge of tears.</p></li>
+<li><p><strong>廣東話口語</strong>: 佢<strong>爭啲就（就快）</strong>喊出嚟。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>on the verge of collapse / bankruptcy</code>：瀕臨崩潰 / 破產邊緣 * <code>on the verge of tears</code>：眼淚都快啲跌落嚟 / 瀕臨崩潰邊緣</p>
+<hr>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>English</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/english/english_2/</guid>
+  <pubDate>Fri, 31 Jul 2026 16:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>English Word Dictionary Day 1</title>
   <link>https://jerryleung16.github.io/my-math-notes/posts/english/english_1/</link>
   <description><![CDATA[ 
 
