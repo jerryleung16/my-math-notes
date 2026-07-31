@@ -68,7 +68,12 @@
 </section>
 <section id="advantages-of-dl" class="level2">
 <h2 class="anchored" data-anchor-id="advantages-of-dl">8. Advantages of DL</h2>
-<p>Deep learning’s prevalence and status as a revolution are justified by three properties: * <strong>Simplicity:</strong> It automates <em>feature engineering</em>, learning all necessary features in one pass rather than relying on humans to manually engineer good data representations. * <strong>Scalability:</strong> It is highly amenable to parallelization on GPUs (benefiting from Moore’s law) and trains over small batches, allowing for datasets of arbitrary size. * <strong>Versatility and Reusability:</strong> Models can be trained on new data without restarting from scratch (continuous online learning) and can be repurposed across new tasks (e.g., foundation models).</p>
+<p>Deep learning’s prevalence and status as a revolution are justified by three properties:</p>
+<ul>
+<li><strong>Simplicity:</strong> It automates <em>feature engineering</em>, learning all necessary features in one pass rather than relying on humans to manually engineer good data representations.</li>
+<li><strong>Scalability:</strong> It is highly amenable to parallelization on GPUs (benefiting from Moore’s law) and trains over small batches, allowing for datasets of arbitrary size.</li>
+<li><strong>Versatility and Reusability:</strong> Models can be trained on new data without restarting from scratch (continuous online learning) and can be repurposed across new tasks (e.g., foundation models).</li>
+</ul>
 </section>
 <section id="generative-ai" class="level2">
 <h2 class="anchored" data-anchor-id="generative-ai">9. Generative AI</h2>
@@ -76,7 +81,13 @@
 </section>
 <section id="achievements-in-dl" class="level2">
 <h2 class="anchored" data-anchor-id="achievements-in-dl">10. Achievements in DL</h2>
-<p>As of the mid-2020s, AI is reshaping the world: * Tens of millions rely daily on AI chatbots (ChatGPT, Gemini, Claude). * Hundreds of thousands interact with AI personas (Character.ai). * Fully autonomous driving is deployed at scale in cities like Phoenix, San Francisco, Los Angeles, and Austin. * DeepMind’s AlphaFold predicts protein structures with unprecedented accuracy, accelerating science and mathematics.</p>
+<p>As of the mid-2020s, AI is reshaping the world:</p>
+<ul>
+<li>Tens of millions rely daily on AI chatbots (ChatGPT, Gemini, Claude).</li>
+<li>Hundreds of thousands interact with AI personas (Character.ai).</li>
+<li>Fully autonomous driving is deployed at scale in cities like Phoenix, San Francisco, Los Angeles, and Austin.</li>
+<li>DeepMind’s AlphaFold predicts protein structures with unprecedented accuracy, accelerating science and mathematics.</li>
+</ul>
 </section>
 <section id="limitations-of-ai" class="level2">
 <h2 class="anchored" data-anchor-id="limitations-of-ai">11. Limitations of AI</h2>

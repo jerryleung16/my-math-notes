@@ -368,7 +368,7 @@
     "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#advantages-of-dl",
     "title": "Deep Learning with Python Ch.1 Summary",
     "section": "8. Advantages of DL",
-    "text": "8. Advantages of DL\nDeep learning’s prevalence and status as a revolution are justified by three properties: * Simplicity: It automates feature engineering, learning all necessary features in one pass rather than relying on humans to manually engineer good data representations. * Scalability: It is highly amenable to parallelization on GPUs (benefiting from Moore’s law) and trains over small batches, allowing for datasets of arbitrary size. * Versatility and Reusability: Models can be trained on new data without restarting from scratch (continuous online learning) and can be repurposed across new tasks (e.g., foundation models)."
+    "text": "8. Advantages of DL\nDeep learning’s prevalence and status as a revolution are justified by three properties:\n\nSimplicity: It automates feature engineering, learning all necessary features in one pass rather than relying on humans to manually engineer good data representations.\nScalability: It is highly amenable to parallelization on GPUs (benefiting from Moore’s law) and trains over small batches, allowing for datasets of arbitrary size.\nVersatility and Reusability: Models can be trained on new data without restarting from scratch (continuous online learning) and can be repurposed across new tasks (e.g., foundation models)."
   },
   {
     "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#generative-ai",
@@ -382,7 +382,7 @@
     "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#achievements-in-dl",
     "title": "Deep Learning with Python Ch.1 Summary",
     "section": "10. Achievements in DL",
-    "text": "10. Achievements in DL\nAs of the mid-2020s, AI is reshaping the world: * Tens of millions rely daily on AI chatbots (ChatGPT, Gemini, Claude). * Hundreds of thousands interact with AI personas (Character.ai). * Fully autonomous driving is deployed at scale in cities like Phoenix, San Francisco, Los Angeles, and Austin. * DeepMind’s AlphaFold predicts protein structures with unprecedented accuracy, accelerating science and mathematics."
+    "text": "10. Achievements in DL\nAs of the mid-2020s, AI is reshaping the world:\n\nTens of millions rely daily on AI chatbots (ChatGPT, Gemini, Claude).\nHundreds of thousands interact with AI personas (Character.ai).\nFully autonomous driving is deployed at scale in cities like Phoenix, San Francisco, Los Angeles, and Austin.\nDeepMind’s AlphaFold predicts protein structures with unprecedented accuracy, accelerating science and mathematics."
   },
   {
     "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#limitations-of-ai",
