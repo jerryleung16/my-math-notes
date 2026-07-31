@@ -84,6 +84,7 @@
 </tbody>
 </table>
 <p>To sort an entire sequence <img src="https://latex.codecogs.com/png.latex?A%20=%20%5Clangle%20A%5B1%5D,%20A%5B2%5D,%20%5Cdots,%20A%5Bn%5D%20%5Crangle">, we make the initial call <code>MERGE-SORT(A, 1, A.length)</code>. The algorithm consists of repeatedly merging pairs of smaller sorted sequences to form larger ones until the final sorted sequence is formulated.</p>
+<hr>
 </section>
 <section id="concrete-example-tracing-merge-sort" class="level2">
 <h2 class="anchored" data-anchor-id="concrete-example-tracing-merge-sort">5. Concrete Example: Tracing <code>MERGE-SORT</code></h2>
