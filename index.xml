@@ -157,7 +157,9 @@
 </tbody>
 </table>
 <hr>
-<p>## 6. The <code>MERGE</code> Procedure</p>
+</section>
+<section id="the-merge-procedure" class="level2">
+<h2 class="anchored" data-anchor-id="the-merge-procedure">6. The <code>MERGE</code> Procedure</h2>
 <p>The crucial operation in Merge Sort is the “combine” step, handled by an auxiliary procedure called <code>MERGE(A, p, q, r)</code>.</p>
 <ul>
 <li><strong>Function:</strong> It assumes that the two subarrays <img src="https://latex.codecogs.com/png.latex?A%5Bp%20%5Cdots%20q%5D"> and <img src="https://latex.codecogs.com/png.latex?A%5Bq+1%20%5Cdots%20r%5D"> are already sorted. It merges them into a single sorted subarray that replaces <img src="https://latex.codecogs.com/png.latex?A%5Bp%20%5Cdots%20r%5D">.</li>

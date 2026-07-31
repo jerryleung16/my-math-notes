@@ -180,6 +180,7 @@ window.Quarto = {
   <li><a href="#merge-sort-overview" id="toc-merge-sort-overview" class="nav-link" data-scroll-target="#merge-sort-overview">3. Merge Sort Overview</a></li>
   <li><a href="#the-merge-sort-pseudocode" id="toc-the-merge-sort-pseudocode" class="nav-link" data-scroll-target="#the-merge-sort-pseudocode">4. The <code>MERGE-SORT</code> Pseudocode</a></li>
   <li><a href="#concrete-example-tracing-merge-sort" id="toc-concrete-example-tracing-merge-sort" class="nav-link" data-scroll-target="#concrete-example-tracing-merge-sort">5. Concrete Example: Tracing <code>MERGE-SORT</code></a></li>
+  <li><a href="#the-merge-procedure" id="toc-the-merge-procedure" class="nav-link" data-scroll-target="#the-merge-procedure">6. The <code>MERGE</code> Procedure</a></li>
   <li><a href="#merge-pseudocode" id="toc-merge-pseudocode" class="nav-link" data-scroll-target="#merge-pseudocode">7. <code>MERGE</code> Pseudocode</a>
   <ul class="collapse">
   <li><a href="#understanding-the-mergea-p-q-r-procedure" id="toc-understanding-the-mergea-p-q-r-procedure" class="nav-link" data-scroll-target="#understanding-the-mergea-p-q-r-procedure">Understanding the <code>MERGE(A, p, q, r)</code> Procedure</a></li>
@@ -336,7 +337,9 @@ window.Quarto = {
 </tbody>
 </table>
 <hr>
-<p>## 6. The <code>MERGE</code> Procedure</p>
+</section>
+<section id="the-merge-procedure" class="level2">
+<h2 class="anchored" data-anchor-id="the-merge-procedure">6. The <code>MERGE</code> Procedure</h2>
 <p>The crucial operation in Merge Sort is the “combine” step, handled by an auxiliary procedure called <code>MERGE(A, p, q, r)</code>.</p>
 <ul>
 <li><strong>Function:</strong> It assumes that the two subarrays <span class="math inline">\(A[p \dots q]\)</span> and <span class="math inline">\(A[q+1 \dots r]\)</span> are already sorted. It merges them into a single sorted subarray that replaces <span class="math inline">\(A[p \dots r]\)</span>.</li>
