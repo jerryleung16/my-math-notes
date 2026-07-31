@@ -42,7 +42,12 @@
 </section>
 <section id="requirements-for-ml" class="level2">
 <h2 class="anchored" data-anchor-id="requirements-for-ml">4. Requirements for ML</h2>
-<p>To do machine learning, three things are required: 1. <strong>Input data points:</strong> (e.g., sound files, images). This requires finding useful <em>representations</em> of the data (such as RGB vs.&nbsp;HSV color formats) that make it more amenable to the task. 2. <strong>Examples of the expected output:</strong> (e.g., human-generated transcripts or image tags). 3. <strong>A way to measure whether the algorithm is doing a good job:</strong> A feedback signal used to adjust how the algorithm works.</p>
+<p>To do machine learning, three things are required:</p>
+<ul>
+<li><p><strong>Input data points:</strong> (e.g., sound files, images). This requires finding useful <em>representations</em> of the data (such as RGB vs.&nbsp;HSV color formats) that make it more amenable to the task.</p></li>
+<li><p><strong>Examples of the expected output:</strong> (e.g., human-generated transcripts or image tags).</p></li>
+<li><p><strong>A way to measure whether the algorithm is doing a good job:</strong> A feedback signal used to adjust how the algorithm works.</p></li>
+</ul>
 </section>
 <section id="the-deep-in-deep-learning" class="level2">
 <h2 class="anchored" data-anchor-id="the-deep-in-deep-learning">5. The “Deep” in Deep Learning</h2>
@@ -51,12 +56,6 @@
 <section id="weights-and-parameterization" class="level2">
 <h2 class="anchored" data-anchor-id="weights-and-parameterization">6. Weights and Parameterization</h2>
 <p>The specification of what a layer does to its input data is stored in the layer’s <strong>weights</strong> (essentially a bunch of numbers). The transformation implemented by a layer is parameterized by these weights.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://deeplearningwithpython.io/chapters/chapter01_what-is-deep-learning/#figure-1-7.png" class="img-fluid figure-img"></p>
-<figcaption>A neural network is parameterized by its weights.</figcaption>
-</figure>
-</div>
 </section>
 <section id="the-flow-of-training" class="level2">
 <h2 class="anchored" data-anchor-id="the-flow-of-training">7. The Flow of Training</h2>

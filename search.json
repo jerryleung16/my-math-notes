@@ -340,7 +340,7 @@
     "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#requirements-for-ml",
     "title": "Deep Learning with Python Ch.1 Summary",
     "section": "4. Requirements for ML",
-    "text": "4. Requirements for ML\nTo do machine learning, three things are required: 1. Input data points: (e.g., sound files, images). This requires finding useful representations of the data (such as RGB vs. HSV color formats) that make it more amenable to the task. 2. Examples of the expected output: (e.g., human-generated transcripts or image tags). 3. A way to measure whether the algorithm is doing a good job: A feedback signal used to adjust how the algorithm works."
+    "text": "4. Requirements for ML\nTo do machine learning, three things are required:\n\nInput data points: (e.g., sound files, images). This requires finding useful representations of the data (such as RGB vs. HSV color formats) that make it more amenable to the task.\nExamples of the expected output: (e.g., human-generated transcripts or image tags).\nA way to measure whether the algorithm is doing a good job: A feedback signal used to adjust how the algorithm works."
   },
   {
     "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-deep-in-deep-learning",
@@ -354,7 +354,7 @@
     "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#weights-and-parameterization",
     "title": "Deep Learning with Python Ch.1 Summary",
     "section": "6. Weights and Parameterization",
-    "text": "6. Weights and Parameterization\nThe specification of what a layer does to its input data is stored in the layer’s weights (essentially a bunch of numbers). The transformation implemented by a layer is parameterized by these weights.\n\n\n\nA neural network is parameterized by its weights."
+    "text": "6. Weights and Parameterization\nThe specification of what a layer does to its input data is stored in the layer’s weights (essentially a bunch of numbers). The transformation implemented by a layer is parameterized by these weights."
   },
   {
     "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-flow-of-training",
