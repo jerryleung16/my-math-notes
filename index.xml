@@ -1307,7 +1307,6 @@ Note
 
  ]]></description>
   <category>Algorithms</category>
-  <category>Divide-and-Conquer</category>
   <guid>https://jerryleung16.github.io/my-math-notes/posts/algorithms/merge sort/</guid>
   <pubDate>Tue, 28 Jul 2026 16:00:00 GMT</pubDate>
 </item>
@@ -1361,7 +1360,6 @@ Note
 
  ]]></description>
   <category>Algorithms</category>
-  <category>Sorting</category>
   <guid>https://jerryleung16.github.io/my-math-notes/posts/algorithms/insertion-sort/</guid>
   <pubDate>Sun, 26 Jul 2026 16:00:00 GMT</pubDate>
 </item>
@@ -1545,7 +1543,6 @@ Note
 
  ]]></description>
   <category>Algorithms</category>
-  <category>Complexity Analysis</category>
   <guid>https://jerryleung16.github.io/my-math-notes/posts/algorithms/insertion-sort-running-time/</guid>
   <pubDate>Sun, 26 Jul 2026 16:00:00 GMT</pubDate>
 </item>
