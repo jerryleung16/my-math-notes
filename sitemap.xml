@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://jerryleung16.github.io/my-math-notes/posts/merge sort/index.html</loc>
+    <loc>https://jerryleung16.github.io/my-math-notes/posts/japanese/japanese_1/index.html</loc>
+    <lastmod>2026-07-31T06:46:08.397Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jerryleung16.github.io/my-math-notes/posts/algorithms/merge sort/index.html</loc>
     <lastmod>2026-07-31T06:30:30.663Z</lastmod>
   </url>
   <url>
-    <loc>https://jerryleung16.github.io/my-math-notes/posts/insertion-sort-running-time/index.html</loc>
-    <lastmod>2026-07-27T10:10:07.493Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jerryleung16.github.io/my-math-notes/posts/english_1/index.html</loc>
-    <lastmod>2026-07-31T06:49:21.596Z</lastmod>
+    <loc>https://jerryleung16.github.io/my-math-notes/posts/algorithms/insertion-sort/index.html</loc>
+    <lastmod>2026-07-31T06:43:18.661Z</lastmod>
   </url>
   <url>
     <loc>https://jerryleung16.github.io/my-math-notes/about.html</loc>
@@ -21,11 +21,11 @@
     <lastmod>2026-07-26T16:10:37.305Z</lastmod>
   </url>
   <url>
-    <loc>https://jerryleung16.github.io/my-math-notes/posts/insertion-sort/index.html</loc>
-    <lastmod>2026-07-31T06:43:18.661Z</lastmod>
+    <loc>https://jerryleung16.github.io/my-math-notes/posts/algorithms/insertion-sort-running-time/index.html</loc>
+    <lastmod>2026-07-27T10:10:07.493Z</lastmod>
   </url>
   <url>
-    <loc>https://jerryleung16.github.io/my-math-notes/posts/japanese_1/index.html</loc>
-    <lastmod>2026-07-31T06:46:08.397Z</lastmod>
+    <loc>https://jerryleung16.github.io/my-math-notes/posts/english/english_1/index.html</loc>
+    <lastmod>2026-07-31T06:49:21.596Z</lastmod>
   </url>
 </urlset>

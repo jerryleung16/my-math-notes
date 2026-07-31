@@ -13,7 +13,7 @@
 <lastBuildDate>Thu, 30 Jul 2026 16:00:00 GMT</lastBuildDate>
 <item>
   <title>English Word Dictionary (Cantonese Explanation) Day 1</title>
-  <link>https://jerryleung16.github.io/my-math-notes/posts/english_1/</link>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/english/english_1/</link>
   <description><![CDATA[ 
 
 
@@ -772,12 +772,12 @@ Note
 
  ]]></description>
   <category>English</category>
-  <guid>https://jerryleung16.github.io/my-math-notes/posts/english_1/</guid>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/english/english_1/</guid>
   <pubDate>Thu, 30 Jul 2026 16:00:00 GMT</pubDate>
 </item>
 <item>
   <title>日文生字字典（廣東話解釋）Day 1</title>
-  <link>https://jerryleung16.github.io/my-math-notes/posts/japanese_1/</link>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/japanese/japanese_1/</link>
   <description><![CDATA[ 
 
 
@@ -1092,12 +1092,12 @@ Note
 
  ]]></description>
   <category>Japanese</category>
-  <guid>https://jerryleung16.github.io/my-math-notes/posts/japanese_1/</guid>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/japanese/japanese_1/</guid>
   <pubDate>Thu, 30 Jul 2026 16:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Merge Sort: A Divide-and-Conquer Algorithm</title>
-  <link>https://jerryleung16.github.io/my-math-notes/posts/merge sort/</link>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/algorithms/merge sort/</link>
   <description><![CDATA[ 
 
 
@@ -1308,12 +1308,12 @@ Note
  ]]></description>
   <category>Algorithms</category>
   <category>Divide-and-Conquer</category>
-  <guid>https://jerryleung16.github.io/my-math-notes/posts/merge sort/</guid>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/algorithms/merge sort/</guid>
   <pubDate>Tue, 28 Jul 2026 16:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Insertion Sort Algorithm</title>
-  <link>https://jerryleung16.github.io/my-math-notes/posts/insertion-sort/</link>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/algorithms/insertion-sort/</link>
   <description><![CDATA[ 
 
 
@@ -1362,12 +1362,12 @@ Note
  ]]></description>
   <category>Algorithms</category>
   <category>Sorting</category>
-  <guid>https://jerryleung16.github.io/my-math-notes/posts/insertion-sort/</guid>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/algorithms/insertion-sort/</guid>
   <pubDate>Sun, 26 Jul 2026 16:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Theoretical Analysis of Insertion Sort</title>
-  <link>https://jerryleung16.github.io/my-math-notes/posts/insertion-sort-running-time/</link>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/algorithms/insertion-sort-running-time/</link>
   <description><![CDATA[ 
 
 
@@ -1546,7 +1546,7 @@ Note
  ]]></description>
   <category>Algorithms</category>
   <category>Complexity Analysis</category>
-  <guid>https://jerryleung16.github.io/my-math-notes/posts/insertion-sort-running-time/</guid>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/algorithms/insertion-sort-running-time/</guid>
   <pubDate>Sun, 26 Jul 2026 16:00:00 GMT</pubDate>
 </item>
 </channel>
