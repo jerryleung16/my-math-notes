@@ -2,6 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/english_1/index.html",
+      "/posts/japanese_1/index.html",
       "/posts/merge sort/index.html",
       "/posts/insertion-sort/index.html",
       "/posts/insertion-sort-running-time/index.html"
