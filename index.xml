@@ -10,7 +10,735 @@
 <atom:link href="https://jerryleung16.github.io/my-math-notes/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Fri, 31 Jul 2026 16:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 03 Aug 2026 16:00:00 GMT</lastBuildDate>
+<item>
+  <title>Time Complexity Analysis of Merge Sort</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/algorithms/merge-sort-running-time/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="introduction-the-goal" class="level1">
+<h1>Introduction: The Goal</h1>
+<p>Merge Sort is a classic divide-and-conquer algorithm. Our goal is to prove mathematically that its running time scales at <img src="https://latex.codecogs.com/png.latex?%5CTheta(n%20%5Clog%20n)">.</p>
+<p>To do this, we need to translate the algorithm’s code into a mathematical equation, understand the cost of its individual parts, and then solve that equation by visualizing it as a tree. Let’s build this logic step by step.</p>
+</section>
+<section id="step-1-from-code-to-the-time-budget-equation" class="level1">
+<h1>Step 1: From Code to the “Time Budget” Equation</h1>
+<p>Before we can calculate the total time, we need a formula that represents the algorithm’s structure. We call this formula <img src="https://latex.codecogs.com/png.latex?T(n)">, which stands for the total time required to sort an array of <img src="https://latex.codecogs.com/png.latex?n"> elements.</p>
+<p>Let’s look at the underlying code logic for <code>MERGE-SORT</code> and assign a cost to each phase:</p>
+<ol type="1">
+<li><p>Divide (Lines 1-2): <img src="https://latex.codecogs.com/png.latex?%5CTheta(1)"></p>
+<ul>
+<li>Code: <code>if p &lt; r</code>, then <code>q = floor((p + r) / 2)</code></li>
+<li>The cost: Calculating the middle index is a basic math operation. It takes the same fraction of a second whether the array has 4 items or 4,000,000 items. Because this cost is constant and does not grow with <img src="https://latex.codecogs.com/png.latex?n">, it is <img src="https://latex.codecogs.com/png.latex?%5CTheta(1)">.</li>
+</ul></li>
+<li><p>Conquer (Lines 3-4): <img src="https://latex.codecogs.com/png.latex?2T(n/2)"></p>
+<ul>
+<li>Code: <code>MERGE-SORT(LeftHalf)</code> and <code>MERGE-SORT(RightHalf)</code></li>
+<li>The cost: We are splitting an array of <img src="https://latex.codecogs.com/png.latex?n"> elements into two halves of size <img src="https://latex.codecogs.com/png.latex?n/2">. If sorting an array takes <img src="https://latex.codecogs.com/png.latex?T(%5Ctext%7Bsize%7D)"> time, then sorting one half takes <img src="https://latex.codecogs.com/png.latex?T(n/2)">. Because we have to sort two halves, the cost is <img src="https://latex.codecogs.com/png.latex?T(n/2)%20+%20T(n/2)%20=%202T(n/2)">.</li>
+</ul></li>
+<li><p>Combine (Line 5): <img src="https://latex.codecogs.com/png.latex?%5CTheta(n)"></p>
+<ul>
+<li>Code: <code>MERGE(LeftHalf, RightHalf)</code></li>
+<li>The cost: The algorithm zips the two sorted halves back into a single array. As we will prove in the next section, this takes time directly proportional to the number of elements, <img src="https://latex.codecogs.com/png.latex?n">. Therefore, it costs <img src="https://latex.codecogs.com/png.latex?%5CTheta(n)">.</li>
+</ul></li>
+</ol>
+<section id="the-resulting-formula" class="level2">
+<h2 class="anchored" data-anchor-id="the-resulting-formula">The Resulting Formula</h2>
+<p>Adding these parts together gives us our foundational time budget:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AT(n)%20=%20%5Cunderbrace%7B%5CTheta(1)%7D_%7B%5Ctext%7BDivide%7D%7D%20+%20%5Cunderbrace%7B2T(n/2)%7D_%7B%5Ctext%7BConquer%7D%7D%20+%20%5Cunderbrace%7B%5CTheta(n)%7D_%7B%5Ctext%7BCombine%7D%7D%0A"></p>
+<p>Because the linear merging work (<img src="https://latex.codecogs.com/png.latex?%5CTheta(n)">) completely eclipses the tiny constant-time work spent dividing (<img src="https://latex.codecogs.com/png.latex?%5CTheta(1)">), we group all the non-recursive work into a single linear term, representing it as <img src="https://latex.codecogs.com/png.latex?cn"> (where <img src="https://latex.codecogs.com/png.latex?c"> is just some constant amount of time per element). This gives us our final, clean recurrence relation:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AT(n)%20=%202T(n/2)%20+%20cn%0A"></p>
+</section>
+</section>
+<section id="step-2-why-is-the-combine-step-linear-cn" class="level1">
+<h1>Step 2: Why is the Combine Step Linear (<img src="https://latex.codecogs.com/png.latex?cn">)?</h1>
+<p>In our formula, we claimed that merging the arrays takes <img src="https://latex.codecogs.com/png.latex?cn"> time. Why is this true? Let’s trace a concrete example and count the exact actions the computer takes inside the <code>MERGE</code> procedure.</p>
+<p>Imagine merging two sorted halves into a combined array of 6 elements:</p>
+<ul>
+<li>Left half <img src="https://latex.codecogs.com/png.latex?L">: <code>[2, 5, 8]</code></li>
+<li>Right half <img src="https://latex.codecogs.com/png.latex?R">: <code>[1, 4, 7]</code></li>
+<li>Combined array <img src="https://latex.codecogs.com/png.latex?A">: <code>[_, _, _, _, _, _]</code> (6 slots to fill)</li>
+</ul>
+<p>At each step, the CPU looks at the front items of <img src="https://latex.codecogs.com/png.latex?L"> and <img src="https://latex.codecogs.com/png.latex?R">, picks the smaller one, writes it to <img src="https://latex.codecogs.com/png.latex?A">, and advances its pointer.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>Comparing front items</th>
+<th>Smaller item</th>
+<th>Array <img src="https://latex.codecogs.com/png.latex?A"> after placement</th>
+<th>Work done</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>2 vs 1</td>
+<td>1</td>
+<td><code>[1, _, _, _, _, _]</code></td>
+<td>1 compare + 1 write</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>2 vs 4</td>
+<td>2</td>
+<td><code>[1, 2, _, _, _, _]</code></td>
+<td>1 compare + 1 write</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>5 vs 4</td>
+<td>4</td>
+<td><code>[1, 2, 4, _, _, _]</code></td>
+<td>1 compare + 1 write</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>5 vs 7</td>
+<td>5</td>
+<td><code>[1, 2, 4, 5, _, _]</code></td>
+<td>1 compare + 1 write</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>8 vs 7</td>
+<td>7</td>
+<td><code>[1, 2, 4, 5, 7, _]</code></td>
+<td>1 compare + 1 write</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>8 vs <img src="https://latex.codecogs.com/png.latex?%5Cinfty"></td>
+<td>8</td>
+<td><code>[1, 2, 4, 5, 7, 8]</code></td>
+<td>1 compare + 1 write</td>
+</tr>
+</tbody>
+</table>
+<section id="the-math-behind-the-cost" class="level2">
+<h2 class="anchored" data-anchor-id="the-math-behind-the-cost">The Math Behind the Cost</h2>
+<p>For every single empty slot in array <img src="https://latex.codecogs.com/png.latex?A">, the computer performs a fixed, simple set of actions. This basic unit of work takes a tiny, constant amount of time, let’s call it <img src="https://latex.codecogs.com/png.latex?c">. Because there are <img src="https://latex.codecogs.com/png.latex?n"> slots to fill, the CPU performs that unit of work exactly <img src="https://latex.codecogs.com/png.latex?n"> times.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7BTotal%20Work%7D%20=%20c%20%5Ctimes%20n%20=%20cn%0A"></p>
+<p>This proves that merging scales perfectly linearly with the data size.</p>
+</section>
+</section>
+<section id="step-3-solving-the-formula-with-a-recursion-tree" class="level1">
+<h1>Step 3: Solving the Formula with a Recursion Tree</h1>
+<p>Now we know our formula is <img src="https://latex.codecogs.com/png.latex?T(n)%20=%202T(n/2)%20+%20cn">, and we know why. But how do we solve this equation to get the final runtime? We draw it out as a recursion tree to see the workload at every level of the divide-and-conquer process.</p>
+<p>To find the total work of the entire algorithm, we need to calculate the “area” of this tree: width (work per level) multiplied by height (number of levels).</p>
+<section id="the-width-work-per-level" class="level2">
+<h2 class="anchored" data-anchor-id="the-width-work-per-level">The Width: Work Per Level</h2>
+<ul>
+<li>Top level: We start with 1 problem of size <img src="https://latex.codecogs.com/png.latex?n">. The merge work is just <img src="https://latex.codecogs.com/png.latex?cn">.</li>
+<li>Level 1: We split into 2 problems of size <img src="https://latex.codecogs.com/png.latex?n/2">. The merge work is <img src="https://latex.codecogs.com/png.latex?c(n/2)%20+%20c(n/2)%20=%20cn">.</li>
+<li>Level 2: We split into 4 problems of size <img src="https://latex.codecogs.com/png.latex?n/4">. The merge work is <img src="https://latex.codecogs.com/png.latex?4%20%5Ctimes%20c(n/4)%20=%20cn">.</li>
+</ul>
+<section id="the-golden-rule" class="level3">
+<h3 class="anchored" data-anchor-id="the-golden-rule">The Golden Rule</h3>
+<p>Notice a pattern? When you break a problem in half, you double the number of subproblems (<img src="https://latex.codecogs.com/png.latex?1%20%5Cto%202%20%5Cto%204%20%5Cdots">), but you also cut the work per subproblem in half (<img src="https://latex.codecogs.com/png.latex?cn%20%5Cto%20cn/2%20%5Cto%20cn/4%20%5Cdots">). The doubling and the halving perfectly cancel out. Therefore, every single level of the tree requires exactly <img src="https://latex.codecogs.com/png.latex?cn"> work.</p>
+<p>Wait, what about the very bottom leaf nodes (size 1)? Even though an array of 1 element does not need to be sorted, the CPU still has to allocate stack memory, check the base case (<code>if p &lt; r</code>), and return. This takes a constant time, <img src="https://latex.codecogs.com/png.latex?c">. Since there are exactly <img src="https://latex.codecogs.com/png.latex?n"> leaf nodes at the bottom, their total cost is <img src="https://latex.codecogs.com/png.latex?n%20%5Ctimes%20c%20=%20cn">. The rule holds true all the way to the bottom.</p>
+</section>
+</section>
+<section id="the-height-number-of-levels" class="level2">
+<h2 class="anchored" data-anchor-id="the-height-number-of-levels">The Height: Number of Levels</h2>
+<p>How tall is this tree? The height is determined by how many times we can divide <img src="https://latex.codecogs.com/png.latex?n"> by 2 until we reach arrays of size 1.</p>
+<p>In mathematics, this question—“How many times do I divide <img src="https://latex.codecogs.com/png.latex?n"> by 2 to get 1?”—is answered by the base-2 logarithm: <img src="https://latex.codecogs.com/png.latex?%5Clog_2%20n"> (often written in computer science as just <img src="https://latex.codecogs.com/png.latex?%5Clg%20n">).</p>
+<p>As <img src="https://latex.codecogs.com/png.latex?n"> grows, <img src="https://latex.codecogs.com/png.latex?%5Clg%20n"> grows incredibly slowly:</p>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?n%20=%208%20%5Cimplies%20%5Clg%208%20=%203"> splits</li>
+<li><img src="https://latex.codecogs.com/png.latex?n%20=%201,024%20%5Cimplies%20%5Clg%201024%20=%2010"> splits</li>
+<li><img src="https://latex.codecogs.com/png.latex?n%20=%201,000,000%20%5Cimplies%20%5Clg%201,000,000%20%5Capprox%2020"> splits</li>
+</ul>
+<p>Including the very first top level, the total height of our tree is <img src="https://latex.codecogs.com/png.latex?%5Clg%20n%20+%201"> levels.</p>
+</section>
+</section>
+<section id="step-4-putting-it-all-together" class="level1">
+<h1>Step 4: Putting It All Together</h1>
+<p>We have the width and the height. Now we multiply them to find the total time spent across the entire execution of the algorithm:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7BTotal%20Cost%7D%20=%20(%5Ctext%7BWork%20per%20level%7D)%20%5Ctimes%20(%5Ctext%7BTotal%20levels%7D)%0A"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7BTotal%20Cost%7D%20=%20cn%20%5Ccdot%20(%5Clg%20n%20+%201)%0A"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7BTotal%20Cost%7D%20=%20cn%20%5Clg%20n%20+%20cn%0A"></p>
+<p>When converting to Big-<img src="https://latex.codecogs.com/png.latex?%5CTheta"> notation, we drop the lower-order term (<img src="https://latex.codecogs.com/png.latex?cn">) and the constant coefficient (<img src="https://latex.codecogs.com/png.latex?c">), leaving us with the final worst-case complexity:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5CTheta(n%20%5Clog%20n)%0A"></p>
+<section id="concrete-example-tree-for-n8" class="level2">
+<h2 class="anchored" data-anchor-id="concrete-example-tree-for-n8">Concrete Example: Tree for <img src="https://latex.codecogs.com/png.latex?n=8"></h2>
+<p>To visualize this final calculation, here is exactly what the tree looks like for an array of 8 elements.</p>
+<pre class="text"><code>Level 0 (Root):                  8c                              = 8c
+                             /        \
+Level 1:                   4c          4c                        = 8c
+                          /  \        /  \
+Level 2:                2c    2c    2c    2c                     = 8c
+                       / \   / \   / \   / \
+Level 3 (Leaves):     c   c c   c c   c c   c                    = 8c
+----------------------------------------------------------------------
+Total Work:                                                      = 32c</code></pre>
+<ul>
+<li>Width: <img src="https://latex.codecogs.com/png.latex?8c"> work per level.</li>
+<li>Height: <img src="https://latex.codecogs.com/png.latex?%5Clog_2(8)%20+%201%20=%203%20+%201%20=%204"> levels.</li>
+<li>Total: <img src="https://latex.codecogs.com/png.latex?4%20%5Ctimes%208c%20=%2032c">.</li>
+</ul>
+<p>Since <img src="https://latex.codecogs.com/png.latex?32c%20=%208c%20%5Clog_2(8)%20+%208c">, it perfectly matches our <img src="https://latex.codecogs.com/png.latex?cn%20%5Clg%20n%20+%20cn"> formula.</p>
+</section>
+</section>
+<section id="epilogue-the-master-blueprint" class="level1">
+<h1>Epilogue: The Master Blueprint</h1>
+<p>Now that you deeply understand how Merge Sort’s runtime is calculated, you can actually apply this logic to almost any divide-and-conquer algorithm. This generalized approach forms the foundation of what computer scientists call the Master Method.</p>
+<p>Instead of writing out a custom tree every single time, we can plug an algorithm’s properties into a “Master Blueprint” formula:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AT(n)%20=%20aT(n/b)%20+%20D(n)%20+%20C(n)%0A"></p>
+<p>Every variable in this blueprint tells a specific story about the algorithm’s behavior:</p>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?a">: Number of subproblems. How fast does the recursion tree branch out?</li>
+<li><img src="https://latex.codecogs.com/png.latex?b">: Shrinkage factor. By what fraction does the data shrink each time?</li>
+<li><img src="https://latex.codecogs.com/png.latex?D(n)">: Divide time. The cost to split the problem apart.</li>
+<li><img src="https://latex.codecogs.com/png.latex?C(n)">: Combine time. The cost to stitch the solutions back together.</li>
+</ul>
+<section id="the-tug-of-war" class="level2">
+<h2 class="anchored" data-anchor-id="the-tug-of-war">The Tug of War</h2>
+<p>The true power of this blueprint is that it reveals a mathematical tug-of-war happening inside the algorithm.</p>
+<p>On one side, you have the proliferation rate (determined by <img src="https://latex.codecogs.com/png.latex?a">) multiplying the number of problems. On the other side, you have the shrinkage rate (determined by <img src="https://latex.codecogs.com/png.latex?b">) and the overhead cost of merging (<img src="https://latex.codecogs.com/png.latex?C(n)">). Who wins this tug-of-war determines the shape of the tree and the final Big-<img src="https://latex.codecogs.com/png.latex?%5CTheta"> complexity.</p>
+</section>
+<section id="example-1-merge-sort-the-perfect-tie" class="level2">
+<h2 class="anchored" data-anchor-id="example-1-merge-sort-the-perfect-tie">Example 1: Merge Sort (The Perfect Tie)</h2>
+<p>As we discovered earlier, for Merge Sort:</p>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?a%20=%202"> (splits into 2 arrays)</li>
+<li><img src="https://latex.codecogs.com/png.latex?b%20=%202"> (each array is half the size)</li>
+<li><img src="https://latex.codecogs.com/png.latex?D(n)%20+%20C(n)%20=%20%5CTheta(n)"> (linear time to merge)</li>
+</ul>
+<p>Because the rate at which the problems double (<img src="https://latex.codecogs.com/png.latex?a%20=%202">) perfectly balances the rate at which the workload shrinks (<img src="https://latex.codecogs.com/png.latex?b%20=%202">), the total work done at every single level of the tree remains a constant <img src="https://latex.codecogs.com/png.latex?cn">. A perfectly rectangular tree of width <img src="https://latex.codecogs.com/png.latex?n"> and height <img src="https://latex.codecogs.com/png.latex?%5Clog%20n"> gives us <img src="https://latex.codecogs.com/png.latex?%5CTheta(n%20%5Clog%20n)">.</p>
+</section>
+<section id="example-2-binary-search-the-shrinking-tree" class="level2">
+<h2 class="anchored" data-anchor-id="example-2-binary-search-the-shrinking-tree">Example 2: Binary Search (The Shrinking Tree)</h2>
+<p>Let’s apply the blueprint to an entirely different algorithm: finding a number in a sorted array using binary search.</p>
+<p>In binary search, you look at the middle element. If it is not what you’re looking for, you discard half the array and recursively search the remaining half.</p>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?a%20=%201"> (you only search one half; the other is thrown away)</li>
+<li><img src="https://latex.codecogs.com/png.latex?b%20=%202"> (the array you search is cut in half)</li>
+<li><img src="https://latex.codecogs.com/png.latex?D(n)%20+%20C(n)%20=%20%5CTheta(1)"> (finding the middle takes constant time, and there is nothing to merge)</li>
+</ul>
+<p>Plugging this into our blueprint gives:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AT(n)%20=%201%20%5Ccdot%20T(n/2)%20+%20%5CTheta(1)%0A"></p>
+<p>Think about what this recursion tree looks like. Because <img src="https://latex.codecogs.com/png.latex?a%20=%201">, the tree never branches out. It is just a straight, single line going down.</p>
+<ul>
+<li>Level 0: 1 problem of size <img src="https://latex.codecogs.com/png.latex?n">, costing <img src="https://latex.codecogs.com/png.latex?c"></li>
+<li>Level 1: 1 problem of size <img src="https://latex.codecogs.com/png.latex?n/2">, costing <img src="https://latex.codecogs.com/png.latex?c"></li>
+<li>Level 2: 1 problem of size <img src="https://latex.codecogs.com/png.latex?n/4">, costing <img src="https://latex.codecogs.com/png.latex?c"></li>
+</ul>
+<p>Every level costs a tiny constant amount <img src="https://latex.codecogs.com/png.latex?c">. How many levels are there? Just like before, dividing by 2 means there are <img src="https://latex.codecogs.com/png.latex?%5Clg%20n"> levels.</p>
+<p>Multiplying the width (<img src="https://latex.codecogs.com/png.latex?c">) by the height (<img src="https://latex.codecogs.com/png.latex?%5Clg%20n">) gives us the final complexity for binary search:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5CTheta(%5Clog%20n)%0A"></p>
+<p>By simply breaking an algorithm down into its <img src="https://latex.codecogs.com/png.latex?a">, <img src="https://latex.codecogs.com/png.latex?b">, and overhead costs, the Master Blueprint allows you to instantly visualize the shape of the workload and calculate the runtime.</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Algorithms</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/algorithms/merge-sort-running-time/</guid>
+  <pubDate>Mon, 03 Aug 2026 16:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>English Word Dictionary Day 3</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/english/english_3/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>💡 <strong>使用說明</strong>：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。</p>
+</div>
+</div>
+<section id="生字快速索引" class="level2">
+<h2 class="anchored" data-anchor-id="生字快速索引">🔍 生字快速索引</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">英文生字</th>
+<th style="text-align: left;">音標 (IPA)</th>
+<th style="text-align: left;">詞性</th>
+<th style="text-align: left;">廣東話地道意思</th>
+<th style="text-align: center;">難度/常用度</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>braggarts</strong></td>
+<td style="text-align: left;">/ˈbræɡ.əts/</td>
+<td style="text-align: left;"><em>n.</em></td>
+<td style="text-align: left;">愛認叻嘅人、沙塵友、吹水佬</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>harbor</strong></td>
+<td style="text-align: left;">/ˈhɑː.bər/</td>
+<td style="text-align: left;"><em>v.</em></td>
+<td style="text-align: left;">懷有（心事/情緒）、包庇、心存</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>diligent</strong></td>
+<td style="text-align: left;">/ˈdɪl.ɪ.dʒənt/</td>
+<td style="text-align: left;"><em>adj.</em></td>
+<td style="text-align: left;">勤力、用心、盡責</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>obscured</strong></td>
+<td style="text-align: left;">/əbˈskjʊəd/</td>
+<td style="text-align: left;"><em>v. / adj.</em></td>
+<td style="text-align: left;">遮蔽、掩蓋、令人睇唔清</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>bravado</strong></td>
+<td style="text-align: left;">/brəˈvɑː.dəʊ/</td>
+<td style="text-align: left;"><em>n.</em></td>
+<td style="text-align: left;">虛張聲勢、靠嚇、逞強</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>allegiance</strong></td>
+<td style="text-align: left;">/əˈliː.dʒəns/</td>
+<td style="text-align: left;"><em>n.</em></td>
+<td style="text-align: left;">忠誠、效忠</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>boast</strong></td>
+<td style="text-align: left;">/bəʊst/</td>
+<td style="text-align: left;"><em>v. / n.</em></td>
+<td style="text-align: left;">認叻、吹噓、自誇</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>flaunt</strong></td>
+<td style="text-align: left;">/flɔːnt/</td>
+<td style="text-align: left;"><em>v.</em></td>
+<td style="text-align: left;">炫耀、晒命</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>manifests</strong></td>
+<td style="text-align: left;">/ˈmæn.ɪ.fests/</td>
+<td style="text-align: left;"><em>v.</em></td>
+<td style="text-align: left;">表現出嚟、顯現、證明</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>brag about</strong></td>
+<td style="text-align: left;">/bræɡ əˈbaʊt/</td>
+<td style="text-align: left;"><em>phr. v.</em></td>
+<td style="text-align: left;">吹噓（某事）、四圍認叻</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>a boil about to burst</strong></td>
+<td style="text-align: left;">/ə bɔɪl əˈbaʊt tə bɜːst/</td>
+<td style="text-align: left;"><em>idiom</em></td>
+<td style="text-align: left;">爆發邊緣、壓力/積怨去到極點</td>
+<td style="text-align: center;">⭐⭐⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>circumspect</strong></td>
+<td style="text-align: left;">/ˈsɜː.kəm.spekt/</td>
+<td style="text-align: left;"><em>adj.</em></td>
+<td style="text-align: left;">謹慎、小心翼翼、步步為營</td>
+<td style="text-align: center;">⭐⭐⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>anguish</strong></td>
+<td style="text-align: left;">/ˈæŋ.ɡwɪʃ/</td>
+<td style="text-align: left;"><em>n.</em></td>
+<td style="text-align: left;">極度痛苦、煎熬、悲痛</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="生字詳細解析" class="level2">
+<h2 class="anchored" data-anchor-id="生字詳細解析">📚 生字詳細解析</h2>
+<section id="braggarts-braggart-嘅眾數" class="level3">
+<h3 class="anchored" data-anchor-id="braggarts-braggart-嘅眾數">1. braggarts (braggart 嘅眾數)</h3>
+<ul>
+<li><strong>詞性</strong>：名詞 (Noun)</li>
+<li><strong>讀音</strong>：/ˈbræɡ.əts/ (美音: /ˈbræɡ.ɚts/)</li>
+<li><strong>廣東話解法</strong>：指嗰啲好鍾意周圍同人講自己有幾叻、有幾威嘅人。廣東話通常會講「愛認叻嘅人」、「沙塵友」或者「吹水佬」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>English</strong>: Nobody likes braggarts who constantly talk about their wealth.</li>
+<li><strong>廣東話口語</strong>: 無人會鍾意啲成日將自己有幾多錢掛喺嘴邊嘅<strong>沙塵友（認叻嘅人）</strong>。</li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>an empty braggart</code>：得個吹字嘅人</p>
+<hr>
+</section>
+<section id="harbor-動詞用法" class="level3">
+<h3 class="anchored" data-anchor-id="harbor-動詞用法">2. harbor (動詞用法)</h3>
+<ul>
+<li><strong>詞性</strong>：動詞 (Verb)</li>
+<li><strong>讀音</strong>：/ˈhɑː.bər/</li>
+<li><strong>廣東話解法</strong>：做名詞係海港，但做動詞時，通常指喺心入面長時期「懷有」某種情緒（特別係負面情緒，例如怨恨、希望、恐懼），或者指「包庇」罪犯。廣東話會講「心存」、「一直懷有」或「包庇」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>English</strong>: He still harbors a deep resentment against his former boss.</li>
+<li><strong>廣東話口語</strong>: 佢心入面依然對以前個老闆<strong>懷有</strong>好深嘅怨恨。</li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>harbor a grudge / resentment</code>：懷恨在心 / 記仇 * <code>harbor fugitives</code>：包庇逃犯</p>
+<hr>
+</section>
+<section id="diligent" class="level3">
+<h3 class="anchored" data-anchor-id="diligent">3. diligent</h3>
+<ul>
+<li><strong>詞性</strong>：形容詞 (Adjective)</li>
+<li><strong>讀音</strong>：/ˈdɪl.ɪ.dʒənt/</li>
+<li><strong>廣東話解法</strong>：指做嘢非常上心、努力同埋細心。廣東話通常會講「勤力」、「用心」或者「盡責」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>English</strong>: She is a diligent student who always completes her assignments on time.</li>
+<li><strong>廣東話口語</strong>: 佢係個好<strong>勤力（盡責）嘅</strong>學生，每次都準時交功課。</li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>diligent effort / work</code>：勤奮嘅努力 / 盡責嘅工作 * <code>diligent student / employee</code>：勤力嘅學生 / 員工</p>
+<hr>
+</section>
+<section id="obscured" class="level3">
+<h3 class="anchored" data-anchor-id="obscured">4. obscured</h3>
+<ul>
+<li><strong>詞性</strong>：動詞過去式/過去分詞 (Verb) / 形容詞 (Adjective)</li>
+<li><strong>讀音</strong>：/əbˈskjʊəd/</li>
+<li><strong>廣東話解法</strong>：指將某樣嘢遮住、掩蓋，令到人睇唔清楚或者難以理解。廣東話通常會講「遮蔽」、「掩蓋」或者「搞到睇唔清」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>English</strong>: The moon was obscured by heavy clouds.</li>
+<li><strong>廣東話口語</strong>: 個月亮俾啲厚雲<strong>遮住咗</strong>。</li>
+<li><strong>English</strong>: The true meaning of his words was obscured by his complicated language.</li>
+<li><strong>廣東話口語</strong>: 佢講嘢太過複雜，<strong>掩蓋咗</strong>佢真正想表達嘅意思。</li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>obscured by (something)</code>：俾…遮蔽 * <code>vision is obscured</code>：視線受阻</p>
+<hr>
+</section>
+<section id="bravado" class="level3">
+<h3 class="anchored" data-anchor-id="bravado">5. bravado</h3>
+<ul>
+<li><strong>詞性</strong>：名詞 (Noun)</li>
+<li><strong>讀音</strong>：/brəˈvɑː.dəʊ/</li>
+<li><strong>廣東話解法</strong>：指表面上扮到好大膽、好威水，想令人覺得自己好勁，但其實內心可能好怯。廣東話通常會講「虛張聲勢」、「靠嚇」或者「逞強」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>English</strong>: Behind all his bravado, he is actually very insecure.</li>
+<li><strong>廣東話口語</strong>: 佢表面上<strong>虛張聲勢（扮晒嘢）</strong>，其實內心極度缺乏安全感。</li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>false bravado</code>：假嘅虛張聲勢 / 扮鎮定 * <code>an act of bravado</code>：逞強嘅行為</p>
+<hr>
+</section>
+<section id="allegiance" class="level3">
+<h3 class="anchored" data-anchor-id="allegiance">6. allegiance</h3>
+<ul>
+<li><strong>詞性</strong>：名詞 (Noun)</li>
+<li><strong>讀音</strong>：/əˈliː.dʒəns/</li>
+<li><strong>廣東話解法</strong>：指對國家、領袖、信仰或者群體嘅忠誠同支持。廣東話通常會講「忠誠」或者「效忠」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>English</strong>: Soldiers have to swear an oath of allegiance to their country.</li>
+<li><strong>廣東話口語</strong>: 士兵必須宣誓對國家<strong>效忠</strong>。</li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>pledge / swear allegiance to</code>：宣誓效忠於… * <code>switch allegiance</code>：倒戈 / 改變陣營</p>
+<hr>
+</section>
+<section id="boast" class="level3">
+<h3 class="anchored" data-anchor-id="boast">7. boast</h3>
+<ul>
+<li><strong>詞性</strong>：動詞 (Verb) / 名詞 (Noun)</li>
+<li><strong>讀音</strong>：/bəʊst/</li>
+<li><strong>廣東話解法</strong>：指帶住極大嘅驕傲去講述自己嘅成就、財產或者能力。廣東話通常會講「認叻」、「吹噓」或者「自誇」。(做名詞時即係「自誇嘅說話」)</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>English</strong>: He likes to boast that he is the smartest person in the room.</li>
+<li><strong>廣東話口語</strong>: 佢好鍾意<strong>認叻（吹噓）</strong>，話自己係全場最聰明嗰個。</li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>boast about / of</code>：吹噓… * <code>make a boast</code>：自誇</p>
+<hr>
+</section>
+<section id="flaunt" class="level3">
+<h3 class="anchored" data-anchor-id="flaunt">8. flaunt</h3>
+<ul>
+<li><strong>詞性</strong>：動詞 (Verb)</li>
+<li><strong>讀音</strong>：/flɔːnt/</li>
+<li><strong>廣東話解法</strong>：指好張揚咁展示自己擁有嘅好嘢（例如名牌、財富、身材），目的係惹人艷羨或者挑釁。廣東話通常會講「炫耀」或者「晒命」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>English</strong>: She arrived in a sports car to flaunt her new wealth.</li>
+<li><strong>廣東話口語</strong>: 佢揸架跑車出場，為咗<strong>晒命（炫耀）</strong>佢新賺返嚟嘅財富。</li>
+<li><strong>English</strong>: If you’ve got it, flaunt it!</li>
+<li><strong>廣東話口語</strong>: 有本錢就梗係要<strong>晒</strong>啦！</li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>flaunt one's wealth / success</code>：炫富 / 晒命自己有幾成功 * <code>flaunt the rules</code>：公然藐視規則（有時會同 flout 撈亂用）</p>
+<hr>
+</section>
+<section id="manifests" class="level3">
+<h3 class="anchored" data-anchor-id="manifests">9. manifests</h3>
+<ul>
+<li><strong>詞性</strong>：動詞 (Verb, 第三人稱單數)</li>
+<li><strong>讀音</strong>：/ˈmæn.ɪ.fests/</li>
+<li><strong>廣東話解法</strong>：指某種特質、情緒或病徵，透過行為或者外表清楚咁展現出嚟。廣東話通常會講「表現出嚟」、「顯現」或者「證明」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>English</strong>: His frustration often manifests as anger.</li>
+<li><strong>廣東話口語</strong>: 佢嘅挫敗感通常會以憤怒嘅形式<strong>表現出嚟</strong>。</li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>manifests itself as / in</code>：以…形式顯現出嚟 * <code>manifest a desire / symptom</code>：表現出渴望 / 顯現病徵</p>
+<hr>
+</section>
+<section id="brag-about" class="level3">
+<h3 class="anchored" data-anchor-id="brag-about">10. brag about</h3>
+<ul>
+<li><strong>詞性</strong>：片語動詞 (Phrasal Verb)</li>
+<li><strong>讀音</strong>：/bræɡ əˈbaʊt/</li>
+<li><strong>廣東話解法</strong>：同 boast about 好似，都係指自大咁講自己嘅威水史。廣東話通常會講「吹噓某事」或者「四圍認叻」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>English</strong>: She is always bragging about how much money she makes.</li>
+<li><strong>廣東話口語</strong>: 佢成日<strong>四圍認叻（吹噓）</strong>自己賺幾多錢。</li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>brag about one's achievements</code>：吹噓自己嘅成就 * <code>nothing to brag about</code>：無咩好認叻（指表現一般般）</p>
+<hr>
+</section>
+<section id="a-boil-about-to-burst" class="level3">
+<h3 class="anchored" data-anchor-id="a-boil-about-to-burst">11. a boil about to burst</h3>
+<ul>
+<li><strong>詞性</strong>：習語 / 片語 (Idiom / Phrase)</li>
+<li><strong>讀音</strong>：/ə bɔɪl əˈbaʊt tə bɜːst/</li>
+<li><strong>廣東話解法</strong>：Boil 喺度解作「毒瘡」。成句字面解「一粒就快爆嘅大毒瘡」，比喻一個充滿張力、壓力或者積怨嘅局面，去到臨界點就快要爆發。廣東話會講「爆發邊緣」或者「好似個就快爆嘅大毒瘡」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>English</strong>: The tension in the meeting room felt like a boil about to burst.</li>
+<li><strong>廣東話口語</strong>: 會議室入面嘅緊張氣氛，就好似個<strong>就快爆嘅大毒瘡（瀕臨爆發邊緣）</strong>咁。</li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>like a boil about to burst</code>：好似就快爆發咁 * <code>bring a boil to a head</code>：令危機到達頂點（類似用法）</p>
+<hr>
+</section>
+<section id="circumspect" class="level3">
+<h3 class="anchored" data-anchor-id="circumspect">12. circumspect</h3>
+<ul>
+<li><strong>詞性</strong>：形容詞 (Adjective)</li>
+<li><strong>讀音</strong>：/ˈsɜː.kəm.spekt/</li>
+<li><strong>廣東話解法</strong>：指做決定或行動之前考慮得非常周到，唔願意冒險。廣東話通常會講「謹慎」、「小心翼翼」或者「步步為營」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>English</strong>: He was very circumspect in his statement to the press.</li>
+<li><strong>廣東話口語</strong>: 佢同傳媒發表聲明嗰陣非常之<strong>謹慎（小心翼翼）</strong>。</li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>circumspect behavior / approach</code>：謹慎嘅行為 / 做法 * <code>be circumspect about</code>：對…好審慎</p>
+<hr>
+</section>
+<section id="anguish" class="level3">
+<h3 class="anchored" data-anchor-id="anguish">13. anguish</h3>
+<ul>
+<li><strong>詞性</strong>：名詞 (Noun) / 有時作動詞</li>
+<li><strong>讀音</strong>：/ˈæŋ.ɡwɪʃ/</li>
+<li><strong>廣東話解法</strong>：指精神上或者肉體上極度嘅痛苦、煎熬。廣東話通常會講「極度痛苦」、「煎熬」或者「悲痛」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>English</strong>: He groaned in anguish when he heard the terrible news.</li>
+<li><strong>廣東話口語</strong>: 佢聽到個噩耗之後，<strong>極度悲痛（痛苦）</strong>到呻吟出嚟。</li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>mental / physical anguish</code>：精神上 / 肉體上嘅極度痛苦 * <code>cries of anguish</code>：痛苦嘅呼喊聲</p>
+<hr>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>English</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/english/english_3/</guid>
+  <pubDate>Mon, 03 Aug 2026 16:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Deep Learning with Python Ch.1 Summary</title>
   <link>https://jerryleung16.github.io/my-math-notes/posts/deep learning/Deep Learning with Python Ch.1 Summary/</link>
@@ -1952,7 +2680,7 @@ Note
 </item>
 <item>
   <title>Merge Sort: A Divide-and-Conquer Algorithm</title>
-  <link>https://jerryleung16.github.io/my-math-notes/posts/algorithms/merge sort/</link>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/algorithms/merge-sort/</link>
   <description><![CDATA[ 
 
 
@@ -2162,7 +2890,7 @@ Note
 
  ]]></description>
   <category>Algorithms</category>
-  <guid>https://jerryleung16.github.io/my-math-notes/posts/algorithms/merge sort/</guid>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/algorithms/merge-sort/</guid>
   <pubDate>Tue, 28 Jul 2026 16:00:00 GMT</pubDate>
 </item>
 <item>
@@ -2219,7 +2947,7 @@ Note
   <pubDate>Sun, 26 Jul 2026 16:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>Theoretical Analysis of Insertion Sort</title>
+  <title>Time Complexity Analysis of Insertion Sort</title>
   <link>https://jerryleung16.github.io/my-math-notes/posts/algorithms/insertion-sort-running-time/</link>
   <description><![CDATA[ 
 

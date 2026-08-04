@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-07-27">
+<meta name="dcterms.date" content="2026-08-04">
 
-<title>Time Complexity Analysis of Insertion Sort – My Math Notes</title>
+<title>Time Complexity Analysis of Merge Sort – My Math Notes</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -144,7 +144,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Time Complexity Analysis of Insertion Sort</h1>
+      <h1 class="title">Time Complexity Analysis of Merge Sort</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Algorithms</div>
               </div>
@@ -158,7 +158,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 27, 2026</p>
+        <p class="date">August 4, 2026</p>
       </div>
     </div>
     
@@ -174,22 +174,32 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#theoretical-running-time-formulation" id="toc-theoretical-running-time-formulation" class="nav-link active" data-scroll-target="#theoretical-running-time-formulation">1. Theoretical Running Time Formulation</a>
+  <li><a href="#introduction-the-goal" id="toc-introduction-the-goal" class="nav-link active" data-scroll-target="#introduction-the-goal">Introduction: The Goal</a></li>
+  <li><a href="#step-1-from-code-to-the-time-budget-equation" id="toc-step-1-from-code-to-the-time-budget-equation" class="nav-link" data-scroll-target="#step-1-from-code-to-the-time-budget-equation">Step 1: From Code to the “Time Budget” Equation</a>
   <ul class="collapse">
-  <li><a href="#constant-time-cost-c_i" id="toc-constant-time-cost-c_i" class="nav-link" data-scroll-target="#constant-time-cost-c_i">Constant Time Cost (<span class="math inline">\(c_i\)</span>)</a></li>
-  <li><a href="#execution-frequency-the-times-column" id="toc-execution-frequency-the-times-column" class="nav-link" data-scroll-target="#execution-frequency-the-times-column">Execution Frequency (The <code>times</code> column)</a></li>
-  <li><a href="#total-running-time-tn" id="toc-total-running-time-tn" class="nav-link" data-scroll-target="#total-running-time-tn">Total Running Time <span class="math inline">\(T(n)\)</span></a></li>
+  <li><a href="#the-resulting-formula" id="toc-the-resulting-formula" class="nav-link" data-scroll-target="#the-resulting-formula">The Resulting Formula</a></li>
   </ul></li>
-  <li><a href="#concrete-example-trace-a-3-1-2" id="toc-concrete-example-trace-a-3-1-2" class="nav-link" data-scroll-target="#concrete-example-trace-a-3-1-2">2. Concrete Example Trace: <span class="math inline">\(A = [3, 1, 2]\)</span></a>
+  <li><a href="#step-2-why-is-the-combine-step-linear-cn" id="toc-step-2-why-is-the-combine-step-linear-cn" class="nav-link" data-scroll-target="#step-2-why-is-the-combine-step-linear-cn">Step 2: Why is the Combine Step Linear (<span class="math inline">\(cn\)</span>)?</a>
   <ul class="collapse">
-  <li><a href="#step-a-setting-up-constants" id="toc-step-a-setting-up-constants" class="nav-link" data-scroll-target="#step-a-setting-up-constants">Step A: Setting up Constants</a></li>
-  <li><a href="#step-b-tracing-the-loops-to-find-t_j" id="toc-step-b-tracing-the-loops-to-find-t_j" class="nav-link" data-scroll-target="#step-b-tracing-the-loops-to-find-t_j">Step B: Tracing the Loops to Find <span class="math inline">\(t_j\)</span></a></li>
-  <li><a href="#step-c-computing-total-time-t3" id="toc-step-c-computing-total-time-t3" class="nav-link" data-scroll-target="#step-c-computing-total-time-t3">Step C: Computing Total Time <span class="math inline">\(T(3)\)</span></a></li>
+  <li><a href="#the-math-behind-the-cost" id="toc-the-math-behind-the-cost" class="nav-link" data-scroll-target="#the-math-behind-the-cost">The Math Behind the Cost</a></li>
   </ul></li>
-  <li><a href="#best-case-and-worst-case-scenarios" id="toc-best-case-and-worst-case-scenarios" class="nav-link" data-scroll-target="#best-case-and-worst-case-scenarios">3. Best-Case and Worst-Case Scenarios</a>
+  <li><a href="#step-3-solving-the-formula-with-a-recursion-tree" id="toc-step-3-solving-the-formula-with-a-recursion-tree" class="nav-link" data-scroll-target="#step-3-solving-the-formula-with-a-recursion-tree">Step 3: Solving the Formula with a Recursion Tree</a>
   <ul class="collapse">
-  <li><a href="#the-best-case-already-sorted" id="toc-the-best-case-already-sorted" class="nav-link" data-scroll-target="#the-best-case-already-sorted">The Best-Case: Already Sorted</a></li>
-  <li><a href="#the-worst-case-reverse-sorted" id="toc-the-worst-case-reverse-sorted" class="nav-link" data-scroll-target="#the-worst-case-reverse-sorted">The Worst-Case: Reverse Sorted</a></li>
+  <li><a href="#the-width-work-per-level" id="toc-the-width-work-per-level" class="nav-link" data-scroll-target="#the-width-work-per-level">The Width: Work Per Level</a>
+  <ul class="collapse">
+  <li><a href="#the-golden-rule" id="toc-the-golden-rule" class="nav-link" data-scroll-target="#the-golden-rule">The Golden Rule</a></li>
+  </ul></li>
+  <li><a href="#the-height-number-of-levels" id="toc-the-height-number-of-levels" class="nav-link" data-scroll-target="#the-height-number-of-levels">The Height: Number of Levels</a></li>
+  </ul></li>
+  <li><a href="#step-4-putting-it-all-together" id="toc-step-4-putting-it-all-together" class="nav-link" data-scroll-target="#step-4-putting-it-all-together">Step 4: Putting It All Together</a>
+  <ul class="collapse">
+  <li><a href="#concrete-example-tree-for-n8" id="toc-concrete-example-tree-for-n8" class="nav-link" data-scroll-target="#concrete-example-tree-for-n8">Concrete Example: Tree for <span class="math inline">\(n=8\)</span></a></li>
+  </ul></li>
+  <li><a href="#epilogue-the-master-blueprint" id="toc-epilogue-the-master-blueprint" class="nav-link" data-scroll-target="#epilogue-the-master-blueprint">Epilogue: The Master Blueprint</a>
+  <ul class="collapse">
+  <li><a href="#the-tug-of-war" id="toc-the-tug-of-war" class="nav-link" data-scroll-target="#the-tug-of-war">The Tug of War</a></li>
+  <li><a href="#example-1-merge-sort-the-perfect-tie" id="toc-example-1-merge-sort-the-perfect-tie" class="nav-link" data-scroll-target="#example-1-merge-sort-the-perfect-tie">Example 1: Merge Sort (The Perfect Tie)</a></li>
+  <li><a href="#example-2-binary-search-the-shrinking-tree" id="toc-example-2-binary-search-the-shrinking-tree" class="nav-link" data-scroll-target="#example-2-binary-search-the-shrinking-tree">Example 2: Binary Search (The Shrinking Tree)</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -201,192 +211,245 @@ window.Quarto = {
 
 
 
-<section id="theoretical-running-time-formulation" class="level2">
-<h2 class="anchored" data-anchor-id="theoretical-running-time-formulation">1. Theoretical Running Time Formulation</h2>
-<p>The running time of the Insertion Sort algorithm is determined by calculating the time spent executing each individual line of pseudocode.</p>
+<section id="introduction-the-goal" class="level1">
+<h1>Introduction: The Goal</h1>
+<p>Merge Sort is a classic divide-and-conquer algorithm. Our goal is to prove mathematically that its running time scales at <span class="math inline">\(\Theta(n \log n)\)</span>.</p>
+<p>To do this, we need to translate the algorithm’s code into a mathematical equation, understand the cost of its individual parts, and then solve that equation by visualizing it as a tree. Let’s build this logic step by step.</p>
+</section>
+<section id="step-1-from-code-to-the-time-budget-equation" class="level1">
+<h1>Step 1: From Code to the “Time Budget” Equation</h1>
+<p>Before we can calculate the total time, we need a formula that represents the algorithm’s structure. We call this formula <span class="math inline">\(T(n)\)</span>, which stands for the total time required to sort an array of <span class="math inline">\(n\)</span> elements.</p>
+<p>Let’s look at the underlying code logic for <code>MERGE-SORT</code> and assign a cost to each phase:</p>
+<ol type="1">
+<li><p>Divide (Lines 1-2): <span class="math inline">\(\Theta(1)\)</span></p>
+<ul>
+<li>Code: <code>if p &lt; r</code>, then <code>q = floor((p + r) / 2)</code></li>
+<li>The cost: Calculating the middle index is a basic math operation. It takes the same fraction of a second whether the array has 4 items or 4,000,000 items. Because this cost is constant and does not grow with <span class="math inline">\(n\)</span>, it is <span class="math inline">\(\Theta(1)\)</span>.</li>
+</ul></li>
+<li><p>Conquer (Lines 3-4): <span class="math inline">\(2T(n/2)\)</span></p>
+<ul>
+<li>Code: <code>MERGE-SORT(LeftHalf)</code> and <code>MERGE-SORT(RightHalf)</code></li>
+<li>The cost: We are splitting an array of <span class="math inline">\(n\)</span> elements into two halves of size <span class="math inline">\(n/2\)</span>. If sorting an array takes <span class="math inline">\(T(\text{size})\)</span> time, then sorting one half takes <span class="math inline">\(T(n/2)\)</span>. Because we have to sort two halves, the cost is <span class="math inline">\(T(n/2) + T(n/2) = 2T(n/2)\)</span>.</li>
+</ul></li>
+<li><p>Combine (Line 5): <span class="math inline">\(\Theta(n)\)</span></p>
+<ul>
+<li>Code: <code>MERGE(LeftHalf, RightHalf)</code></li>
+<li>The cost: The algorithm zips the two sorted halves back into a single array. As we will prove in the next section, this takes time directly proportional to the number of elements, <span class="math inline">\(n\)</span>. Therefore, it costs <span class="math inline">\(\Theta(n)\)</span>.</li>
+</ul></li>
+</ol>
+<section id="the-resulting-formula" class="level2">
+<h2 class="anchored" data-anchor-id="the-resulting-formula">The Resulting Formula</h2>
+<p>Adding these parts together gives us our foundational time budget:</p>
+<p><span class="math display">\[
+T(n) = \underbrace{\Theta(1)}_{\text{Divide}} + \underbrace{2T(n/2)}_{\text{Conquer}} + \underbrace{\Theta(n)}_{\text{Combine}}
+\]</span></p>
+<p>Because the linear merging work (<span class="math inline">\(\Theta(n)\)</span>) completely eclipses the tiny constant-time work spent dividing (<span class="math inline">\(\Theta(1)\)</span>), we group all the non-recursive work into a single linear term, representing it as <span class="math inline">\(cn\)</span> (where <span class="math inline">\(c\)</span> is just some constant amount of time per element). This gives us our final, clean recurrence relation:</p>
+<p><span class="math display">\[
+T(n) = 2T(n/2) + cn
+\]</span></p>
+</section>
+</section>
+<section id="step-2-why-is-the-combine-step-linear-cn" class="level1">
+<h1>Step 2: Why is the Combine Step Linear (<span class="math inline">\(cn\)</span>)?</h1>
+<p>In our formula, we claimed that merging the arrays takes <span class="math inline">\(cn\)</span> time. Why is this true? Let’s trace a concrete example and count the exact actions the computer takes inside the <code>MERGE</code> procedure.</p>
+<p>Imagine merging two sorted halves into a combined array of 6 elements:</p>
+<ul>
+<li>Left half <span class="math inline">\(L\)</span>: <code>[2, 5, 8]</code></li>
+<li>Right half <span class="math inline">\(R\)</span>: <code>[1, 4, 7]</code></li>
+<li>Combined array <span class="math inline">\(A\)</span>: <code>[_, _, _, _, _, _]</code> (6 slots to fill)</li>
+</ul>
+<p>At each step, the CPU looks at the front items of <span class="math inline">\(L\)</span> and <span class="math inline">\(R\)</span>, picks the smaller one, writes it to <span class="math inline">\(A\)</span>, and advances its pointer.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 22%">
-<col style="width: 22%">
-<col style="width: 27%">
-<col style="width: 27%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">Line</th>
-<th style="text-align: left;"><code>Insertion-Sort(A)</code></th>
-<th style="text-align: center;"><em>cost</em></th>
-<th style="text-align: center;"><em>times</em></th>
+<th>Step</th>
+<th>Comparing front items</th>
+<th>Smaller item</th>
+<th>Array <span class="math inline">\(A\)</span> after placement</th>
+<th>Work done</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: left;"><strong>for</strong> <span class="math inline">\(j = 2\)</span> <strong>to</strong> <span class="math inline">\(A.length\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(c_1\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(n\)</span></td>
+<td>1</td>
+<td>2 vs 1</td>
+<td>1</td>
+<td><code>[1, _, _, _, _, _]</code></td>
+<td>1 compare + 1 write</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<span class="math inline">\(key = A[j]\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(c_2\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(n - 1\)</span></td>
+<td>2</td>
+<td>2 vs 4</td>
+<td>2</td>
+<td><code>[1, 2, _, _, _, _]</code></td>
+<td>1 compare + 1 write</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<code>// Insert</code> <span class="math inline">\(A[j]\)</span> <code>into the sorted sequence</code> <span class="math inline">\(A[1 \dots j - 1]\)</span>.</td>
-<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(n - 1\)</span></td>
+<td>3</td>
+<td>5 vs 4</td>
+<td>4</td>
+<td><code>[1, 2, 4, _, _, _]</code></td>
+<td>1 compare + 1 write</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">4</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<span class="math inline">\(i = j - 1\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(c_4\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(n - 1\)</span></td>
+<td>4</td>
+<td>5 vs 7</td>
+<td>5</td>
+<td><code>[1, 2, 4, 5, _, _]</code></td>
+<td>1 compare + 1 write</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<strong>while</strong> <span class="math inline">\(i &gt; 0\)</span> <strong>and</strong> <span class="math inline">\(A[i] &gt; key\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(c_5\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\sum_{j=2}^n t_j\)</span></td>
+<td>5</td>
+<td>8 vs 7</td>
+<td>7</td>
+<td><code>[1, 2, 4, 5, 7, _]</code></td>
+<td>1 compare + 1 write</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">6</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="math inline">\(A[i + 1] = A[i]\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(c_6\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\sum_{j=2}^n (t_j - 1)\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="math inline">\(i = i - 1\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(c_7\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\sum_{j=2}^n (t_j - 1)\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">8</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<span class="math inline">\(A[i + 1] = key\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(c_8\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(n - 1\)</span></td>
+<td>6</td>
+<td>8 vs <span class="math inline">\(\infty\)</span></td>
+<td>8</td>
+<td><code>[1, 2, 4, 5, 7, 8]</code></td>
+<td>1 compare + 1 write</td>
 </tr>
 </tbody>
 </table>
-<section id="constant-time-cost-c_i" class="level3">
-<h3 class="anchored" data-anchor-id="constant-time-cost-c_i">Constant Time Cost (<span class="math inline">\(c_i\)</span>)</h3>
-<ul>
-<li><span class="math inline">\(c_i\)</span> represents the <strong>constant time cost</strong> to execute line <span class="math inline">\(i\)</span> exactly once.</li>
-<li>Different operations (math, assignments, conditional checks) require slightly different processing times, hence unique costs (<span class="math inline">\(c_1, c_2, \dots\)</span>).</li>
-<li>Comments (e.g., Line 3) are ignored by the computer, resulting in a cost of <span class="math inline">\(0\)</span>.</li>
-</ul>
-</section>
-<section id="execution-frequency-the-times-column" class="level3">
-<h3 class="anchored" data-anchor-id="execution-frequency-the-times-column">Execution Frequency (The <code>times</code> column)</h3>
-<p>For an input array of size <span class="math inline">\(n\)</span>:</p>
-<ul>
-<li><strong>Outer loop header (Line 1):</strong> Runs <span class="math inline">\(n\)</span> times (once per item, plus the final exit check).</li>
-<li><strong>Outer loop body (Lines 2, 4, 8):</strong> Runs <span class="math inline">\(n - 1\)</span> times (one less than the header).</li>
-<li><strong>Inner <code>while</code> loop condition (Line 5):</strong> Runs <span class="math inline">\(\sum_{j=2}^n t_j\)</span> times, where <span class="math inline">\(t_j\)</span> is the number of condition checks during the <span class="math inline">\(j\)</span>-th pass.</li>
-<li><strong>Inner <code>while</code> loop body (Lines 6, 7):</strong> Runs <span class="math inline">\(\sum_{j=2}^n (t_j - 1)\)</span> times.</li>
-</ul>
-</section>
-<section id="total-running-time-tn" class="level3">
-<h3 class="anchored" data-anchor-id="total-running-time-tn">Total Running Time <span class="math inline">\(T(n)\)</span></h3>
-<p>To find the total running time, multiply the cost (<span class="math inline">\(c_i\)</span>) by the execution frequency for each line, and sum the results:</p>
+<section id="the-math-behind-the-cost" class="level2">
+<h2 class="anchored" data-anchor-id="the-math-behind-the-cost">The Math Behind the Cost</h2>
+<p>For every single empty slot in array <span class="math inline">\(A\)</span>, the computer performs a fixed, simple set of actions. This basic unit of work takes a tiny, constant amount of time, let’s call it <span class="math inline">\(c\)</span>. Because there are <span class="math inline">\(n\)</span> slots to fill, the CPU performs that unit of work exactly <span class="math inline">\(n\)</span> times.</p>
 <p><span class="math display">\[
-T(n) = c_1n + c_2(n-1) + c_4(n-1) + c_5 \sum_{j=2}^n t_j + c_6 \sum_{j=2}^n (t_j - 1) + c_7 \sum_{j=2}^n (t_j - 1) + c_8(n-1)
+\text{Total Work} = c \times n = cn
 \]</span></p>
-<hr>
+<p>This proves that merging scales perfectly linearly with the data size.</p>
 </section>
 </section>
-<section id="concrete-example-trace-a-3-1-2" class="level2">
-<h2 class="anchored" data-anchor-id="concrete-example-trace-a-3-1-2">2. Concrete Example Trace: <span class="math inline">\(A = [3, 1, 2]\)</span></h2>
-<p>Let us trace the algorithm using an input size of <span class="math inline">\(n=3\)</span> and hypothetical execution cycles for each <span class="math inline">\(c_i\)</span>.</p>
-<section id="step-a-setting-up-constants" class="level3">
-<h3 class="anchored" data-anchor-id="step-a-setting-up-constants">Step A: Setting up Constants</h3>
-<p>Assume the following clock cycle costs per execution:</p>
+<section id="step-3-solving-the-formula-with-a-recursion-tree" class="level1">
+<h1>Step 3: Solving the Formula with a Recursion Tree</h1>
+<p>Now we know our formula is <span class="math inline">\(T(n) = 2T(n/2) + cn\)</span>, and we know why. But how do we solve this equation to get the final runtime? We draw it out as a recursion tree to see the workload at every level of the divide-and-conquer process.</p>
+<p>To find the total work of the entire algorithm, we need to calculate the “area” of this tree: width (work per level) multiplied by height (number of levels).</p>
+<section id="the-width-work-per-level" class="level2">
+<h2 class="anchored" data-anchor-id="the-width-work-per-level">The Width: Work Per Level</h2>
 <ul>
-<li><span class="math inline">\(c_1 = 2\)</span> cycles (checking <code>for</code> loop, incrementing <span class="math inline">\(j\)</span>)</li>
-<li><span class="math inline">\(c_2 = 1\)</span> cycle (reading and assigning <code>key</code>)</li>
-<li><span class="math inline">\(c_4 = 1\)</span> cycle (assigning <span class="math inline">\(i\)</span>)</li>
-<li><span class="math inline">\(c_5 = 3\)</span> cycles (checking <code>while</code> conditions)</li>
-<li><span class="math inline">\(c_6 = 2\)</span> cycles (shifting element right)</li>
-<li><span class="math inline">\(c_7 = 1\)</span> cycle (decrementing <span class="math inline">\(i\)</span>)</li>
-<li><span class="math inline">\(c_8 = 1\)</span> cycle (inserting <code>key</code>)</li>
+<li>Top level: We start with 1 problem of size <span class="math inline">\(n\)</span>. The merge work is just <span class="math inline">\(cn\)</span>.</li>
+<li>Level 1: We split into 2 problems of size <span class="math inline">\(n/2\)</span>. The merge work is <span class="math inline">\(c(n/2) + c(n/2) = cn\)</span>.</li>
+<li>Level 2: We split into 4 problems of size <span class="math inline">\(n/4\)</span>. The merge work is <span class="math inline">\(4 \times c(n/4) = cn\)</span>.</li>
 </ul>
+<section id="the-golden-rule" class="level3">
+<h3 class="anchored" data-anchor-id="the-golden-rule">The Golden Rule</h3>
+<p>Notice a pattern? When you break a problem in half, you double the number of subproblems (<span class="math inline">\(1 \to 2 \to 4 \dots\)</span>), but you also cut the work per subproblem in half (<span class="math inline">\(cn \to cn/2 \to cn/4 \dots\)</span>). The doubling and the halving perfectly cancel out. Therefore, every single level of the tree requires exactly <span class="math inline">\(cn\)</span> work.</p>
+<p>Wait, what about the very bottom leaf nodes (size 1)? Even though an array of 1 element does not need to be sorted, the CPU still has to allocate stack memory, check the base case (<code>if p &lt; r</code>), and return. This takes a constant time, <span class="math inline">\(c\)</span>. Since there are exactly <span class="math inline">\(n\)</span> leaf nodes at the bottom, their total cost is <span class="math inline">\(n \times c = cn\)</span>. The rule holds true all the way to the bottom.</p>
 </section>
-<section id="step-b-tracing-the-loops-to-find-t_j" class="level3">
-<h3 class="anchored" data-anchor-id="step-b-tracing-the-loops-to-find-t_j">Step B: Tracing the Loops to Find <span class="math inline">\(t_j\)</span></h3>
-<ul>
-<li><p><strong>Pass <span class="math inline">\(j = 2\)</span> (Inserting 1 into <span class="math inline">\([3]\)</span>):</strong> The condition is checked once successfully, and once failing (<span class="math inline">\(3&gt;1\)</span>, then <span class="math inline">\(0&gt;0\)</span> fails). <strong>Result:</strong> <span class="math inline">\(t_2 = 2\)</span> (loop body runs <span class="math inline">\(1\)</span> time).</p></li>
-<li><p><strong>Pass <span class="math inline">\(j = 3\)</span> (Inserting 2 into <span class="math inline">\([1, 3]\)</span>):</strong> The condition is checked once successfully, and once failing (<span class="math inline">\(3&gt;2\)</span>, then <span class="math inline">\(1&gt;2\)</span> fails). <strong>Result:</strong> <span class="math inline">\(t_3 = 2\)</span> (loop body runs <span class="math inline">\(1\)</span> time).</p></li>
-</ul>
 </section>
-<section id="step-c-computing-total-time-t3" class="level3">
-<h3 class="anchored" data-anchor-id="step-c-computing-total-time-t3">Step C: Computing Total Time <span class="math inline">\(T(3)\)</span></h3>
-<p>Substituting <span class="math inline">\(n=3, t_2=2, t_3=2\)</span> into our frequencies:</p>
+<section id="the-height-number-of-levels" class="level2">
+<h2 class="anchored" data-anchor-id="the-height-number-of-levels">The Height: Number of Levels</h2>
+<p>How tall is this tree? The height is determined by how many times we can divide <span class="math inline">\(n\)</span> by 2 until we reach arrays of size 1.</p>
+<p>In mathematics, this question—“How many times do I divide <span class="math inline">\(n\)</span> by 2 to get 1?”—is answered by the base-2 logarithm: <span class="math inline">\(\log_2 n\)</span> (often written in computer science as just <span class="math inline">\(\lg n\)</span>).</p>
+<p>As <span class="math inline">\(n\)</span> grows, <span class="math inline">\(\lg n\)</span> grows incredibly slowly:</p>
 <ul>
-<li><strong>Line 1:</strong> <span class="math inline">\(n = 3\)</span> times</li>
-<li><strong>Lines 2, 4, 8:</strong> <span class="math inline">\(n-1 = 2\)</span> times each</li>
-<li><strong>Line 5:</strong> <span class="math inline">\(t_2 + t_3 = 4\)</span> times</li>
-<li><strong>Lines 6, 7:</strong> <span class="math inline">\((t_2-1) + (t_3-1) = 2\)</span> times each</li>
+<li><span class="math inline">\(n = 8 \implies \lg 8 = 3\)</span> splits</li>
+<li><span class="math inline">\(n = 1,024 \implies \lg 1024 = 10\)</span> splits</li>
+<li><span class="math inline">\(n = 1,000,000 \implies \lg 1,000,000 \approx 20\)</span> splits</li>
 </ul>
-<p>Multiplying by the <span class="math inline">\(c_i\)</span> costs and summing:</p>
+<p>Including the very first top level, the total height of our tree is <span class="math inline">\(\lg n + 1\)</span> levels.</p>
+</section>
+</section>
+<section id="step-4-putting-it-all-together" class="level1">
+<h1>Step 4: Putting It All Together</h1>
+<p>We have the width and the height. Now we multiply them to find the total time spent across the entire execution of the algorithm:</p>
 <p><span class="math display">\[
-\begin{aligned}
-T(3) &amp;= (c_1 \times 3) + (c_2 \times 2) + (c_4 \times 2) + (c_5 \times 4) + (c_6 \times 2) + (c_7 \times 2) + (c_8 \times 2) \\
-     &amp;= (2 \times 3) + (1 \times 2) + (1 \times 2) + (3 \times 4) + (2 \times 2) + (1 \times 2) + (1 \times 2) \\
-     &amp;= 6 + 2 + 2 + 12 + 4 + 2 + 2 \\
-     &amp;= \mathbf{30 \text{ cycles}}
-\end{aligned}
+\text{Total Cost} = (\text{Work per level}) \times (\text{Total levels})
 \]</span></p>
-<p><strong>Conclusion:</strong> For this unsorted array, it takes 30 cycles. If the array were already sorted (e.g., <span class="math inline">\([1, 2, 3]\)</span>), the inner loop would fail immediately (<span class="math inline">\(t_2=1, t_3=1\)</span>). This eliminates Lines 6 and 7, dropping the total running time to a much faster <strong>18 cycles</strong>.</p>
-<hr>
+<p><span class="math display">\[
+\text{Total Cost} = cn \cdot (\lg n + 1)
+\]</span></p>
+<p><span class="math display">\[
+\text{Total Cost} = cn \lg n + cn
+\]</span></p>
+<p>When converting to Big-<span class="math inline">\(\Theta\)</span> notation, we drop the lower-order term (<span class="math inline">\(cn\)</span>) and the constant coefficient (<span class="math inline">\(c\)</span>), leaving us with the final worst-case complexity:</p>
+<p><span class="math display">\[
+\Theta(n \log n)
+\]</span></p>
+<section id="concrete-example-tree-for-n8" class="level2">
+<h2 class="anchored" data-anchor-id="concrete-example-tree-for-n8">Concrete Example: Tree for <span class="math inline">\(n=8\)</span></h2>
+<p>To visualize this final calculation, here is exactly what the tree looks like for an array of 8 elements.</p>
+<pre class="text"><code>Level 0 (Root):                  8c                              = 8c
+                             /        \
+Level 1:                   4c          4c                        = 8c
+                          /  \        /  \
+Level 2:                2c    2c    2c    2c                     = 8c
+                       / \   / \   / \   / \
+Level 3 (Leaves):     c   c c   c c   c c   c                    = 8c
+----------------------------------------------------------------------
+Total Work:                                                      = 32c</code></pre>
+<ul>
+<li>Width: <span class="math inline">\(8c\)</span> work per level.</li>
+<li>Height: <span class="math inline">\(\log_2(8) + 1 = 3 + 1 = 4\)</span> levels.</li>
+<li>Total: <span class="math inline">\(4 \times 8c = 32c\)</span>.</li>
+</ul>
+<p>Since <span class="math inline">\(32c = 8c \log_2(8) + 8c\)</span>, it perfectly matches our <span class="math inline">\(cn \lg n + cn\)</span> formula.</p>
 </section>
 </section>
-<section id="best-case-and-worst-case-scenarios" class="level2">
-<h2 class="anchored" data-anchor-id="best-case-and-worst-case-scenarios">3. Best-Case and Worst-Case Scenarios</h2>
-<p>Even for inputs of the exact same size <span class="math inline">\(n\)</span>, the algorithm’s running time can vary drastically depending on how the initial items are arranged.</p>
-<section id="the-best-case-already-sorted" class="level3">
-<h3 class="anchored" data-anchor-id="the-best-case-already-sorted">The Best-Case: Already Sorted</h3>
-<ul>
-<li><strong>Scenario:</strong> The input array is already in the correct sorted order.</li>
-<li><strong>What happens:</strong> When the inner <code>while</code> loop checks if it needs to shift elements, it immediately finds they are in order (<span class="math inline">\(A[i] \le key\)</span>).</li>
-<li><strong>Math impact:</strong> The condition is checked exactly once per pass (<span class="math inline">\(t_j = 1\)</span>). The inner loop body never runs (<span class="math inline">\(t_j - 1 = 0\)</span>).</li>
-<li><strong>Calculation:</strong> Substituting <span class="math inline">\(t_j = 1\)</span> into our <span class="math inline">\(T(n)\)</span> formula gives:</li>
-</ul>
+<section id="epilogue-the-master-blueprint" class="level1">
+<h1>Epilogue: The Master Blueprint</h1>
+<p>Now that you deeply understand how Merge Sort’s runtime is calculated, you can actually apply this logic to almost any divide-and-conquer algorithm. This generalized approach forms the foundation of what computer scientists call the Master Method.</p>
+<p>Instead of writing out a custom tree every single time, we can plug an algorithm’s properties into a “Master Blueprint” formula:</p>
 <p><span class="math display">\[
-\begin{aligned}
-T(n) &amp;= c_1n + c_2(n-1) + c_4(n-1) + c_5(n-1) + c_8(n-1) \\
-     &amp;= (c_1 + c_2 + c_4 + c_5 + c_8)n - (c_2 + c_4 + c_5 + c_8)
-\end{aligned}
+T(n) = aT(n/b) + D(n) + C(n)
 \]</span></p>
+<p>Every variable in this blueprint tells a specific story about the algorithm’s behavior:</p>
 <ul>
-<li><strong>Resulting Time:</strong> We can express this running time as <span class="math inline">\(T(n) = \mathbf{an + b}\)</span> (where <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are constants), which is a fast, <strong>linear function</strong> of <span class="math inline">\(n\)</span>.</li>
+<li><span class="math inline">\(a\)</span>: Number of subproblems. How fast does the recursion tree branch out?</li>
+<li><span class="math inline">\(b\)</span>: Shrinkage factor. By what fraction does the data shrink each time?</li>
+<li><span class="math inline">\(D(n)\)</span>: Divide time. The cost to split the problem apart.</li>
+<li><span class="math inline">\(C(n)\)</span>: Combine time. The cost to stitch the solutions back together.</li>
 </ul>
+<section id="the-tug-of-war" class="level2">
+<h2 class="anchored" data-anchor-id="the-tug-of-war">The Tug of War</h2>
+<p>The true power of this blueprint is that it reveals a mathematical tug-of-war happening inside the algorithm.</p>
+<p>On one side, you have the proliferation rate (determined by <span class="math inline">\(a\)</span>) multiplying the number of problems. On the other side, you have the shrinkage rate (determined by <span class="math inline">\(b\)</span>) and the overhead cost of merging (<span class="math inline">\(C(n)\)</span>). Who wins this tug-of-war determines the shape of the tree and the final Big-<span class="math inline">\(\Theta\)</span> complexity.</p>
 </section>
-<section id="the-worst-case-reverse-sorted" class="level3">
-<h3 class="anchored" data-anchor-id="the-worst-case-reverse-sorted">The Worst-Case: Reverse Sorted</h3>
+<section id="example-1-merge-sort-the-perfect-tie" class="level2">
+<h2 class="anchored" data-anchor-id="example-1-merge-sort-the-perfect-tie">Example 1: Merge Sort (The Perfect Tie)</h2>
+<p>As we discovered earlier, for Merge Sort:</p>
 <ul>
-<li><strong>Scenario:</strong> The input array is completely backward (decreasing order).</li>
-<li><strong>What happens:</strong> The inner <code>while</code> loop must shift every new element all the way to the very front, comparing it against every single item in the already-sorted portion.</li>
-<li><strong>Math impact:</strong> The loop condition is checked <span class="math inline">\(j\)</span> times per pass (<span class="math inline">\(t_j = j\)</span>).</li>
-<li><strong>Applying Summations:</strong> We replace the sums in our <span class="math inline">\(T(n)\)</span> formula using standard math rules:</li>
+<li><span class="math inline">\(a = 2\)</span> (splits into 2 arrays)</li>
+<li><span class="math inline">\(b = 2\)</span> (each array is half the size)</li>
+<li><span class="math inline">\(D(n) + C(n) = \Theta(n)\)</span> (linear time to merge)</li>
 </ul>
+<p>Because the rate at which the problems double (<span class="math inline">\(a = 2\)</span>) perfectly balances the rate at which the workload shrinks (<span class="math inline">\(b = 2\)</span>), the total work done at every single level of the tree remains a constant <span class="math inline">\(cn\)</span>. A perfectly rectangular tree of width <span class="math inline">\(n\)</span> and height <span class="math inline">\(\log n\)</span> gives us <span class="math inline">\(\Theta(n \log n)\)</span>.</p>
+</section>
+<section id="example-2-binary-search-the-shrinking-tree" class="level2">
+<h2 class="anchored" data-anchor-id="example-2-binary-search-the-shrinking-tree">Example 2: Binary Search (The Shrinking Tree)</h2>
+<p>Let’s apply the blueprint to an entirely different algorithm: finding a number in a sorted array using binary search.</p>
+<p>In binary search, you look at the middle element. If it is not what you’re looking for, you discard half the array and recursively search the remaining half.</p>
+<ul>
+<li><span class="math inline">\(a = 1\)</span> (you only search one half; the other is thrown away)</li>
+<li><span class="math inline">\(b = 2\)</span> (the array you search is cut in half)</li>
+<li><span class="math inline">\(D(n) + C(n) = \Theta(1)\)</span> (finding the middle takes constant time, and there is nothing to merge)</li>
+</ul>
+<p>Plugging this into our blueprint gives:</p>
 <p><span class="math display">\[
-\sum_{j=2}^n j = \frac{n(n+1)}{2} - 1 \quad \text{and} \quad \sum_{j=2}^n (j-1) = \frac{n(n-1)}{2}
+T(n) = 1 \cdot T(n/2) + \Theta(1)
 \]</span></p>
+<p>Think about what this recursion tree looks like. Because <span class="math inline">\(a = 1\)</span>, the tree never branches out. It is just a straight, single line going down.</p>
 <ul>
-<li><strong>Calculation:</strong> Substituting these formulas into our <span class="math inline">\(T(n)\)</span> equation gives:</li>
+<li>Level 0: 1 problem of size <span class="math inline">\(n\)</span>, costing <span class="math inline">\(c\)</span></li>
+<li>Level 1: 1 problem of size <span class="math inline">\(n/2\)</span>, costing <span class="math inline">\(c\)</span></li>
+<li>Level 2: 1 problem of size <span class="math inline">\(n/4\)</span>, costing <span class="math inline">\(c\)</span></li>
 </ul>
+<p>Every level costs a tiny constant amount <span class="math inline">\(c\)</span>. How many levels are there? Just like before, dividing by 2 means there are <span class="math inline">\(\lg n\)</span> levels.</p>
+<p>Multiplying the width (<span class="math inline">\(c\)</span>) by the height (<span class="math inline">\(\lg n\)</span>) gives us the final complexity for binary search:</p>
 <p><span class="math display">\[
-\begin{aligned}
-T(n) &amp;= c_1n + c_2(n-1) + c_4(n-1) + c_5\left(\frac{n(n+1)}{2} - 1\right) \\
-     &amp;\quad + c_6\left(\frac{n(n-1)}{2}\right) + c_7\left(\frac{n(n-1)}{2}\right) + c_8(n-1) \\
-     &amp;= \left(\frac{c_5}{2} + \frac{c_6}{2} + \frac{c_7}{2}\right)n^2 + \left(c_1 + c_2 + c_4 + \frac{c_5}{2} - \frac{c_6}{2} - \frac{c_7}{2} + c_8\right)n - (c_2 + c_4 + c_5 + c_8)
-\end{aligned}
+\Theta(\log n)
 \]</span></p>
-<ul>
-<li><strong>Resulting Time:</strong> We can express this worst-case time as <span class="math inline">\(T(n) = \mathbf{an^2 + bn + c}\)</span> (where <span class="math inline">\(a, b,\)</span> and <span class="math inline">\(c\)</span> are constants), which is a significantly slower, <strong>quadratic function</strong> of <span class="math inline">\(n\)</span>.</li>
-</ul>
+<p>By simply breaking an algorithm down into its <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, and overhead costs, the Master Blueprint allows you to instantly visualize the shape of the workload and calculate the runtime.</p>
 
 
 </section>
