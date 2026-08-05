@@ -424,7 +424,7 @@
     "href": "index.html",
     "title": "my-math-notes",
     "section": "",
-    "text": "4. Decorator (@property)\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 8, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n3. Flexible Arguments\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 7, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n2. Optional Attributes\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 6, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nClasses in Python: A Beginner’s Guide to Object-Oriented Programming\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 5, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Merge Sort\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 3\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning with Python Ch.1 Summary\n\n\n\nDeep Learning\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 2\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 1\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n日文生字字典（廣東話解釋）Day 1\n\n\n\nJapanese\n\n\n\n\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nMerge Sort: A Divide-and-Conquer Algorithm\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 29, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nInsertion Sort Algorithm\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Insertion Sort\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\nNo matching items"
+    "text": "4. Decorator (@property)\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 8, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n3. Flexible Arguments\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 7, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n2. Optional Attributes\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 6, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n1. Classes in Python: A Beginner’s Guide to Object-Oriented Programming\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 5, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Merge Sort\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 3\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning with Python Ch.1 Summary\n\n\n\nDeep Learning\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 2\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 1\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n日文生字字典（廣東話解釋）Day 1\n\n\n\nJapanese\n\n\n\n\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nMerge Sort: A Divide-and-Conquer Algorithm\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 29, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nInsertion Sort Algorithm\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Insertion Sort\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/algorithms/insertion-sort-running-time/index.html",
@@ -604,35 +604,35 @@
   {
     "objectID": "posts/python/intro-to-class/index.html",
     "href": "posts/python/intro-to-class/index.html",
-    "title": "Classes in Python: A Beginner’s Guide to Object-Oriented Programming",
+    "title": "1. Classes in Python: A Beginner’s Guide to Object-Oriented Programming",
     "section": "",
     "text": "Welcome to the world of Object-Oriented Programming (OOP)!\nThe name may sound complicated, but the basic idea is quite simple: OOP is a way of organizing programs by modeling things as objects, similar to the way we think about objects in the real world.\nA helpful way to understand OOP is to imagine a cookie cutter.\n\nA Class is the cookie cutter. It is a blueprint or template that describes what something should look like and what it can do. You cannot eat the cookie cutter, but it determines the shape of every cookie you make.\nAn Object is the cookie. It is an actual thing created from the class. One cookie cutter can be used to make many different cookies.\n\nFor example, one Dog class can be used to create many different dog objects:\nDog class\n   ↓\n ┌─────────┬─────────┬─────────┐\n ↓         ↓         ↓\nBuddy     Daisy     Max\nEach object follows the same blueprint but can have its own data.\n\n\n\nBefore writing code, let’s learn four terms that you will encounter constantly when working with classes.\n\n\n\n\n\n\n\n\nTerm\nSimple Meaning\nReal-World Example\n\n\n\n\nClass\nA blueprint or template for creating objects.\nThe general idea of a “Dog”\n\n\nObject (Instance)\nA specific item created from a class.\nYour pet dog, Fido\n\n\nAttribute\nData stored inside an object that describes it.\nName, breed, age, fur color\n\n\nMethod\nA function inside a class that describes an action.\nBarking, sitting, fetching\n\n\n\nA useful way to remember the difference is:\n\nAttributes describe what an object has. Methods describe what an object can do."
   },
   {
     "objectID": "posts/python/intro-to-class/index.html#the-4-key-oop-vocabulary-words",
     "href": "posts/python/intro-to-class/index.html#the-4-key-oop-vocabulary-words",
-    "title": "Classes in Python: A Beginner’s Guide to Object-Oriented Programming",
+    "title": "1. Classes in Python: A Beginner’s Guide to Object-Oriented Programming",
     "section": "",
     "text": "Before writing code, let’s learn four terms that you will encounter constantly when working with classes.\n\n\n\n\n\n\n\n\nTerm\nSimple Meaning\nReal-World Example\n\n\n\n\nClass\nA blueprint or template for creating objects.\nThe general idea of a “Dog”\n\n\nObject (Instance)\nA specific item created from a class.\nYour pet dog, Fido\n\n\nAttribute\nData stored inside an object that describes it.\nName, breed, age, fur color\n\n\nMethod\nA function inside a class that describes an action.\nBarking, sitting, fetching\n\n\n\nA useful way to remember the difference is:\n\nAttributes describe what an object has. Methods describe what an object can do."
   },
   {
     "objectID": "posts/python/intro-to-class/index.html#breaking-down-the-code",
     "href": "posts/python/intro-to-class/index.html#breaking-down-the-code",
-    "title": "Classes in Python: A Beginner’s Guide to Object-Oriented Programming",
+    "title": "1. Classes in Python: A Beginner’s Guide to Object-Oriented Programming",
     "section": "Breaking Down the Code",
     "text": "Breaking Down the Code\nLet’s examine the code one piece at a time.\n\n1. class Dog:\nclass Dog:\nThis tells Python:\n\n“I want to create a new blueprint called Dog.”\n\nBy convention, Python class names usually begin with a capital letter.\n\n\n\n2. def __init__(self, name, age):\ndef __init__(self, name, age):\n__init__ is a special method called the constructor.\nIt runs automatically whenever we create a new object from the class.\nThe constructor allows us to provide the initial information needed to set up our object.\nFor example:\nDog(\"Buddy\", 3)\nPython uses \"Buddy\" as the name and 3 as the age when setting up the new dog.\n\n\n\n3. self.name = name\nself.name = name\nself.age = age\nThe keyword self refers to the particular object currently being created or used.\nSo:\nself.name = name\ncan be understood as:\n\n“Take the name provided by the user and store it as the name of this specific dog.”\n\nSimilarly:\nself.age = age\nmeans:\n\n“Store this age as the age of this specific dog.”\n\n\n\n\n4. def bark(self):\ndef bark(self):\n    print(f\"{self.name} says Woof!\")\nThis is a function defined inside a class, so we call it a method.\nThe method also receives self because the dog needs to know which dog is performing the action."
   },
   {
     "objectID": "posts/python/intro-to-class/index.html#accessing-attributes-and-methods",
     "href": "posts/python/intro-to-class/index.html#accessing-attributes-and-methods",
-    "title": "Classes in Python: A Beginner’s Guide to Object-Oriented Programming",
+    "title": "1. Classes in Python: A Beginner’s Guide to Object-Oriented Programming",
     "section": "Accessing Attributes and Methods",
     "text": "Accessing Attributes and Methods\nWe can interact with an object using the dot operator (.).\n\nAccessing Attributes\nprint(dog_1.name)\n# Buddy\n\nprint(dog_2.age)\n# 5\nThe dot tells Python which attribute belonging to the object we want to access.\n\n\nCalling Methods\ndog_1.bark()\n# Buddy says Woof!\n\ndog_2.bark()\n# Daisy says Woof!\nNotice how the same method can produce different results depending on the object that calls it.\nThis is one of the key ideas behind OOP."
   },
   {
     "objectID": "posts/python/intro-to-class/index.html#python-is-doing-something-behind-the-scenes",
     "href": "posts/python/intro-to-class/index.html#python-is-doing-something-behind-the-scenes",
-    "title": "Classes in Python: A Beginner’s Guide to Object-Oriented Programming",
+    "title": "1. Classes in Python: A Beginner’s Guide to Object-Oriented Programming",
     "section": "Python Is Doing Something Behind the Scenes",
     "text": "Python Is Doing Something Behind the Scenes\nWhen you write:\nmy_robot.beep()\nPython effectively treats this as:\nRobot.beep(my_robot)\nIn other words, Python automatically passes the object that called the method as the first argument.\nThat object needs somewhere to go.\nThat is why we write:\ndef beep(self):\nThe self parameter is the place where Python passes the current object.\nYou can think of it like this:\nmy_robot.beep()\n      ↓\nPython automatically passes my_robot\n      ↓\nRobot.beep(my_robot)\n      ↓\n             self\n              ↓\n        \"this robot\"\nSo when you forget self, Python is essentially saying:\n\n“I tried to give you the robot object, but your method doesn’t have a parameter to receive it!”"
   }
