@@ -2,7 +2,10 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/python/class/index.html",
+      "/posts/python/decorator (@property)/index.html",
+      "/posts/python/flexible-arguments/index.html",
+      "/posts/python/intro-to-class/index.html",
+      "/posts/python/optional-attributes/index.html",
       "/posts/algorithms/merge-sort-running-time/index.html",
       "/posts/english/english_3/index.html",
       "/posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html",

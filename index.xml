@@ -12,443 +12,722 @@
 <generator>quarto-1.10.18</generator>
 <lastBuildDate>Tue, 04 Aug 2026 16:00:00 GMT</lastBuildDate>
 <item>
-  <title>Class</title>
-  <link>https://jerryleung16.github.io/my-math-notes/posts/python/class/</link>
+  <title>Decorator (@property)</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/python/decorator (@property)/</link>
   <description><![CDATA[ 
 
 
 
 
 
-<section id="introduction-to-object-oriented-programming-with-python" class="level1">
-<h1>Introduction to Object-Oriented Programming with Python</h1>
-<p>Welcome to the world of <strong>Object-Oriented Programming (OOP)</strong>!</p>
-<p>The name may sound complicated, but the basic idea is quite simple: <strong>OOP is a way of organizing programs by modeling things as objects</strong>, similar to the way we think about objects in the real world.</p>
-<p>A helpful way to understand OOP is to imagine a <strong>cookie cutter</strong>.</p>
+<section id="understanding-property-in-python-classes" class="level1">
+<h1>Understanding <code>@property</code> in Python Classes</h1>
+<p>One of the most useful ways to understand <code>@property</code> is to connect it to a simple mental model:</p>
+<blockquote class="blockquote">
+<p><strong>A method is an operation. A <code>@property</code> is a dynamic characteristic.</strong></p>
+</blockquote>
+<p>In other words:</p>
 <ul>
-<li><strong>A Class</strong> is the <em>cookie cutter</em>. It is a blueprint or template that describes what something should look like and what it can do. You cannot eat the cookie cutter, but it determines the shape of every cookie you make.</li>
-<li><strong>An Object</strong> is the <em>cookie</em>. It is an actual thing created from the class. One cookie cutter can be used to make many different cookies.</li>
+<li>A <strong>method</strong> tells an object to <strong>do something</strong>.</li>
+<li>A <strong>property</strong> asks an object <strong>what its current value is</strong>.</li>
 </ul>
-<p>For example, one <code>Dog</code> class can be used to create many different dog objects:</p>
-<pre class="text"><code>Dog class
-   ↓
- ┌─────────┬─────────┬─────────┐
- ↓         ↓         ↓
-Buddy     Daisy     Max</code></pre>
-<p>Each object follows the same blueprint but can have its own data.</p>
+<p>Let’s build this idea step by step.</p>
 <hr>
-<section id="the-4-key-oop-vocabulary-words" class="level2">
-<h2 class="anchored" data-anchor-id="the-4-key-oop-vocabulary-words">The 4 Key OOP Vocabulary Words</h2>
-<p>Before writing code, let’s learn four terms that you will encounter constantly when working with classes.</p>
+</section>
+<section id="a-method-an-operation" class="level1">
+<h1>1. A Method = An Operation</h1>
+<p>A normal method represents an <strong>action or process</strong> that an object can perform.</p>
+<p>You can think of it as telling the object:</p>
+<blockquote class="blockquote">
+<p><strong>“Hey object, go do this operation!”</strong></p>
+</blockquote>
+<p>For example:</p>
+<pre class="text"><code>account.withdraw(50)
+robot.walk()
+user.login()</code></pre>
+<p>The parentheses <code>()</code> are an important clue.</p>
+<p>They indicate that we are <strong>calling a method</strong>.</p>
+<hr>
+<section id="example-a-robot" class="level2">
+<h2 class="anchored" data-anchor-id="example-a-robot">Example: A Robot</h2>
+<p>Imagine a <code>Robot</code> class.</p>
+<p>A robot can have characteristics such as its name and battery level, but it can also perform actions such as walking.</p>
+<pre class="text"><code>class Robot:
+
+    def __init__(self, name):
+        self.name = name
+        self.battery = 100
+
+    def walk(self):
+        self.battery -= 10
+        print(f"{self.name} is walking!")
+
+    def recharge(self):
+        self.battery = 100
+        print(f"{self.name} is fully charged.")</code></pre>
+<p>We can create a robot:</p>
+<pre class="text"><code>robot = Robot("Wall-E")</code></pre>
+<p>Then we can tell it to perform an operation:</p>
+<pre class="text"><code>robot.walk()</code></pre>
+<p>The method changes the robot’s state.</p>
+<p>For example:</p>
+<pre class="text"><code>Before:
+battery = 100
+
+robot.walk()
+
+After:
+battery = 90</code></pre>
+<p>The important idea is:</p>
+<blockquote class="blockquote">
+<p><strong>A method represents something the object does.</strong></p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="a-property-a-dynamic-characteristic" class="level1">
+<h1>2. A <code>@property</code> = A Dynamic Characteristic</h1>
+<p>Now let’s consider something slightly different.</p>
+<p>Suppose we want to know the robot’s current battery percentage.</p>
+<p>We could write a method:</p>
+<pre class="text"><code>robot.get_battery()</code></pre>
+<p>But conceptually, <strong>battery level isn’t really an action</strong>.</p>
+<p>We aren’t telling the robot to <em>do</em> something.</p>
+<p>We are asking:</p>
+<blockquote class="blockquote">
+<p>“What is your current battery level?”</p>
+</blockquote>
+<p>That sounds more like an <strong>attribute</strong>.</p>
+<p>This is where <code>@property</code> becomes useful.</p>
+<p>A property lets us create an attribute-like interface for a value that is actually <strong>calculated dynamically</strong>.</p>
+<hr>
+</section>
+<section id="regular-attributes-vs.-dynamic-properties" class="level1">
+<h1>3. Regular Attributes vs.&nbsp;Dynamic Properties</h1>
+<p>Before going further, let’s distinguish three important concepts.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 21%">
-<col style="width: 51%">
-<col style="width: 27%">
+<col style="width: 20%">
+<col style="width: 45%">
+<col style="width: 8%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Term</th>
-<th style="text-align: left;">Simple Meaning</th>
-<th style="text-align: left;">Real-World Example</th>
+<th style="text-align: left;">Concept</th>
+<th style="text-align: left;">What It Is</th>
+<th style="text-align: left;">Syntax</th>
+<th style="text-align: left;">Example</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><strong>Class</strong></td>
-<td style="text-align: left;">A blueprint or template for creating objects.</td>
-<td style="text-align: left;">The general idea of a “Dog”</td>
+<td style="text-align: left;"><strong>Regular Attribute</strong></td>
+<td style="text-align: left;">A value stored directly in the object</td>
+<td style="text-align: left;"><code>obj.x</code></td>
+<td style="text-align: left;"><code>self.first_name = "Bruce"</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>Object</strong> (Instance)</td>
-<td style="text-align: left;">A specific item created from a class.</td>
-<td style="text-align: left;">Your pet dog, Fido</td>
+<td style="text-align: left;"><strong><code>@property</code></strong></td>
+<td style="text-align: left;">A dynamic value calculated from other attributes</td>
+<td style="text-align: left;"><code>obj.x</code></td>
+<td style="text-align: left;"><code>user.full_name</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><strong>Attribute</strong></td>
-<td style="text-align: left;">Data stored inside an object that describes it.</td>
-<td style="text-align: left;">Name, breed, age, fur color</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;"><strong>Method</strong></td>
-<td style="text-align: left;">A function inside a class that describes an action.</td>
-<td style="text-align: left;">Barking, sitting, fetching</td>
+<td style="text-align: left;">An operation or action</td>
+<td style="text-align: left;"><code>obj.x()</code></td>
+<td style="text-align: left;"><code>user.login()</code></td>
 </tr>
 </tbody>
 </table>
-<p>A useful way to remember the difference is:</p>
-<blockquote class="blockquote">
-<p><strong>Attributes describe what an object has. Methods describe what an object can do.</strong></p>
-</blockquote>
+<p>The key difference is:</p>
+<pre class="text"><code>Regular Attribute
+        ↓
+Stored value
+
+@property
+        ↓
+Calculated value
+
+Method
+        ↓
+Action / operation</code></pre>
 <hr>
 </section>
-</section>
-<section id="building-our-first-class" class="level1">
-<h1>Building Our First Class</h1>
-<p>Let’s turn the general idea of a <strong>Dog</strong> into Python code.</p>
-<p>We want our <code>Dog</code> class to have:</p>
+<section id="a-concrete-example-a-users-full-name" class="level1">
+<h1>4. A Concrete Example: A User’s Full Name</h1>
+<p>Suppose we have a user with:</p>
 <ul>
-<li><strong>Attributes</strong>: a name and an age</li>
-<li><strong>Method</strong>: the ability to bark</li>
+<li><code>first_name</code></li>
+<li><code>last_name</code></li>
 </ul>
-<pre class="text"><code>class Dog:
+<p>We could store the full name separately:</p>
+<pre class="text"><code>class User:
 
-    # The constructor: used to initialize a new object
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.full_name = first_name + " " + last_name</code></pre>
+<p>Then:</p>
+<pre class="text"><code>user = User("Bruce", "Wayne")
 
-    # A method: an action the dog can perform
-    def bark(self):
-        print(f"{self.name} says Woof!")</code></pre>
-<section id="breaking-down-the-code" class="level2">
-<h2 class="anchored" data-anchor-id="breaking-down-the-code">Breaking Down the Code</h2>
-<p>Let’s examine the code one piece at a time.</p>
-<section id="class-dog" class="level3">
-<h3 class="anchored" data-anchor-id="class-dog">1. <code>class Dog:</code></h3>
-<pre class="text"><code>class Dog:</code></pre>
-<p>This tells Python:</p>
-<blockquote class="blockquote">
-<p>“I want to create a new blueprint called <code>Dog</code>.”</p>
-</blockquote>
-<p>By convention, Python class names usually begin with a <strong>capital letter</strong>.</p>
+print(user.full_name)</code></pre>
+<p>This works.</p>
+<p>However, there is a potential problem.</p>
+<p>What happens if we later change the first name?</p>
+<pre class="text"><code>user.first_name = "Thomas"
+
+print(user.full_name)</code></pre>
+<p>The result might still be:</p>
+<pre class="text"><code>Bruce Wayne</code></pre>
+<p>Why?</p>
+<p>Because <code>full_name</code> was calculated <strong>once</strong>, when the object was created.</p>
+<p>The stored value is now out of sync with the other attributes.</p>
 <hr>
 </section>
-<section id="def-__init__self-name-age" class="level3">
-<h3 class="anchored" data-anchor-id="def-__init__self-name-age">2. <code>def __init__(self, name, age):</code></h3>
-<pre class="text"><code>def __init__(self, name, age):</code></pre>
-<p><code>__init__</code> is a special method called the <strong>constructor</strong>.</p>
-<p>It runs automatically whenever we create a new object from the class.</p>
-<p>The constructor allows us to provide the initial information needed to set up our object.</p>
-<p>For example:</p>
-<pre class="text"><code>Dog("Buddy", 3)</code></pre>
-<p>Python uses <code>"Buddy"</code> as the name and <code>3</code> as the age when setting up the new dog.</p>
+<section id="the-problem-with-storing-derived-data" class="level1">
+<h1>5. The Problem with Storing Derived Data</h1>
+<p>Consider this object:</p>
+<pre class="text"><code>user
+ ├── first_name = "Bruce"
+ ├── last_name  = "Wayne"
+ └── full_name  = "Bruce Wayne"</code></pre>
+<p>Now change the first name:</p>
+<pre class="text"><code>user.first_name = "Thomas"</code></pre>
+<p>The object could become:</p>
+<pre class="text"><code>user
+ ├── first_name = "Thomas"
+ ├── last_name  = "Wayne"
+ └── full_name  = "Bruce Wayne"  ← OUT OF DATE!</code></pre>
+<p>We now have two pieces of information that disagree with each other.</p>
+<p>This is exactly the kind of problem that <code>@property</code> can solve.</p>
 <hr>
 </section>
-<section id="self.name-name" class="level3">
-<h3 class="anchored" data-anchor-id="self.name-name">3. <code>self.name = name</code></h3>
-<pre class="text"><code>self.name = name
-self.age = age</code></pre>
-<p>The keyword <code>self</code> refers to <strong>the particular object currently being created or used</strong>.</p>
+<section id="using-property" class="level1">
+<h1>6. Using <code>@property</code></h1>
+<p>Instead of storing <code>full_name</code>, we can calculate it whenever someone asks for it.</p>
+<pre class="text"><code>class User:
+
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
+    @property
+    def full_name(self):
+        return self.first_name + " " + self.last_name</code></pre>
+<p>Now create a user:</p>
+<pre class="text"><code>user = User("Bruce", "Wayne")</code></pre>
+<p>We can access:</p>
+<pre class="text"><code>user.full_name</code></pre>
+<p>Notice that we <strong>do not use parentheses</strong>.</p>
+<p>We don’t write:</p>
+<pre class="text"><code>user.full_name()</code></pre>
+<p>Instead:</p>
+<pre class="text"><code>user.full_name</code></pre>
+<p>This makes <code>full_name</code> look like an ordinary attribute.</p>
+<p>But behind the scenes, Python is running the property method and calculating the value.</p>
+<hr>
+</section>
+<section id="what-is-happening-behind-the-scenes" class="level1">
+<h1>7. What Is Happening Behind the Scenes?</h1>
+<p>When we write:</p>
+<pre class="text"><code>user.full_name</code></pre>
+<p>Python effectively performs the calculation defined inside:</p>
+<pre class="text"><code>@property
+def full_name(self):
+    return self.first_name + " " + self.last_name</code></pre>
 <p>So:</p>
-<pre class="text"><code>self.name = name</code></pre>
-<p>can be understood as:</p>
-<blockquote class="blockquote">
-<p>“Take the name provided by the user and store it as the name of <strong>this specific dog</strong>.”</p>
-</blockquote>
-<p>Similarly:</p>
-<pre class="text"><code>self.age = age</code></pre>
-<p>means:</p>
-<blockquote class="blockquote">
-<p>“Store this age as the age of <strong>this specific dog</strong>.”</p>
-</blockquote>
+<pre class="text"><code>user.full_name</code></pre>
+<p>can be thought of as:</p>
+<pre class="text"><code>"Bruce" + " " + "Wayne"</code></pre>
+<p>which gives:</p>
+<pre class="text"><code>"Bruce Wayne"</code></pre>
+<p>The important point is that the value is <strong>calculated when we access it</strong>.</p>
 <hr>
 </section>
-<section id="def-barkself" class="level3">
-<h3 class="anchored" data-anchor-id="def-barkself">4. <code>def bark(self):</code></h3>
-<pre class="text"><code>def bark(self):
-    print(f"{self.name} says Woof!")</code></pre>
-<p>This is a function defined inside a class, so we call it a <strong>method</strong>.</p>
-<p>The method also receives <code>self</code> because the dog needs to know <strong>which dog</strong> is performing the action.</p>
+<section id="why-is-this-better" class="level1">
+<h1>8. Why Is This Better?</h1>
+<p>Now let’s change the first name.</p>
+<pre class="text"><code>user.first_name = "Thomas"</code></pre>
+<p>Then ask for the full name again:</p>
+<pre class="text"><code>print(user.full_name)</code></pre>
+<p>Python recalculates the property using the current attributes.</p>
+<p>The result is:</p>
+<pre class="text"><code>Thomas Wayne</code></pre>
+<p>We don’t have to manually update <code>full_name</code>.</p>
+<p>That is the major advantage of a dynamic property.</p>
 <hr>
 </section>
-</section>
-</section>
-<section id="bringing-the-class-to-life" class="level1">
-<h1>Bringing the Class to Life</h1>
-<p>Our class is only a blueprint so far.</p>
-<p>Now let’s use it to create actual objects.</p>
-<pre class="text"><code># Create the first dog
-dog_1 = Dog("Buddy", 3)
-
-# Create a second dog
-dog_2 = Dog("Daisy", 5)</code></pre>
-<p>We have now created two separate objects:</p>
-<ul>
-<li><code>dog_1</code> represents Buddy, who is 3 years old.</li>
-<li><code>dog_2</code> represents Daisy, who is 5 years old.</li>
-</ul>
-<p>Both objects were created from the same <code>Dog</code> class, but each object has its <strong>own data</strong>.</p>
-<hr>
-<section id="accessing-attributes-and-methods" class="level2">
-<h2 class="anchored" data-anchor-id="accessing-attributes-and-methods">Accessing Attributes and Methods</h2>
-<p>We can interact with an object using the <strong>dot operator (<code>.</code>)</strong>.</p>
-<section id="accessing-attributes" class="level3">
-<h3 class="anchored" data-anchor-id="accessing-attributes">Accessing Attributes</h3>
-<pre class="text"><code>print(dog_1.name)
-# Buddy
-
-print(dog_2.age)
-# 5</code></pre>
-<p>The dot tells Python which attribute belonging to the object we want to access.</p>
-</section>
-<section id="calling-methods" class="level3">
-<h3 class="anchored" data-anchor-id="calling-methods">Calling Methods</h3>
-<pre class="text"><code>dog_1.bark()
-# Buddy says Woof!
-
-dog_2.bark()
-# Daisy says Woof!</code></pre>
-<p>Notice how the same method can produce different results depending on the object that calls it.</p>
-<p>This is one of the key ideas behind OOP.</p>
-<hr>
-</section>
-</section>
-</section>
-<section id="why-do-we-use-classes" class="level1">
-<h1>Why Do We Use Classes?</h1>
-<p>For a very small program, you may not need classes.</p>
-<p>For example, if you are writing a quick program to calculate your taxes, a class might be unnecessary.</p>
-<p>However, as programs become larger—such as:</p>
-<ul>
-<li>video games,</li>
-<li>web applications,</li>
-<li>data dashboards,</li>
-<li>simulations, or</li>
-<li>business software,</li>
-</ul>
-<p>classes can make your code much easier to organize.</p>
-<p>Imagine a video game with two players.</p>
-<p>Without classes, you might have variables such as:</p>
-<pre class="text"><code>player_1_health
-player_1_score
-player_2_health
-player_2_score</code></pre>
-<p>As the game becomes more complicated, you could end up with dozens or even hundreds of related variables.</p>
-<p>Instead, we can create a <code>Player</code> class and then create multiple player objects from it.</p>
-<pre class="text"><code>Player class
-      ↓
- ┌────┴────┐
- ↓         ↓
-Player 1  Player 2</code></pre>
-<p>Each player object can keep track of its own health, score, name, and other information.</p>
-<blockquote class="blockquote">
-<p><strong>A class lets us organize related data and actions into one reusable structure.</strong></p>
-</blockquote>
-<hr>
-</section>
-<section id="understanding-self" class="level1">
-<h1>Understanding <code>self</code></h1>
-<p>The keyword <code>self</code> is one of the most important concepts for beginners learning Python classes.</p>
-<p>Think of a class as a blueprint for building robots.</p>
-<p>Suppose we use the blueprint to build two robots:</p>
-<pre class="text"><code>Robot class
-     ↓
- ┌───┴────┐
- ↓        ↓
-Wall-E   R2-D2</code></pre>
-<p>Both robots are built from exactly the same blueprint.</p>
-<p>However, if we ask Wall-E to introduce itself, we want <strong>Wall-E</strong> to give its name—not R2-D2.</p>
-<p>In Python, <code>self</code> means:</p>
-<blockquote class="blockquote">
-<p><strong>“this particular object”</strong></p>
-</blockquote>
-<p>or, more casually:</p>
-<blockquote class="blockquote">
-<p><strong>“me” / “my”</strong></p>
-</blockquote>
-<p>Let’s see this in action.</p>
-<pre class="text"><code>class Robot:
-
-    # self.name means "MY name"
-    def __init__(self, name):
-        self.name = name
-
-    # self.name means "MY name"
-    def introduce(self):
-        print(f"Hello, my name is {self.name}.")
-
-
-# Create two different robot objects
-robot_1 = Robot("Wall-E")
-robot_2 = Robot("R2-D2")
-
-
-robot_1.introduce()
-# Hello, my name is Wall-E.
-
-robot_2.introduce()
-# Hello, my name is R2-D2.</code></pre>
-<p>Even though both robots use exactly the same class definition, each object stores its own name.</p>
-<pre class="text"><code>robot_1.name → "Wall-E"
-robot_2.name → "R2-D2"</code></pre>
-<p>That’s the power of <code>self</code>.</p>
-<hr>
-</section>
-<section id="what-happens-if-you-forget-self" class="level1">
-<h1>What Happens If You Forget <code>self</code>?</h1>
-<p>One of the most common mistakes beginners make is forgetting <code>self</code> when defining a method.</p>
-<p>Consider this example:</p>
-<pre class="text"><code>class Robot:
-
-    # Oops! We forgot self.
-    def beep():
-        print("Beep boop!")
-
-
-my_robot = Robot()
-my_robot.beep()</code></pre>
-<p>Python will produce an error similar to:</p>
-<pre class="text"><code>TypeError: Robot.beep() takes 0 positional arguments but 1 was given</code></pre>
-<p>At first, this error can seem strange.</p>
-<p>You might think:</p>
-<blockquote class="blockquote">
-<p>“I didn’t give <code>beep()</code> any arguments! The parentheses are empty!”</p>
-</blockquote>
-<p>So where did the mysterious <strong>1 argument</strong> come from?</p>
-<hr>
-<section id="python-is-doing-something-behind-the-scenes" class="level2">
-<h2 class="anchored" data-anchor-id="python-is-doing-something-behind-the-scenes">Python Is Doing Something Behind the Scenes</h2>
-<p>When you write:</p>
-<pre class="text"><code>my_robot.beep()</code></pre>
-<p>Python effectively treats this as:</p>
-<pre class="text"><code>Robot.beep(my_robot)</code></pre>
-<p>In other words, Python automatically passes the object that called the method as the first argument.</p>
-<p>That object needs somewhere to go.</p>
-<p>That is why we write:</p>
-<pre class="text"><code>def beep(self):</code></pre>
-<p>The <code>self</code> parameter is the place where Python passes the current object.</p>
-<p>You can think of it like this:</p>
-<pre class="text"><code>my_robot.beep()
-      ↓
-Python automatically passes my_robot
-      ↓
-Robot.beep(my_robot)
-      ↓
-             self
+<section id="the-property-stays-in-sync" class="level1">
+<h1>9. The Property Stays in Sync</h1>
+<p>Think of the object as:</p>
+<pre class="text"><code>             User
+              │
+       ┌──────┴──────┐
+       ↓             ↓
+ first_name      last_name
+ "Bruce"          "Wayne"
+       │             │
+       └──────┬──────┘
               ↓
-        "this robot"</code></pre>
-<p>So when you forget <code>self</code>, Python is essentially saying:</p>
+         @property
+         full_name
+              ↓
+       "Bruce Wayne"</code></pre>
+<p>If either input changes:</p>
+<pre class="text"><code>first_name = "Thomas"</code></pre>
+<p>the property automatically produces:</p>
+<pre class="text"><code>full_name
+     ↓
+"Thomas Wayne"</code></pre>
+<p>The property is therefore always based on the object’s <strong>current state</strong>.</p>
+<hr>
+</section>
+<section id="method-vs.-property" class="level1">
+<h1>10. Method vs.&nbsp;Property</h1>
+<p>Let’s compare the two approaches.</p>
+<section id="using-a-method" class="level2">
+<h2 class="anchored" data-anchor-id="using-a-method">Using a Method</h2>
+<pre class="text"><code>class User:
+
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
+    def get_full_name(self):
+        return self.first_name + " " + self.last_name</code></pre>
+<p>We would call it like this:</p>
+<pre class="text"><code>user.get_full_name()</code></pre>
+<p>The parentheses tell us:</p>
 <blockquote class="blockquote">
-<p>“I tried to give you the robot object, but your method doesn’t have a parameter to receive it!”</p>
+<p>“Perform an operation.”</p>
+</blockquote>
+<hr>
+</section>
+<section id="using-property-1" class="level2">
+<h2 class="anchored" data-anchor-id="using-property-1">Using <code>@property</code></h2>
+<pre class="text"><code>class User:
+
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
+    @property
+    def full_name(self):
+        return self.first_name + " " + self.last_name</code></pre>
+<p>We access it like this:</p>
+<pre class="text"><code>user.full_name</code></pre>
+<p>There are no parentheses.</p>
+<p>This tells us:</p>
+<blockquote class="blockquote">
+<p>“Tell me the current value of this characteristic.”</p>
 </blockquote>
 <hr>
 </section>
 </section>
-<section id="optional-attributes" class="level1">
-<h1>Optional Attributes</h1>
-<p>An <strong>optional attribute</strong> simply means that when you create a new object, you <strong>don’t have to provide that particular piece of information</strong>.</p>
-<p>If you leave it out, Python uses a <strong>default value</strong> instead.</p>
-<p>We actually used an optional attribute earlier in our <code>BankAccount</code> example.</p>
-<p>Consider:</p>
-<pre class="text"><code>def __init__(self, owner, starting_balance=0.0):</code></pre>
-<p>Here:</p>
+<section id="a-simple-mental-model" class="level1">
+<h1>11. A Simple Mental Model</h1>
+<p>This distinction is extremely useful.</p>
+<section id="method" class="level3">
+<h3 class="anchored" data-anchor-id="method">Method</h3>
+<pre class="text"><code>object.do_something()</code></pre>
+<p>Think:</p>
+<blockquote class="blockquote">
+<p><strong>“Go perform this operation.”</strong></p>
+</blockquote>
+<p>Examples:</p>
+<pre class="text"><code>account.withdraw(50)
+robot.walk()
+user.login()</code></pre>
+<hr>
+</section>
+<section id="property" class="level3">
+<h3 class="anchored" data-anchor-id="property"><code>@property</code></h3>
+<pre class="text"><code>object.some_value</code></pre>
+<p>Think:</p>
+<blockquote class="blockquote">
+<p><strong>“What is your current value for this characteristic?”</strong></p>
+</blockquote>
+<p>Examples:</p>
+<pre class="text"><code>user.full_name
+account.balance
+robot.battery_percentage</code></pre>
+<hr>
+</section>
+</section>
+<section id="example-bank-account-balance" class="level1">
+<h1>12. Example: Bank Account Balance</h1>
+<p>Let’s look at a more realistic example.</p>
+<p>Suppose our bank account stores:</p>
 <ul>
-<li><code>owner</code> is <strong>required</strong>.</li>
-<li><code>starting_balance</code> is <strong>optional</strong>.</li>
-<li>If no starting balance is provided, Python uses <code>0.0</code>.</li>
+<li>account owner</li>
+<li>deposited money</li>
+<li>withdrawn money</li>
 </ul>
-<p>For example:</p>
-<pre class="text"><code>alice_account = BankAccount("Alice", 100.0)</code></pre>
-<p>Alice starts with <code>$100</code>.</p>
-<p>But:</p>
-<pre class="text"><code>bob_account = BankAccount("Bob")</code></pre>
-<p>Bob automatically starts with <code>$0</code>.</p>
-<p>This is the basic idea behind optional attributes.</p>
-<hr>
-<section id="the-default-value-method" class="level2">
-<h2 class="anchored" data-anchor-id="the-default-value-method">1. The “Default Value” Method</h2>
-<p>The most straightforward way to create an optional attribute is to give the parameter a <strong>default value</strong> inside <code>__init__</code>.</p>
-<p>You use the equals sign (<code>=</code>) to specify the default.</p>
-<pre class="text"><code>class Dog:
+<p>We might want to know the <strong>current balance</strong>.</p>
+<p>The balance depends on other information, so it is a good candidate for a property.</p>
+<pre class="text"><code>class BankAccount:
 
-    # name is REQUIRED.
-    # collar_color is OPTIONAL and defaults to "Red".
-    def __init__(self, name, collar_color="Red"):
-        self.name = name
-        self.collar_color = collar_color
+    def __init__(self, owner, deposited=0):
+        self.owner = owner
+        self.deposited = deposited
+        self.withdrawn = 0
 
+    def deposit(self, amount):
+        self.deposited += amount
 
-# We only provide the name.
-# Python automatically uses "Red".
-dog_1 = Dog("Buddy")
+    def withdraw(self, amount):
+        self.withdrawn += amount
 
-print(f"{dog_1.name} has a {dog_1.collar_color} collar.")
-# Buddy has a Red collar.
-
-
-# We provide both values.
-# Python uses "Blue" instead of the default.
-dog_2 = Dog("Daisy", "Blue")
-
-print(f"{dog_2.name} has a {dog_2.collar_color} collar.")
-# Daisy has a Blue collar.</code></pre>
-<p>The important idea is:</p>
-<pre class="text"><code>collar_color="Red"</code></pre>
-<p>means:</p>
-<blockquote class="blockquote">
-<p>“If the user doesn’t provide a collar color, use <code>Red</code>.”</p>
-</blockquote>
-<p>But if the user does provide a value:</p>
-<pre class="text"><code>Dog("Daisy", "Blue")</code></pre>
-<p>Python uses <code>"Blue"</code> instead.</p>
+    @property
+    def balance(self):
+        return self.deposited - self.withdrawn</code></pre>
+<p>Create an account:</p>
+<pre class="text"><code>account = BankAccount("Alice", 1000)</code></pre>
+<p>Ask for the current balance:</p>
+<pre class="text"><code>print(account.balance)</code></pre>
+<p>The result is:</p>
+<pre class="text"><code>1000</code></pre>
+<p>Now Alice deposits another <code>$500</code>:</p>
+<pre class="text"><code>account.deposit(500)</code></pre>
+<p>The balance is automatically updated:</p>
+<pre class="text"><code>print(account.balance)</code></pre>
+<p>Result:</p>
+<pre class="text"><code>1500</code></pre>
+<p>Now Alice withdraws <code>$200</code>:</p>
+<pre class="text"><code>account.withdraw(200)</code></pre>
+<p>Ask for the balance again:</p>
+<pre class="text"><code>print(account.balance)</code></pre>
+<p>Result:</p>
+<pre class="text"><code>1300</code></pre>
+<p>We never had to manually update a <code>balance</code> variable.</p>
+<p>The property calculates it from the current state.</p>
 <hr>
 </section>
-<section id="the-none-method-when-information-is-missing" class="level2">
-<h2 class="anchored" data-anchor-id="the-none-method-when-information-is-missing">2. The <code>None</code> Method — When Information Is Missing</h2>
-<p>Sometimes an attribute is optional because the information <strong>might not exist yet</strong>.</p>
-<p>In Python, we can use the special value <code>None</code> to represent:</p>
+<section id="why-balance-is-a-property" class="level1">
+<h1>13. Why <code>balance</code> Is a Property</h1>
+<p>Think about the question:</p>
 <blockquote class="blockquote">
-<p><strong>“There is currently no value.”</strong></p>
+<p>“What is the account’s current balance?”</p>
 </blockquote>
-<p>For example, imagine creating a user profile where a phone number is optional.</p>
-<pre class="text"><code>class UserProfile:
-
-    # phone_number is optional.
-    # If no number is provided, it is set to None.
-    def __init__(self, username, phone_number=None):
-        self.username = username
-        self.phone_number = phone_number
-
-    def show_profile(self):
-        print(f"User: {self.username}")
-
-        # Check whether a phone number was provided.
-        if self.phone_number is None:
-            print("Phone: No number provided.")
-        else:
-            print(f"Phone: {self.phone_number}")
-
-
-# Create a user without a phone number
-user_1 = UserProfile("CoolSkater99")
-
-user_1.show_profile()</code></pre>
-<p>The output would be:</p>
-<pre class="text"><code>User: CoolSkater99
-Phone: No number provided.</code></pre>
-<p>Here, <code>None</code> doesn’t mean that the phone number is zero or an empty string.</p>
-<p>It means:</p>
-<blockquote class="blockquote">
-<p><strong>“No phone number has been provided.”</strong></p>
-</blockquote>
+<p>This is a <strong>characteristic</strong>, not an action.</p>
+<p>We therefore want:</p>
+<pre class="text"><code>account.balance</code></pre>
+<p>rather than:</p>
+<pre class="text"><code>account.get_balance()</code></pre>
+<p>The property makes the interface feel natural.</p>
+<p>The user of the class doesn’t need to know that Python is calculating the value behind the scenes.</p>
 <hr>
 </section>
-</section>
-<section id="the-golden-rule-of-optional-attributes" class="level1">
-<h1>⚠️ The Golden Rule of Optional Attributes</h1>
-<p>When defining your <code>__init__</code> method, <strong>all required parameters must come before optional parameters</strong>.</p>
-<section id="correct" class="level3">
-<h3 class="anchored" data-anchor-id="correct">✅ Correct</h3>
-<pre class="text"><code>def __init__(self, name, age, color="Brown"):</code></pre>
-<p>Here:</p>
+<section id="example-rectangle-area" class="level1">
+<h1>14. Example: Rectangle Area</h1>
+<p>Here’s another simple example.</p>
+<p>A rectangle has:</p>
 <ul>
-<li><code>name</code> is required.</li>
-<li><code>age</code> is required.</li>
-<li><code>color</code> is optional.</li>
+<li>width</li>
+<li>height</li>
 </ul>
+<p>Its area is:</p>
+<p>[ A = width height]</p>
+<p>We don’t necessarily need to store the area.</p>
+<p>We can calculate it whenever we need it.</p>
+<pre class="text"><code>class Rectangle:
+
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    @property
+    def area(self):
+        return self.width * self.height</code></pre>
+<p>Create a rectangle:</p>
+<pre class="text"><code>rectangle = Rectangle(10, 5)</code></pre>
+<p>Ask for its area:</p>
+<pre class="text"><code>print(rectangle.area)</code></pre>
+<p>Result:</p>
+<pre class="text"><code>50</code></pre>
+<p>Now change the width:</p>
+<pre class="text"><code>rectangle.width = 20</code></pre>
+<p>Ask for the area again:</p>
+<pre class="text"><code>print(rectangle.area)</code></pre>
+<p>Result:</p>
+<pre class="text"><code>100</code></pre>
+<p>The property automatically reflects the new dimensions.</p>
+<hr>
 </section>
-<section id="incorrect" class="level3">
-<h3 class="anchored" data-anchor-id="incorrect">❌ Incorrect</h3>
-<pre class="text"><code>def __init__(self, color="Brown", name, age):</code></pre>
-<p>This causes a <code>SyntaxError</code> because Python does not allow a required parameter to appear after a parameter with a default value.</p>
-<p>A simple rule to remember is:</p>
+<section id="property-vs.-stored-attribute" class="level1">
+<h1>15. Property vs.&nbsp;Stored Attribute</h1>
+<p>Let’s compare two designs.</p>
+<section id="stored-attribute" class="level2">
+<h2 class="anchored" data-anchor-id="stored-attribute">Stored Attribute</h2>
+<pre class="text"><code>class Rectangle:
+
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+        self.area = width * height</code></pre>
+<p>Here, <code>area</code> is stored.</p>
+<p>If the width changes:</p>
+<pre class="text"><code>rectangle.width = 20</code></pre>
+<p>the stored area might become incorrect.</p>
+<hr>
+</section>
+<section id="dynamic-property" class="level2">
+<h2 class="anchored" data-anchor-id="dynamic-property">Dynamic Property</h2>
+<pre class="text"><code>class Rectangle:
+
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    @property
+    def area(self):
+        return self.width * self.height</code></pre>
+<p>Now:</p>
+<pre class="text"><code>rectangle.width = 20</code></pre>
+<p>automatically causes the next access to:</p>
+<pre class="text"><code>rectangle.area</code></pre>
+<p>to use the new width.</p>
+<p>The property is always based on the current state.</p>
+<hr>
+</section>
+</section>
+<section id="a-property-can-also-enforce-rules" class="level1">
+<h1>16. A Property Can Also Enforce Rules</h1>
+<p><code>@property</code> is not only useful for calculations.</p>
+<p>It can also control how information is accessed.</p>
+<p>For example, suppose we have a temperature stored in Celsius, but we want to easily view it in Fahrenheit.</p>
+<pre class="text"><code>class Temperature:
+
+    def __init__(self, celsius):
+        self.celsius = celsius
+
+    @property
+    def fahrenheit(self):
+        return self.celsius * 9 / 5 + 32</code></pre>
+<p>Now:</p>
+<pre class="text"><code>temperature = Temperature(25)</code></pre>
+<p>We can ask:</p>
+<pre class="text"><code>print(temperature.fahrenheit)</code></pre>
+<p>Result:</p>
+<pre class="text"><code>77.0</code></pre>
+<p>If the Celsius temperature changes:</p>
+<pre class="text"><code>temperature.celsius = 30</code></pre>
+<p>then:</p>
+<pre class="text"><code>print(temperature.fahrenheit)</code></pre>
+<p>automatically gives:</p>
+<pre class="text"><code>86.0</code></pre>
+<p>Again, the property stays synchronized with the object’s current state.</p>
+<hr>
+</section>
+<section id="property-is-really-a-method-in-disguise" class="level1">
+<h1>17. <code>@property</code> Is Really a Method in Disguise</h1>
+<p>This is an important detail.</p>
+<p>When we write:</p>
+<pre class="text"><code>@property
+def area(self):
+    return self.width * self.height</code></pre>
+<p><code>area</code> is technically implemented using a method.</p>
+<p>However, the <code>@property</code> decorator changes how we <strong>access</strong> it.</p>
+<p>Without <code>@property</code>:</p>
+<pre class="text"><code>rectangle.area()</code></pre>
+<p>With <code>@property</code>:</p>
+<pre class="text"><code>rectangle.area</code></pre>
+<p>So we can think of <code>@property</code> as:</p>
 <blockquote class="blockquote">
-<p><strong>Required first, optional last.</strong></p>
+<p><strong>A method that behaves like an attribute when accessed.</strong></p>
+</blockquote>
+<p>This is why it is so useful for <strong>dynamic characteristics</strong>.</p>
+<hr>
+</section>
+<section id="three-concepts-side-by-side" class="level1">
+<h1>18. Three Concepts Side by Side</h1>
+<p>Now we can put everything together.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 51%">
+<col style="width: 9%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Concept</th>
+<th style="text-align: left;">Meaning</th>
+<th style="text-align: left;">Syntax</th>
+<th style="text-align: left;">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Regular Attribute</strong></td>
+<td style="text-align: left;">A value stored directly in the object</td>
+<td style="text-align: left;"><code>obj.x</code></td>
+<td style="text-align: left;"><code>user.first_name</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>@property</code></strong></td>
+<td style="text-align: left;">A dynamic value calculated from the object’s state</td>
+<td style="text-align: left;"><code>obj.x</code></td>
+<td style="text-align: left;"><code>user.full_name</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Method</strong></td>
+<td style="text-align: left;">An operation or action</td>
+<td style="text-align: left;"><code>obj.x()</code></td>
+<td style="text-align: left;"><code>user.login()</code></td>
+</tr>
+</tbody>
+</table>
+<p>Consider our <code>User</code> example:</p>
+<pre class="text"><code>class User:
+
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
+    @property
+    def full_name(self):
+        return self.first_name + " " + self.last_name
+
+    def login(self):
+        print("User logged in.")</code></pre>
+<p>We can now classify each part:</p>
+<pre class="text"><code>user.first_name
+       ↓
+Regular Attribute
+"Bruce"
+
+
+user.full_name
+       ↓
+@property
+"Bruce Wayne"
+
+
+user.login()
+       ↓
+Method
+Performs an action</code></pre>
+<hr>
+</section>
+<section id="a-practical-mental-model" class="level1">
+<h1>19. A Practical Mental Model</h1>
+<p>When designing a class, ask yourself three questions.</p>
+<section id="question-1-is-this-simply-stored-information" class="level3">
+<h3 class="anchored" data-anchor-id="question-1-is-this-simply-stored-information">Question 1: Is this simply stored information?</h3>
+<p>If yes, use a <strong>regular attribute</strong>.</p>
+<pre class="text"><code>self.name = "Alice"
+self.age = 25
+self.color = "Blue"</code></pre>
+<p>Think:</p>
+<blockquote class="blockquote">
+<p><strong>“What does this object have?”</strong></p>
+</blockquote>
+<hr>
+</section>
+<section id="question-2-is-this-information-calculated-from-the-objects-current-state" class="level3">
+<h3 class="anchored" data-anchor-id="question-2-is-this-information-calculated-from-the-objects-current-state">Question 2: Is this information calculated from the object’s current state?</h3>
+<p>If yes, consider using a <strong><code>@property</code></strong>.</p>
+<pre class="text"><code>@property
+def full_name(self):
+    return self.first_name + " " + self.last_name</code></pre>
+<p>Think:</p>
+<blockquote class="blockquote">
+<p><strong>“What is this object’s current characteristic?”</strong></p>
+</blockquote>
+<hr>
+</section>
+<section id="question-3-is-this-something-the-object-actively-does" class="level3">
+<h3 class="anchored" data-anchor-id="question-3-is-this-something-the-object-actively-does">Question 3: Is this something the object actively does?</h3>
+<p>If yes, use a <strong>method</strong>.</p>
+<pre class="text"><code>def withdraw(self, amount):
+    ...</code></pre>
+<p>Think:</p>
+<blockquote class="blockquote">
+<p><strong>“What operation should this object perform?”</strong></p>
 </blockquote>
 <hr>
 </section>
 </section>
+<section id="the-final-mental-model" class="level1">
+<h1>20. The Final Mental Model</h1>
+<p>The distinction can be summarized as follows:</p>
+<pre class="text"><code>                  PYTHON CLASS
+                       │
+          ┌────────────┼────────────┐
+          ↓            ↓            ↓
+     Attribute     @property      Method
+          │            │            │
+          ↓            ↓            ↓
+      Stored       Dynamic        Action
+       value      characteristic  / operation
+          │            │            │
+          ↓            ↓            ↓
+     obj.name     obj.full_name   obj.login()</code></pre>
+<p>Or, in plain English:</p>
+<blockquote class="blockquote">
+<p><strong>Attribute:</strong> “What information does the object store?”</p>
+<p><strong><code>@property</code>:</strong> “What is the object’s current calculated characteristic?”</p>
+<p><strong>Method:</strong> “What can the object do?”</p>
+</blockquote>
+<hr>
+</section>
+<section id="key-takeaways" class="level1">
+<h1>Key Takeaways</h1>
+<p>The most important ideas to remember are:</p>
+<ol type="1">
+<li><p><strong>A regular attribute stores data directly.</strong></p>
+<pre class="text"><code>self.first_name = "Bruce"</code></pre></li>
+<li><p><strong>A <code>@property</code> calculates a characteristic dynamically.</strong></p>
+<pre class="text"><code>@property
+def full_name(self):
+    return self.first_name + " " + self.last_name</code></pre></li>
+<li><p><strong>A method represents an operation or action.</strong></p>
+<pre class="text"><code>def login(self):
+    ...</code></pre></li>
+<li><p><strong>Properties are accessed without parentheses.</strong></p>
+<pre class="text"><code>user.full_name</code></pre></li>
+<li><p><strong>Methods are called with parentheses.</strong></p>
+<pre class="text"><code>user.login()</code></pre></li>
+<li><p><strong>A property is especially useful when its value depends on other attributes.</strong></p>
+<pre class="text"><code>width + height
+     ↓
+   area</code></pre></li>
+<li><p><strong>A property automatically stays synchronized with the object’s current state.</strong></p></li>
+</ol>
+<p>The simplest way to remember the distinction is:</p>
+<blockquote class="blockquote">
+<p><strong>Methods DO things. Properties DESCRIBE things.</strong></p>
+</blockquote>
+<p>Or even more simply:</p>
+<pre class="text"><code>METHOD
+   ↓
+"Do this!"
+
+@property
+   ↓
+"What is your current value?"</code></pre>
+<p>Once this mental model becomes natural, <code>@property</code> becomes much less mysterious. You can start recognizing when a value should be treated as an <strong>action</strong>, a <strong>stored attribute</strong>, or a <strong>dynamic characteristic</strong>.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Python</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/python/decorator (@property)/</guid>
+  <pubDate>Tue, 04 Aug 2026 16:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Flexible Arguments</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/python/flexible-arguments/</link>
+  <description><![CDATA[ 
+
+
+
+
+
 <section id="flexible-classes-with-args-and-kwargs" class="level1">
 <h1>Flexible Classes with <code>*args</code> and <code>**kwargs</code></h1>
 <p>Sometimes, when you build a class, you don’t know exactly how much information the user will provide.</p>
@@ -905,104 +1184,474 @@ alice_account.balance
 bob_account.balance
 # 0.0</code></pre>
 <p>The same class can therefore be used to create as many independent bank accounts as we need.</p>
-<hr>
-</section>
-<section id="the-big-picture" class="level1">
-<h1>The Big Picture</h1>
-<p>The most important idea to remember is:</p>
-<blockquote class="blockquote">
-<p><strong>A class is a blueprint. An object is a specific instance created from that blueprint.</strong></p>
-</blockquote>
-<p>Classes allow us to package <strong>data</strong> and <strong>actions</strong> together.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 26%">
-<col style="width: 23%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">OOP Concept</th>
-<th style="text-align: left;">Python Example</th>
-<th style="text-align: left;">Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><strong>Class</strong></td>
-<td style="text-align: left;"><code>BankAccount</code></td>
-<td style="text-align: left;">Blueprint</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>Object</strong></td>
-<td style="text-align: left;"><code>alice_account</code></td>
-<td style="text-align: left;">A specific instance</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>Attribute</strong></td>
-<td style="text-align: left;"><code>self.balance</code></td>
-<td style="text-align: left;">Data belonging to the object</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>Method</strong></td>
-<td style="text-align: left;"><code>deposit()</code></td>
-<td style="text-align: left;">An action the object can perform</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong><code>self</code></strong></td>
-<td style="text-align: left;"><code>self.balance</code></td>
-<td style="text-align: left;">Refers to the current object</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>Constructor</strong></td>
-<td style="text-align: left;"><code>__init__()</code></td>
-<td style="text-align: left;">Sets up a new object</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>Default value</strong></td>
-<td style="text-align: left;"><code>balance=0.0</code></td>
-<td style="text-align: left;">Provides a fallback value</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong><code>None</code></strong></td>
-<td style="text-align: left;"><code>phone=None</code></td>
-<td style="text-align: left;">Represents missing information</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong><code>*args</code></strong></td>
-<td style="text-align: left;"><code>*toppings</code></td>
-<td style="text-align: left;">Collects extra unnamed arguments</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong><code>**kwargs</code></strong></td>
-<td style="text-align: left;"><code>**options</code></td>
-<td style="text-align: left;">Collects extra named arguments</td>
-</tr>
-</tbody>
-</table>
-<p>A useful mental model is:</p>
-<pre class="text"><code>             CLASS
-          "The Blueprint"
-                │
-        ┌───────┼───────┐
-        ↓       ↓       ↓
-     Object   Object   Object
-        │       │       │
-        ↓       ↓       ↓
-      Data    Data    Data
-        +       +       +
-     Actions  Actions  Actions</code></pre>
-<p>Once you understand <strong>classes, objects, attributes, methods, <code>self</code>, default values, <code>None</code>, <code>*args</code>, and <code>**kwargs</code></strong>, you have learned the foundation for creating flexible Python classes.</p>
-<blockquote class="blockquote">
-<p><strong>Start with a blueprint, give each object its own data, and use methods to define what each object can do.</strong></p>
-</blockquote>
 
 
 </section>
 
  ]]></description>
   <category>Python</category>
-  <guid>https://jerryleung16.github.io/my-math-notes/posts/python/class/</guid>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/python/flexible-arguments/</guid>
+  <pubDate>Tue, 04 Aug 2026 16:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Classes in Python: A Beginner’s Guide to Object-Oriented Programming</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/python/intro-to-class/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="introduction-to-object-oriented-programming-with-python" class="level1">
+<h1>Introduction to Object-Oriented Programming with Python</h1>
+<p>Welcome to the world of <strong>Object-Oriented Programming (OOP)</strong>!</p>
+<p>The name may sound complicated, but the basic idea is quite simple: <strong>OOP is a way of organizing programs by modeling things as objects</strong>, similar to the way we think about objects in the real world.</p>
+<p>A helpful way to understand OOP is to imagine a <strong>cookie cutter</strong>.</p>
+<ul>
+<li><strong>A Class</strong> is the <em>cookie cutter</em>. It is a blueprint or template that describes what something should look like and what it can do. You cannot eat the cookie cutter, but it determines the shape of every cookie you make.</li>
+<li><strong>An Object</strong> is the <em>cookie</em>. It is an actual thing created from the class. One cookie cutter can be used to make many different cookies.</li>
+</ul>
+<p>For example, one <code>Dog</code> class can be used to create many different dog objects:</p>
+<pre class="text"><code>Dog class
+   ↓
+ ┌─────────┬─────────┬─────────┐
+ ↓         ↓         ↓
+Buddy     Daisy     Max</code></pre>
+<p>Each object follows the same blueprint but can have its own data.</p>
+<hr>
+<section id="the-4-key-oop-vocabulary-words" class="level2">
+<h2 class="anchored" data-anchor-id="the-4-key-oop-vocabulary-words">The 4 Key OOP Vocabulary Words</h2>
+<p>Before writing code, let’s learn four terms that you will encounter constantly when working with classes.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 51%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: left;">Simple Meaning</th>
+<th style="text-align: left;">Real-World Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Class</strong></td>
+<td style="text-align: left;">A blueprint or template for creating objects.</td>
+<td style="text-align: left;">The general idea of a “Dog”</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Object</strong> (Instance)</td>
+<td style="text-align: left;">A specific item created from a class.</td>
+<td style="text-align: left;">Your pet dog, Fido</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Attribute</strong></td>
+<td style="text-align: left;">Data stored inside an object that describes it.</td>
+<td style="text-align: left;">Name, breed, age, fur color</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Method</strong></td>
+<td style="text-align: left;">A function inside a class that describes an action.</td>
+<td style="text-align: left;">Barking, sitting, fetching</td>
+</tr>
+</tbody>
+</table>
+<p>A useful way to remember the difference is:</p>
+<blockquote class="blockquote">
+<p><strong>Attributes describe what an object has. Methods describe what an object can do.</strong></p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="building-our-first-class" class="level1">
+<h1>Building Our First Class</h1>
+<p>Let’s turn the general idea of a <strong>Dog</strong> into Python code.</p>
+<p>We want our <code>Dog</code> class to have:</p>
+<ul>
+<li><strong>Attributes</strong>: a name and an age</li>
+<li><strong>Method</strong>: the ability to bark</li>
+</ul>
+<pre class="text"><code>class Dog:
+
+    # The constructor: used to initialize a new object
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    # A method: an action the dog can perform
+    def bark(self):
+        print(f"{self.name} says Woof!")</code></pre>
+<section id="breaking-down-the-code" class="level2">
+<h2 class="anchored" data-anchor-id="breaking-down-the-code">Breaking Down the Code</h2>
+<p>Let’s examine the code one piece at a time.</p>
+<section id="class-dog" class="level3">
+<h3 class="anchored" data-anchor-id="class-dog">1. <code>class Dog:</code></h3>
+<pre class="text"><code>class Dog:</code></pre>
+<p>This tells Python:</p>
+<blockquote class="blockquote">
+<p>“I want to create a new blueprint called <code>Dog</code>.”</p>
+</blockquote>
+<p>By convention, Python class names usually begin with a <strong>capital letter</strong>.</p>
+<hr>
+</section>
+<section id="def-__init__self-name-age" class="level3">
+<h3 class="anchored" data-anchor-id="def-__init__self-name-age">2. <code>def __init__(self, name, age):</code></h3>
+<pre class="text"><code>def __init__(self, name, age):</code></pre>
+<p><code>__init__</code> is a special method called the <strong>constructor</strong>.</p>
+<p>It runs automatically whenever we create a new object from the class.</p>
+<p>The constructor allows us to provide the initial information needed to set up our object.</p>
+<p>For example:</p>
+<pre class="text"><code>Dog("Buddy", 3)</code></pre>
+<p>Python uses <code>"Buddy"</code> as the name and <code>3</code> as the age when setting up the new dog.</p>
+<hr>
+</section>
+<section id="self.name-name" class="level3">
+<h3 class="anchored" data-anchor-id="self.name-name">3. <code>self.name = name</code></h3>
+<pre class="text"><code>self.name = name
+self.age = age</code></pre>
+<p>The keyword <code>self</code> refers to <strong>the particular object currently being created or used</strong>.</p>
+<p>So:</p>
+<pre class="text"><code>self.name = name</code></pre>
+<p>can be understood as:</p>
+<blockquote class="blockquote">
+<p>“Take the name provided by the user and store it as the name of <strong>this specific dog</strong>.”</p>
+</blockquote>
+<p>Similarly:</p>
+<pre class="text"><code>self.age = age</code></pre>
+<p>means:</p>
+<blockquote class="blockquote">
+<p>“Store this age as the age of <strong>this specific dog</strong>.”</p>
+</blockquote>
+<hr>
+</section>
+<section id="def-barkself" class="level3">
+<h3 class="anchored" data-anchor-id="def-barkself">4. <code>def bark(self):</code></h3>
+<pre class="text"><code>def bark(self):
+    print(f"{self.name} says Woof!")</code></pre>
+<p>This is a function defined inside a class, so we call it a <strong>method</strong>.</p>
+<p>The method also receives <code>self</code> because the dog needs to know <strong>which dog</strong> is performing the action.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="bringing-the-class-to-life" class="level1">
+<h1>Bringing the Class to Life</h1>
+<p>Our class is only a blueprint so far.</p>
+<p>Now let’s use it to create actual objects.</p>
+<pre class="text"><code># Create the first dog
+dog_1 = Dog("Buddy", 3)
+
+# Create a second dog
+dog_2 = Dog("Daisy", 5)</code></pre>
+<p>We have now created two separate objects:</p>
+<ul>
+<li><code>dog_1</code> represents Buddy, who is 3 years old.</li>
+<li><code>dog_2</code> represents Daisy, who is 5 years old.</li>
+</ul>
+<p>Both objects were created from the same <code>Dog</code> class, but each object has its <strong>own data</strong>.</p>
+<hr>
+<section id="accessing-attributes-and-methods" class="level2">
+<h2 class="anchored" data-anchor-id="accessing-attributes-and-methods">Accessing Attributes and Methods</h2>
+<p>We can interact with an object using the <strong>dot operator (<code>.</code>)</strong>.</p>
+<section id="accessing-attributes" class="level3">
+<h3 class="anchored" data-anchor-id="accessing-attributes">Accessing Attributes</h3>
+<pre class="text"><code>print(dog_1.name)
+# Buddy
+
+print(dog_2.age)
+# 5</code></pre>
+<p>The dot tells Python which attribute belonging to the object we want to access.</p>
+</section>
+<section id="calling-methods" class="level3">
+<h3 class="anchored" data-anchor-id="calling-methods">Calling Methods</h3>
+<pre class="text"><code>dog_1.bark()
+# Buddy says Woof!
+
+dog_2.bark()
+# Daisy says Woof!</code></pre>
+<p>Notice how the same method can produce different results depending on the object that calls it.</p>
+<p>This is one of the key ideas behind OOP.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="why-do-we-use-classes" class="level1">
+<h1>Why Do We Use Classes?</h1>
+<p>For a very small program, you may not need classes.</p>
+<p>For example, if you are writing a quick program to calculate your taxes, a class might be unnecessary.</p>
+<p>However, as programs become larger—such as:</p>
+<ul>
+<li>video games,</li>
+<li>web applications,</li>
+<li>data dashboards,</li>
+<li>simulations, or</li>
+<li>business software,</li>
+</ul>
+<p>classes can make your code much easier to organize.</p>
+<p>Imagine a video game with two players.</p>
+<p>Without classes, you might have variables such as:</p>
+<pre class="text"><code>player_1_health
+player_1_score
+player_2_health
+player_2_score</code></pre>
+<p>As the game becomes more complicated, you could end up with dozens or even hundreds of related variables.</p>
+<p>Instead, we can create a <code>Player</code> class and then create multiple player objects from it.</p>
+<pre class="text"><code>Player class
+      ↓
+ ┌────┴────┐
+ ↓         ↓
+Player 1  Player 2</code></pre>
+<p>Each player object can keep track of its own health, score, name, and other information.</p>
+<blockquote class="blockquote">
+<p><strong>A class lets us organize related data and actions into one reusable structure.</strong></p>
+</blockquote>
+<hr>
+</section>
+<section id="understanding-self" class="level1">
+<h1>Understanding <code>self</code></h1>
+<p>The keyword <code>self</code> is one of the most important concepts for beginners learning Python classes.</p>
+<p>Think of a class as a blueprint for building robots.</p>
+<p>Suppose we use the blueprint to build two robots:</p>
+<pre class="text"><code>Robot class
+     ↓
+ ┌───┴────┐
+ ↓        ↓
+Wall-E   R2-D2</code></pre>
+<p>Both robots are built from exactly the same blueprint.</p>
+<p>However, if we ask Wall-E to introduce itself, we want <strong>Wall-E</strong> to give its name—not R2-D2.</p>
+<p>In Python, <code>self</code> means:</p>
+<blockquote class="blockquote">
+<p><strong>“this particular object”</strong></p>
+</blockquote>
+<p>or, more casually:</p>
+<blockquote class="blockquote">
+<p><strong>“me” / “my”</strong></p>
+</blockquote>
+<p>Let’s see this in action.</p>
+<pre class="text"><code>class Robot:
+
+    # self.name means "MY name"
+    def __init__(self, name):
+        self.name = name
+
+    # self.name means "MY name"
+    def introduce(self):
+        print(f"Hello, my name is {self.name}.")
+
+
+# Create two different robot objects
+robot_1 = Robot("Wall-E")
+robot_2 = Robot("R2-D2")
+
+
+robot_1.introduce()
+# Hello, my name is Wall-E.
+
+robot_2.introduce()
+# Hello, my name is R2-D2.</code></pre>
+<p>Even though both robots use exactly the same class definition, each object stores its own name.</p>
+<pre class="text"><code>robot_1.name → "Wall-E"
+robot_2.name → "R2-D2"</code></pre>
+<p>That’s the power of <code>self</code>.</p>
+<hr>
+</section>
+<section id="what-happens-if-you-forget-self" class="level1">
+<h1>What Happens If You Forget <code>self</code>?</h1>
+<p>One of the most common mistakes beginners make is forgetting <code>self</code> when defining a method.</p>
+<p>Consider this example:</p>
+<pre class="text"><code>class Robot:
+
+    # Oops! We forgot self.
+    def beep():
+        print("Beep boop!")
+
+
+my_robot = Robot()
+my_robot.beep()</code></pre>
+<p>Python will produce an error similar to:</p>
+<pre class="text"><code>TypeError: Robot.beep() takes 0 positional arguments but 1 was given</code></pre>
+<p>At first, this error can seem strange.</p>
+<p>You might think:</p>
+<blockquote class="blockquote">
+<p>“I didn’t give <code>beep()</code> any arguments! The parentheses are empty!”</p>
+</blockquote>
+<p>So where did the mysterious <strong>1 argument</strong> come from?</p>
+<hr>
+<section id="python-is-doing-something-behind-the-scenes" class="level2">
+<h2 class="anchored" data-anchor-id="python-is-doing-something-behind-the-scenes">Python Is Doing Something Behind the Scenes</h2>
+<p>When you write:</p>
+<pre class="text"><code>my_robot.beep()</code></pre>
+<p>Python effectively treats this as:</p>
+<pre class="text"><code>Robot.beep(my_robot)</code></pre>
+<p>In other words, Python automatically passes the object that called the method as the first argument.</p>
+<p>That object needs somewhere to go.</p>
+<p>That is why we write:</p>
+<pre class="text"><code>def beep(self):</code></pre>
+<p>The <code>self</code> parameter is the place where Python passes the current object.</p>
+<p>You can think of it like this:</p>
+<pre class="text"><code>my_robot.beep()
+      ↓
+Python automatically passes my_robot
+      ↓
+Robot.beep(my_robot)
+      ↓
+             self
+              ↓
+        "this robot"</code></pre>
+<p>So when you forget <code>self</code>, Python is essentially saying:</p>
+<blockquote class="blockquote">
+<p>“I tried to give you the robot object, but your method doesn’t have a parameter to receive it!”</p>
+</blockquote>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Python</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/python/intro-to-class/</guid>
+  <pubDate>Tue, 04 Aug 2026 16:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Optional Attributes</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/python/optional-attributes/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="optional-attributes" class="level1">
+<h1>Optional Attributes</h1>
+<p>An <strong>optional attribute</strong> simply means that when you create a new object, you <strong>don’t have to provide that particular piece of information</strong>.</p>
+<p>If you leave it out, Python uses a <strong>default value</strong> instead.</p>
+<p>We actually used an optional attribute earlier in our <code>BankAccount</code> example.</p>
+<p>Consider:</p>
+<pre class="text"><code>def __init__(self, owner, starting_balance=0.0):</code></pre>
+<p>Here:</p>
+<ul>
+<li><code>owner</code> is <strong>required</strong>.</li>
+<li><code>starting_balance</code> is <strong>optional</strong>.</li>
+<li>If no starting balance is provided, Python uses <code>0.0</code>.</li>
+</ul>
+<p>For example:</p>
+<pre class="text"><code>alice_account = BankAccount("Alice", 100.0)</code></pre>
+<p>Alice starts with <code>$100</code>.</p>
+<p>But:</p>
+<pre class="text"><code>bob_account = BankAccount("Bob")</code></pre>
+<p>Bob automatically starts with <code>$0</code>.</p>
+<p>This is the basic idea behind optional attributes.</p>
+<hr>
+<section id="the-default-value-method" class="level2">
+<h2 class="anchored" data-anchor-id="the-default-value-method">1. The “Default Value” Method</h2>
+<p>The most straightforward way to create an optional attribute is to give the parameter a <strong>default value</strong> inside <code>__init__</code>.</p>
+<p>You use the equals sign (<code>=</code>) to specify the default.</p>
+<pre class="text"><code>class Dog:
+
+    # name is REQUIRED.
+    # collar_color is OPTIONAL and defaults to "Red".
+    def __init__(self, name, collar_color="Red"):
+        self.name = name
+        self.collar_color = collar_color
+
+
+# We only provide the name.
+# Python automatically uses "Red".
+dog_1 = Dog("Buddy")
+
+print(f"{dog_1.name} has a {dog_1.collar_color} collar.")
+# Buddy has a Red collar.
+
+
+# We provide both values.
+# Python uses "Blue" instead of the default.
+dog_2 = Dog("Daisy", "Blue")
+
+print(f"{dog_2.name} has a {dog_2.collar_color} collar.")
+# Daisy has a Blue collar.</code></pre>
+<p>The important idea is:</p>
+<pre class="text"><code>collar_color="Red"</code></pre>
+<p>means:</p>
+<blockquote class="blockquote">
+<p>“If the user doesn’t provide a collar color, use <code>Red</code>.”</p>
+</blockquote>
+<p>But if the user does provide a value:</p>
+<pre class="text"><code>Dog("Daisy", "Blue")</code></pre>
+<p>Python uses <code>"Blue"</code> instead.</p>
+<hr>
+</section>
+<section id="the-none-method-when-information-is-missing" class="level2">
+<h2 class="anchored" data-anchor-id="the-none-method-when-information-is-missing">2. The <code>None</code> Method — When Information Is Missing</h2>
+<p>Sometimes an attribute is optional because the information <strong>might not exist yet</strong>.</p>
+<p>In Python, we can use the special value <code>None</code> to represent:</p>
+<blockquote class="blockquote">
+<p><strong>“There is currently no value.”</strong></p>
+</blockquote>
+<p>For example, imagine creating a user profile where a phone number is optional.</p>
+<pre class="text"><code>class UserProfile:
+
+    # phone_number is optional.
+    # If no number is provided, it is set to None.
+    def __init__(self, username, phone_number=None):
+        self.username = username
+        self.phone_number = phone_number
+
+    def show_profile(self):
+        print(f"User: {self.username}")
+
+        # Check whether a phone number was provided.
+        if self.phone_number is None:
+            print("Phone: No number provided.")
+        else:
+            print(f"Phone: {self.phone_number}")
+
+
+# Create a user without a phone number
+user_1 = UserProfile("CoolSkater99")
+
+user_1.show_profile()</code></pre>
+<p>The output would be:</p>
+<pre class="text"><code>User: CoolSkater99
+Phone: No number provided.</code></pre>
+<p>Here, <code>None</code> doesn’t mean that the phone number is zero or an empty string.</p>
+<p>It means:</p>
+<blockquote class="blockquote">
+<p><strong>“No phone number has been provided.”</strong></p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="the-golden-rule-of-optional-attributes" class="level1">
+<h1>⚠️ The Golden Rule of Optional Attributes</h1>
+<p>When defining your <code>__init__</code> method, <strong>all required parameters must come before optional parameters</strong>.</p>
+<section id="correct" class="level3">
+<h3 class="anchored" data-anchor-id="correct">✅ Correct</h3>
+<pre class="text"><code>def __init__(self, name, age, color="Brown"):</code></pre>
+<p>Here:</p>
+<ul>
+<li><code>name</code> is required.</li>
+<li><code>age</code> is required.</li>
+<li><code>color</code> is optional.</li>
+</ul>
+</section>
+<section id="incorrect" class="level3">
+<h3 class="anchored" data-anchor-id="incorrect">❌ Incorrect</h3>
+<pre class="text"><code>def __init__(self, color="Brown", name, age):</code></pre>
+<p>This causes a <code>SyntaxError</code> because Python does not allow a required parameter to appear after a parameter with a default value.</p>
+<p>A simple rule to remember is:</p>
+<blockquote class="blockquote">
+<p><strong>Required first, optional last.</strong></p>
+</blockquote>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Python</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/python/optional-attributes/</guid>
   <pubDate>Tue, 04 Aug 2026 16:00:00 GMT</pubDate>
 </item>
 <item>
