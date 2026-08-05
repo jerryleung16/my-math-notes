@@ -10,9 +10,9 @@
 <atom:link href="https://jerryleung16.github.io/my-math-notes/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Tue, 04 Aug 2026 16:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 07 Aug 2026 16:00:00 GMT</lastBuildDate>
 <item>
-  <title>Decorator (@property)</title>
+  <title>4. Decorator (@property)</title>
   <link>https://jerryleung16.github.io/my-math-notes/posts/python/decorator (@property)/</link>
   <description><![CDATA[ 
 
@@ -717,10 +717,10 @@ def full_name(self):
  ]]></description>
   <category>Python</category>
   <guid>https://jerryleung16.github.io/my-math-notes/posts/python/decorator (@property)/</guid>
-  <pubDate>Tue, 04 Aug 2026 16:00:00 GMT</pubDate>
+  <pubDate>Fri, 07 Aug 2026 16:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>Flexible Arguments</title>
+  <title>3. Flexible Arguments</title>
   <link>https://jerryleung16.github.io/my-math-notes/posts/python/flexible-arguments/</link>
   <description><![CDATA[ 
 
@@ -1191,7 +1191,147 @@ bob_account.balance
  ]]></description>
   <category>Python</category>
   <guid>https://jerryleung16.github.io/my-math-notes/posts/python/flexible-arguments/</guid>
-  <pubDate>Tue, 04 Aug 2026 16:00:00 GMT</pubDate>
+  <pubDate>Thu, 06 Aug 2026 16:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>2. Optional Attributes</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/python/optional-attributes/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="optional-attributes" class="level1">
+<h1>Optional Attributes</h1>
+<p>An <strong>optional attribute</strong> simply means that when you create a new object, you <strong>don’t have to provide that particular piece of information</strong>.</p>
+<p>If you leave it out, Python uses a <strong>default value</strong> instead.</p>
+<p>We actually used an optional attribute earlier in our <code>BankAccount</code> example.</p>
+<p>Consider:</p>
+<pre class="text"><code>def __init__(self, owner, starting_balance=0.0):</code></pre>
+<p>Here:</p>
+<ul>
+<li><code>owner</code> is <strong>required</strong>.</li>
+<li><code>starting_balance</code> is <strong>optional</strong>.</li>
+<li>If no starting balance is provided, Python uses <code>0.0</code>.</li>
+</ul>
+<p>For example:</p>
+<pre class="text"><code>alice_account = BankAccount("Alice", 100.0)</code></pre>
+<p>Alice starts with <code>$100</code>.</p>
+<p>But:</p>
+<pre class="text"><code>bob_account = BankAccount("Bob")</code></pre>
+<p>Bob automatically starts with <code>$0</code>.</p>
+<p>This is the basic idea behind optional attributes.</p>
+<hr>
+<section id="the-default-value-method" class="level2">
+<h2 class="anchored" data-anchor-id="the-default-value-method">1. The “Default Value” Method</h2>
+<p>The most straightforward way to create an optional attribute is to give the parameter a <strong>default value</strong> inside <code>__init__</code>.</p>
+<p>You use the equals sign (<code>=</code>) to specify the default.</p>
+<pre class="text"><code>class Dog:
+
+    # name is REQUIRED.
+    # collar_color is OPTIONAL and defaults to "Red".
+    def __init__(self, name, collar_color="Red"):
+        self.name = name
+        self.collar_color = collar_color
+
+
+# We only provide the name.
+# Python automatically uses "Red".
+dog_1 = Dog("Buddy")
+
+print(f"{dog_1.name} has a {dog_1.collar_color} collar.")
+# Buddy has a Red collar.
+
+
+# We provide both values.
+# Python uses "Blue" instead of the default.
+dog_2 = Dog("Daisy", "Blue")
+
+print(f"{dog_2.name} has a {dog_2.collar_color} collar.")
+# Daisy has a Blue collar.</code></pre>
+<p>The important idea is:</p>
+<pre class="text"><code>collar_color="Red"</code></pre>
+<p>means:</p>
+<blockquote class="blockquote">
+<p>“If the user doesn’t provide a collar color, use <code>Red</code>.”</p>
+</blockquote>
+<p>But if the user does provide a value:</p>
+<pre class="text"><code>Dog("Daisy", "Blue")</code></pre>
+<p>Python uses <code>"Blue"</code> instead.</p>
+<hr>
+</section>
+<section id="the-none-method-when-information-is-missing" class="level2">
+<h2 class="anchored" data-anchor-id="the-none-method-when-information-is-missing">2. The <code>None</code> Method — When Information Is Missing</h2>
+<p>Sometimes an attribute is optional because the information <strong>might not exist yet</strong>.</p>
+<p>In Python, we can use the special value <code>None</code> to represent:</p>
+<blockquote class="blockquote">
+<p><strong>“There is currently no value.”</strong></p>
+</blockquote>
+<p>For example, imagine creating a user profile where a phone number is optional.</p>
+<pre class="text"><code>class UserProfile:
+
+    # phone_number is optional.
+    # If no number is provided, it is set to None.
+    def __init__(self, username, phone_number=None):
+        self.username = username
+        self.phone_number = phone_number
+
+    def show_profile(self):
+        print(f"User: {self.username}")
+
+        # Check whether a phone number was provided.
+        if self.phone_number is None:
+            print("Phone: No number provided.")
+        else:
+            print(f"Phone: {self.phone_number}")
+
+
+# Create a user without a phone number
+user_1 = UserProfile("CoolSkater99")
+
+user_1.show_profile()</code></pre>
+<p>The output would be:</p>
+<pre class="text"><code>User: CoolSkater99
+Phone: No number provided.</code></pre>
+<p>Here, <code>None</code> doesn’t mean that the phone number is zero or an empty string.</p>
+<p>It means:</p>
+<blockquote class="blockquote">
+<p><strong>“No phone number has been provided.”</strong></p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="the-golden-rule-of-optional-attributes" class="level1">
+<h1>⚠️ The Golden Rule of Optional Attributes</h1>
+<p>When defining your <code>__init__</code> method, <strong>all required parameters must come before optional parameters</strong>.</p>
+<section id="correct" class="level3">
+<h3 class="anchored" data-anchor-id="correct">✅ Correct</h3>
+<pre class="text"><code>def __init__(self, name, age, color="Brown"):</code></pre>
+<p>Here:</p>
+<ul>
+<li><code>name</code> is required.</li>
+<li><code>age</code> is required.</li>
+<li><code>color</code> is optional.</li>
+</ul>
+</section>
+<section id="incorrect" class="level3">
+<h3 class="anchored" data-anchor-id="incorrect">❌ Incorrect</h3>
+<pre class="text"><code>def __init__(self, color="Brown", name, age):</code></pre>
+<p>This causes a <code>SyntaxError</code> because Python does not allow a required parameter to appear after a parameter with a default value.</p>
+<p>A simple rule to remember is:</p>
+<blockquote class="blockquote">
+<p><strong>Required first, optional last.</strong></p>
+</blockquote>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Python</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/python/optional-attributes/</guid>
+  <pubDate>Wed, 05 Aug 2026 16:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Classes in Python: A Beginner’s Guide to Object-Oriented Programming</title>
@@ -1512,146 +1652,6 @@ Robot.beep(my_robot)
  ]]></description>
   <category>Python</category>
   <guid>https://jerryleung16.github.io/my-math-notes/posts/python/intro-to-class/</guid>
-  <pubDate>Tue, 04 Aug 2026 16:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Optional Attributes</title>
-  <link>https://jerryleung16.github.io/my-math-notes/posts/python/optional-attributes/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="optional-attributes" class="level1">
-<h1>Optional Attributes</h1>
-<p>An <strong>optional attribute</strong> simply means that when you create a new object, you <strong>don’t have to provide that particular piece of information</strong>.</p>
-<p>If you leave it out, Python uses a <strong>default value</strong> instead.</p>
-<p>We actually used an optional attribute earlier in our <code>BankAccount</code> example.</p>
-<p>Consider:</p>
-<pre class="text"><code>def __init__(self, owner, starting_balance=0.0):</code></pre>
-<p>Here:</p>
-<ul>
-<li><code>owner</code> is <strong>required</strong>.</li>
-<li><code>starting_balance</code> is <strong>optional</strong>.</li>
-<li>If no starting balance is provided, Python uses <code>0.0</code>.</li>
-</ul>
-<p>For example:</p>
-<pre class="text"><code>alice_account = BankAccount("Alice", 100.0)</code></pre>
-<p>Alice starts with <code>$100</code>.</p>
-<p>But:</p>
-<pre class="text"><code>bob_account = BankAccount("Bob")</code></pre>
-<p>Bob automatically starts with <code>$0</code>.</p>
-<p>This is the basic idea behind optional attributes.</p>
-<hr>
-<section id="the-default-value-method" class="level2">
-<h2 class="anchored" data-anchor-id="the-default-value-method">1. The “Default Value” Method</h2>
-<p>The most straightforward way to create an optional attribute is to give the parameter a <strong>default value</strong> inside <code>__init__</code>.</p>
-<p>You use the equals sign (<code>=</code>) to specify the default.</p>
-<pre class="text"><code>class Dog:
-
-    # name is REQUIRED.
-    # collar_color is OPTIONAL and defaults to "Red".
-    def __init__(self, name, collar_color="Red"):
-        self.name = name
-        self.collar_color = collar_color
-
-
-# We only provide the name.
-# Python automatically uses "Red".
-dog_1 = Dog("Buddy")
-
-print(f"{dog_1.name} has a {dog_1.collar_color} collar.")
-# Buddy has a Red collar.
-
-
-# We provide both values.
-# Python uses "Blue" instead of the default.
-dog_2 = Dog("Daisy", "Blue")
-
-print(f"{dog_2.name} has a {dog_2.collar_color} collar.")
-# Daisy has a Blue collar.</code></pre>
-<p>The important idea is:</p>
-<pre class="text"><code>collar_color="Red"</code></pre>
-<p>means:</p>
-<blockquote class="blockquote">
-<p>“If the user doesn’t provide a collar color, use <code>Red</code>.”</p>
-</blockquote>
-<p>But if the user does provide a value:</p>
-<pre class="text"><code>Dog("Daisy", "Blue")</code></pre>
-<p>Python uses <code>"Blue"</code> instead.</p>
-<hr>
-</section>
-<section id="the-none-method-when-information-is-missing" class="level2">
-<h2 class="anchored" data-anchor-id="the-none-method-when-information-is-missing">2. The <code>None</code> Method — When Information Is Missing</h2>
-<p>Sometimes an attribute is optional because the information <strong>might not exist yet</strong>.</p>
-<p>In Python, we can use the special value <code>None</code> to represent:</p>
-<blockquote class="blockquote">
-<p><strong>“There is currently no value.”</strong></p>
-</blockquote>
-<p>For example, imagine creating a user profile where a phone number is optional.</p>
-<pre class="text"><code>class UserProfile:
-
-    # phone_number is optional.
-    # If no number is provided, it is set to None.
-    def __init__(self, username, phone_number=None):
-        self.username = username
-        self.phone_number = phone_number
-
-    def show_profile(self):
-        print(f"User: {self.username}")
-
-        # Check whether a phone number was provided.
-        if self.phone_number is None:
-            print("Phone: No number provided.")
-        else:
-            print(f"Phone: {self.phone_number}")
-
-
-# Create a user without a phone number
-user_1 = UserProfile("CoolSkater99")
-
-user_1.show_profile()</code></pre>
-<p>The output would be:</p>
-<pre class="text"><code>User: CoolSkater99
-Phone: No number provided.</code></pre>
-<p>Here, <code>None</code> doesn’t mean that the phone number is zero or an empty string.</p>
-<p>It means:</p>
-<blockquote class="blockquote">
-<p><strong>“No phone number has been provided.”</strong></p>
-</blockquote>
-<hr>
-</section>
-</section>
-<section id="the-golden-rule-of-optional-attributes" class="level1">
-<h1>⚠️ The Golden Rule of Optional Attributes</h1>
-<p>When defining your <code>__init__</code> method, <strong>all required parameters must come before optional parameters</strong>.</p>
-<section id="correct" class="level3">
-<h3 class="anchored" data-anchor-id="correct">✅ Correct</h3>
-<pre class="text"><code>def __init__(self, name, age, color="Brown"):</code></pre>
-<p>Here:</p>
-<ul>
-<li><code>name</code> is required.</li>
-<li><code>age</code> is required.</li>
-<li><code>color</code> is optional.</li>
-</ul>
-</section>
-<section id="incorrect" class="level3">
-<h3 class="anchored" data-anchor-id="incorrect">❌ Incorrect</h3>
-<pre class="text"><code>def __init__(self, color="Brown", name, age):</code></pre>
-<p>This causes a <code>SyntaxError</code> because Python does not allow a required parameter to appear after a parameter with a default value.</p>
-<p>A simple rule to remember is:</p>
-<blockquote class="blockquote">
-<p><strong>Required first, optional last.</strong></p>
-</blockquote>
-
-
-</section>
-</section>
-
- ]]></description>
-  <category>Python</category>
-  <guid>https://jerryleung16.github.io/my-math-notes/posts/python/optional-attributes/</guid>
   <pubDate>Tue, 04 Aug 2026 16:00:00 GMT</pubDate>
 </item>
 <item>

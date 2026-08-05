@@ -2,49 +2,49 @@
   {
     "objectID": "posts/python/optional-attributes/index.html",
     "href": "posts/python/optional-attributes/index.html",
-    "title": "Optional Attributes",
+    "title": "2. Optional Attributes",
     "section": "",
     "text": "An optional attribute simply means that when you create a new object, you don’t have to provide that particular piece of information.\nIf you leave it out, Python uses a default value instead.\nWe actually used an optional attribute earlier in our BankAccount example.\nConsider:\ndef __init__(self, owner, starting_balance=0.0):\nHere:\n\nowner is required.\nstarting_balance is optional.\nIf no starting balance is provided, Python uses 0.0.\n\nFor example:\nalice_account = BankAccount(\"Alice\", 100.0)\nAlice starts with $100.\nBut:\nbob_account = BankAccount(\"Bob\")\nBob automatically starts with $0.\nThis is the basic idea behind optional attributes.\n\n\n\nThe most straightforward way to create an optional attribute is to give the parameter a default value inside __init__.\nYou use the equals sign (=) to specify the default.\nclass Dog:\n\n    # name is REQUIRED.\n    # collar_color is OPTIONAL and defaults to \"Red\".\n    def __init__(self, name, collar_color=\"Red\"):\n        self.name = name\n        self.collar_color = collar_color\n\n\n# We only provide the name.\n# Python automatically uses \"Red\".\ndog_1 = Dog(\"Buddy\")\n\nprint(f\"{dog_1.name} has a {dog_1.collar_color} collar.\")\n# Buddy has a Red collar.\n\n\n# We provide both values.\n# Python uses \"Blue\" instead of the default.\ndog_2 = Dog(\"Daisy\", \"Blue\")\n\nprint(f\"{dog_2.name} has a {dog_2.collar_color} collar.\")\n# Daisy has a Blue collar.\nThe important idea is:\ncollar_color=\"Red\"\nmeans:\n\n“If the user doesn’t provide a collar color, use Red.”\n\nBut if the user does provide a value:\nDog(\"Daisy\", \"Blue\")\nPython uses \"Blue\" instead.\n\n\n\n\nSometimes an attribute is optional because the information might not exist yet.\nIn Python, we can use the special value None to represent:\n\n“There is currently no value.”\n\nFor example, imagine creating a user profile where a phone number is optional.\nclass UserProfile:\n\n    # phone_number is optional.\n    # If no number is provided, it is set to None.\n    def __init__(self, username, phone_number=None):\n        self.username = username\n        self.phone_number = phone_number\n\n    def show_profile(self):\n        print(f\"User: {self.username}\")\n\n        # Check whether a phone number was provided.\n        if self.phone_number is None:\n            print(\"Phone: No number provided.\")\n        else:\n            print(f\"Phone: {self.phone_number}\")\n\n\n# Create a user without a phone number\nuser_1 = UserProfile(\"CoolSkater99\")\n\nuser_1.show_profile()\nThe output would be:\nUser: CoolSkater99\nPhone: No number provided.\nHere, None doesn’t mean that the phone number is zero or an empty string.\nIt means:\n\n“No phone number has been provided.”"
   },
   {
     "objectID": "posts/python/optional-attributes/index.html#the-default-value-method",
     "href": "posts/python/optional-attributes/index.html#the-default-value-method",
-    "title": "Optional Attributes",
+    "title": "2. Optional Attributes",
     "section": "",
     "text": "The most straightforward way to create an optional attribute is to give the parameter a default value inside __init__.\nYou use the equals sign (=) to specify the default.\nclass Dog:\n\n    # name is REQUIRED.\n    # collar_color is OPTIONAL and defaults to \"Red\".\n    def __init__(self, name, collar_color=\"Red\"):\n        self.name = name\n        self.collar_color = collar_color\n\n\n# We only provide the name.\n# Python automatically uses \"Red\".\ndog_1 = Dog(\"Buddy\")\n\nprint(f\"{dog_1.name} has a {dog_1.collar_color} collar.\")\n# Buddy has a Red collar.\n\n\n# We provide both values.\n# Python uses \"Blue\" instead of the default.\ndog_2 = Dog(\"Daisy\", \"Blue\")\n\nprint(f\"{dog_2.name} has a {dog_2.collar_color} collar.\")\n# Daisy has a Blue collar.\nThe important idea is:\ncollar_color=\"Red\"\nmeans:\n\n“If the user doesn’t provide a collar color, use Red.”\n\nBut if the user does provide a value:\nDog(\"Daisy\", \"Blue\")\nPython uses \"Blue\" instead."
   },
   {
     "objectID": "posts/python/optional-attributes/index.html#the-none-method-when-information-is-missing",
     "href": "posts/python/optional-attributes/index.html#the-none-method-when-information-is-missing",
-    "title": "Optional Attributes",
+    "title": "2. Optional Attributes",
     "section": "",
     "text": "Sometimes an attribute is optional because the information might not exist yet.\nIn Python, we can use the special value None to represent:\n\n“There is currently no value.”\n\nFor example, imagine creating a user profile where a phone number is optional.\nclass UserProfile:\n\n    # phone_number is optional.\n    # If no number is provided, it is set to None.\n    def __init__(self, username, phone_number=None):\n        self.username = username\n        self.phone_number = phone_number\n\n    def show_profile(self):\n        print(f\"User: {self.username}\")\n\n        # Check whether a phone number was provided.\n        if self.phone_number is None:\n            print(\"Phone: No number provided.\")\n        else:\n            print(f\"Phone: {self.phone_number}\")\n\n\n# Create a user without a phone number\nuser_1 = UserProfile(\"CoolSkater99\")\n\nuser_1.show_profile()\nThe output would be:\nUser: CoolSkater99\nPhone: No number provided.\nHere, None doesn’t mean that the phone number is zero or an empty string.\nIt means:\n\n“No phone number has been provided.”"
   },
   {
     "objectID": "posts/python/flexible-arguments/index.html",
     "href": "posts/python/flexible-arguments/index.html",
-    "title": "Flexible Arguments",
+    "title": "3. Flexible Arguments",
     "section": "",
     "text": "Sometimes, when you build a class, you don’t know exactly how much information the user will provide.\nImagine creating a Pizza class.\nOne customer might order:\nMedium + Extra Cheese\nwhile another customer might order:\nLarge + Pepperoni + Sausage + Onions + Peppers\nIt would be inconvenient to create a separate parameter for every possible topping.\nPython gives us two powerful tools for handling an unlimited number of arguments:\n\n*args\n**kwargs\n\nThe magic is in the asterisks (* and **).\nThe names args and kwargs are simply common naming conventions. They are not special keywords.\nFor example, these work the same way:\n*args\n*toppings\n*items\nand:\n**kwargs\n**options\n**settings\nThe asterisks are what matter."
   },
   {
     "objectID": "posts/python/flexible-arguments/index.html#example-pizza-with-any-number-of-toppings",
     "href": "posts/python/flexible-arguments/index.html#example-pizza-with-any-number-of-toppings",
-    "title": "Flexible Arguments",
+    "title": "3. Flexible Arguments",
     "section": "Example: Pizza with Any Number of Toppings",
     "text": "Example: Pizza with Any Number of Toppings\nclass Pizza:\n\n    # size is required.\n    # *args catches all additional unnamed arguments.\n    def __init__(self, size, *args):\n        self.size = size\n        self.toppings = args\n\n    def describe(self):\n        print(f\"A {self.size} pizza with:\")\n\n        for topping in self.toppings:\n            print(f\"- {topping}\")\n\n\n# One topping\ncheese_pizza = Pizza(\"Medium\", \"Extra Cheese\")\n\n\n# Four toppings\nsupreme = Pizza(\n    \"Large\",\n    \"Pepperoni\",\n    \"Sausage\",\n    \"Onions\",\n    \"Peppers\"\n)\n\nsupreme.describe()\nThe *args parameter collects the toppings into a tuple.\nConceptually:\nargs\n ↓\n(\"Pepperoni\", \"Sausage\", \"Onions\", \"Peppers\")\nThe output would be:\nA Large pizza with:\n- Pepperoni\n- Sausage\n- Onions\n- Peppers"
   },
   {
     "objectID": "posts/python/flexible-arguments/index.html#example-a-flexible-smartphone-class",
     "href": "posts/python/flexible-arguments/index.html#example-a-flexible-smartphone-class",
-    "title": "Flexible Arguments",
+    "title": "3. Flexible Arguments",
     "section": "Example: A Flexible Smartphone Class",
     "text": "Example: A Flexible Smartphone Class\nclass SmartPhone:\n\n    # brand is required.\n    # **kwargs catches all custom specifications.\n    def __init__(self, brand, **kwargs):\n        self.brand = brand\n\n        # kwargs is a dictionary.\n        self.specs = kwargs\n\n    def show_specs(self):\n        print(f\"--- {self.brand} Phone ---\")\n\n        for key, value in self.specs.items():\n            print(f\"{key}: {value}\")\n\n\n# We can provide any number of custom specifications.\nmy_phone = SmartPhone(\n    \"Apple\",\n    storage=\"256GB\",\n    color=\"Midnight\",\n    has_headphone_jack=False\n)\n\nmy_phone.show_specs()\nConceptually, kwargs contains:\n{\n    \"storage\": \"256GB\",\n    \"color\": \"Midnight\",\n    \"has_headphone_jack\": False\n}\nThe output would be:\n--- Apple Phone ---\nstorage: 256GB\ncolor: Midnight\nhas_headphone_jack: False\nThe key advantage is flexibility.\nWe don’t have to predict every possible specification when we create the class."
   },
   {
     "objectID": "posts/python/flexible-arguments/index.html#example-video-game-character",
     "href": "posts/python/flexible-arguments/index.html#example-video-game-character",
-    "title": "Flexible Arguments",
+    "title": "3. Flexible Arguments",
     "section": "Example: Video Game Character",
     "text": "Example: Video Game Character\nclass VideoGameCharacter:\n\n    def __init__(self, name, *args, **kwargs):\n        self.name = name\n        self.inventory = args\n        self.stats = kwargs\n\n\nhero = VideoGameCharacter(\n    \"Link\",\n\n    # *args\n    \"Sword\",\n    \"Shield\",\n\n    # **kwargs\n    health=100,\n    magic=50\n)\nThe information is stored like this:\nname\n ↓\n\"Link\"\n\ninventory\n ↓\n(\"Sword\", \"Shield\")\n\nstats\n ↓\n{\n    \"health\": 100,\n    \"magic\": 50\n}\nSo one object can contain three different types of information:\nVideoGameCharacter\n        │\n        ├── name\n        │     └── \"Link\"\n        │\n        ├── inventory\n        │     └── (\"Sword\", \"Shield\")\n        │\n        └── stats\n              ├── health = 100\n              └── magic = 50\nThis makes classes extremely flexible."
   },
@@ -424,7 +424,7 @@
     "href": "index.html",
     "title": "my-math-notes",
     "section": "",
-    "text": "Decorator (@property)\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 5, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nFlexible Arguments\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 5, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nClasses in Python: A Beginner’s Guide to Object-Oriented Programming\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 5, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nOptional Attributes\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 5, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Merge Sort\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 3\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning with Python Ch.1 Summary\n\n\n\nDeep Learning\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 2\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 1\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n日文生字字典（廣東話解釋）Day 1\n\n\n\nJapanese\n\n\n\n\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nMerge Sort: A Divide-and-Conquer Algorithm\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 29, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nInsertion Sort Algorithm\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Insertion Sort\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\nNo matching items"
+    "text": "4. Decorator (@property)\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 8, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n3. Flexible Arguments\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 7, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n2. Optional Attributes\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 6, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nClasses in Python: A Beginner’s Guide to Object-Oriented Programming\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 5, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Merge Sort\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 3\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning with Python Ch.1 Summary\n\n\n\nDeep Learning\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 2\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 1\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n日文生字字典（廣東話解釋）Day 1\n\n\n\nJapanese\n\n\n\n\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nMerge Sort: A Divide-and-Conquer Algorithm\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 29, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nInsertion Sort Algorithm\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Insertion Sort\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/algorithms/insertion-sort-running-time/index.html",
@@ -562,42 +562,42 @@
   {
     "objectID": "posts/python/decorator (@property)/index.html",
     "href": "posts/python/decorator (@property)/index.html",
-    "title": "Decorator (@property)",
+    "title": "4. Decorator (@property)",
     "section": "",
     "text": "One of the most useful ways to understand @property is to connect it to a simple mental model:\n\nA method is an operation. A @property is a dynamic characteristic.\n\nIn other words:\n\nA method tells an object to do something.\nA property asks an object what its current value is.\n\nLet’s build this idea step by step."
   },
   {
     "objectID": "posts/python/decorator (@property)/index.html#example-a-robot",
     "href": "posts/python/decorator (@property)/index.html#example-a-robot",
-    "title": "Decorator (@property)",
+    "title": "4. Decorator (@property)",
     "section": "Example: A Robot",
     "text": "Example: A Robot\nImagine a Robot class.\nA robot can have characteristics such as its name and battery level, but it can also perform actions such as walking.\nclass Robot:\n\n    def __init__(self, name):\n        self.name = name\n        self.battery = 100\n\n    def walk(self):\n        self.battery -= 10\n        print(f\"{self.name} is walking!\")\n\n    def recharge(self):\n        self.battery = 100\n        print(f\"{self.name} is fully charged.\")\nWe can create a robot:\nrobot = Robot(\"Wall-E\")\nThen we can tell it to perform an operation:\nrobot.walk()\nThe method changes the robot’s state.\nFor example:\nBefore:\nbattery = 100\n\nrobot.walk()\n\nAfter:\nbattery = 90\nThe important idea is:\n\nA method represents something the object does."
   },
   {
     "objectID": "posts/python/decorator (@property)/index.html#using-a-method",
     "href": "posts/python/decorator (@property)/index.html#using-a-method",
-    "title": "Decorator (@property)",
+    "title": "4. Decorator (@property)",
     "section": "Using a Method",
     "text": "Using a Method\nclass User:\n\n    def __init__(self, first_name, last_name):\n        self.first_name = first_name\n        self.last_name = last_name\n\n    def get_full_name(self):\n        return self.first_name + \" \" + self.last_name\nWe would call it like this:\nuser.get_full_name()\nThe parentheses tell us:\n\n“Perform an operation.”"
   },
   {
     "objectID": "posts/python/decorator (@property)/index.html#using-property-1",
     "href": "posts/python/decorator (@property)/index.html#using-property-1",
-    "title": "Decorator (@property)",
+    "title": "4. Decorator (@property)",
     "section": "Using @property",
     "text": "Using @property\nclass User:\n\n    def __init__(self, first_name, last_name):\n        self.first_name = first_name\n        self.last_name = last_name\n\n    @property\n    def full_name(self):\n        return self.first_name + \" \" + self.last_name\nWe access it like this:\nuser.full_name\nThere are no parentheses.\nThis tells us:\n\n“Tell me the current value of this characteristic.”"
   },
   {
     "objectID": "posts/python/decorator (@property)/index.html#stored-attribute",
     "href": "posts/python/decorator (@property)/index.html#stored-attribute",
-    "title": "Decorator (@property)",
+    "title": "4. Decorator (@property)",
     "section": "Stored Attribute",
     "text": "Stored Attribute\nclass Rectangle:\n\n    def __init__(self, width, height):\n        self.width = width\n        self.height = height\n        self.area = width * height\nHere, area is stored.\nIf the width changes:\nrectangle.width = 20\nthe stored area might become incorrect."
   },
   {
     "objectID": "posts/python/decorator (@property)/index.html#dynamic-property",
     "href": "posts/python/decorator (@property)/index.html#dynamic-property",
-    "title": "Decorator (@property)",
+    "title": "4. Decorator (@property)",
     "section": "Dynamic Property",
     "text": "Dynamic Property\nclass Rectangle:\n\n    def __init__(self, width, height):\n        self.width = width\n        self.height = height\n\n    @property\n    def area(self):\n        return self.width * self.height\nNow:\nrectangle.width = 20\nautomatically causes the next access to:\nrectangle.area\nto use the new width.\nThe property is always based on the current state."
   },
