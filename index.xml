@@ -10,7 +10,560 @@
 <atom:link href="https://jerryleung16.github.io/my-math-notes/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Mon, 03 Aug 2026 16:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 04 Aug 2026 16:00:00 GMT</lastBuildDate>
+<item>
+  <title>Class</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/python/class/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="introduction-to-object-oriented-programming-with-python" class="level1">
+<h1>Introduction to Object-Oriented Programming with Python</h1>
+<p>Welcome to the world of <strong>Object-Oriented Programming (OOP)</strong>!</p>
+<p>The name may sound complicated, but the basic idea is quite simple: <strong>OOP is a way of organizing programs by modeling things as objects</strong>, similar to the way we think about objects in the real world.</p>
+<p>A helpful way to understand OOP is to imagine a <strong>cookie cutter</strong>.</p>
+<ul>
+<li><strong>A Class</strong> is the <em>cookie cutter</em>. It is a blueprint or template that describes what something should look like and what it can do. You cannot eat the cookie cutter, but it determines the shape of every cookie you make.</li>
+<li><strong>An Object</strong> is the <em>cookie</em>. It is an actual thing created from the class. One cookie cutter can be used to make many different cookies.</li>
+</ul>
+<p>For example, one <code>Dog</code> class can be used to create many different dog objects:</p>
+<pre class="text"><code>Dog class
+   ↓
+ ┌─────────┬─────────┬─────────┐
+ ↓         ↓         ↓
+Buddy     Daisy     Max</code></pre>
+<p>Each object follows the same blueprint but can have its own data.</p>
+<hr>
+<section id="the-4-key-oop-vocabulary-words" class="level2">
+<h2 class="anchored" data-anchor-id="the-4-key-oop-vocabulary-words">The 4 Key OOP Vocabulary Words</h2>
+<p>Before writing code, let’s learn four terms that you will encounter constantly when working with classes.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 51%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: left;">Simple Meaning</th>
+<th style="text-align: left;">Real-World Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Class</strong></td>
+<td style="text-align: left;">A blueprint or template for creating objects.</td>
+<td style="text-align: left;">The general idea of a “Dog”</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Object</strong> (Instance)</td>
+<td style="text-align: left;">A specific item created from a class.</td>
+<td style="text-align: left;">Your pet dog, Fido</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Attribute</strong></td>
+<td style="text-align: left;">Data stored inside an object that describes it.</td>
+<td style="text-align: left;">Name, breed, age, fur color</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Method</strong></td>
+<td style="text-align: left;">A function inside a class that describes an action.</td>
+<td style="text-align: left;">Barking, sitting, fetching</td>
+</tr>
+</tbody>
+</table>
+<p>A useful way to remember the difference is:</p>
+<blockquote class="blockquote">
+<p><strong>Attributes describe what an object has. Methods describe what an object can do.</strong></p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="building-our-first-class" class="level1">
+<h1>Building Our First Class</h1>
+<p>Let’s turn the general idea of a <strong>Dog</strong> into Python code.</p>
+<p>We want our <code>Dog</code> class to have:</p>
+<ul>
+<li><strong>Attributes</strong>: a name and an age</li>
+<li><strong>Method</strong>: the ability to bark</li>
+</ul>
+<pre class="text"><code>class Dog:
+
+    # The constructor: used to initialize a new object
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    # A method: an action the dog can perform
+    def bark(self):
+        print(f"{self.name} says Woof!")</code></pre>
+<section id="breaking-down-the-code" class="level2">
+<h2 class="anchored" data-anchor-id="breaking-down-the-code">Breaking Down the Code</h2>
+<p>Let’s examine the code one piece at a time.</p>
+<section id="class-dog" class="level3">
+<h3 class="anchored" data-anchor-id="class-dog">1. <code>class Dog:</code></h3>
+<pre class="text"><code>class Dog:</code></pre>
+<p>This tells Python:</p>
+<blockquote class="blockquote">
+<p>“I want to create a new blueprint called <code>Dog</code>.”</p>
+</blockquote>
+<p>By convention, Python class names usually begin with a <strong>capital letter</strong>.</p>
+<hr>
+</section>
+<section id="def-__init__self-name-age" class="level3">
+<h3 class="anchored" data-anchor-id="def-__init__self-name-age">2. <code>def __init__(self, name, age):</code></h3>
+<pre class="text"><code>def __init__(self, name, age):</code></pre>
+<p><code>__init__</code> is a special method called the <strong>constructor</strong>.</p>
+<p>It runs automatically whenever we create a new object from the class.</p>
+<p>The constructor allows us to provide the initial information needed to set up our object.</p>
+<p>For example:</p>
+<pre class="text"><code>Dog("Buddy", 3)</code></pre>
+<p>Python uses <code>"Buddy"</code> as the name and <code>3</code> as the age when setting up the new dog.</p>
+<hr>
+</section>
+<section id="self.name-name" class="level3">
+<h3 class="anchored" data-anchor-id="self.name-name">3. <code>self.name = name</code></h3>
+<pre class="text"><code>self.name = name
+self.age = age</code></pre>
+<p>The keyword <code>self</code> refers to <strong>the particular object currently being created or used</strong>.</p>
+<p>So:</p>
+<pre class="text"><code>self.name = name</code></pre>
+<p>can be understood as:</p>
+<blockquote class="blockquote">
+<p>“Take the name provided by the user and store it as the name of <strong>this specific dog</strong>.”</p>
+</blockquote>
+<p>Similarly:</p>
+<pre class="text"><code>self.age = age</code></pre>
+<p>means:</p>
+<blockquote class="blockquote">
+<p>“Store this age as the age of <strong>this specific dog</strong>.”</p>
+</blockquote>
+<hr>
+</section>
+<section id="def-barkself" class="level3">
+<h3 class="anchored" data-anchor-id="def-barkself">4. <code>def bark(self):</code></h3>
+<pre class="text"><code>def bark(self):
+    print(f"{self.name} says Woof!")</code></pre>
+<p>This is a function defined inside a class, so we call it a <strong>method</strong>.</p>
+<p>The method also receives <code>self</code> because the dog needs to know <strong>which dog</strong> is performing the action.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="bringing-the-class-to-life" class="level1">
+<h1>Bringing the Class to Life</h1>
+<p>Our class is only a blueprint so far.</p>
+<p>Now let’s use it to create actual objects.</p>
+<pre class="text"><code># Create the first dog
+dog_1 = Dog("Buddy", 3)
+
+# Create a second dog
+dog_2 = Dog("Daisy", 5)</code></pre>
+<p>We have now created two separate objects:</p>
+<ul>
+<li><code>dog_1</code> represents Buddy, who is 3 years old.</li>
+<li><code>dog_2</code> represents Daisy, who is 5 years old.</li>
+</ul>
+<p>Both objects were created from the same <code>Dog</code> class, but each object has its <strong>own data</strong>.</p>
+<hr>
+<section id="accessing-attributes-and-methods" class="level2">
+<h2 class="anchored" data-anchor-id="accessing-attributes-and-methods">Accessing Attributes and Methods</h2>
+<p>We can interact with an object using the <strong>dot operator (<code>.</code>)</strong>.</p>
+<section id="accessing-attributes" class="level3">
+<h3 class="anchored" data-anchor-id="accessing-attributes">Accessing Attributes</h3>
+<pre class="text"><code>print(dog_1.name)
+# Buddy
+
+print(dog_2.age)
+# 5</code></pre>
+<p>The dot tells Python which attribute belonging to the object we want to access.</p>
+</section>
+<section id="calling-methods" class="level3">
+<h3 class="anchored" data-anchor-id="calling-methods">Calling Methods</h3>
+<pre class="text"><code>dog_1.bark()
+# Buddy says Woof!
+
+dog_2.bark()
+# Daisy says Woof!</code></pre>
+<p>Notice how the same method can produce different results depending on the object that calls it.</p>
+<p>This is one of the key ideas behind OOP.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="why-do-we-use-classes" class="level1">
+<h1>Why Do We Use Classes?</h1>
+<p>For a very small program, you may not need classes.</p>
+<p>For example, if you are writing a quick program to calculate your taxes, a class might be unnecessary.</p>
+<p>However, as programs become larger—such as:</p>
+<ul>
+<li>video games,</li>
+<li>web applications,</li>
+<li>data dashboards,</li>
+<li>simulations, or</li>
+<li>business software,</li>
+</ul>
+<p>classes can make your code much easier to organize.</p>
+<p>Imagine a video game with two players.</p>
+<p>Without classes, you might have variables such as:</p>
+<pre class="text"><code>player_1_health
+player_1_score
+player_2_health
+player_2_score</code></pre>
+<p>As the game becomes more complicated, you could end up with dozens or even hundreds of related variables.</p>
+<p>Instead, we can create a <code>Player</code> class and then create multiple player objects from it.</p>
+<pre class="text"><code>Player class
+      ↓
+ ┌────┴────┐
+ ↓         ↓
+Player 1  Player 2</code></pre>
+<p>Each player object can keep track of its own health, score, name, and other information.</p>
+<blockquote class="blockquote">
+<p><strong>A class lets us organize related data and actions into one reusable structure.</strong></p>
+</blockquote>
+<hr>
+</section>
+<section id="understanding-self" class="level1">
+<h1>Understanding <code>self</code></h1>
+<p>The keyword <code>self</code> is one of the most important concepts for beginners learning Python classes.</p>
+<p>Think of a class as a blueprint for building robots.</p>
+<p>Suppose we use the blueprint to build two robots:</p>
+<pre class="text"><code>Robot class
+     ↓
+ ┌───┴────┐
+ ↓        ↓
+Wall-E   R2-D2</code></pre>
+<p>Both robots are built from exactly the same blueprint.</p>
+<p>However, if we ask Wall-E to introduce itself, we want <strong>Wall-E</strong> to give its name—not R2-D2.</p>
+<p>In Python, <code>self</code> means:</p>
+<blockquote class="blockquote">
+<p><strong>“this particular object”</strong></p>
+</blockquote>
+<p>or, more casually:</p>
+<blockquote class="blockquote">
+<p><strong>“me” / “my”</strong></p>
+</blockquote>
+<p>Let’s see this in action.</p>
+<pre class="text"><code>class Robot:
+
+    # self.name means "MY name"
+    def __init__(self, name):
+        self.name = name
+
+    # self.name means "MY name"
+    def introduce(self):
+        print(f"Hello, my name is {self.name}.")
+
+
+# Create two different robot objects
+robot_1 = Robot("Wall-E")
+robot_2 = Robot("R2-D2")
+
+
+robot_1.introduce()
+# Hello, my name is Wall-E.
+
+robot_2.introduce()
+# Hello, my name is R2-D2.</code></pre>
+<p>Even though both robots use exactly the same class definition, each object stores its own name.</p>
+<pre class="text"><code>robot_1.name → "Wall-E"
+robot_2.name → "R2-D2"</code></pre>
+<p>That’s the power of <code>self</code>.</p>
+<hr>
+</section>
+<section id="what-happens-if-you-forget-self" class="level1">
+<h1>What Happens If You Forget <code>self</code>?</h1>
+<p>One of the most common mistakes beginners make is forgetting <code>self</code> when defining a method.</p>
+<p>Consider this example:</p>
+<pre class="text"><code>class Robot:
+
+    # Oops! We forgot self.
+    def beep():
+        print("Beep boop!")
+
+
+my_robot = Robot()
+my_robot.beep()</code></pre>
+<p>Python will produce an error similar to:</p>
+<pre class="text"><code>TypeError: Robot.beep() takes 0 positional arguments but 1 was given</code></pre>
+<p>At first, this error can seem strange.</p>
+<p>You might think:</p>
+<blockquote class="blockquote">
+<p>“I didn’t give <code>beep()</code> any arguments! The parentheses are empty!”</p>
+</blockquote>
+<p>So where did the mysterious <strong>1 argument</strong> come from?</p>
+<hr>
+<section id="python-is-doing-something-behind-the-scenes" class="level2">
+<h2 class="anchored" data-anchor-id="python-is-doing-something-behind-the-scenes">Python Is Doing Something Behind the Scenes</h2>
+<p>When you write:</p>
+<pre class="text"><code>my_robot.beep()</code></pre>
+<p>Python effectively treats this as:</p>
+<pre class="text"><code>Robot.beep(my_robot)</code></pre>
+<p>In other words, Python automatically passes the object that called the method as the first argument.</p>
+<p>That object needs somewhere to go.</p>
+<p>That is why we write:</p>
+<pre class="text"><code>def beep(self):</code></pre>
+<p>The <code>self</code> parameter is the place where Python passes the current object.</p>
+<p>You can think of it like this:</p>
+<pre class="text"><code>my_robot.beep()
+      ↓
+Python automatically passes my_robot
+      ↓
+Robot.beep(my_robot)
+      ↓
+             self
+              ↓
+        "this robot"</code></pre>
+<p>So when you forget <code>self</code>, Python is essentially saying:</p>
+<blockquote class="blockquote">
+<p>“I tried to give you the robot object, but your method doesn’t have a parameter to receive it!”</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="a-real-world-example-bank-accounts" class="level1">
+<h1>A Real-World Example: Bank Accounts</h1>
+<p>Let’s apply everything we’ve learned to a more practical example.</p>
+<p>A <strong>bank account</strong> is something we can easily understand in the real world.</p>
+<p>A bank account has:</p>
+<section id="attributes-what-the-account-has" class="level3">
+<h3 class="anchored" data-anchor-id="attributes-what-the-account-has">Attributes — What the account has</h3>
+<ul>
+<li>Owner’s name</li>
+<li>Current balance</li>
+</ul>
+</section>
+<section id="methods-what-the-account-can-do" class="level3">
+<h3 class="anchored" data-anchor-id="methods-what-the-account-can-do">Methods — What the account can do</h3>
+<ul>
+<li>Deposit money</li>
+<li>Withdraw money</li>
+<li>Check the balance</li>
+</ul>
+<p>Let’s build a <code>BankAccount</code> class step by step.</p>
+<hr>
+</section>
+</section>
+<section id="step-1-create-the-blueprint" class="level1">
+<h1>Step 1: Create the Blueprint</h1>
+<p>First, we define our class and its constructor.</p>
+<pre class="text"><code>class BankAccount:
+
+    # Create a new account
+    def __init__(self, owner, starting_balance=0.0):
+        self.owner = owner
+        self.balance = starting_balance</code></pre>
+<p>The parameter:</p>
+<pre class="text"><code>starting_balance=0.0</code></pre>
+<p>provides a <strong>default value</strong>.</p>
+<p>Therefore, if someone creates an account without specifying a starting balance, the account automatically starts with <code>$0.00</code>.</p>
+<p>For example:</p>
+<pre class="text"><code>alice_account = BankAccount("Alice", 100.0)</code></pre>
+<p>Alice starts with <code>$100</code>.</p>
+<p>But:</p>
+<pre class="text"><code>bob_account = BankAccount("Bob")</code></pre>
+<p>Bob starts with <code>$0</code>.</p>
+<hr>
+</section>
+<section id="step-2-add-methods" class="level1">
+<h1>Step 2: Add Methods</h1>
+<p>Now let’s teach our <code>BankAccount</code> class how to handle money.</p>
+<p>We will create three methods:</p>
+<ol type="1">
+<li><code>deposit()</code></li>
+<li><code>withdraw()</code></li>
+<li><code>check_balance()</code></li>
+</ol>
+<pre class="text"><code>class BankAccount:
+
+    def __init__(self, owner, starting_balance=0.0):
+        self.owner = owner
+        self.balance = starting_balance
+
+    # ACTION 1: Deposit money
+    def deposit(self, amount):
+
+        if amount &gt; 0:
+            self.balance += amount
+            print(
+                f"Deposited ${amount}. "
+                f"New balance is ${self.balance}."
+            )
+        else:
+            print("You must deposit a positive amount!")
+
+    # ACTION 2: Withdraw money
+    def withdraw(self, amount):
+
+        # Make sure there is enough money
+        if amount &gt; self.balance:
+            print(
+                f"Declined! You only have "
+                f"${self.balance} in your account."
+            )
+
+        elif amount &lt;= 0:
+            print("You must withdraw a positive amount!")
+
+        else:
+            self.balance -= amount
+            print(
+                f"Withdrew ${amount}. "
+                f"New balance is ${self.balance}."
+            )
+
+    # ACTION 3: Check the balance
+    def check_balance(self):
+        print(
+            f"Account Owner: {self.owner} | "
+            f"Current Balance: ${self.balance}"
+        )</code></pre>
+<p>Notice that <strong>every method has <code>self</code> as its first parameter</strong>.</p>
+<p>This is necessary because each method needs to know which particular bank account it is working with.</p>
+<p>For example:</p>
+<pre class="text"><code>self.balance</code></pre>
+<p>means:</p>
+<blockquote class="blockquote">
+<p>“The balance belonging to this particular account.”</p>
+</blockquote>
+<hr>
+</section>
+<section id="step-3-create-and-test-our-objects" class="level1">
+<h1>Step 3: Create and Test Our Objects</h1>
+<p>Our blueprint is now complete.</p>
+<p>Let’s create some actual bank account objects and test them.</p>
+<pre class="text"><code># Create an account for Alice with $100
+alice_account = BankAccount("Alice", 100.0)
+
+# Create an account for Bob with $0
+bob_account = BankAccount("Bob")</code></pre>
+<p>We now have two separate objects:</p>
+<pre class="text"><code>BankAccount class
+       ↓
+ ┌─────┴─────┐
+ ↓           ↓
+Alice       Bob
+$100         $0</code></pre>
+<p>Let’s make some transactions.</p>
+<pre class="text"><code># Alice deposits $50
+alice_account.deposit(50)
+# Deposited $50. New balance is $150.0.
+
+# Alice withdraws $20
+alice_account.withdraw(20)
+# Withdrew $20. New balance is $130.0.</code></pre>
+<p>Now let’s see what happens when Bob tries to withdraw more money than he has.</p>
+<pre class="text"><code>bob_account.withdraw(500)
+# Declined! You only have $0.0 in your account.</code></pre>
+<p>Finally, let’s check both accounts.</p>
+<pre class="text"><code>alice_account.check_balance()
+# Account Owner: Alice | Current Balance: $130.0
+
+bob_account.check_balance()
+# Account Owner: Bob | Current Balance: $0.0</code></pre>
+<hr>
+</section>
+<section id="putting-everything-together" class="level1">
+<h1>Putting Everything Together</h1>
+<p>Our <code>BankAccount</code> class combines <strong>data</strong> and <strong>actions</strong> into one organized structure.</p>
+<pre class="text"><code>                 BankAccount
+                      │
+          ┌───────────┴───────────┐
+          │                       │
+      Attributes               Methods
+          │                       │
+    ┌─────┴─────┐        ┌────────┼────────┐
+    │           │        │        │        │
+  owner      balance   deposit  withdraw  check_balance</code></pre>
+<p>Each object created from the class has its own attributes.</p>
+<pre class="text"><code>alice_account.owner
+# Alice
+
+alice_account.balance
+# 130.0</code></pre>
+<p>while:</p>
+<pre class="text"><code>bob_account.owner
+# Bob
+
+bob_account.balance
+# 0.0</code></pre>
+<p>The same class can therefore be used to create as many independent bank accounts as we need.</p>
+<hr>
+</section>
+<section id="the-big-picture" class="level1">
+<h1>The Big Picture</h1>
+<p>The most important idea to remember is:</p>
+<blockquote class="blockquote">
+<p><strong>A class is a blueprint. An object is a specific instance created from that blueprint.</strong></p>
+</blockquote>
+<p>Classes allow us to package <strong>data</strong> and <strong>actions</strong> together.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">OOP Concept</th>
+<th style="text-align: left;">Python Example</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Class</strong></td>
+<td style="text-align: left;"><code>BankAccount</code></td>
+<td style="text-align: left;">Blueprint</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Object</strong></td>
+<td style="text-align: left;"><code>alice_account</code></td>
+<td style="text-align: left;">A specific instance</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Attribute</strong></td>
+<td style="text-align: left;"><code>self.balance</code></td>
+<td style="text-align: left;">Data belonging to the object</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Method</strong></td>
+<td style="text-align: left;"><code>deposit()</code></td>
+<td style="text-align: left;">An action the object can perform</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>self</code></strong></td>
+<td style="text-align: left;"><code>self.balance</code></td>
+<td style="text-align: left;">Refers to the current object</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Constructor</strong></td>
+<td style="text-align: left;"><code>__init__()</code></td>
+<td style="text-align: left;">Sets up a new object</td>
+</tr>
+</tbody>
+</table>
+<p>A useful mental model is:</p>
+<pre class="text"><code>             CLASS
+          "The Blueprint"
+                │
+        ┌───────┼───────┐
+        ↓       ↓       ↓
+     Object   Object   Object
+        │       │       │
+        ↓       ↓       ↓
+      Data    Data    Data
+        +       +       +
+     Actions  Actions  Actions</code></pre>
+<p>Once you understand <strong>classes, objects, attributes, methods, and <code>self</code></strong>, you have learned the foundation of Python’s Object-Oriented Programming.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Python</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/python/class/</guid>
+  <pubDate>Tue, 04 Aug 2026 16:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Time Complexity Analysis of Merge Sort</title>
   <link>https://jerryleung16.github.io/my-math-notes/posts/algorithms/merge-sort-running-time/</link>

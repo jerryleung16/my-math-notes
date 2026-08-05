@@ -1,5 +1,390 @@
 [
   {
+    "objectID": "posts/python/class/index.html",
+    "href": "posts/python/class/index.html",
+    "title": "Class",
+    "section": "",
+    "text": "Welcome to the world of Object-Oriented Programming (OOP)!\nThe name may sound complicated, but the basic idea is quite simple: OOP is a way of organizing programs by modeling things as objects, similar to the way we think about objects in the real world.\nA helpful way to understand OOP is to imagine a cookie cutter.\n\nA Class is the cookie cutter. It is a blueprint or template that describes what something should look like and what it can do. You cannot eat the cookie cutter, but it determines the shape of every cookie you make.\nAn Object is the cookie. It is an actual thing created from the class. One cookie cutter can be used to make many different cookies.\n\nFor example, one Dog class can be used to create many different dog objects:\nDog class\n   ↓\n ┌─────────┬─────────┬─────────┐\n ↓         ↓         ↓\nBuddy     Daisy     Max\nEach object follows the same blueprint but can have its own data.\n\n\n\nBefore writing code, let’s learn four terms that you will encounter constantly when working with classes.\n\n\n\n\n\n\n\n\nTerm\nSimple Meaning\nReal-World Example\n\n\n\n\nClass\nA blueprint or template for creating objects.\nThe general idea of a “Dog”\n\n\nObject (Instance)\nA specific item created from a class.\nYour pet dog, Fido\n\n\nAttribute\nData stored inside an object that describes it.\nName, breed, age, fur color\n\n\nMethod\nA function inside a class that describes an action.\nBarking, sitting, fetching\n\n\n\nA useful way to remember the difference is:\n\nAttributes describe what an object has. Methods describe what an object can do."
+  },
+  {
+    "objectID": "posts/python/class/index.html#the-4-key-oop-vocabulary-words",
+    "href": "posts/python/class/index.html#the-4-key-oop-vocabulary-words",
+    "title": "Class",
+    "section": "",
+    "text": "Before writing code, let’s learn four terms that you will encounter constantly when working with classes.\n\n\n\n\n\n\n\n\nTerm\nSimple Meaning\nReal-World Example\n\n\n\n\nClass\nA blueprint or template for creating objects.\nThe general idea of a “Dog”\n\n\nObject (Instance)\nA specific item created from a class.\nYour pet dog, Fido\n\n\nAttribute\nData stored inside an object that describes it.\nName, breed, age, fur color\n\n\nMethod\nA function inside a class that describes an action.\nBarking, sitting, fetching\n\n\n\nA useful way to remember the difference is:\n\nAttributes describe what an object has. Methods describe what an object can do."
+  },
+  {
+    "objectID": "posts/python/class/index.html#breaking-down-the-code",
+    "href": "posts/python/class/index.html#breaking-down-the-code",
+    "title": "Class",
+    "section": "Breaking Down the Code",
+    "text": "Breaking Down the Code\nLet’s examine the code one piece at a time.\n\n1. class Dog:\nclass Dog:\nThis tells Python:\n\n“I want to create a new blueprint called Dog.”\n\nBy convention, Python class names usually begin with a capital letter.\n\n\n\n2. def __init__(self, name, age):\ndef __init__(self, name, age):\n__init__ is a special method called the constructor.\nIt runs automatically whenever we create a new object from the class.\nThe constructor allows us to provide the initial information needed to set up our object.\nFor example:\nDog(\"Buddy\", 3)\nPython uses \"Buddy\" as the name and 3 as the age when setting up the new dog.\n\n\n\n3. self.name = name\nself.name = name\nself.age = age\nThe keyword self refers to the particular object currently being created or used.\nSo:\nself.name = name\ncan be understood as:\n\n“Take the name provided by the user and store it as the name of this specific dog.”\n\nSimilarly:\nself.age = age\nmeans:\n\n“Store this age as the age of this specific dog.”\n\n\n\n\n4. def bark(self):\ndef bark(self):\n    print(f\"{self.name} says Woof!\")\nThis is a function defined inside a class, so we call it a method.\nThe method also receives self because the dog needs to know which dog is performing the action."
+  },
+  {
+    "objectID": "posts/python/class/index.html#accessing-attributes-and-methods",
+    "href": "posts/python/class/index.html#accessing-attributes-and-methods",
+    "title": "Class",
+    "section": "Accessing Attributes and Methods",
+    "text": "Accessing Attributes and Methods\nWe can interact with an object using the dot operator (.).\n\nAccessing Attributes\nprint(dog_1.name)\n# Buddy\n\nprint(dog_2.age)\n# 5\nThe dot tells Python which attribute belonging to the object we want to access.\n\n\nCalling Methods\ndog_1.bark()\n# Buddy says Woof!\n\ndog_2.bark()\n# Daisy says Woof!\nNotice how the same method can produce different results depending on the object that calls it.\nThis is one of the key ideas behind OOP."
+  },
+  {
+    "objectID": "posts/python/class/index.html#python-is-doing-something-behind-the-scenes",
+    "href": "posts/python/class/index.html#python-is-doing-something-behind-the-scenes",
+    "title": "Class",
+    "section": "Python Is Doing Something Behind the Scenes",
+    "text": "Python Is Doing Something Behind the Scenes\nWhen you write:\nmy_robot.beep()\nPython effectively treats this as:\nRobot.beep(my_robot)\nIn other words, Python automatically passes the object that called the method as the first argument.\nThat object needs somewhere to go.\nThat is why we write:\ndef beep(self):\nThe self parameter is the place where Python passes the current object.\nYou can think of it like this:\nmy_robot.beep()\n      ↓\nPython automatically passes my_robot\n      ↓\nRobot.beep(my_robot)\n      ↓\n             self\n              ↓\n        \"this robot\"\nSo when you forget self, Python is essentially saying:\n\n“I tried to give you the robot object, but your method doesn’t have a parameter to receive it!”"
+  },
+  {
+    "objectID": "posts/english/english_3/index.html",
+    "href": "posts/english/english_3/index.html",
+    "title": "English Word Dictionary Day 3",
+    "section": "",
+    "text": "Note\n\n\n\n💡 使用說明：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。"
+  },
+  {
+    "objectID": "posts/english/english_3/index.html#生字快速索引",
+    "href": "posts/english/english_3/index.html#生字快速索引",
+    "title": "English Word Dictionary Day 3",
+    "section": "🔍 生字快速索引",
+    "text": "🔍 生字快速索引\n\n\n\n\n\n\n\n\n\n\n英文生字\n音標 (IPA)\n詞性\n廣東話地道意思\n難度/常用度\n\n\n\n\nbraggarts\n/ˈbræɡ.əts/\nn.\n愛認叻嘅人、沙塵友、吹水佬\n⭐⭐⭐⭐\n\n\nharbor\n/ˈhɑː.bər/\nv.\n懷有（心事/情緒）、包庇、心存\n⭐⭐⭐\n\n\ndiligent\n/ˈdɪl.ɪ.dʒənt/\nadj.\n勤力、用心、盡責\n⭐⭐⭐\n\n\nobscured\n/əbˈskjʊəd/\nv. / adj.\n遮蔽、掩蓋、令人睇唔清\n⭐⭐⭐⭐\n\n\nbravado\n/brəˈvɑː.dəʊ/\nn.\n虛張聲勢、靠嚇、逞強\n⭐⭐⭐⭐\n\n\nallegiance\n/əˈliː.dʒəns/\nn.\n忠誠、效忠\n⭐⭐⭐⭐\n\n\nboast\n/bəʊst/\nv. / n.\n認叻、吹噓、自誇\n⭐⭐⭐\n\n\nflaunt\n/flɔːnt/\nv.\n炫耀、晒命\n⭐⭐⭐\n\n\nmanifests\n/ˈmæn.ɪ.fests/\nv.\n表現出嚟、顯現、證明\n⭐⭐⭐⭐\n\n\nbrag about\n/bræɡ əˈbaʊt/\nphr. v.\n吹噓（某事）、四圍認叻\n⭐⭐⭐\n\n\na boil about to burst\n/ə bɔɪl əˈbaʊt tə bɜːst/\nidiom\n爆發邊緣、壓力/積怨去到極點\n⭐⭐⭐⭐⭐\n\n\ncircumspect\n/ˈsɜː.kəm.spekt/\nadj.\n謹慎、小心翼翼、步步為營\n⭐⭐⭐⭐⭐\n\n\nanguish\n/ˈæŋ.ɡwɪʃ/\nn.\n極度痛苦、煎熬、悲痛\n⭐⭐⭐⭐"
+  },
+  {
+    "objectID": "posts/english/english_3/index.html#生字詳細解析",
+    "href": "posts/english/english_3/index.html#生字詳細解析",
+    "title": "English Word Dictionary Day 3",
+    "section": "📚 生字詳細解析",
+    "text": "📚 生字詳細解析\n\n1. braggarts (braggart 嘅眾數)\n\n詞性：名詞 (Noun)\n讀音：/ˈbræɡ.əts/ (美音: /ˈbræɡ.ɚts/)\n廣東話解法：指嗰啲好鍾意周圍同人講自己有幾叻、有幾威嘅人。廣東話通常會講「愛認叻嘅人」、「沙塵友」或者「吹水佬」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Nobody likes braggarts who constantly talk about their wealth.\n廣東話口語: 無人會鍾意啲成日將自己有幾多錢掛喺嘴邊嘅沙塵友（認叻嘅人）。\n\n\n\n常見搭配 (Collocations)： * an empty braggart：得個吹字嘅人\n\n\n\n2. harbor (動詞用法)\n\n詞性：動詞 (Verb)\n讀音：/ˈhɑː.bər/\n廣東話解法：做名詞係海港，但做動詞時，通常指喺心入面長時期「懷有」某種情緒（特別係負面情緒，例如怨恨、希望、恐懼），或者指「包庇」罪犯。廣東話會講「心存」、「一直懷有」或「包庇」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: He still harbors a deep resentment against his former boss.\n廣東話口語: 佢心入面依然對以前個老闆懷有好深嘅怨恨。\n\n\n\n常見搭配 (Collocations)： * harbor a grudge / resentment：懷恨在心 / 記仇 * harbor fugitives：包庇逃犯\n\n\n\n3. diligent\n\n詞性：形容詞 (Adjective)\n讀音：/ˈdɪl.ɪ.dʒənt/\n廣東話解法：指做嘢非常上心、努力同埋細心。廣東話通常會講「勤力」、「用心」或者「盡責」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: She is a diligent student who always completes her assignments on time.\n廣東話口語: 佢係個好勤力（盡責）嘅學生，每次都準時交功課。\n\n\n\n常見搭配 (Collocations)： * diligent effort / work：勤奮嘅努力 / 盡責嘅工作 * diligent student / employee：勤力嘅學生 / 員工\n\n\n\n4. obscured\n\n詞性：動詞過去式/過去分詞 (Verb) / 形容詞 (Adjective)\n讀音：/əbˈskjʊəd/\n廣東話解法：指將某樣嘢遮住、掩蓋，令到人睇唔清楚或者難以理解。廣東話通常會講「遮蔽」、「掩蓋」或者「搞到睇唔清」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: The moon was obscured by heavy clouds.\n廣東話口語: 個月亮俾啲厚雲遮住咗。\nEnglish: The true meaning of his words was obscured by his complicated language.\n廣東話口語: 佢講嘢太過複雜，掩蓋咗佢真正想表達嘅意思。\n\n\n\n常見搭配 (Collocations)： * obscured by (something)：俾…遮蔽 * vision is obscured：視線受阻\n\n\n\n5. bravado\n\n詞性：名詞 (Noun)\n讀音：/brəˈvɑː.dəʊ/\n廣東話解法：指表面上扮到好大膽、好威水，想令人覺得自己好勁，但其實內心可能好怯。廣東話通常會講「虛張聲勢」、「靠嚇」或者「逞強」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Behind all his bravado, he is actually very insecure.\n廣東話口語: 佢表面上虛張聲勢（扮晒嘢），其實內心極度缺乏安全感。\n\n\n\n常見搭配 (Collocations)： * false bravado：假嘅虛張聲勢 / 扮鎮定 * an act of bravado：逞強嘅行為\n\n\n\n6. allegiance\n\n詞性：名詞 (Noun)\n讀音：/əˈliː.dʒəns/\n廣東話解法：指對國家、領袖、信仰或者群體嘅忠誠同支持。廣東話通常會講「忠誠」或者「效忠」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Soldiers have to swear an oath of allegiance to their country.\n廣東話口語: 士兵必須宣誓對國家效忠。\n\n\n\n常見搭配 (Collocations)： * pledge / swear allegiance to：宣誓效忠於… * switch allegiance：倒戈 / 改變陣營\n\n\n\n7. boast\n\n詞性：動詞 (Verb) / 名詞 (Noun)\n讀音：/bəʊst/\n廣東話解法：指帶住極大嘅驕傲去講述自己嘅成就、財產或者能力。廣東話通常會講「認叻」、「吹噓」或者「自誇」。(做名詞時即係「自誇嘅說話」)\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: He likes to boast that he is the smartest person in the room.\n廣東話口語: 佢好鍾意認叻（吹噓），話自己係全場最聰明嗰個。\n\n\n\n常見搭配 (Collocations)： * boast about / of：吹噓… * make a boast：自誇\n\n\n\n8. flaunt\n\n詞性：動詞 (Verb)\n讀音：/flɔːnt/\n廣東話解法：指好張揚咁展示自己擁有嘅好嘢（例如名牌、財富、身材），目的係惹人艷羨或者挑釁。廣東話通常會講「炫耀」或者「晒命」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: She arrived in a sports car to flaunt her new wealth.\n廣東話口語: 佢揸架跑車出場，為咗晒命（炫耀）佢新賺返嚟嘅財富。\nEnglish: If you’ve got it, flaunt it!\n廣東話口語: 有本錢就梗係要晒啦！\n\n\n\n常見搭配 (Collocations)： * flaunt one's wealth / success：炫富 / 晒命自己有幾成功 * flaunt the rules：公然藐視規則（有時會同 flout 撈亂用）\n\n\n\n9. manifests\n\n詞性：動詞 (Verb, 第三人稱單數)\n讀音：/ˈmæn.ɪ.fests/\n廣東話解法：指某種特質、情緒或病徵，透過行為或者外表清楚咁展現出嚟。廣東話通常會講「表現出嚟」、「顯現」或者「證明」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: His frustration often manifests as anger.\n廣東話口語: 佢嘅挫敗感通常會以憤怒嘅形式表現出嚟。\n\n\n\n常見搭配 (Collocations)： * manifests itself as / in：以…形式顯現出嚟 * manifest a desire / symptom：表現出渴望 / 顯現病徵\n\n\n\n10. brag about\n\n詞性：片語動詞 (Phrasal Verb)\n讀音：/bræɡ əˈbaʊt/\n廣東話解法：同 boast about 好似，都係指自大咁講自己嘅威水史。廣東話通常會講「吹噓某事」或者「四圍認叻」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: She is always bragging about how much money she makes.\n廣東話口語: 佢成日四圍認叻（吹噓）自己賺幾多錢。\n\n\n\n常見搭配 (Collocations)： * brag about one's achievements：吹噓自己嘅成就 * nothing to brag about：無咩好認叻（指表現一般般）\n\n\n\n11. a boil about to burst\n\n詞性：習語 / 片語 (Idiom / Phrase)\n讀音：/ə bɔɪl əˈbaʊt tə bɜːst/\n廣東話解法：Boil 喺度解作「毒瘡」。成句字面解「一粒就快爆嘅大毒瘡」，比喻一個充滿張力、壓力或者積怨嘅局面，去到臨界點就快要爆發。廣東話會講「爆發邊緣」或者「好似個就快爆嘅大毒瘡」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: The tension in the meeting room felt like a boil about to burst.\n廣東話口語: 會議室入面嘅緊張氣氛，就好似個就快爆嘅大毒瘡（瀕臨爆發邊緣）咁。\n\n\n\n常見搭配 (Collocations)： * like a boil about to burst：好似就快爆發咁 * bring a boil to a head：令危機到達頂點（類似用法）\n\n\n\n12. circumspect\n\n詞性：形容詞 (Adjective)\n讀音：/ˈsɜː.kəm.spekt/\n廣東話解法：指做決定或行動之前考慮得非常周到，唔願意冒險。廣東話通常會講「謹慎」、「小心翼翼」或者「步步為營」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: He was very circumspect in his statement to the press.\n廣東話口語: 佢同傳媒發表聲明嗰陣非常之謹慎（小心翼翼）。\n\n\n\n常見搭配 (Collocations)： * circumspect behavior / approach：謹慎嘅行為 / 做法 * be circumspect about：對…好審慎\n\n\n\n13. anguish\n\n詞性：名詞 (Noun) / 有時作動詞\n讀音：/ˈæŋ.ɡwɪʃ/\n廣東話解法：指精神上或者肉體上極度嘅痛苦、煎熬。廣東話通常會講「極度痛苦」、「煎熬」或者「悲痛」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: He groaned in anguish when he heard the terrible news.\n廣東話口語: 佢聽到個噩耗之後，極度悲痛（痛苦）到呻吟出嚟。\n\n\n\n常見搭配 (Collocations)： * mental / physical anguish：精神上 / 肉體上嘅極度痛苦 * cries of anguish：痛苦嘅呼喊聲"
+  },
+  {
+    "objectID": "posts/english/english_1/index.html",
+    "href": "posts/english/english_1/index.html",
+    "title": "English Word Dictionary Day 1",
+    "section": "",
+    "text": "Note\n\n\n\n💡 使用說明：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。"
+  },
+  {
+    "objectID": "posts/english/english_1/index.html#生字快速索引",
+    "href": "posts/english/english_1/index.html#生字快速索引",
+    "title": "English Word Dictionary Day 1",
+    "section": "🔍 生字快速索引",
+    "text": "🔍 生字快速索引\n\n\n\n\n\n\n\n\n\n\n英文生字\n音標 (IPA)\n詞性\n廣東話地道意思\n難度/常用度\n\n\n\n\nbe overcome with\n/bi ˌəʊ.vəˈkʌm wɪð/\nphr.\n俾（某種強烈情緒）控制住 / 湧上心頭\n⭐⭐⭐\n\n\nriddled\n/ˈrɪd.əld/\nadj.\n充滿（負面嘢）、滿佈、千瘡百孔\n⭐⭐⭐\n\n\ntorment\n/ˈtɔː.ment/ (n.)  /tɔːˈment/ (v.)\nn. / v.\n折磨、極度痛苦、死纏爛打\n⭐⭐⭐\n\n\nattributed\n/əˈtrɪb.jə.tɪd/\nv.\n歸功於、歸咎於、被認為係出自（某人）\n⭐⭐⭐\n\n\ndebase\n/dɪˈbeɪs/\nv.\n貶低、降低價值、搞 Cheap\n⭐⭐⭐⭐\n\n\namasses\n/əˈmæs.ɪz/\nv.\n累積、積聚（財富/知識）\n⭐⭐⭐\n\n\npeerless\n/ˈpɪə.ləs/\nadj.\n無與倫比、超班、冇得頂\n⭐⭐⭐⭐\n\n\nplagued\n/pleɪɡd/\nv. / adj.\n備受困擾、纏繞、搞到一鑊泡\n⭐⭐⭐\n\n\npursuit\n/pəˈsjuːt/\nn.\n追求、追捕、嗜好/消遣\n⭐⭐⭐\n\n\ntoddler\n/ˈtɒd.lər/\nn.\n啱啱學行嘅BB、幼兒\n⭐⭐\n\n\nholds up\n/həʊldz ʌp/\nphr. v.\n站得住腳、經得起考驗 / 阻滯\n⭐⭐⭐\n\n\nbeset\n/bɪˈset/\nv. / adj.\n困擾、充滿（困難/問題）\n⭐⭐⭐⭐\n\n\nlaunch pad\n/ˈlɔːntʃ ˌpæd/\nn.\n發射台、起步點、跳板\n⭐⭐\n\n\ninferiority complex\n/ɪnˌfɪə.riˈɒr.ə.ti ˌkɒm.pleks/\nn.\n自卑感、自卑情結\n⭐⭐⭐⭐\n\n\nutter\n/ˈʌt.ər/\nadj. / v.\n徹頭徹尾、完全的 / 講出口\n⭐⭐⭐\n\n\nOedipus complex\n/ˈiː.dɪ.pəs ˌkɒm.pleks/\nn.\n戀母情結\n⭐⭐⭐⭐⭐\n\n\nnuances\n/ˈnjuː.ɑːnsɪz/\nn.\n細微差別、細節位\n⭐⭐⭐⭐\n\n\nwith regard to\n/wɪð rɪˈɡɑːd tuː/\nphr.\n關於、至於\n⭐⭐⭐\n\n\nresolved to\n/rɪˈzɒlvd tuː/\nphr. v.\n下定決心去做\n⭐⭐⭐\n\n\nwhatsoever\n/ˌwɒt.səʊˈev.ər/\nadv.\n絲毫、一啲都（無）\n⭐⭐⭐"
+  },
+  {
+    "objectID": "posts/english/english_1/index.html#生字詳細解析",
+    "href": "posts/english/english_1/index.html#生字詳細解析",
+    "title": "English Word Dictionary Day 1",
+    "section": "📚 生字詳細解析",
+    "text": "📚 生字詳細解析\n\n1. be overcome with (something)\n\n詞性：片語 (Phrase)\n讀音：/bi ˌəʊ.vəˈkʌm wɪð/\n廣東話解法：指突然之間俾一種好強烈嘅情緒（例如悲傷、恐懼、喜悅等）淹沒或者控制，搞到個人無法自控。廣東話通常會話「俾（某種情緒）控制住」、「成個人都係…」或者「（情緒）湧晒上嚟」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: She was overcome with emotion when she won the award.\n廣東話口語: 佢贏咗個獎嗰陣，激動到控制唔到自己（啲情緒湧晒上嚟）。\nEnglish: I was overcome with guilt after lying to him.\n廣東話口語: 我同佢講完大話之後，覺得超級內疚（內疚感湧晒出嚟 / 俾內疚感浸沒咗）。\n\n\n\n常見搭配 (Collocations)： * overcome with grief：傷心欲絕 / 傷心到崩潰 * overcome with joy：開心到癲 / 狂喜 * overcome with fear：驚到呆咗 / 俾恐懼支配\n\n\n\n2. riddled (with something)\n\n詞性：形容詞 (Adjective)\n讀音：/ˈrɪd.əld/\n廣東話解法：通常用嚟形容「充滿咗啲唔好嘅嘢」（例如錯誤、疾病、貪污或者子彈窿）。廣東話會視乎配搭譯做「滿佈」、「千瘡百孔」、「錯漏百出」或者「周身都係」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: His report was riddled with errors.\n廣東話口語: 佢份報告錯漏百出（周圍都係錯處）。\nEnglish: The car was riddled with bullets.\n廣東話口語: 架車俾人開槍打到變咗馬蜂窩（滿佈子彈窿）。\n\n\n\n常見搭配 (Collocations)： * riddled with errors / mistakes：錯漏百出 * riddled with corruption：充滿貪污腐敗 * riddled with disease：百病叢生 / 周身病痛 * riddled with bullet holes：滿佈子彈窿 / 打到變馬蜂窩\n\n\n\n3. torment\n\n詞性：名詞 (Noun) / 動詞 (Verb)\n讀音：名詞讀音為 /ˈtɔː.ment/，動詞讀音為 /tɔːˈment/（重音喺後面）\n廣東話解法：\n\n做名詞時，指肉體或精神上受到嘅「極大痛苦」或者「折磨」。\n做動詞時，指特登去「折磨」人、「玩殘」人，或者不斷令對方覺得好煩、好痛苦。\n\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish (Noun): Waiting for the medical test results was absolute torment.\n廣東話口語: 等緊驗身報告出嗰段時間，真係一種折磨（痛苦到死）。\nEnglish (Verb): The older kids used to torment him at school.\n廣東話口語: 以前喺學校啲大個仔成日恰佢 / 玩殘佢（特登去折磨佢）。\n\n\n\n常見搭配 (Collocations)： * in agony and torment：極度痛苦 * mental torment：精神折磨\n\n\n\n4. attributed (to someone / something)\n\n詞性：動詞 (Verb - 過去式 / 過去分詞)\n讀音：/əˈtrɪb.jə.tɪd/\n廣東話解法：最常用係 be attributed to，指將一件事嘅發生（例如成功或失敗）「歸功於」或者「歸咎於」某個原因或某人。另外，亦可以解作一幅畫、一句說話「被認為係出自」某人之手。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Her success can be attributed to hard work and determination.\n廣東話口語: 佢咁成功，可以歸功於（全靠）佢夠勤力同有決心。\nEnglish: The quote is widely attributed to Albert Einstein, but he never actually said it.\n廣東話口語: 呢句金句好多人都話係出自愛因斯坦（以為係佢講），但其實佢根本無講過。\n\n\n\n常見搭配 (Collocations)： * widely attributed to：普遍認為係…造成 / 出自… * directly attributed to：直接歸因於 / 直接因為…而起\n\n\n\n5. debase\n\n詞性：動詞 (Verb)\n讀音：/dɪˈbeɪs/\n廣東話解法：指降低一樣嘢嘅價值、品質，或者降低一個人嘅品格。廣東話通常會講「貶低」、「搞到好 Cheap」或者「拉低個層次」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: He wouldn’t debase himself by asking them for money.\n廣東話口語: 佢唔會為咗問佢哋攞錢而貶低自己（搞到自己咁 Cheap）。\nEnglish: The currency was debased by the government.\n廣東話口語: 啲貨幣俾政府搞到貶晒值。\n\n\n\n常見搭配 (Collocations)： * debase yourself：貶低自己 * debase the currency：貨幣貶值 / 降低貨幣價值\n\n\n\n6. amasses (amass 嘅第三人稱單數)\n\n詞性：動詞 (Verb)\n讀音：/əˈmæs.ɪz/ (原型讀音為 /əˈmæs/)\n廣東話解法：指大量地收集或者累積（通常係指財富、知識或者證據）。廣東話會講「積聚」、「儲埋儲埋一大堆」或者「積埋積埋」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: By the time he was 40, he had amassed a fortune.\n廣東話口語: 佢四十歲嗰陣，已經積聚咗一大筆財富（儲埋儲埋好多錢）。\nEnglish: She amasses evidence for her research.\n廣東話口語: 佢為咗自己個研究，周圍收集（儲埋）好多證據。\n\n\n\n常見搭配 (Collocations)： * amass a fortune / wealth：累積財富 * amass evidence / data：收集大量證據 / 數據\n\n\n\n7. peerless\n\n詞性：形容詞 (Adjective)\n讀音：/ˈpɪə.ləs/\n廣東話解法：指冇人能夠比得上。廣東話通常會講「無與倫比」、「超班」、「冇得頂」或者「天下無雙」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: As a martial artist, Bruce Lee was peerless.\n廣東話口語: 作為一個武術家，李小龍真係超晒班（冇人夠佢打 / 無與倫比）。\nEnglish: The hotel offers peerless service.\n廣東話口語: 呢間酒店嘅服務真係冇得頂（無人能及）。\n\n\n\n常見搭配 (Collocations)： * peerless beauty：絕色 / 無雙嘅美貌 * peerless performance：無與倫比嘅表現\n\n\n\n8. plagued (plague 嘅過去式 / 過去分詞)\n\n詞性：動詞 (Verb) / 亦可作被動語態形容詞\n讀音：/pleɪɡd/\n廣東話解法：指不斷受到某啲壞事或麻煩嘅折磨。廣東話通常會講「備受困擾」、「纏繞住」、「煩死」或者「搞到一鑊泡」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: The project has been plagued by financial problems from the start.\n廣東話口語: 個項目一開始就一路俾財務問題困擾住（搞到一鑊泡）。\nEnglish: He has been plagued with leg injuries this season.\n廣東話口語: 佢今季一直俾啲腳傷纏繞住。\n\n\n\n常見搭配 (Collocations)： * plagued by problems / doubts：被問題 / 疑慮困擾 * plagued with injuries / disease：傷患 / 疾病纏身\n\n\n\n9. pursuit\n\n詞性：名詞 (Noun)\n讀音：/pəˈsjuːt/\n廣東話解法：主要有三個解法：第一係「追求」（例如追求夢想、學問）；第二係「追捕 / 追擊」；第三（通常加 s 變眾數 pursuits）可以解作「消遣」或者「嗜好」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: She travelled the world in pursuit of her dreams.\n廣東話口語: 佢為咗追求自己嘅夢想，去咗環遊世界。\nEnglish: The police are in hot pursuit of the stolen car.\n廣東話口語: 啲警察窮追不捨緊（狂追）架失車。\nEnglish: He enjoys outdoor pursuits like hiking and cycling.\n廣東話口語: 佢好鍾意行山同踩單車呢類戶外活動（消遣）。\n\n\n\n常見搭配 (Collocations)： * in pursuit of：為咗追求… / 追捕緊… * hot pursuit：窮追不捨 * leisure / outdoor pursuits：休閒 / 戶外消遣活動\n\n\n\n10. toddler\n\n詞性：名詞 (Noun)\n讀音：/ˈtɒd.lər/\n廣東話解法：指啱啱開始學行路（大概一至三歲）嘅細路仔。因為佢哋行路通常跌跌撞撞（toddle），所以英文叫 toddler。廣東話通常會叫「學行BB」、「BB」或者「幼兒」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: The toddler took a few steps and fell down.\n廣東話口語: 個啱啱學行嘅BB行咗幾步就跌低咗。\nEnglish: We bought some educational toys for toddlers.\n廣東話口語: 我哋買咗啲俾幼兒玩嘅益智玩具。\n\n\n\n常見搭配 (Collocations)： * toddler years：幼兒時期（通常指 1-3 歲） * toddler group：幼兒遊戲小組 / Playgroup\n\n\n\n11. holds up\n\n詞性：片語動詞 (Phrasal Verb)\n讀音：/həʊldz ʌp/\n廣東話解法：常見有兩個意思：第一係指一個論點、藉口或者質素「站得住腳」、「經得起考驗」；第二係指事情或者交通受到「阻滯 / 拖延」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: His excuse for being late just doesn’t hold up.\n廣東話口語: 佢遲到個藉口根本站唔住腳（講唔通 / 呃唔到人）。\nEnglish: Sorry I’m late, I was held up in traffic.\n廣東話口語: 唔好意思遲咗，頭先塞車阻住咗（有阻滯）。\n\n\n\n常見搭配 (Collocations)： * argument holds up：論點站得住腳 * held up by (something)：俾（某啲嘢）拖延 / 阻滯\n\n\n\n12. beset\n\n詞性：動詞 (Verb) / 被動語態形容詞\n讀音：/bɪˈset/\n廣東話解法：指四方八面都係困難、問題或者危險。廣東話通常會講「困擾」、「充滿（困難）」、「困難重重」或者「俾麻煩圍住晒」。同 plagued 意思相近。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: The project was beset by financial difficulties.\n廣東話口語: 個項目遇到重重財務困難（俾財困問題纏繞住）。\nEnglish: She is beset with self-doubt.\n廣東話口語: 佢充滿自我懷疑（成日都覺得自己唔得）。\n\n\n\n常見搭配 (Collocations)： * beset by / with problems：困難重重 * beset with danger：危機四伏\n\n\n\n13. launch pad\n\n詞性：名詞 (Noun)\n讀音：/ˈlɔːntʃ ˌpæd/\n廣東話解法：字面意思係火箭嘅「發射台」。通常用作比喻，指事業或者某項計劃嘅「起步點」或者「跳板」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: He used the job as a launch pad for his political career.\n廣東話口語: 佢當呢份工係佢政治生涯嘅跳板（起步點）。\nEnglish: The new policy will serve as a launch pad for economic growth.\n廣東話口語: 呢個新政策將會成為經濟增長嘅推動力（發射台）。\n\n\n\n常見搭配 (Collocations)： * act as a launch pad：作為跳板 / 起步點 * provide a launch pad：提供一個發揮嘅平台\n\n\n\n14. inferiority complex\n\n詞性：名詞 (Noun)\n讀音：/ɪnˌfɪə.riˈɒr.ə.ti ˌkɒm.pleks/\n廣東話解法：心理學名詞，指人有一種強烈覺得自己唔夠人哋好、低人一等嘅心態。廣東話通常會叫「自卑感」或者「自卑情結」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: She has a massive inferiority complex when it comes to her looks.\n廣東話口語: 一講到自己個樣，佢就有好嚴重嘅自卑感。\nEnglish: He constantly criticizes others to hide his own inferiority complex.\n廣東話口語: 佢成日踩低人，其實係想掩飾自己嘅自卑。\n\n\n\n常見搭配 (Collocations)： * have / suffer from an inferiority complex：有自卑感 * massive inferiority complex：極度自卑\n\n\n\n15. utter\n\n詞性：形容詞 (Adjective) / 動詞 (Verb)\n讀音：/ˈʌt.ər/\n廣東話解法：\n\n做形容詞時，用嚟強調程度，解作「完全的」、「徹頭徹尾的」。廣東話會講「十足十」、「完全係」。\n做動詞時，指「講出口」、「發出聲音」。廣東話會講「出聲」、「講嘢」。\n\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish (Adj): What you are saying is absolute and utter nonsense.\n廣東話口語: 你講嗰啲根本就係徹頭徹尾嘅廢話。\nEnglish (Verb): She sat there without uttering a single word.\n廣東話口語: 佢坐喺度一粒聲都無出過。\n\n\n\n常見搭配 (Collocations)： * utter chaos / nonsense / disaster：完全混亂 / 徹頭徹尾嘅廢話 / 徹底嘅災難 * not utter a word：隻字不提 / 一聲都唔出\n\n\n\n16. Oedipus complex\n\n詞性：名詞 (Noun)\n讀音：/ˈiː.dɪ.pəs ˌkɒm.pleks/\n廣東話解法：心理學名詞（由佛洛伊德提出），指兒子潛意識對母親有愛慕甚至佔有慾，同時對父親有敵意。廣東話叫「戀母情結」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Psychoanalysts suggested that the character’s behavior stemmed from an unresolved Oedipus complex.\n廣東話口語: 心理分析師話個角色嘅行為，係源自佢未解決嘅戀母情結。\n\n\n\n常見搭配 (Collocations)： * unresolved Oedipus complex：未解決嘅戀母情結\n\n\n\n17. nuances (nuance 嘅眾數)\n\n詞性：名詞 (Noun)\n讀音：/ˈnjuː.ɑːnsɪz/\n廣東話解法：指意思、聲音、感覺或者顏色上好微小嘅差異。廣東話通常會講「細微差別」、「細節位」或者「微妙之處」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: You need to understand the nuances of the Cantonese language.\n廣東話口語: 你要明白廣東話入面啲好微妙嘅細節（細微嘅分別）。\nEnglish: The actor captured all the nuances of the character.\n廣東話口語: 個演員捕捉到個角色所有嘅細微變化（演得好細膩）。\n\n\n\n常見搭配 (Collocations)： * understand / grasp the nuances：理解當中嘅細微差別 * subtle nuances：微妙嘅細節\n\n\n\n18. with regard to\n\n詞性：片語 (Phrase)\n讀音：/wɪð rɪˈɡɑːd tuː/\n廣東話解法：比較正式嘅寫法，解作「關於」、「至於」或者「講開…」。口語通常會講「關於」、「講起…」或者「喺…方面」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: With regard to your request, we will get back to you shortly.\n廣東話口語: 關於你嘅要求，我哋會好快覆返你。\nEnglish: I am writing with regard to my recent order.\n廣東話口語: （寫信常用）我寫呢封信係關於我最近嘅訂單。\n\n\n\n常見搭配 (Collocations)： * with regard to (something)：關於某事\n\n\n\n19. resolved to\n\n詞性：片語動詞 (Phrasal Verb)\n讀音：/rɪˈzɒlvd tuː/\n廣東話解法：指做咗一個好堅定嘅決定去完成一件事。廣東話通常會講「下定決心去做」、「決定咗」或者「立定心腸」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: She resolved to quit smoking this year.\n廣東話口語: 佢下定決心今年一定要戒煙。\nEnglish: He resolved to work harder.\n廣東話口語: 佢立定心腸要更加勤力做嘢。\n\n\n\n常見搭配 (Collocations)： * resolved to do (something)：下定決心做某事\n\n\n\n20. whatsoever\n\n詞性：副詞 (Adverb)\n讀音：/ˌwɒt.səʊˈev.ər/\n廣東話解法：通常用喺否定句嘅最尾，用嚟加強語氣，解作「絲毫（都沒有）」或者「無論如何都唔…」。廣東話會講「一啲都（無）」、「絕對唔…」或者「完全無」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: I have no doubt whatsoever about his ability.\n廣東話口語: 我對佢嘅能力絕對無絲毫懷疑（一啲懷疑都無）。\nEnglish: There is no evidence whatsoever to support that claim.\n廣東話口語: 完全無任何證據去支持嗰個講法。\n\n\n\n常見搭配 (Collocations)： * none whatsoever / nothing whatsoever：完全無 / 一啲都無 * no doubt whatsoever：毫無疑問"
+  },
+  {
+    "objectID": "posts/algorithms/merge-sort-running-time/index.html",
+    "href": "posts/algorithms/merge-sort-running-time/index.html",
+    "title": "Time Complexity Analysis of Merge Sort",
+    "section": "",
+    "text": "Merge Sort is a classic divide-and-conquer algorithm. Our goal is to prove mathematically that its running time scales at \\(\\Theta(n \\log n)\\).\nTo do this, we need to translate the algorithm’s code into a mathematical equation, understand the cost of its individual parts, and then solve that equation by visualizing it as a tree. Let’s build this logic step by step."
+  },
+  {
+    "objectID": "posts/algorithms/merge-sort-running-time/index.html#the-resulting-formula",
+    "href": "posts/algorithms/merge-sort-running-time/index.html#the-resulting-formula",
+    "title": "Time Complexity Analysis of Merge Sort",
+    "section": "The Resulting Formula",
+    "text": "The Resulting Formula\nAdding these parts together gives us our foundational time budget:\n\\[\nT(n) = \\underbrace{\\Theta(1)}_{\\text{Divide}} + \\underbrace{2T(n/2)}_{\\text{Conquer}} + \\underbrace{\\Theta(n)}_{\\text{Combine}}\n\\]\nBecause the linear merging work (\\(\\Theta(n)\\)) completely eclipses the tiny constant-time work spent dividing (\\(\\Theta(1)\\)), we group all the non-recursive work into a single linear term, representing it as \\(cn\\) (where \\(c\\) is just some constant amount of time per element). This gives us our final, clean recurrence relation:\n\\[\nT(n) = 2T(n/2) + cn\n\\]"
+  },
+  {
+    "objectID": "posts/algorithms/merge-sort-running-time/index.html#the-math-behind-the-cost",
+    "href": "posts/algorithms/merge-sort-running-time/index.html#the-math-behind-the-cost",
+    "title": "Time Complexity Analysis of Merge Sort",
+    "section": "The Math Behind the Cost",
+    "text": "The Math Behind the Cost\nFor every single empty slot in array \\(A\\), the computer performs a fixed, simple set of actions. This basic unit of work takes a tiny, constant amount of time, let’s call it \\(c\\). Because there are \\(n\\) slots to fill, the CPU performs that unit of work exactly \\(n\\) times.\n\\[\n\\text{Total Work} = c \\times n = cn\n\\]\nThis proves that merging scales perfectly linearly with the data size."
+  },
+  {
+    "objectID": "posts/algorithms/merge-sort-running-time/index.html#the-width-work-per-level",
+    "href": "posts/algorithms/merge-sort-running-time/index.html#the-width-work-per-level",
+    "title": "Time Complexity Analysis of Merge Sort",
+    "section": "The Width: Work Per Level",
+    "text": "The Width: Work Per Level\n\nTop level: We start with 1 problem of size \\(n\\). The merge work is just \\(cn\\).\nLevel 1: We split into 2 problems of size \\(n/2\\). The merge work is \\(c(n/2) + c(n/2) = cn\\).\nLevel 2: We split into 4 problems of size \\(n/4\\). The merge work is \\(4 \\times c(n/4) = cn\\).\n\n\nThe Golden Rule\nNotice a pattern? When you break a problem in half, you double the number of subproblems (\\(1 \\to 2 \\to 4 \\dots\\)), but you also cut the work per subproblem in half (\\(cn \\to cn/2 \\to cn/4 \\dots\\)). The doubling and the halving perfectly cancel out. Therefore, every single level of the tree requires exactly \\(cn\\) work.\nWait, what about the very bottom leaf nodes (size 1)? Even though an array of 1 element does not need to be sorted, the CPU still has to allocate stack memory, check the base case (if p &lt; r), and return. This takes a constant time, \\(c\\). Since there are exactly \\(n\\) leaf nodes at the bottom, their total cost is \\(n \\times c = cn\\). The rule holds true all the way to the bottom."
+  },
+  {
+    "objectID": "posts/algorithms/merge-sort-running-time/index.html#the-height-number-of-levels",
+    "href": "posts/algorithms/merge-sort-running-time/index.html#the-height-number-of-levels",
+    "title": "Time Complexity Analysis of Merge Sort",
+    "section": "The Height: Number of Levels",
+    "text": "The Height: Number of Levels\nHow tall is this tree? The height is determined by how many times we can divide \\(n\\) by 2 until we reach arrays of size 1.\nIn mathematics, this question—“How many times do I divide \\(n\\) by 2 to get 1?”—is answered by the base-2 logarithm: \\(\\log_2 n\\) (often written in computer science as just \\(\\lg n\\)).\nAs \\(n\\) grows, \\(\\lg n\\) grows incredibly slowly:\n\n\\(n = 8 \\implies \\lg 8 = 3\\) splits\n\\(n = 1,024 \\implies \\lg 1024 = 10\\) splits\n\\(n = 1,000,000 \\implies \\lg 1,000,000 \\approx 20\\) splits\n\nIncluding the very first top level, the total height of our tree is \\(\\lg n + 1\\) levels."
+  },
+  {
+    "objectID": "posts/algorithms/merge-sort-running-time/index.html#concrete-example-tree-for-n8",
+    "href": "posts/algorithms/merge-sort-running-time/index.html#concrete-example-tree-for-n8",
+    "title": "Time Complexity Analysis of Merge Sort",
+    "section": "Concrete Example: Tree for \\(n=8\\)",
+    "text": "Concrete Example: Tree for \\(n=8\\)\nTo visualize this final calculation, here is exactly what the tree looks like for an array of 8 elements.\nLevel 0 (Root):                  8c                              = 8c\n                             /        \\\nLevel 1:                   4c          4c                        = 8c\n                          /  \\        /  \\\nLevel 2:                2c    2c    2c    2c                     = 8c\n                       / \\   / \\   / \\   / \\\nLevel 3 (Leaves):     c   c c   c c   c c   c                    = 8c\n----------------------------------------------------------------------\nTotal Work:                                                      = 32c\n\nWidth: \\(8c\\) work per level.\nHeight: \\(\\log_2(8) + 1 = 3 + 1 = 4\\) levels.\nTotal: \\(4 \\times 8c = 32c\\).\n\nSince \\(32c = 8c \\log_2(8) + 8c\\), it perfectly matches our \\(cn \\lg n + cn\\) formula."
+  },
+  {
+    "objectID": "posts/algorithms/merge-sort-running-time/index.html#the-tug-of-war",
+    "href": "posts/algorithms/merge-sort-running-time/index.html#the-tug-of-war",
+    "title": "Time Complexity Analysis of Merge Sort",
+    "section": "The Tug of War",
+    "text": "The Tug of War\nThe true power of this blueprint is that it reveals a mathematical tug-of-war happening inside the algorithm.\nOn one side, you have the proliferation rate (determined by \\(a\\)) multiplying the number of problems. On the other side, you have the shrinkage rate (determined by \\(b\\)) and the overhead cost of merging (\\(C(n)\\)). Who wins this tug-of-war determines the shape of the tree and the final Big-\\(\\Theta\\) complexity."
+  },
+  {
+    "objectID": "posts/algorithms/merge-sort-running-time/index.html#example-1-merge-sort-the-perfect-tie",
+    "href": "posts/algorithms/merge-sort-running-time/index.html#example-1-merge-sort-the-perfect-tie",
+    "title": "Time Complexity Analysis of Merge Sort",
+    "section": "Example 1: Merge Sort (The Perfect Tie)",
+    "text": "Example 1: Merge Sort (The Perfect Tie)\nAs we discovered earlier, for Merge Sort:\n\n\\(a = 2\\) (splits into 2 arrays)\n\\(b = 2\\) (each array is half the size)\n\\(D(n) + C(n) = \\Theta(n)\\) (linear time to merge)\n\nBecause the rate at which the problems double (\\(a = 2\\)) perfectly balances the rate at which the workload shrinks (\\(b = 2\\)), the total work done at every single level of the tree remains a constant \\(cn\\). A perfectly rectangular tree of width \\(n\\) and height \\(\\log n\\) gives us \\(\\Theta(n \\log n)\\)."
+  },
+  {
+    "objectID": "posts/algorithms/merge-sort-running-time/index.html#example-2-binary-search-the-shrinking-tree",
+    "href": "posts/algorithms/merge-sort-running-time/index.html#example-2-binary-search-the-shrinking-tree",
+    "title": "Time Complexity Analysis of Merge Sort",
+    "section": "Example 2: Binary Search (The Shrinking Tree)",
+    "text": "Example 2: Binary Search (The Shrinking Tree)\nLet’s apply the blueprint to an entirely different algorithm: finding a number in a sorted array using binary search.\nIn binary search, you look at the middle element. If it is not what you’re looking for, you discard half the array and recursively search the remaining half.\n\n\\(a = 1\\) (you only search one half; the other is thrown away)\n\\(b = 2\\) (the array you search is cut in half)\n\\(D(n) + C(n) = \\Theta(1)\\) (finding the middle takes constant time, and there is nothing to merge)\n\nPlugging this into our blueprint gives:\n\\[\nT(n) = 1 \\cdot T(n/2) + \\Theta(1)\n\\]\nThink about what this recursion tree looks like. Because \\(a = 1\\), the tree never branches out. It is just a straight, single line going down.\n\nLevel 0: 1 problem of size \\(n\\), costing \\(c\\)\nLevel 1: 1 problem of size \\(n/2\\), costing \\(c\\)\nLevel 2: 1 problem of size \\(n/4\\), costing \\(c\\)\n\nEvery level costs a tiny constant amount \\(c\\). How many levels are there? Just like before, dividing by 2 means there are \\(\\lg n\\) levels.\nMultiplying the width (\\(c\\)) by the height (\\(\\lg n\\)) gives us the final complexity for binary search:\n\\[\n\\Theta(\\log n)\n\\]\nBy simply breaking an algorithm down into its \\(a\\), \\(b\\), and overhead costs, the Master Blueprint allows you to instantly visualize the shape of the workload and calculate the runtime."
+  },
+  {
+    "objectID": "posts/algorithms/insertion-sort-running-time/index.html",
+    "href": "posts/algorithms/insertion-sort-running-time/index.html",
+    "title": "Time Complexity Analysis of Insertion Sort",
+    "section": "",
+    "text": "The running time of the Insertion Sort algorithm is determined by calculating the time spent executing each individual line of pseudocode.\n\n\n\n\n\n\n\n\n\nLine\nInsertion-Sort(A)\ncost\ntimes\n\n\n\n\n1\nfor \\(j = 2\\) to \\(A.length\\)\n\\(c_1\\)\n\\(n\\)\n\n\n2\n    \\(key = A[j]\\)\n\\(c_2\\)\n\\(n - 1\\)\n\n\n3\n    // Insert \\(A[j]\\) into the sorted sequence \\(A[1 \\dots j - 1]\\).\n\\(0\\)\n\\(n - 1\\)\n\n\n4\n    \\(i = j - 1\\)\n\\(c_4\\)\n\\(n - 1\\)\n\n\n5\n    while \\(i &gt; 0\\) and \\(A[i] &gt; key\\)\n\\(c_5\\)\n\\(\\sum_{j=2}^n t_j\\)\n\n\n6\n        \\(A[i + 1] = A[i]\\)\n\\(c_6\\)\n\\(\\sum_{j=2}^n (t_j - 1)\\)\n\n\n7\n        \\(i = i - 1\\)\n\\(c_7\\)\n\\(\\sum_{j=2}^n (t_j - 1)\\)\n\n\n8\n    \\(A[i + 1] = key\\)\n\\(c_8\\)\n\\(n - 1\\)\n\n\n\n\n\n\n\\(c_i\\) represents the constant time cost to execute line \\(i\\) exactly once.\nDifferent operations (math, assignments, conditional checks) require slightly different processing times, hence unique costs (\\(c_1, c_2, \\dots\\)).\nComments (e.g., Line 3) are ignored by the computer, resulting in a cost of \\(0\\).\n\n\n\n\nFor an input array of size \\(n\\):\n\nOuter loop header (Line 1): Runs \\(n\\) times (once per item, plus the final exit check).\nOuter loop body (Lines 2, 4, 8): Runs \\(n - 1\\) times (one less than the header).\nInner while loop condition (Line 5): Runs \\(\\sum_{j=2}^n t_j\\) times, where \\(t_j\\) is the number of condition checks during the \\(j\\)-th pass.\nInner while loop body (Lines 6, 7): Runs \\(\\sum_{j=2}^n (t_j - 1)\\) times.\n\n\n\n\nTo find the total running time, multiply the cost (\\(c_i\\)) by the execution frequency for each line, and sum the results:\n\\[\nT(n) = c_1n + c_2(n-1) + c_4(n-1) + c_5 \\sum_{j=2}^n t_j + c_6 \\sum_{j=2}^n (t_j - 1) + c_7 \\sum_{j=2}^n (t_j - 1) + c_8(n-1)\n\\]"
+  },
+  {
+    "objectID": "posts/algorithms/insertion-sort-running-time/index.html#theoretical-running-time-formulation",
+    "href": "posts/algorithms/insertion-sort-running-time/index.html#theoretical-running-time-formulation",
+    "title": "Time Complexity Analysis of Insertion Sort",
+    "section": "",
+    "text": "The running time of the Insertion Sort algorithm is determined by calculating the time spent executing each individual line of pseudocode.\n\n\n\n\n\n\n\n\n\nLine\nInsertion-Sort(A)\ncost\ntimes\n\n\n\n\n1\nfor \\(j = 2\\) to \\(A.length\\)\n\\(c_1\\)\n\\(n\\)\n\n\n2\n    \\(key = A[j]\\)\n\\(c_2\\)\n\\(n - 1\\)\n\n\n3\n    // Insert \\(A[j]\\) into the sorted sequence \\(A[1 \\dots j - 1]\\).\n\\(0\\)\n\\(n - 1\\)\n\n\n4\n    \\(i = j - 1\\)\n\\(c_4\\)\n\\(n - 1\\)\n\n\n5\n    while \\(i &gt; 0\\) and \\(A[i] &gt; key\\)\n\\(c_5\\)\n\\(\\sum_{j=2}^n t_j\\)\n\n\n6\n        \\(A[i + 1] = A[i]\\)\n\\(c_6\\)\n\\(\\sum_{j=2}^n (t_j - 1)\\)\n\n\n7\n        \\(i = i - 1\\)\n\\(c_7\\)\n\\(\\sum_{j=2}^n (t_j - 1)\\)\n\n\n8\n    \\(A[i + 1] = key\\)\n\\(c_8\\)\n\\(n - 1\\)\n\n\n\n\n\n\n\\(c_i\\) represents the constant time cost to execute line \\(i\\) exactly once.\nDifferent operations (math, assignments, conditional checks) require slightly different processing times, hence unique costs (\\(c_1, c_2, \\dots\\)).\nComments (e.g., Line 3) are ignored by the computer, resulting in a cost of \\(0\\).\n\n\n\n\nFor an input array of size \\(n\\):\n\nOuter loop header (Line 1): Runs \\(n\\) times (once per item, plus the final exit check).\nOuter loop body (Lines 2, 4, 8): Runs \\(n - 1\\) times (one less than the header).\nInner while loop condition (Line 5): Runs \\(\\sum_{j=2}^n t_j\\) times, where \\(t_j\\) is the number of condition checks during the \\(j\\)-th pass.\nInner while loop body (Lines 6, 7): Runs \\(\\sum_{j=2}^n (t_j - 1)\\) times.\n\n\n\n\nTo find the total running time, multiply the cost (\\(c_i\\)) by the execution frequency for each line, and sum the results:\n\\[\nT(n) = c_1n + c_2(n-1) + c_4(n-1) + c_5 \\sum_{j=2}^n t_j + c_6 \\sum_{j=2}^n (t_j - 1) + c_7 \\sum_{j=2}^n (t_j - 1) + c_8(n-1)\n\\]"
+  },
+  {
+    "objectID": "posts/algorithms/insertion-sort-running-time/index.html#concrete-example-trace-a-3-1-2",
+    "href": "posts/algorithms/insertion-sort-running-time/index.html#concrete-example-trace-a-3-1-2",
+    "title": "Time Complexity Analysis of Insertion Sort",
+    "section": "2. Concrete Example Trace: \\(A = [3, 1, 2]\\)",
+    "text": "2. Concrete Example Trace: \\(A = [3, 1, 2]\\)\nLet us trace the algorithm using an input size of \\(n=3\\) and hypothetical execution cycles for each \\(c_i\\).\n\nStep A: Setting up Constants\nAssume the following clock cycle costs per execution:\n\n\\(c_1 = 2\\) cycles (checking for loop, incrementing \\(j\\))\n\\(c_2 = 1\\) cycle (reading and assigning key)\n\\(c_4 = 1\\) cycle (assigning \\(i\\))\n\\(c_5 = 3\\) cycles (checking while conditions)\n\\(c_6 = 2\\) cycles (shifting element right)\n\\(c_7 = 1\\) cycle (decrementing \\(i\\))\n\\(c_8 = 1\\) cycle (inserting key)\n\n\n\nStep B: Tracing the Loops to Find \\(t_j\\)\n\nPass \\(j = 2\\) (Inserting 1 into \\([3]\\)): The condition is checked once successfully, and once failing (\\(3&gt;1\\), then \\(0&gt;0\\) fails). Result: \\(t_2 = 2\\) (loop body runs \\(1\\) time).\nPass \\(j = 3\\) (Inserting 2 into \\([1, 3]\\)): The condition is checked once successfully, and once failing (\\(3&gt;2\\), then \\(1&gt;2\\) fails). Result: \\(t_3 = 2\\) (loop body runs \\(1\\) time).\n\n\n\nStep C: Computing Total Time \\(T(3)\\)\nSubstituting \\(n=3, t_2=2, t_3=2\\) into our frequencies:\n\nLine 1: \\(n = 3\\) times\nLines 2, 4, 8: \\(n-1 = 2\\) times each\nLine 5: \\(t_2 + t_3 = 4\\) times\nLines 6, 7: \\((t_2-1) + (t_3-1) = 2\\) times each\n\nMultiplying by the \\(c_i\\) costs and summing:\n\\[\n\\begin{aligned}\nT(3) &= (c_1 \\times 3) + (c_2 \\times 2) + (c_4 \\times 2) + (c_5 \\times 4) + (c_6 \\times 2) + (c_7 \\times 2) + (c_8 \\times 2) \\\\\n     &= (2 \\times 3) + (1 \\times 2) + (1 \\times 2) + (3 \\times 4) + (2 \\times 2) + (1 \\times 2) + (1 \\times 2) \\\\\n     &= 6 + 2 + 2 + 12 + 4 + 2 + 2 \\\\\n     &= \\mathbf{30 \\text{ cycles}}\n\\end{aligned}\n\\]\nConclusion: For this unsorted array, it takes 30 cycles. If the array were already sorted (e.g., \\([1, 2, 3]\\)), the inner loop would fail immediately (\\(t_2=1, t_3=1\\)). This eliminates Lines 6 and 7, dropping the total running time to a much faster 18 cycles."
+  },
+  {
+    "objectID": "posts/algorithms/insertion-sort-running-time/index.html#best-case-and-worst-case-scenarios",
+    "href": "posts/algorithms/insertion-sort-running-time/index.html#best-case-and-worst-case-scenarios",
+    "title": "Time Complexity Analysis of Insertion Sort",
+    "section": "3. Best-Case and Worst-Case Scenarios",
+    "text": "3. Best-Case and Worst-Case Scenarios\nEven for inputs of the exact same size \\(n\\), the algorithm’s running time can vary drastically depending on how the initial items are arranged.\n\nThe Best-Case: Already Sorted\n\nScenario: The input array is already in the correct sorted order.\nWhat happens: When the inner while loop checks if it needs to shift elements, it immediately finds they are in order (\\(A[i] \\le key\\)).\nMath impact: The condition is checked exactly once per pass (\\(t_j = 1\\)). The inner loop body never runs (\\(t_j - 1 = 0\\)).\nCalculation: Substituting \\(t_j = 1\\) into our \\(T(n)\\) formula gives:\n\n\\[\n\\begin{aligned}\nT(n) &= c_1n + c_2(n-1) + c_4(n-1) + c_5(n-1) + c_8(n-1) \\\\\n     &= (c_1 + c_2 + c_4 + c_5 + c_8)n - (c_2 + c_4 + c_5 + c_8)\n\\end{aligned}\n\\]\n\nResulting Time: We can express this running time as \\(T(n) = \\mathbf{an + b}\\) (where \\(a\\) and \\(b\\) are constants), which is a fast, linear function of \\(n\\).\n\n\n\nThe Worst-Case: Reverse Sorted\n\nScenario: The input array is completely backward (decreasing order).\nWhat happens: The inner while loop must shift every new element all the way to the very front, comparing it against every single item in the already-sorted portion.\nMath impact: The loop condition is checked \\(j\\) times per pass (\\(t_j = j\\)).\nApplying Summations: We replace the sums in our \\(T(n)\\) formula using standard math rules:\n\n\\[\n\\sum_{j=2}^n j = \\frac{n(n+1)}{2} - 1 \\quad \\text{and} \\quad \\sum_{j=2}^n (j-1) = \\frac{n(n-1)}{2}\n\\]\n\nCalculation: Substituting these formulas into our \\(T(n)\\) equation gives:\n\n\\[\n\\begin{aligned}\nT(n) &= c_1n + c_2(n-1) + c_4(n-1) + c_5\\left(\\frac{n(n+1)}{2} - 1\\right) \\\\\n     &\\quad + c_6\\left(\\frac{n(n-1)}{2}\\right) + c_7\\left(\\frac{n(n-1)}{2}\\right) + c_8(n-1) \\\\\n     &= \\left(\\frac{c_5}{2} + \\frac{c_6}{2} + \\frac{c_7}{2}\\right)n^2 + \\left(c_1 + c_2 + c_4 + \\frac{c_5}{2} - \\frac{c_6}{2} - \\frac{c_7}{2} + c_8\\right)n - (c_2 + c_4 + c_5 + c_8)\n\\end{aligned}\n\\]\n\nResulting Time: We can express this worst-case time as \\(T(n) = \\mathbf{an^2 + bn + c}\\) (where \\(a, b,\\) and \\(c\\) are constants), which is a significantly slower, quadratic function of \\(n\\)."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "my-math-notes",
+    "section": "",
+    "text": "Class\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 5, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Merge Sort\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 3\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning with Python Ch.1 Summary\n\n\n\nDeep Learning\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 2\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 1\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n日文生字字典（廣東話解釋）Day 1\n\n\n\nJapanese\n\n\n\n\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nMerge Sort: A Divide-and-Conquer Algorithm\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 29, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nInsertion Sort Algorithm\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Insertion Sort\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Jerry’s Notes",
+    "section": "",
+    "text": "This is a personal website for my notes on mathematics, computer science, and other topics. The content is written in Markdown and rendered using Quarto. You can find the source code for this website on GitHub."
+  },
+  {
+    "objectID": "posts/algorithms/insertion-sort/index.html",
+    "href": "posts/algorithms/insertion-sort/index.html",
+    "title": "Insertion Sort Algorithm",
+    "section": "",
+    "text": "An insertion sort works exactly like sorting a hand of playing cards: you pick up cards one by one from an unsorted pile and slide each new card into its correct position among the cards you are already holding."
+  },
+  {
+    "objectID": "posts/algorithms/insertion-sort/index.html#the-core-concept",
+    "href": "posts/algorithms/insertion-sort/index.html#the-core-concept",
+    "title": "Insertion Sort Algorithm",
+    "section": "",
+    "text": "An insertion sort works exactly like sorting a hand of playing cards: you pick up cards one by one from an unsorted pile and slide each new card into its correct position among the cards you are already holding."
+  },
+  {
+    "objectID": "posts/algorithms/insertion-sort/index.html#visualizing-the-partition",
+    "href": "posts/algorithms/insertion-sort/index.html#visualizing-the-partition",
+    "title": "Insertion Sort Algorithm",
+    "section": "Visualizing the Partition",
+    "text": "Visualizing the Partition\nTo see this in action, let’s sort five numbers from smallest to largest: [5, 3, 8, 4, 2].\nImagine dividing the list into two sections separated by a vertical bar: a sorted section on the left, and an unsorted section on the right."
+  },
+  {
+    "objectID": "posts/algorithms/insertion-sort/index.html#the-step-by-step-trace",
+    "href": "posts/algorithms/insertion-sort/index.html#the-step-by-step-trace",
+    "title": "Insertion Sort Algorithm",
+    "section": "The Step-by-Step Trace",
+    "text": "The Step-by-Step Trace\n\nStarting Position: [5 | 3, 8, 4, 2]\nWe start by looking at the very first number, 5. Since it is the only number in our “sorted hand,” it is already sorted by default.\n\n\nStep 1: Pick up 3\nWe look at the first unsorted number (3) and compare it to the sorted section on the left. Since 3 is smaller than 5, we shift 5 one spot to the right and drop 3 into the empty space at the front.\nCurrent state: [3, 5 | 8, 4, 2]\n\n\nStep 2: Pick up 8\nWe take the next unsorted number (8) and compare it moving from right to left in our sorted section. Is 8 smaller than 5? No. Since it is already larger than the biggest number in our hand, we don’t need to shift anything — it simply locks into place on the end.\nCurrent state: [3, 5, 8 | 4, 2]\n\n\nStep 3: Pick up 4\nWe take 4 and compare it moving leftwards:\nSmaller than 8? Yes — shift 8 to the right. Smaller than 5? Yes — shift 5 to the right. Smaller than 3? No! We stop here and insert 4 into the spot right between 3 and 5. Current state: [3, 4, 5, 8 | 2]\n\n\nStep 4: Pick up 2\nFinally, we take 2 and compare it against our sorted hand. Since 2 is smaller than 8, 5, 4, and 3, all four of those numbers shift one position to the right, opening up the very first spot for 2.\nFinal sorted list: [2, 3, 4, 5, 8]"
+  },
+  {
+    "objectID": "posts/algorithms/merge-sort/index.html",
+    "href": "posts/algorithms/merge-sort/index.html",
+    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
+    "section": "",
+    "text": "Algorithms can be designed using various fundamental approaches. Two primary techniques are:\n\nIncremental Approach: Used by algorithms like Insertion Sort. It builds the solution one element at a time (e.g., inserting a single element into an already sorted subarray).\nDivide-and-Conquer Approach: A highly recursive alternative that often yields significantly faster worst-case running times. It solves problems by breaking them down into smaller, manageable pieces."
+  },
+  {
+    "objectID": "posts/algorithms/merge-sort/index.html#algorithm-design-approaches",
+    "href": "posts/algorithms/merge-sort/index.html#algorithm-design-approaches",
+    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
+    "section": "",
+    "text": "Algorithms can be designed using various fundamental approaches. Two primary techniques are:\n\nIncremental Approach: Used by algorithms like Insertion Sort. It builds the solution one element at a time (e.g., inserting a single element into an already sorted subarray).\nDivide-and-Conquer Approach: A highly recursive alternative that often yields significantly faster worst-case running times. It solves problems by breaking them down into smaller, manageable pieces."
+  },
+  {
+    "objectID": "posts/algorithms/merge-sort/index.html#the-divide-and-conquer-paradigm",
+    "href": "posts/algorithms/merge-sort/index.html#the-divide-and-conquer-paradigm",
+    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
+    "section": "2. The Divide-and-Conquer Paradigm",
+    "text": "2. The Divide-and-Conquer Paradigm\nThis recursive approach involves three distinct steps at each level of the recursion:\n\nDivide: Break the original problem into a number of smaller subproblems that are just smaller instances of the exact same problem.\nConquer: Solve the subproblems recursively. However, if the subproblem size is small enough (the recursion “bottoms out”), solve it in a straightforward, direct manner.\nCombine: Merge the solutions of the smaller subproblems together to formulate the solution to the original, overarching problem."
+  },
+  {
+    "objectID": "posts/algorithms/merge-sort/index.html#merge-sort-overview",
+    "href": "posts/algorithms/merge-sort/index.html#merge-sort-overview",
+    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
+    "section": "3. Merge Sort Overview",
+    "text": "3. Merge Sort Overview\nMerge Sort is a classic algorithm that strictly follows the divide-and-conquer paradigm to sort a sequence of elements:\n\nDivide: Split the sequence into two separate subsequences of equal (or near-equal) size.\nConquer: Recursively sort both subsequences. This process bottoms out when a sequence hits a length of 1, as a single element is already inherently sorted.\nCombine: Merge the two sorted subsequences back together to produce the final, fully sorted answer."
+  },
+  {
+    "objectID": "posts/algorithms/merge-sort/index.html#the-engine-the-merge-procedure",
+    "href": "posts/algorithms/merge-sort/index.html#the-engine-the-merge-procedure",
+    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
+    "section": "4. The Engine: The MERGE Procedure",
+    "text": "4. The Engine: The MERGE Procedure\nTo understand Merge Sort, you first have to understand its engine: the “combine” step. This is handled by an auxiliary procedure called MERGE(A, p, q, r).\nIt assumes that the two subarrays \\(A[p \\dots q]\\) and \\(A[q+1 \\dots r]\\) are already sorted. Its job is to merge them into a single sorted subarray that replaces the space they currently take up (\\(A[p \\dots r]\\)).\n\nThe Card Analogy: Imagine two sorted piles of cards face up on a table. You compare the top two cards, remove the smaller one, and place it face down in a new output pile. You repeat this constant-time comparison step until all cards are merged.\nTo prevent constantly checking if either pile is completely empty, a special “sentinel” card containing the value infinity (\\(\\infty\\)) is placed at the bottom of each pile. This guarantees that the core sorting logic stops exactly when all real data has been merged.\n\n\nMERGE Pseudocode\nBelow is the pseudocode for the merging process, demonstrating the use of the new temporary arrays (\\(L\\) and \\(R\\)) and the sentinel values.\n\n\n\n\n\n\n\nLine\nMERGE(A, p, q, r)\n\n\n\n\n1\n\\(n_1 = q - p + 1\\)\n\n\n2\n\\(n_2 = r - q\\)\n\n\n3\nlet \\(L[1 \\dots n_1 + 1]\\) and \\(R[1 \\dots n_2 + 1]\\) be new arrays\n\n\n4\nfor \\(i = 1\\) to \\(n_1\\)\n\n\n5\n    \\(L[i] = A[p + i - 1]\\)\n\n\n6\nfor \\(j = 1\\) to \\(n_2\\)\n\n\n7\n    \\(R[j] = A[q + j]\\)\n\n\n8\n\\(L[n_1 + 1] = \\infty\\)     // Sentinel value\n\n\n9\n\\(R[n_2 + 1] = \\infty\\)     // Sentinel value\n\n\n10\n\\(i = 1\\)\n\n\n11\n\\(j = 1\\)\n\n\n12\nfor \\(k = p\\) to \\(r\\)\n\n\n13\n    if \\(L[i] \\le R[j]\\)\n\n\n14\n        \\(A[k] = L[i]\\)\n\n\n15\n        \\(i = i + 1\\)\n\n\n16\n    else \\(A[k] = R[j]\\)\n\n\n17\n        \\(j = j + 1\\)\n\n\n\nBecause each basic step compares two cards and takes constant time, merging \\(n\\) total elements takes \\(\\Theta(n)\\) time.\n\n\nTracing the MERGE Procedure\nImagine we have a 1-indexed array \\(A = [8, 4, 7, 2, 5, 9]\\). We want to merge two already-sorted sections in the middle: the left pile \\([4, 7]\\) and the right pile \\([2, 5]\\). We call MERGE(A, 2, 3, 5).\n\nSizing & Copying: The algorithm calculates the sizes (\\(n_1 = 2\\), \\(n_2 = 2\\)) and creates temporary arrays \\(L\\) and \\(R\\) with an extra slot for the \\(\\infty\\) sentinel.\n\n\\(L\\) becomes \\([4, 7, \\infty]\\)\n\\(R\\) becomes \\([2, 5, \\infty]\\)\n\nThe Loop: Pointers \\(i\\) and \\(j\\) start at 1. The main loop iterates from \\(k = 2\\) to \\(5\\), overwriting \\(A\\) by picking the smaller of \\(L[i]\\) and \\(R[j]\\):\n\n\\(k=2\\): \\(L[1]\\) (4) vs \\(R[1]\\) (2). Right is smaller. \\(A[2]\\) becomes 2. \\(j\\) increments.\n\\(k=3\\): \\(L[1]\\) (4) vs \\(R[2]\\) (5). Left is smaller. \\(A[3]\\) becomes 4. \\(i\\) increments.\n\\(k=4\\): \\(L[2]\\) (7) vs \\(R[2]\\) (5). Right is smaller. \\(A[4]\\) becomes 5. \\(j\\) increments.\n\\(k=5\\): \\(L[2]\\) (7) vs \\(R[3]\\) (\\(\\infty\\)). Left is smaller. \\(A[5]\\) becomes 7. \\(i\\) increments.\n\nResult: The target section is overwritten. Array \\(A\\) goes from \\([8, 4, 7, 2, 5, 9]\\) to \\([8, 2, 4, 5, 7, 9]\\)."
+  },
+  {
+    "objectID": "posts/algorithms/merge-sort/index.html#the-driver-the-merge-sort-procedure",
+    "href": "posts/algorithms/merge-sort/index.html#the-driver-the-merge-sort-procedure",
+    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
+    "section": "5. The Driver: The MERGE-SORT Procedure",
+    "text": "5. The Driver: The MERGE-SORT Procedure\nNow that we have the engine, we need the driver. The recursive MERGE-SORT function traces the array indices all the way down to the base cases (single elements) first, and only then uses our MERGE engine on the way back up the call stack.\n\n\n\nLine\nMERGE-SORT(A, p, r)\n\n\n\n\n1\nif \\(p &lt; r\\)\n\n\n2\n    \\(q = \\lfloor(p + r)/2\\rfloor\\)\n\n\n3\n    MERGE-SORT(A, p, q)\n\n\n4\n    MERGE-SORT(A, q + 1, r)\n\n\n5\n    MERGE(A, p, q, r)\n\n\n\nTo sort an entire sequence, we make the initial call MERGE-SORT(A, 1, A.length)."
+  },
+  {
+    "objectID": "posts/algorithms/merge-sort/index.html#putting-it-together-a-full-execution-trace",
+    "href": "posts/algorithms/merge-sort/index.html#putting-it-together-a-full-execution-trace",
+    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
+    "section": "6. Putting It Together: A Full Execution Trace",
+    "text": "6. Putting It Together: A Full Execution Trace\nLet us trace the algorithm end-to-end on an unsorted 8-element array: \\(A = [5, 2, 4, 7, 1, 3, 2, 6]\\).\nPhase 1: The Divide Phase (Top-Down) The MERGE-SORT function recursively splits the array in half. No sorting happens yet; it just calculates midpoints (\\(q\\)) and pushes calls onto the stack until every subsequence is length 1.\n\nSplit 1: \\([5, 2, 4, 7]\\) and \\([1, 3, 2, 6]\\)\nSplit 2: \\([5, 2]\\), \\([4, 7]\\), \\([1, 3]\\), and \\([2, 6]\\)\nBase Case (Length 1): \\([5]\\), \\([2]\\), \\([4]\\), \\([7]\\), \\([1]\\), \\([3]\\), \\([2]\\), and \\([6]\\)\n\nAt this point, the recursion bottoms out because single elements are trivially sorted.\nPhase 2: The Combine Phase (Bottom-Up) As the recursive calls resolve, the MERGE procedure kicks in, combining the small sorted subarrays back together level-by-level:\n\nMerge to size 2: \\([2, 5]\\), \\([4, 7]\\), \\([1, 3]\\), and \\([2, 6]\\)\nMerge to size 4: \\([2, 4, 5, 7]\\) and \\([1, 2, 3, 6]\\)\nFinal Merge to size 8: We call MERGE on the two halves, yielding the final sorted array: \\([1, 2, 2, 3, 4, 5, 6, 7]\\)."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html",
+    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html",
+    "title": "Deep Learning with Python Ch.1 Summary",
+    "section": "",
+    "text": "DL: Deep Learning\nML: Machine Learning\nAI: Artificial Intelligence"
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#acronyms",
+    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#acronyms",
+    "title": "Deep Learning with Python Ch.1 Summary",
+    "section": "",
+    "text": "DL: Deep Learning\nML: Machine Learning\nAI: Artificial Intelligence"
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-hierarchy-dl-subset-ml-subset-ai",
+    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-hierarchy-dl-subset-ml-subset-ai",
+    "title": "Deep Learning with Python Ch.1 Summary",
+    "section": "1. The Hierarchy: DL \\(\\subset\\) ML \\(\\subset\\) AI",
+    "text": "1. The Hierarchy: DL \\(\\subset\\) ML \\(\\subset\\) AI\nAI is the broad effort to automate intellectual tasks normally performed by humans. Machine learning is a subfield of AI, and deep learning is a specific subfield of machine learning."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#symbolic-ai",
+    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#symbolic-ai",
+    "title": "Deep Learning with Python Ch.1 Summary",
+    "section": "2. Symbolic AI",
+    "text": "2. Symbolic AI\nThe dominant paradigm in AI from the 1950s to the late 1980s. Experts believed human-level artificial intelligence could be achieved by having programmers handcraft a sufficiently large set of explicit rules for manipulating knowledge stored in explicit databases."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#machine-learning-ml",
+    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#machine-learning-ml",
+    "title": "Deep Learning with Python Ch.1 Summary",
+    "section": "3. Machine Learning (ML)",
+    "text": "3. Machine Learning (ML)\nUnlike classical programming where a computer executes step-by-step rules, ML systems are trained rather than explicitly programmed. The system looks at input data and the corresponding answers to automatically figure out what the rules should be."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#requirements-for-ml",
+    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#requirements-for-ml",
+    "title": "Deep Learning with Python Ch.1 Summary",
+    "section": "4. Requirements for ML",
+    "text": "4. Requirements for ML\nTo do machine learning, three things are required:\n\nInput data points: (e.g., sound files, images). This requires finding useful representations of the data (such as RGB vs. HSV color formats) that make it more amenable to the task.\nExamples of the expected output: (e.g., human-generated transcripts or image tags).\nA way to measure whether the algorithm is doing a good job: A feedback signal used to adjust how the algorithm works."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-deep-in-deep-learning",
+    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-deep-in-deep-learning",
+    "title": "Deep Learning with Python Ch.1 Summary",
+    "section": "5. The “Deep” in Deep Learning",
+    "text": "5. The “Deep” in Deep Learning\n“Deep” does not mean a deeper understanding; rather, it refers to the idea of successive layers of representations. Modern DL often involves tens or hundreds of layers learned automatically, acting as a multistage information-distillation process. This contrasts with shallow learning, which typically involves only one or two representation layers."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#weights-and-parameterization",
+    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#weights-and-parameterization",
+    "title": "Deep Learning with Python Ch.1 Summary",
+    "section": "6. Weights and Parameterization",
+    "text": "6. Weights and Parameterization\nThe specification of what a layer does to its input data is stored in the layer’s weights (essentially a bunch of numbers). The transformation implemented by a layer is parameterized by these weights."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-flow-of-training",
+    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-flow-of-training",
+    "title": "Deep Learning with Python Ch.1 Summary",
+    "section": "7. The Flow of Training",
+    "text": "7. The Flow of Training\n\nPrediction: The network processes input data to generate an output.\nLoss Function: The network calculates the distance between its prediction and the expected target to measure performance (a loss score).\nOptimizer & Backpropagation: Based on the loss function, the optimizer adjusts the weights slightly in the correct direction to lower the loss score. This is done via the central deep learning algorithm called Backpropagation.\nTraining Loop: By repeating this cycle for a sufficient number of times (over thousands of examples), the network finds a set of weights that minimizes the loss function."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#advantages-of-dl",
+    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#advantages-of-dl",
+    "title": "Deep Learning with Python Ch.1 Summary",
+    "section": "8. Advantages of DL",
+    "text": "8. Advantages of DL\nDeep learning’s prevalence and status as a revolution are justified by three properties:\n\nSimplicity: It automates feature engineering, learning all necessary features in one pass rather than relying on humans to manually engineer good data representations.\nScalability: It is highly amenable to parallelization on GPUs (benefiting from Moore’s law) and trains over small batches, allowing for datasets of arbitrary size.\nVersatility and Reusability: Models can be trained on new data without restarting from scratch (continuous online learning) and can be repurposed across new tasks (e.g., foundation models)."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#generative-ai",
+    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#generative-ai",
+    "title": "Deep Learning with Python Ch.1 Summary",
+    "section": "9. Generative AI",
+    "text": "9. Generative AI\nA major breakthrough where models can reconstruct a sharp image from a noisy version, predict the next word in a sentence, and more. This relies heavily on self-supervised learning, meaning the expected targets are derived directly from the input itself."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#achievements-in-dl",
+    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#achievements-in-dl",
+    "title": "Deep Learning with Python Ch.1 Summary",
+    "section": "10. Achievements in DL",
+    "text": "10. Achievements in DL\nAs of the mid-2020s, AI is reshaping the world:\n\nTens of millions rely daily on AI chatbots (ChatGPT, Gemini, Claude).\nHundreds of thousands interact with AI personas (Character.ai).\nFully autonomous driving is deployed at scale in cities like Phoenix, San Francisco, Los Angeles, and Austin.\nDeepMind’s AlphaFold predicts protein structures with unprecedented accuracy, accelerating science and mathematics."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#limitations-of-ai",
+    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#limitations-of-ai",
+    "title": "Deep Learning with Python Ch.1 Summary",
+    "section": "11. Limitations of AI",
+    "text": "11. Limitations of AI\nDespite the “magic,” today’s machine learning systems fundamentally rely on statistical patterns; they are generally restricted to handling situations and distributions they have been specifically trained on or programmed for."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-hype-cycle-and-ai-winter",
+    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-hype-cycle-and-ai-winter",
+    "title": "Deep Learning with Python Ch.1 Summary",
+    "section": "12. The Hype Cycle and “AI Winter”",
+    "text": "12. The Hype Cycle and “AI Winter”\nWhile the AI revolution is rapidly unfolding, the field may face short-term setbacks. Just as the early internet was overhyped in 1998–1999 and experienced a crash that dried up investment in the early 2000s, AI could experience its own temporary pullbacks before reaching its full potential."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#additional-context-the-ada-lovelace-objection",
+    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#additional-context-the-ada-lovelace-objection",
+    "title": "Deep Learning with Python Ch.1 Summary",
+    "section": "13. Additional Context: The Ada Lovelace Objection",
+    "text": "13. Additional Context: The Ada Lovelace Objection\nThe chapter notes a historical perspective from Ada Lovelace in 1843, who remarked that mechanical computers have “no pretensions whatever to originate anything” and can only do what we order them to perform. This prompted early pioneers like Alan Turing to question if computers could learn from experience or show creativity—questions that machine learning is finally answering today. As the authors conclude: “Don’t believe the short-term hype, but do believe in the long-term vision.”"
+  },
+  {
+    "objectID": "posts/english/english_2/index.html",
+    "href": "posts/english/english_2/index.html",
+    "title": "English Word Dictionary Day 2",
+    "section": "",
+    "text": "Note\n\n\n\n💡 使用說明：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。"
+  },
+  {
+    "objectID": "posts/english/english_2/index.html#生字快速索引",
+    "href": "posts/english/english_2/index.html#生字快速索引",
+    "title": "English Word Dictionary Day 2",
+    "section": "🔍 生字快速索引",
+    "text": "🔍 生字快速索引\n\n\n\n\n\n\n\n\n\n\n英文生字\n音標 (IPA)\n詞性\n廣東話地道意思\n難度/常用度\n\n\n\n\nencompass\n/ɪnˈkʌm.pəs/\nv.\n涵蓋、包含埋、包羅\n⭐⭐⭐\n\n\nparadigm\n/ˈpær.ə.daɪm/\nn.\n典範、模式、思考框架\n⭐⭐⭐⭐\n\n\npretensions\n/prɪˈten.ʃənz/\nn.\n野心、架子、妄想 / 自命不凡\n⭐⭐⭐⭐\n\n\nprovince\n/ˈprɒv.ɪns/\nn.\n職責範圍、專屬領域\n⭐⭐⭐⭐\n\n\nacquainted with\n/əˈkweɪn.tɪd wɪð/\nphr.\n熟悉、認識、搞清楚\n⭐⭐⭐\n\n\narresting\n/əˈres.tɪŋ/\nadj.\n震撼、好吸睛、引人注目\n⭐⭐⭐⭐\n\n\nprovocative\n/prəˈvɒk.ə.tɪv/\nadj.\n具挑釁性、引人爭議/思考\n⭐⭐⭐\n\n\nshroud of\n/ʃraʊd əv/\nphr. n.\n一層籠罩住嘅（神秘/面紗）\n⭐⭐⭐⭐\n\n\nmystique\n/mɪˈstiːk/\nn.\n神秘感、光環\n⭐⭐⭐⭐\n\n\namenable\n/əˈmiː.nə.bəl/\nadj.\n易於處理/配合、順從\n⭐⭐⭐⭐\n\n\nculminating with\n/ˈkʌl.mɪ.neɪ.tɪŋ wɪð/\nphr. v.\n以…告終、最終達致\n⭐⭐⭐⭐\n\n\neluded\n/ɪˈluː.dɪd/\nv.\n逃過、困擾/令人摸唔透\n⭐⭐⭐⭐\n\n\ngrounded\n/ˈɡraʊn.dɪd/\nadj.\n踏實、有根有據、接地氣\n⭐⭐⭐\n\n\npundits\n/ˈpʌn.dɪts/\nn.\n專家、評論員、名嘴\n⭐⭐⭐\n\n\ndent\n/dent/\nn. / v.\n削弱、打擊、凹痕\n⭐⭐⭐\n\n\npales\n/peɪlz/\nv.\n相形見絀、比落去差得遠\n⭐⭐⭐⭐\n\n\nample\n/ˈæm.pəl/\nadj.\n充足、大量、大把\n⭐⭐⭐\n\n\nrobust\n/rəʊˈbʌst/\nadj.\n穩健、完善、強健/襟用\n⭐⭐⭐⭐\n\n\nsentient\n/ˈsen.ʃənt/\nadj.\n有意識嘅、有知覺嘅\n⭐⭐⭐⭐⭐\n\n\non the verge of\n/ɒn ðə vɜːdʒ əv/\nphr.\n喺…嘅邊緣、就快、爭啲\n⭐⭐⭐"
+  },
+  {
+    "objectID": "posts/english/english_2/index.html#生字詳細解析",
+    "href": "posts/english/english_2/index.html#生字詳細解析",
+    "title": "English Word Dictionary Day 2",
+    "section": "📚 生字詳細解析",
+    "text": "📚 生字詳細解析\n\n1. encompass\n\n詞性：動詞 (Verb)\n讀音：/ɪnˈkʌm.pəs/\n廣東話解法：指包涵、涵蓋或者包含咗唔同嘅領域或內容。廣東話通常會講「涵蓋」、「包羅」或者「包含埋」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: AI is a general field that encompasses machine learning and deep learning.\n廣東話口語: 人工智能係一個大範疇，涵蓋咗（包含埋）機器學習同深度學習。\nEnglish: The course encompasses a wide range of topics.\n廣東話口語: 呢個課程包含咗好廣泛嘅課題。\n\n\n\n常見搭配 (Collocations)： * encompass a wide range of...：涵蓋好廣泛嘅… * encompass everything：包含埋所有嘢\n\n\n\n2. paradigm\n\n詞性：名詞 (Noun)\n讀音：/ˈpær.ə.daɪm/\n廣東話解法：指一種主導嘅模式、思考框架或者典型範例。廣東話會講「主流模式」、「典範」或者「一套玩法」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Symbolic AI was the dominant paradigm from the 1950s to the 1980s.\n廣東話口語: 喺 1950 至 1980 年代，符號化 AI（Symbolic AI）係當時嘅主流模式（ dominant paradigm）。\nEnglish: The internet caused a paradigm shift in how we work.\n廣東話口語: 互聯網帶來咗工作模式上嘅重大轉變（Paradigm shift）。\n\n\n\n常見搭配 (Collocations)： * paradigm shift：模式轉變 / 典範轉移 * dominant paradigm：主流模式 / 主導框架\n\n\n\n3. pretensions (pretension 嘅眾數)\n\n詞性：名詞 (Noun)\n讀音：/prɪˈten.ʃənz/\n廣東話解法：指自命不凡、吹噓、裝模作樣，或者指某種高遠（甚至不切實際）嘅意圖同野心。廣東話會講「擺架子」、「吹噓」、「妄想」或者「意圖」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: The engine has no pretensions whatever to originate anything.\n廣東話口語: 呢部引擎完全冇妄想 / 意圖去原創任何新嘢。\nEnglish: He has pretensions of being a great writer.\n廣東話口語: 佢自命（妄想）自己係個偉大嘅作家。\n\n\n\n常見搭配 (Collocations)： * have pretensions to / of being...：自命係… / 妄想成為… * without any pretensions：完全冇架子 / 唔吹噓\n\n\n\n4. province\n\n詞性：名詞 (Noun)\n讀音：/ˈprɒv.ɪns/\n廣東話解法：除咗解作「省份」之外，引申意思係指某人或某領域嘅「職責範圍」、「專屬領域」或者「管轄範圍」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Its province is to assist us in making available what we’re already acquainted with.\n廣東話口語: 佢嘅職責範圍（角色），只係幫我哋活用已經掌握咗嘅嘢。\nEnglish: Marketing is not really my province; you should ask Sarah.\n廣東話口語: 市場推廣唔太算係我嘅專長 / 範疇，你問 Sarah 啦。\n\n\n\n常見搭配 (Collocations)： * outside one's province：超出某人嘅職責/專業範圍 * the province of (experts)：…嘅專屬領域\n\n\n\n5. acquainted with\n\n詞性：片語 (Phrase)\n讀音：/əˈkweɪn.tɪd wɪð/\n廣東話解法：指對某樣嘢有所認識、了解或者熟悉；亦可指認識某個人。廣東話通常講「熟悉」、「搞清楚」或者「認識」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Are you acquainted with the basic principles of machine learning?\n廣東話口語: 你熟唔熟悉機器學習嘅基本原理？\nEnglish: I need to get acquainted with the new office rules.\n廣東話口語: 我要盡快搞清楚（熟悉）公司新嘅規矩。\n\n\n\n常見搭配 (Collocations)： * be acquainted with (something)：熟悉某事 * get acquainted with：去了解 / 搞熟\n\n\n\n6. arresting\n\n詞性：形容詞 (Adjective)\n讀音：/əˈres.tɪŋ/\n廣東話解法：字面係逮捕，但作形容詞時指非常吸引人注意、令人印象深刻或者極具震撼力。廣東話會講「好吸睛」、「好震撼」或者「極引人注目」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Lady Lovelace’s observation remains arresting even today.\n廣東話口語: 愛達·勒芙蕾絲嘅觀察，就算到咗今日依然係好震撼 / 咁引人注目。\nEnglish: She has an arresting smile that captures everyone’s attention.\n廣東話口語: 佢有個好吸睛嘅笑容，吸引咗所有人嘅注意。\n\n\n\n常見搭配 (Collocations)： * arresting image / performance：好吸睛嘅畫面 / 演出 * arresting observation：令人印象深刻嘅觀察\n\n\n\n7. provocative\n\n詞性：形容詞 (Adjective)\n讀音：/prəˈvɒk.ə.tɪv/\n廣東話解法：指能夠引發爭議、激起思考，或者帶有挑釁意味嘅。廣東話通常講「具挑釁性」、「引人爭議」或者「好衝擊/引人深思」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Turing’s opinion was highly provocative at the time.\n廣東話口語: 圖靈嘅觀點喺當時嚟講係極具爭議（震撼/衝擊）嘅。\nEnglish: He made a provocative speech to spark a debate.\n廣東話口語: 佢發表咗一段極具挑釁性 / 激發思考嘅演講嚟引起討論。\n\n\n\n常見搭配 (Collocations)： * provocative statement / question：引人爭議/深思嘅言論 / 問題 * provocative behavior：挑釁行為\n\n\n\n8. shroud of\n\n詞性：名詞片語 (Noun Phrase)\n讀音：/ʃraʊd əv/\n廣東話解法：shroud 原意係裹屍布或遮蓋物。shroud of 指籠罩住某樣嘢嘅「一層面紗」或者「一層陰影/迷霧」。廣東話會講「一層…嘅面紗」或者「籠罩住」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: You don’t need that shroud of mystique and mystery around AI.\n廣東話口語: 你唔需要喺 AI 圍繞住嗰層「神秘嘅面紗」。\nEnglish: The event was hidden under a shroud of secrecy.\n廣東話口語: 呢件事被籠罩喺一層嚴密嘅保密面紗之下。\n\n\n\n常見搭配 (Collocations)： * a shroud of secrecy / mystery：一層保密 / 神秘嘅面紗 * shrouded in darkness：籠罩喺黑暗之中\n\n\n\n9. mystique\n\n詞性：名詞 (Noun)\n讀音：/mɪˈstiːk/\n廣東話解法：指某樣嘢因為神秘、特殊或不可思議而產生嘅「神秘感」、「神秘色彩」或者「光環」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Deep learning is just mathematics; forget the pop-science mystique.\n廣東話口語: 深度學習只係數學，唔好理大眾科學包裝出嚟嘅神秘光環。\nEnglish: The brand lost its mystique over time.\n廣東話口語: 呢個品牌隨住時間流逝失去咗以前嗰種神秘吸引力（光環）。\n\n\n\n常見搭配 (Collocations)： * air of mystique：神秘嘅氛圍 * remove / debunk the mystique：揭開神秘面紗 / 打破光環\n\n\n\n10. amenable\n\n詞性：形容詞 (Adjective)\n讀音：/əˈmiː.nə.bəl/\n廣東話解法：形容人時指「聽話、順從」；形容事物時指「易於處理、適合…嘅、好配合嘅」。廣東話會講「好配合」、「方便處理/適應」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Transform data into representations that are more amenable to the task.\n廣東話口語: 將數據轉化成更加方便（易於）處理嗰項任務嘅形式。\nEnglish: He was amenable to the proposed changes.\n廣東話口語: 佢好配合（接受）所提議嘅改動。\n\n\n\n常見搭配 (Collocations)： * amenable to change / advice：接受改變 / 聽勸 * amenable to processing：易於 / 方便處理\n\n\n\n11. culminating with (或 culminating in)\n\n詞性：片語動詞 (Phrasal Verb)\n讀音：/ˈkʌl.mɪ.neɪ.tɪŋ wɪð/\n廣東話解法：指經過一段時間嘅發展，最後以某個成果、高潮或結局作結。廣東話通常講「以…告終」、「最終達致」或者「最後以…作結」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: A months-long investigation culminated with several arrests.\n廣東話口語: 經過幾個月嘅調查，最終以逮捕幾個人告終。\nEnglish: Years of research culminated in a major discovery.\n廣東話口語: 多年嘅研究，最後以一個重大發現作為完美結尾。\n\n\n\n常見搭配 (Collocations)： * culminate in success：最終以成功告終 * culminate with a presentation：最後以簡報畫上句號\n\n\n\n12. eluded (elude 嘅過去式)\n\n詞性：動詞 (Verb)\n讀音：/ɪˈluː.dɪd/\n廣東話解法：可以指「避開/逃過」；如果指目標、理解或記憶，指「得唔到」、「令人摸唔透」或者「諗唔起」。廣東話會講「逃過」、「摸唔透」或者「得唔到手」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: A satisfactory answer to this question has eluded scientists for decades.\n廣東話口語: 幾十年嚟，科學家一直都摸唔透（搵唔到）呢個問題嘅滿意答案。\nEnglish: The thief eluded the police by hiding in the crowd.\n廣東話口語: 個賊匿喺人群入面逃過咗警察嘅追捕。\n\n\n\n常見搭配 (Collocations)： * elude capture：逃過捕獵 / 抓捕 * elude one's understanding：令人理解唔到 / 摸唔透\n\n\n\n13. grounded\n\n詞性：形容詞 (Adjective)\n讀音：/ˈɡraʊn.dɪd/\n廣東話解法：指一個人好踏實、理性；或者指某種理論/想法「有根有據」、「扎根於現實」。廣東話會講「踏實」、「有根有據」或者「接地氣」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Good AI research should be grounded in empirical evidence.\n廣東話口語: 好嘅 AI 研究應該要有根有據（扎根於實驗數據）。\nEnglish: Despite his fame, he remains very grounded.\n廣東話口語: 雖然佢好出名，但佢個人依然好踏實（無飄）。\n\n\n\n常見搭配 (Collocations)： * grounded in reality / fact：基於現實 / 事實 * keep someone grounded：令某人保持踏實\n\n\n\n14. pundits (pundit 嘅眾數)\n\n詞性：名詞 (Noun)\n讀音：/ˈpʌn.dɪts/\n廣東話解法：指經常喺媒體上發表意見嘅專家、評論員或者「名嘴」。廣東話通常講「專家」、「時事評論員」或者「名嘴」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Tech pundits are constantly debating the future of generative AI.\n廣東話口語: 科技名嘴（評論員）成日喺度爭論生成式 AI 嘅未來。\nEnglish: Political pundits predicted a different outcome.\n廣東話口語: 政治評論員預測咗個完全唔同嘅結果。\n\n\n\n常見搭配 (Collocations)： * industry / tech pundits：行業 / 科技專家評論員 * political pundits：政治名嘴\n\n\n\n15. dent\n\n詞性：名詞 (Noun) / 動詞 (Verb)\n讀音：/dent/\n廣東話解法：字面係「凹痕」。比喻上指對某樣嘢（如信心、數量、進度）造成「打擊」、「削弱」或者「減少」。廣東話會講「削弱」、「打擊」或者「凹咗一塊」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: The high cost barely made a dent in his massive fortune.\n廣東話口語: 咁昂貴嘅開支，對佢龐大嘅財產嚟講根本微不足道（傷唔到佢筋骨 / 凹都冇凹過）。\nEnglish: Failure didn’t dent her confidence at all.\n廣東話口語: 失敗完全冇打擊（削弱）到佢嘅信心。\n\n\n\n常見搭配 (Collocations)： * make a dent in (something)：削弱 / 減少 / 造成打擊 * dent someone's confidence：打擊某人嘅信心\n\n\n\n16. pales (pale in comparison)\n\n詞性：動詞 (Verb)\n讀音：/peɪlz/\n廣東話解法：通常配搭 pale in comparison to 使用，指同另一樣嘢相比之下「相形見絀」、「顯得微不足道」或者「差幾班」。廣東話會講「比起嚟差得遠」、「顯得好微不足道」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Early AI achievements pale in comparison to what modern deep learning can do.\n廣東話口語: 早期 AI 嘅成就，同現代深度學習做得到嘅嘢比起嚟，簡直係相形見絀（差得遠）。\nEnglish: My problem pales in comparison to yours.\n廣東話口語: 同你嗰個問題比起嚟，我嗰個根本微不足道。\n\n\n\n常見搭配 (Collocations)： * pale in comparison to / with：同…相比顯得微不足道 / 相形見絀\n\n\n\n17. ample\n\n詞性：形容詞 (Adjective)\n讀音：/ˈæm.pəl/\n廣東話解法：指數量上非常足夠，甚至多過你需要嘅。廣東話通常會講「充足」、「大量」或者「大把」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: AI excels at solving problems where ample precise examples are available.\n廣東話口語: AI 最擅長解決嗰啲有大量（大把）精確例子可以參考嘅問題。\nEnglish: There is ample evidence to support his theory.\n廣東話口語: 有充足嘅證據去支持佢嘅理論。\n\n\n\n常見搭配 (Collocations)： * ample evidence / time / space：充足嘅證據 / 時間 / 空間 * ample opportunity：大把機會\n\n\n\n18. robust\n\n詞性：形容詞 (Adjective)\n讀音：/rəʊˈbʌst/\n廣東話解法：形容人時指「強健」；形容系統、機制或數據時指「穩健」、「完善」、「經得起考驗」或者「好襟用 / 唔易壞」。廣東話通常會講「穩健」、「紮實」或者「完善」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: We need a robust security system to protect our data.\n廣東話口語: 我哋需要一個穩健（完善）嘅保安系統嚟保護啲數據。\nEnglish: The company showed robust growth this quarter.\n廣東話口語: 間公司今季展現咗強勁（紮實）嘅增長。\n\n\n\n常見搭配 (Collocations)： * robust system / framework：穩健嘅系統 / 框架 * robust economic growth：強勁嘅經濟增長\n\n\n\n19. sentient\n\n詞性：形容詞 (Adjective)\n讀音：/ˈsen.ʃənt/\n廣東話解法：指有知覺、能夠感受事物同埋有自我意識嘅。喺討論 AI 嘅時候經常出現。廣東話通常會講「有意識嘅」、「有知覺嘅」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Some people fear that AI will eventually become sentient.\n廣東話口語: 有啲人擔心 AI 遲早會變成有自我意識。\nEnglish: Humans and animals are sentient beings.\n廣東話口語: 人類同動物都係有知覺嘅（有情）眾生。\n\n\n\n常見搭配 (Collocations)： * sentient being：有感知能力嘅生物 / 有情眾生 * become sentient：變得有自我意識\n\n\n\n20. on the verge of\n\n詞性：片語 (Phrase)\n讀音：/ɒn ðə vɜːdʒ əv/\n廣東話解法：指非常接近某個狀態或者即將發生某件事。廣東話通常會講「喺…嘅邊緣」、「就快…」或者「爭啲就…」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Scientists are on the verge of a major breakthrough in cancer research.\n廣東話口語: 科學家喺癌症研究上就快（去到邊緣）有重大突破。\nEnglish: She was on the verge of tears.\n廣東話口語: 佢爭啲就（就快）喊出嚟。\n\n\n\n常見搭配 (Collocations)： * on the verge of collapse / bankruptcy：瀕臨崩潰 / 破產邊緣 * on the verge of tears：眼淚都快啲跌落嚟 / 瀕臨崩潰邊緣"
+  },
+  {
     "objectID": "posts/japanese/japanese_1/index.html",
     "href": "posts/japanese/japanese_1/index.html",
     "title": "日文生字字典（廣東話解釋）Day 1",
@@ -159,355 +544,5 @@
     "title": "日文生字字典（廣東話解釋）Day 1",
     "section": "",
     "text": "詞性： 自動詞\n廣東話解釋： 行過、經過（即係「行過咗」、「過龍」）。\n例句：\n\n🇯🇵 日： 駅を通り過ぎてしまった。\n🇭🇰 粵： 搭車搭過咗龍（過咗個站）。"
-  },
-  {
-    "objectID": "posts/english/english_2/index.html",
-    "href": "posts/english/english_2/index.html",
-    "title": "English Word Dictionary Day 2",
-    "section": "",
-    "text": "Note\n\n\n\n💡 使用說明：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。"
-  },
-  {
-    "objectID": "posts/english/english_2/index.html#生字快速索引",
-    "href": "posts/english/english_2/index.html#生字快速索引",
-    "title": "English Word Dictionary Day 2",
-    "section": "🔍 生字快速索引",
-    "text": "🔍 生字快速索引\n\n\n\n\n\n\n\n\n\n\n英文生字\n音標 (IPA)\n詞性\n廣東話地道意思\n難度/常用度\n\n\n\n\nencompass\n/ɪnˈkʌm.pəs/\nv.\n涵蓋、包含埋、包羅\n⭐⭐⭐\n\n\nparadigm\n/ˈpær.ə.daɪm/\nn.\n典範、模式、思考框架\n⭐⭐⭐⭐\n\n\npretensions\n/prɪˈten.ʃənz/\nn.\n野心、架子、妄想 / 自命不凡\n⭐⭐⭐⭐\n\n\nprovince\n/ˈprɒv.ɪns/\nn.\n職責範圍、專屬領域\n⭐⭐⭐⭐\n\n\nacquainted with\n/əˈkweɪn.tɪd wɪð/\nphr.\n熟悉、認識、搞清楚\n⭐⭐⭐\n\n\narresting\n/əˈres.tɪŋ/\nadj.\n震撼、好吸睛、引人注目\n⭐⭐⭐⭐\n\n\nprovocative\n/prəˈvɒk.ə.tɪv/\nadj.\n具挑釁性、引人爭議/思考\n⭐⭐⭐\n\n\nshroud of\n/ʃraʊd əv/\nphr. n.\n一層籠罩住嘅（神秘/面紗）\n⭐⭐⭐⭐\n\n\nmystique\n/mɪˈstiːk/\nn.\n神秘感、光環\n⭐⭐⭐⭐\n\n\namenable\n/əˈmiː.nə.bəl/\nadj.\n易於處理/配合、順從\n⭐⭐⭐⭐\n\n\nculminating with\n/ˈkʌl.mɪ.neɪ.tɪŋ wɪð/\nphr. v.\n以…告終、最終達致\n⭐⭐⭐⭐\n\n\neluded\n/ɪˈluː.dɪd/\nv.\n逃過、困擾/令人摸唔透\n⭐⭐⭐⭐\n\n\ngrounded\n/ˈɡraʊn.dɪd/\nadj.\n踏實、有根有據、接地氣\n⭐⭐⭐\n\n\npundits\n/ˈpʌn.dɪts/\nn.\n專家、評論員、名嘴\n⭐⭐⭐\n\n\ndent\n/dent/\nn. / v.\n削弱、打擊、凹痕\n⭐⭐⭐\n\n\npales\n/peɪlz/\nv.\n相形見絀、比落去差得遠\n⭐⭐⭐⭐\n\n\nample\n/ˈæm.pəl/\nadj.\n充足、大量、大把\n⭐⭐⭐\n\n\nrobust\n/rəʊˈbʌst/\nadj.\n穩健、完善、強健/襟用\n⭐⭐⭐⭐\n\n\nsentient\n/ˈsen.ʃənt/\nadj.\n有意識嘅、有知覺嘅\n⭐⭐⭐⭐⭐\n\n\non the verge of\n/ɒn ðə vɜːdʒ əv/\nphr.\n喺…嘅邊緣、就快、爭啲\n⭐⭐⭐"
-  },
-  {
-    "objectID": "posts/english/english_2/index.html#生字詳細解析",
-    "href": "posts/english/english_2/index.html#生字詳細解析",
-    "title": "English Word Dictionary Day 2",
-    "section": "📚 生字詳細解析",
-    "text": "📚 生字詳細解析\n\n1. encompass\n\n詞性：動詞 (Verb)\n讀音：/ɪnˈkʌm.pəs/\n廣東話解法：指包涵、涵蓋或者包含咗唔同嘅領域或內容。廣東話通常會講「涵蓋」、「包羅」或者「包含埋」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: AI is a general field that encompasses machine learning and deep learning.\n廣東話口語: 人工智能係一個大範疇，涵蓋咗（包含埋）機器學習同深度學習。\nEnglish: The course encompasses a wide range of topics.\n廣東話口語: 呢個課程包含咗好廣泛嘅課題。\n\n\n\n常見搭配 (Collocations)： * encompass a wide range of...：涵蓋好廣泛嘅… * encompass everything：包含埋所有嘢\n\n\n\n2. paradigm\n\n詞性：名詞 (Noun)\n讀音：/ˈpær.ə.daɪm/\n廣東話解法：指一種主導嘅模式、思考框架或者典型範例。廣東話會講「主流模式」、「典範」或者「一套玩法」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Symbolic AI was the dominant paradigm from the 1950s to the 1980s.\n廣東話口語: 喺 1950 至 1980 年代，符號化 AI（Symbolic AI）係當時嘅主流模式（ dominant paradigm）。\nEnglish: The internet caused a paradigm shift in how we work.\n廣東話口語: 互聯網帶來咗工作模式上嘅重大轉變（Paradigm shift）。\n\n\n\n常見搭配 (Collocations)： * paradigm shift：模式轉變 / 典範轉移 * dominant paradigm：主流模式 / 主導框架\n\n\n\n3. pretensions (pretension 嘅眾數)\n\n詞性：名詞 (Noun)\n讀音：/prɪˈten.ʃənz/\n廣東話解法：指自命不凡、吹噓、裝模作樣，或者指某種高遠（甚至不切實際）嘅意圖同野心。廣東話會講「擺架子」、「吹噓」、「妄想」或者「意圖」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: The engine has no pretensions whatever to originate anything.\n廣東話口語: 呢部引擎完全冇妄想 / 意圖去原創任何新嘢。\nEnglish: He has pretensions of being a great writer.\n廣東話口語: 佢自命（妄想）自己係個偉大嘅作家。\n\n\n\n常見搭配 (Collocations)： * have pretensions to / of being...：自命係… / 妄想成為… * without any pretensions：完全冇架子 / 唔吹噓\n\n\n\n4. province\n\n詞性：名詞 (Noun)\n讀音：/ˈprɒv.ɪns/\n廣東話解法：除咗解作「省份」之外，引申意思係指某人或某領域嘅「職責範圍」、「專屬領域」或者「管轄範圍」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Its province is to assist us in making available what we’re already acquainted with.\n廣東話口語: 佢嘅職責範圍（角色），只係幫我哋活用已經掌握咗嘅嘢。\nEnglish: Marketing is not really my province; you should ask Sarah.\n廣東話口語: 市場推廣唔太算係我嘅專長 / 範疇，你問 Sarah 啦。\n\n\n\n常見搭配 (Collocations)： * outside one's province：超出某人嘅職責/專業範圍 * the province of (experts)：…嘅專屬領域\n\n\n\n5. acquainted with\n\n詞性：片語 (Phrase)\n讀音：/əˈkweɪn.tɪd wɪð/\n廣東話解法：指對某樣嘢有所認識、了解或者熟悉；亦可指認識某個人。廣東話通常講「熟悉」、「搞清楚」或者「認識」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Are you acquainted with the basic principles of machine learning?\n廣東話口語: 你熟唔熟悉機器學習嘅基本原理？\nEnglish: I need to get acquainted with the new office rules.\n廣東話口語: 我要盡快搞清楚（熟悉）公司新嘅規矩。\n\n\n\n常見搭配 (Collocations)： * be acquainted with (something)：熟悉某事 * get acquainted with：去了解 / 搞熟\n\n\n\n6. arresting\n\n詞性：形容詞 (Adjective)\n讀音：/əˈres.tɪŋ/\n廣東話解法：字面係逮捕，但作形容詞時指非常吸引人注意、令人印象深刻或者極具震撼力。廣東話會講「好吸睛」、「好震撼」或者「極引人注目」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Lady Lovelace’s observation remains arresting even today.\n廣東話口語: 愛達·勒芙蕾絲嘅觀察，就算到咗今日依然係好震撼 / 咁引人注目。\nEnglish: She has an arresting smile that captures everyone’s attention.\n廣東話口語: 佢有個好吸睛嘅笑容，吸引咗所有人嘅注意。\n\n\n\n常見搭配 (Collocations)： * arresting image / performance：好吸睛嘅畫面 / 演出 * arresting observation：令人印象深刻嘅觀察\n\n\n\n7. provocative\n\n詞性：形容詞 (Adjective)\n讀音：/prəˈvɒk.ə.tɪv/\n廣東話解法：指能夠引發爭議、激起思考，或者帶有挑釁意味嘅。廣東話通常講「具挑釁性」、「引人爭議」或者「好衝擊/引人深思」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Turing’s opinion was highly provocative at the time.\n廣東話口語: 圖靈嘅觀點喺當時嚟講係極具爭議（震撼/衝擊）嘅。\nEnglish: He made a provocative speech to spark a debate.\n廣東話口語: 佢發表咗一段極具挑釁性 / 激發思考嘅演講嚟引起討論。\n\n\n\n常見搭配 (Collocations)： * provocative statement / question：引人爭議/深思嘅言論 / 問題 * provocative behavior：挑釁行為\n\n\n\n8. shroud of\n\n詞性：名詞片語 (Noun Phrase)\n讀音：/ʃraʊd əv/\n廣東話解法：shroud 原意係裹屍布或遮蓋物。shroud of 指籠罩住某樣嘢嘅「一層面紗」或者「一層陰影/迷霧」。廣東話會講「一層…嘅面紗」或者「籠罩住」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: You don’t need that shroud of mystique and mystery around AI.\n廣東話口語: 你唔需要喺 AI 圍繞住嗰層「神秘嘅面紗」。\nEnglish: The event was hidden under a shroud of secrecy.\n廣東話口語: 呢件事被籠罩喺一層嚴密嘅保密面紗之下。\n\n\n\n常見搭配 (Collocations)： * a shroud of secrecy / mystery：一層保密 / 神秘嘅面紗 * shrouded in darkness：籠罩喺黑暗之中\n\n\n\n9. mystique\n\n詞性：名詞 (Noun)\n讀音：/mɪˈstiːk/\n廣東話解法：指某樣嘢因為神秘、特殊或不可思議而產生嘅「神秘感」、「神秘色彩」或者「光環」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Deep learning is just mathematics; forget the pop-science mystique.\n廣東話口語: 深度學習只係數學，唔好理大眾科學包裝出嚟嘅神秘光環。\nEnglish: The brand lost its mystique over time.\n廣東話口語: 呢個品牌隨住時間流逝失去咗以前嗰種神秘吸引力（光環）。\n\n\n\n常見搭配 (Collocations)： * air of mystique：神秘嘅氛圍 * remove / debunk the mystique：揭開神秘面紗 / 打破光環\n\n\n\n10. amenable\n\n詞性：形容詞 (Adjective)\n讀音：/əˈmiː.nə.bəl/\n廣東話解法：形容人時指「聽話、順從」；形容事物時指「易於處理、適合…嘅、好配合嘅」。廣東話會講「好配合」、「方便處理/適應」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Transform data into representations that are more amenable to the task.\n廣東話口語: 將數據轉化成更加方便（易於）處理嗰項任務嘅形式。\nEnglish: He was amenable to the proposed changes.\n廣東話口語: 佢好配合（接受）所提議嘅改動。\n\n\n\n常見搭配 (Collocations)： * amenable to change / advice：接受改變 / 聽勸 * amenable to processing：易於 / 方便處理\n\n\n\n11. culminating with (或 culminating in)\n\n詞性：片語動詞 (Phrasal Verb)\n讀音：/ˈkʌl.mɪ.neɪ.tɪŋ wɪð/\n廣東話解法：指經過一段時間嘅發展，最後以某個成果、高潮或結局作結。廣東話通常講「以…告終」、「最終達致」或者「最後以…作結」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: A months-long investigation culminated with several arrests.\n廣東話口語: 經過幾個月嘅調查，最終以逮捕幾個人告終。\nEnglish: Years of research culminated in a major discovery.\n廣東話口語: 多年嘅研究，最後以一個重大發現作為完美結尾。\n\n\n\n常見搭配 (Collocations)： * culminate in success：最終以成功告終 * culminate with a presentation：最後以簡報畫上句號\n\n\n\n12. eluded (elude 嘅過去式)\n\n詞性：動詞 (Verb)\n讀音：/ɪˈluː.dɪd/\n廣東話解法：可以指「避開/逃過」；如果指目標、理解或記憶，指「得唔到」、「令人摸唔透」或者「諗唔起」。廣東話會講「逃過」、「摸唔透」或者「得唔到手」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: A satisfactory answer to this question has eluded scientists for decades.\n廣東話口語: 幾十年嚟，科學家一直都摸唔透（搵唔到）呢個問題嘅滿意答案。\nEnglish: The thief eluded the police by hiding in the crowd.\n廣東話口語: 個賊匿喺人群入面逃過咗警察嘅追捕。\n\n\n\n常見搭配 (Collocations)： * elude capture：逃過捕獵 / 抓捕 * elude one's understanding：令人理解唔到 / 摸唔透\n\n\n\n13. grounded\n\n詞性：形容詞 (Adjective)\n讀音：/ˈɡraʊn.dɪd/\n廣東話解法：指一個人好踏實、理性；或者指某種理論/想法「有根有據」、「扎根於現實」。廣東話會講「踏實」、「有根有據」或者「接地氣」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Good AI research should be grounded in empirical evidence.\n廣東話口語: 好嘅 AI 研究應該要有根有據（扎根於實驗數據）。\nEnglish: Despite his fame, he remains very grounded.\n廣東話口語: 雖然佢好出名，但佢個人依然好踏實（無飄）。\n\n\n\n常見搭配 (Collocations)： * grounded in reality / fact：基於現實 / 事實 * keep someone grounded：令某人保持踏實\n\n\n\n14. pundits (pundit 嘅眾數)\n\n詞性：名詞 (Noun)\n讀音：/ˈpʌn.dɪts/\n廣東話解法：指經常喺媒體上發表意見嘅專家、評論員或者「名嘴」。廣東話通常講「專家」、「時事評論員」或者「名嘴」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Tech pundits are constantly debating the future of generative AI.\n廣東話口語: 科技名嘴（評論員）成日喺度爭論生成式 AI 嘅未來。\nEnglish: Political pundits predicted a different outcome.\n廣東話口語: 政治評論員預測咗個完全唔同嘅結果。\n\n\n\n常見搭配 (Collocations)： * industry / tech pundits：行業 / 科技專家評論員 * political pundits：政治名嘴\n\n\n\n15. dent\n\n詞性：名詞 (Noun) / 動詞 (Verb)\n讀音：/dent/\n廣東話解法：字面係「凹痕」。比喻上指對某樣嘢（如信心、數量、進度）造成「打擊」、「削弱」或者「減少」。廣東話會講「削弱」、「打擊」或者「凹咗一塊」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: The high cost barely made a dent in his massive fortune.\n廣東話口語: 咁昂貴嘅開支，對佢龐大嘅財產嚟講根本微不足道（傷唔到佢筋骨 / 凹都冇凹過）。\nEnglish: Failure didn’t dent her confidence at all.\n廣東話口語: 失敗完全冇打擊（削弱）到佢嘅信心。\n\n\n\n常見搭配 (Collocations)： * make a dent in (something)：削弱 / 減少 / 造成打擊 * dent someone's confidence：打擊某人嘅信心\n\n\n\n16. pales (pale in comparison)\n\n詞性：動詞 (Verb)\n讀音：/peɪlz/\n廣東話解法：通常配搭 pale in comparison to 使用，指同另一樣嘢相比之下「相形見絀」、「顯得微不足道」或者「差幾班」。廣東話會講「比起嚟差得遠」、「顯得好微不足道」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Early AI achievements pale in comparison to what modern deep learning can do.\n廣東話口語: 早期 AI 嘅成就，同現代深度學習做得到嘅嘢比起嚟，簡直係相形見絀（差得遠）。\nEnglish: My problem pales in comparison to yours.\n廣東話口語: 同你嗰個問題比起嚟，我嗰個根本微不足道。\n\n\n\n常見搭配 (Collocations)： * pale in comparison to / with：同…相比顯得微不足道 / 相形見絀\n\n\n\n17. ample\n\n詞性：形容詞 (Adjective)\n讀音：/ˈæm.pəl/\n廣東話解法：指數量上非常足夠，甚至多過你需要嘅。廣東話通常會講「充足」、「大量」或者「大把」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: AI excels at solving problems where ample precise examples are available.\n廣東話口語: AI 最擅長解決嗰啲有大量（大把）精確例子可以參考嘅問題。\nEnglish: There is ample evidence to support his theory.\n廣東話口語: 有充足嘅證據去支持佢嘅理論。\n\n\n\n常見搭配 (Collocations)： * ample evidence / time / space：充足嘅證據 / 時間 / 空間 * ample opportunity：大把機會\n\n\n\n18. robust\n\n詞性：形容詞 (Adjective)\n讀音：/rəʊˈbʌst/\n廣東話解法：形容人時指「強健」；形容系統、機制或數據時指「穩健」、「完善」、「經得起考驗」或者「好襟用 / 唔易壞」。廣東話通常會講「穩健」、「紮實」或者「完善」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: We need a robust security system to protect our data.\n廣東話口語: 我哋需要一個穩健（完善）嘅保安系統嚟保護啲數據。\nEnglish: The company showed robust growth this quarter.\n廣東話口語: 間公司今季展現咗強勁（紮實）嘅增長。\n\n\n\n常見搭配 (Collocations)： * robust system / framework：穩健嘅系統 / 框架 * robust economic growth：強勁嘅經濟增長\n\n\n\n19. sentient\n\n詞性：形容詞 (Adjective)\n讀音：/ˈsen.ʃənt/\n廣東話解法：指有知覺、能夠感受事物同埋有自我意識嘅。喺討論 AI 嘅時候經常出現。廣東話通常會講「有意識嘅」、「有知覺嘅」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Some people fear that AI will eventually become sentient.\n廣東話口語: 有啲人擔心 AI 遲早會變成有自我意識。\nEnglish: Humans and animals are sentient beings.\n廣東話口語: 人類同動物都係有知覺嘅（有情）眾生。\n\n\n\n常見搭配 (Collocations)： * sentient being：有感知能力嘅生物 / 有情眾生 * become sentient：變得有自我意識\n\n\n\n20. on the verge of\n\n詞性：片語 (Phrase)\n讀音：/ɒn ðə vɜːdʒ əv/\n廣東話解法：指非常接近某個狀態或者即將發生某件事。廣東話通常會講「喺…嘅邊緣」、「就快…」或者「爭啲就…」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Scientists are on the verge of a major breakthrough in cancer research.\n廣東話口語: 科學家喺癌症研究上就快（去到邊緣）有重大突破。\nEnglish: She was on the verge of tears.\n廣東話口語: 佢爭啲就（就快）喊出嚟。\n\n\n\n常見搭配 (Collocations)： * on the verge of collapse / bankruptcy：瀕臨崩潰 / 破產邊緣 * on the verge of tears：眼淚都快啲跌落嚟 / 瀕臨崩潰邊緣"
-  },
-  {
-    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html",
-    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html",
-    "title": "Deep Learning with Python Ch.1 Summary",
-    "section": "",
-    "text": "DL: Deep Learning\nML: Machine Learning\nAI: Artificial Intelligence"
-  },
-  {
-    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#acronyms",
-    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#acronyms",
-    "title": "Deep Learning with Python Ch.1 Summary",
-    "section": "",
-    "text": "DL: Deep Learning\nML: Machine Learning\nAI: Artificial Intelligence"
-  },
-  {
-    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-hierarchy-dl-subset-ml-subset-ai",
-    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-hierarchy-dl-subset-ml-subset-ai",
-    "title": "Deep Learning with Python Ch.1 Summary",
-    "section": "1. The Hierarchy: DL \\(\\subset\\) ML \\(\\subset\\) AI",
-    "text": "1. The Hierarchy: DL \\(\\subset\\) ML \\(\\subset\\) AI\nAI is the broad effort to automate intellectual tasks normally performed by humans. Machine learning is a subfield of AI, and deep learning is a specific subfield of machine learning."
-  },
-  {
-    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#symbolic-ai",
-    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#symbolic-ai",
-    "title": "Deep Learning with Python Ch.1 Summary",
-    "section": "2. Symbolic AI",
-    "text": "2. Symbolic AI\nThe dominant paradigm in AI from the 1950s to the late 1980s. Experts believed human-level artificial intelligence could be achieved by having programmers handcraft a sufficiently large set of explicit rules for manipulating knowledge stored in explicit databases."
-  },
-  {
-    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#machine-learning-ml",
-    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#machine-learning-ml",
-    "title": "Deep Learning with Python Ch.1 Summary",
-    "section": "3. Machine Learning (ML)",
-    "text": "3. Machine Learning (ML)\nUnlike classical programming where a computer executes step-by-step rules, ML systems are trained rather than explicitly programmed. The system looks at input data and the corresponding answers to automatically figure out what the rules should be."
-  },
-  {
-    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#requirements-for-ml",
-    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#requirements-for-ml",
-    "title": "Deep Learning with Python Ch.1 Summary",
-    "section": "4. Requirements for ML",
-    "text": "4. Requirements for ML\nTo do machine learning, three things are required:\n\nInput data points: (e.g., sound files, images). This requires finding useful representations of the data (such as RGB vs. HSV color formats) that make it more amenable to the task.\nExamples of the expected output: (e.g., human-generated transcripts or image tags).\nA way to measure whether the algorithm is doing a good job: A feedback signal used to adjust how the algorithm works."
-  },
-  {
-    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-deep-in-deep-learning",
-    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-deep-in-deep-learning",
-    "title": "Deep Learning with Python Ch.1 Summary",
-    "section": "5. The “Deep” in Deep Learning",
-    "text": "5. The “Deep” in Deep Learning\n“Deep” does not mean a deeper understanding; rather, it refers to the idea of successive layers of representations. Modern DL often involves tens or hundreds of layers learned automatically, acting as a multistage information-distillation process. This contrasts with shallow learning, which typically involves only one or two representation layers."
-  },
-  {
-    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#weights-and-parameterization",
-    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#weights-and-parameterization",
-    "title": "Deep Learning with Python Ch.1 Summary",
-    "section": "6. Weights and Parameterization",
-    "text": "6. Weights and Parameterization\nThe specification of what a layer does to its input data is stored in the layer’s weights (essentially a bunch of numbers). The transformation implemented by a layer is parameterized by these weights."
-  },
-  {
-    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-flow-of-training",
-    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-flow-of-training",
-    "title": "Deep Learning with Python Ch.1 Summary",
-    "section": "7. The Flow of Training",
-    "text": "7. The Flow of Training\n\nPrediction: The network processes input data to generate an output.\nLoss Function: The network calculates the distance between its prediction and the expected target to measure performance (a loss score).\nOptimizer & Backpropagation: Based on the loss function, the optimizer adjusts the weights slightly in the correct direction to lower the loss score. This is done via the central deep learning algorithm called Backpropagation.\nTraining Loop: By repeating this cycle for a sufficient number of times (over thousands of examples), the network finds a set of weights that minimizes the loss function."
-  },
-  {
-    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#advantages-of-dl",
-    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#advantages-of-dl",
-    "title": "Deep Learning with Python Ch.1 Summary",
-    "section": "8. Advantages of DL",
-    "text": "8. Advantages of DL\nDeep learning’s prevalence and status as a revolution are justified by three properties:\n\nSimplicity: It automates feature engineering, learning all necessary features in one pass rather than relying on humans to manually engineer good data representations.\nScalability: It is highly amenable to parallelization on GPUs (benefiting from Moore’s law) and trains over small batches, allowing for datasets of arbitrary size.\nVersatility and Reusability: Models can be trained on new data without restarting from scratch (continuous online learning) and can be repurposed across new tasks (e.g., foundation models)."
-  },
-  {
-    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#generative-ai",
-    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#generative-ai",
-    "title": "Deep Learning with Python Ch.1 Summary",
-    "section": "9. Generative AI",
-    "text": "9. Generative AI\nA major breakthrough where models can reconstruct a sharp image from a noisy version, predict the next word in a sentence, and more. This relies heavily on self-supervised learning, meaning the expected targets are derived directly from the input itself."
-  },
-  {
-    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#achievements-in-dl",
-    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#achievements-in-dl",
-    "title": "Deep Learning with Python Ch.1 Summary",
-    "section": "10. Achievements in DL",
-    "text": "10. Achievements in DL\nAs of the mid-2020s, AI is reshaping the world:\n\nTens of millions rely daily on AI chatbots (ChatGPT, Gemini, Claude).\nHundreds of thousands interact with AI personas (Character.ai).\nFully autonomous driving is deployed at scale in cities like Phoenix, San Francisco, Los Angeles, and Austin.\nDeepMind’s AlphaFold predicts protein structures with unprecedented accuracy, accelerating science and mathematics."
-  },
-  {
-    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#limitations-of-ai",
-    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#limitations-of-ai",
-    "title": "Deep Learning with Python Ch.1 Summary",
-    "section": "11. Limitations of AI",
-    "text": "11. Limitations of AI\nDespite the “magic,” today’s machine learning systems fundamentally rely on statistical patterns; they are generally restricted to handling situations and distributions they have been specifically trained on or programmed for."
-  },
-  {
-    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-hype-cycle-and-ai-winter",
-    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#the-hype-cycle-and-ai-winter",
-    "title": "Deep Learning with Python Ch.1 Summary",
-    "section": "12. The Hype Cycle and “AI Winter”",
-    "text": "12. The Hype Cycle and “AI Winter”\nWhile the AI revolution is rapidly unfolding, the field may face short-term setbacks. Just as the early internet was overhyped in 1998–1999 and experienced a crash that dried up investment in the early 2000s, AI could experience its own temporary pullbacks before reaching its full potential."
-  },
-  {
-    "objectID": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#additional-context-the-ada-lovelace-objection",
-    "href": "posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html#additional-context-the-ada-lovelace-objection",
-    "title": "Deep Learning with Python Ch.1 Summary",
-    "section": "13. Additional Context: The Ada Lovelace Objection",
-    "text": "13. Additional Context: The Ada Lovelace Objection\nThe chapter notes a historical perspective from Ada Lovelace in 1843, who remarked that mechanical computers have “no pretensions whatever to originate anything” and can only do what we order them to perform. This prompted early pioneers like Alan Turing to question if computers could learn from experience or show creativity—questions that machine learning is finally answering today. As the authors conclude: “Don’t believe the short-term hype, but do believe in the long-term vision.”"
-  },
-  {
-    "objectID": "posts/algorithms/merge-sort/index.html",
-    "href": "posts/algorithms/merge-sort/index.html",
-    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
-    "section": "",
-    "text": "Algorithms can be designed using various fundamental approaches. Two primary techniques are:\n\nIncremental Approach: Used by algorithms like Insertion Sort. It builds the solution one element at a time (e.g., inserting a single element into an already sorted subarray).\nDivide-and-Conquer Approach: A highly recursive alternative that often yields significantly faster worst-case running times. It solves problems by breaking them down into smaller, manageable pieces."
-  },
-  {
-    "objectID": "posts/algorithms/merge-sort/index.html#algorithm-design-approaches",
-    "href": "posts/algorithms/merge-sort/index.html#algorithm-design-approaches",
-    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
-    "section": "",
-    "text": "Algorithms can be designed using various fundamental approaches. Two primary techniques are:\n\nIncremental Approach: Used by algorithms like Insertion Sort. It builds the solution one element at a time (e.g., inserting a single element into an already sorted subarray).\nDivide-and-Conquer Approach: A highly recursive alternative that often yields significantly faster worst-case running times. It solves problems by breaking them down into smaller, manageable pieces."
-  },
-  {
-    "objectID": "posts/algorithms/merge-sort/index.html#the-divide-and-conquer-paradigm",
-    "href": "posts/algorithms/merge-sort/index.html#the-divide-and-conquer-paradigm",
-    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
-    "section": "2. The Divide-and-Conquer Paradigm",
-    "text": "2. The Divide-and-Conquer Paradigm\nThis recursive approach involves three distinct steps at each level of the recursion:\n\nDivide: Break the original problem into a number of smaller subproblems that are just smaller instances of the exact same problem.\nConquer: Solve the subproblems recursively. However, if the subproblem size is small enough (the recursion “bottoms out”), solve it in a straightforward, direct manner.\nCombine: Merge the solutions of the smaller subproblems together to formulate the solution to the original, overarching problem."
-  },
-  {
-    "objectID": "posts/algorithms/merge-sort/index.html#merge-sort-overview",
-    "href": "posts/algorithms/merge-sort/index.html#merge-sort-overview",
-    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
-    "section": "3. Merge Sort Overview",
-    "text": "3. Merge Sort Overview\nMerge Sort is a classic algorithm that strictly follows the divide-and-conquer paradigm to sort a sequence of elements:\n\nDivide: Split the sequence into two separate subsequences of equal (or near-equal) size.\nConquer: Recursively sort both subsequences. This process bottoms out when a sequence hits a length of 1, as a single element is already inherently sorted.\nCombine: Merge the two sorted subsequences back together to produce the final, fully sorted answer."
-  },
-  {
-    "objectID": "posts/algorithms/merge-sort/index.html#the-engine-the-merge-procedure",
-    "href": "posts/algorithms/merge-sort/index.html#the-engine-the-merge-procedure",
-    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
-    "section": "4. The Engine: The MERGE Procedure",
-    "text": "4. The Engine: The MERGE Procedure\nTo understand Merge Sort, you first have to understand its engine: the “combine” step. This is handled by an auxiliary procedure called MERGE(A, p, q, r).\nIt assumes that the two subarrays \\(A[p \\dots q]\\) and \\(A[q+1 \\dots r]\\) are already sorted. Its job is to merge them into a single sorted subarray that replaces the space they currently take up (\\(A[p \\dots r]\\)).\n\nThe Card Analogy: Imagine two sorted piles of cards face up on a table. You compare the top two cards, remove the smaller one, and place it face down in a new output pile. You repeat this constant-time comparison step until all cards are merged.\nTo prevent constantly checking if either pile is completely empty, a special “sentinel” card containing the value infinity (\\(\\infty\\)) is placed at the bottom of each pile. This guarantees that the core sorting logic stops exactly when all real data has been merged.\n\n\nMERGE Pseudocode\nBelow is the pseudocode for the merging process, demonstrating the use of the new temporary arrays (\\(L\\) and \\(R\\)) and the sentinel values.\n\n\n\n\n\n\n\nLine\nMERGE(A, p, q, r)\n\n\n\n\n1\n\\(n_1 = q - p + 1\\)\n\n\n2\n\\(n_2 = r - q\\)\n\n\n3\nlet \\(L[1 \\dots n_1 + 1]\\) and \\(R[1 \\dots n_2 + 1]\\) be new arrays\n\n\n4\nfor \\(i = 1\\) to \\(n_1\\)\n\n\n5\n    \\(L[i] = A[p + i - 1]\\)\n\n\n6\nfor \\(j = 1\\) to \\(n_2\\)\n\n\n7\n    \\(R[j] = A[q + j]\\)\n\n\n8\n\\(L[n_1 + 1] = \\infty\\)     // Sentinel value\n\n\n9\n\\(R[n_2 + 1] = \\infty\\)     // Sentinel value\n\n\n10\n\\(i = 1\\)\n\n\n11\n\\(j = 1\\)\n\n\n12\nfor \\(k = p\\) to \\(r\\)\n\n\n13\n    if \\(L[i] \\le R[j]\\)\n\n\n14\n        \\(A[k] = L[i]\\)\n\n\n15\n        \\(i = i + 1\\)\n\n\n16\n    else \\(A[k] = R[j]\\)\n\n\n17\n        \\(j = j + 1\\)\n\n\n\nBecause each basic step compares two cards and takes constant time, merging \\(n\\) total elements takes \\(\\Theta(n)\\) time.\n\n\nTracing the MERGE Procedure\nImagine we have a 1-indexed array \\(A = [8, 4, 7, 2, 5, 9]\\). We want to merge two already-sorted sections in the middle: the left pile \\([4, 7]\\) and the right pile \\([2, 5]\\). We call MERGE(A, 2, 3, 5).\n\nSizing & Copying: The algorithm calculates the sizes (\\(n_1 = 2\\), \\(n_2 = 2\\)) and creates temporary arrays \\(L\\) and \\(R\\) with an extra slot for the \\(\\infty\\) sentinel.\n\n\\(L\\) becomes \\([4, 7, \\infty]\\)\n\\(R\\) becomes \\([2, 5, \\infty]\\)\n\nThe Loop: Pointers \\(i\\) and \\(j\\) start at 1. The main loop iterates from \\(k = 2\\) to \\(5\\), overwriting \\(A\\) by picking the smaller of \\(L[i]\\) and \\(R[j]\\):\n\n\\(k=2\\): \\(L[1]\\) (4) vs \\(R[1]\\) (2). Right is smaller. \\(A[2]\\) becomes 2. \\(j\\) increments.\n\\(k=3\\): \\(L[1]\\) (4) vs \\(R[2]\\) (5). Left is smaller. \\(A[3]\\) becomes 4. \\(i\\) increments.\n\\(k=4\\): \\(L[2]\\) (7) vs \\(R[2]\\) (5). Right is smaller. \\(A[4]\\) becomes 5. \\(j\\) increments.\n\\(k=5\\): \\(L[2]\\) (7) vs \\(R[3]\\) (\\(\\infty\\)). Left is smaller. \\(A[5]\\) becomes 7. \\(i\\) increments.\n\nResult: The target section is overwritten. Array \\(A\\) goes from \\([8, 4, 7, 2, 5, 9]\\) to \\([8, 2, 4, 5, 7, 9]\\)."
-  },
-  {
-    "objectID": "posts/algorithms/merge-sort/index.html#the-driver-the-merge-sort-procedure",
-    "href": "posts/algorithms/merge-sort/index.html#the-driver-the-merge-sort-procedure",
-    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
-    "section": "5. The Driver: The MERGE-SORT Procedure",
-    "text": "5. The Driver: The MERGE-SORT Procedure\nNow that we have the engine, we need the driver. The recursive MERGE-SORT function traces the array indices all the way down to the base cases (single elements) first, and only then uses our MERGE engine on the way back up the call stack.\n\n\n\nLine\nMERGE-SORT(A, p, r)\n\n\n\n\n1\nif \\(p &lt; r\\)\n\n\n2\n    \\(q = \\lfloor(p + r)/2\\rfloor\\)\n\n\n3\n    MERGE-SORT(A, p, q)\n\n\n4\n    MERGE-SORT(A, q + 1, r)\n\n\n5\n    MERGE(A, p, q, r)\n\n\n\nTo sort an entire sequence, we make the initial call MERGE-SORT(A, 1, A.length)."
-  },
-  {
-    "objectID": "posts/algorithms/merge-sort/index.html#putting-it-together-a-full-execution-trace",
-    "href": "posts/algorithms/merge-sort/index.html#putting-it-together-a-full-execution-trace",
-    "title": "Merge Sort: A Divide-and-Conquer Algorithm",
-    "section": "6. Putting It Together: A Full Execution Trace",
-    "text": "6. Putting It Together: A Full Execution Trace\nLet us trace the algorithm end-to-end on an unsorted 8-element array: \\(A = [5, 2, 4, 7, 1, 3, 2, 6]\\).\nPhase 1: The Divide Phase (Top-Down) The MERGE-SORT function recursively splits the array in half. No sorting happens yet; it just calculates midpoints (\\(q\\)) and pushes calls onto the stack until every subsequence is length 1.\n\nSplit 1: \\([5, 2, 4, 7]\\) and \\([1, 3, 2, 6]\\)\nSplit 2: \\([5, 2]\\), \\([4, 7]\\), \\([1, 3]\\), and \\([2, 6]\\)\nBase Case (Length 1): \\([5]\\), \\([2]\\), \\([4]\\), \\([7]\\), \\([1]\\), \\([3]\\), \\([2]\\), and \\([6]\\)\n\nAt this point, the recursion bottoms out because single elements are trivially sorted.\nPhase 2: The Combine Phase (Bottom-Up) As the recursive calls resolve, the MERGE procedure kicks in, combining the small sorted subarrays back together level-by-level:\n\nMerge to size 2: \\([2, 5]\\), \\([4, 7]\\), \\([1, 3]\\), and \\([2, 6]\\)\nMerge to size 4: \\([2, 4, 5, 7]\\) and \\([1, 2, 3, 6]\\)\nFinal Merge to size 8: We call MERGE on the two halves, yielding the final sorted array: \\([1, 2, 2, 3, 4, 5, 6, 7]\\)."
-  },
-  {
-    "objectID": "posts/algorithms/insertion-sort/index.html",
-    "href": "posts/algorithms/insertion-sort/index.html",
-    "title": "Insertion Sort Algorithm",
-    "section": "",
-    "text": "An insertion sort works exactly like sorting a hand of playing cards: you pick up cards one by one from an unsorted pile and slide each new card into its correct position among the cards you are already holding."
-  },
-  {
-    "objectID": "posts/algorithms/insertion-sort/index.html#the-core-concept",
-    "href": "posts/algorithms/insertion-sort/index.html#the-core-concept",
-    "title": "Insertion Sort Algorithm",
-    "section": "",
-    "text": "An insertion sort works exactly like sorting a hand of playing cards: you pick up cards one by one from an unsorted pile and slide each new card into its correct position among the cards you are already holding."
-  },
-  {
-    "objectID": "posts/algorithms/insertion-sort/index.html#visualizing-the-partition",
-    "href": "posts/algorithms/insertion-sort/index.html#visualizing-the-partition",
-    "title": "Insertion Sort Algorithm",
-    "section": "Visualizing the Partition",
-    "text": "Visualizing the Partition\nTo see this in action, let’s sort five numbers from smallest to largest: [5, 3, 8, 4, 2].\nImagine dividing the list into two sections separated by a vertical bar: a sorted section on the left, and an unsorted section on the right."
-  },
-  {
-    "objectID": "posts/algorithms/insertion-sort/index.html#the-step-by-step-trace",
-    "href": "posts/algorithms/insertion-sort/index.html#the-step-by-step-trace",
-    "title": "Insertion Sort Algorithm",
-    "section": "The Step-by-Step Trace",
-    "text": "The Step-by-Step Trace\n\nStarting Position: [5 | 3, 8, 4, 2]\nWe start by looking at the very first number, 5. Since it is the only number in our “sorted hand,” it is already sorted by default.\n\n\nStep 1: Pick up 3\nWe look at the first unsorted number (3) and compare it to the sorted section on the left. Since 3 is smaller than 5, we shift 5 one spot to the right and drop 3 into the empty space at the front.\nCurrent state: [3, 5 | 8, 4, 2]\n\n\nStep 2: Pick up 8\nWe take the next unsorted number (8) and compare it moving from right to left in our sorted section. Is 8 smaller than 5? No. Since it is already larger than the biggest number in our hand, we don’t need to shift anything — it simply locks into place on the end.\nCurrent state: [3, 5, 8 | 4, 2]\n\n\nStep 3: Pick up 4\nWe take 4 and compare it moving leftwards:\nSmaller than 8? Yes — shift 8 to the right. Smaller than 5? Yes — shift 5 to the right. Smaller than 3? No! We stop here and insert 4 into the spot right between 3 and 5. Current state: [3, 4, 5, 8 | 2]\n\n\nStep 4: Pick up 2\nFinally, we take 2 and compare it against our sorted hand. Since 2 is smaller than 8, 5, 4, and 3, all four of those numbers shift one position to the right, opening up the very first spot for 2.\nFinal sorted list: [2, 3, 4, 5, 8]"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Jerry’s Notes",
-    "section": "",
-    "text": "This is a personal website for my notes on mathematics, computer science, and other topics. The content is written in Markdown and rendered using Quarto. You can find the source code for this website on GitHub."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "my-math-notes",
-    "section": "",
-    "text": "Time Complexity Analysis of Merge Sort\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 3\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning with Python Ch.1 Summary\n\n\n\nDeep Learning\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 2\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 1\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n日文生字字典（廣東話解釋）Day 1\n\n\n\nJapanese\n\n\n\n\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nMerge Sort: A Divide-and-Conquer Algorithm\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 29, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nInsertion Sort Algorithm\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Insertion Sort\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "posts/algorithms/insertion-sort-running-time/index.html",
-    "href": "posts/algorithms/insertion-sort-running-time/index.html",
-    "title": "Time Complexity Analysis of Insertion Sort",
-    "section": "",
-    "text": "The running time of the Insertion Sort algorithm is determined by calculating the time spent executing each individual line of pseudocode.\n\n\n\n\n\n\n\n\n\nLine\nInsertion-Sort(A)\ncost\ntimes\n\n\n\n\n1\nfor \\(j = 2\\) to \\(A.length\\)\n\\(c_1\\)\n\\(n\\)\n\n\n2\n    \\(key = A[j]\\)\n\\(c_2\\)\n\\(n - 1\\)\n\n\n3\n    // Insert \\(A[j]\\) into the sorted sequence \\(A[1 \\dots j - 1]\\).\n\\(0\\)\n\\(n - 1\\)\n\n\n4\n    \\(i = j - 1\\)\n\\(c_4\\)\n\\(n - 1\\)\n\n\n5\n    while \\(i &gt; 0\\) and \\(A[i] &gt; key\\)\n\\(c_5\\)\n\\(\\sum_{j=2}^n t_j\\)\n\n\n6\n        \\(A[i + 1] = A[i]\\)\n\\(c_6\\)\n\\(\\sum_{j=2}^n (t_j - 1)\\)\n\n\n7\n        \\(i = i - 1\\)\n\\(c_7\\)\n\\(\\sum_{j=2}^n (t_j - 1)\\)\n\n\n8\n    \\(A[i + 1] = key\\)\n\\(c_8\\)\n\\(n - 1\\)\n\n\n\n\n\n\n\\(c_i\\) represents the constant time cost to execute line \\(i\\) exactly once.\nDifferent operations (math, assignments, conditional checks) require slightly different processing times, hence unique costs (\\(c_1, c_2, \\dots\\)).\nComments (e.g., Line 3) are ignored by the computer, resulting in a cost of \\(0\\).\n\n\n\n\nFor an input array of size \\(n\\):\n\nOuter loop header (Line 1): Runs \\(n\\) times (once per item, plus the final exit check).\nOuter loop body (Lines 2, 4, 8): Runs \\(n - 1\\) times (one less than the header).\nInner while loop condition (Line 5): Runs \\(\\sum_{j=2}^n t_j\\) times, where \\(t_j\\) is the number of condition checks during the \\(j\\)-th pass.\nInner while loop body (Lines 6, 7): Runs \\(\\sum_{j=2}^n (t_j - 1)\\) times.\n\n\n\n\nTo find the total running time, multiply the cost (\\(c_i\\)) by the execution frequency for each line, and sum the results:\n\\[\nT(n) = c_1n + c_2(n-1) + c_4(n-1) + c_5 \\sum_{j=2}^n t_j + c_6 \\sum_{j=2}^n (t_j - 1) + c_7 \\sum_{j=2}^n (t_j - 1) + c_8(n-1)\n\\]"
-  },
-  {
-    "objectID": "posts/algorithms/insertion-sort-running-time/index.html#theoretical-running-time-formulation",
-    "href": "posts/algorithms/insertion-sort-running-time/index.html#theoretical-running-time-formulation",
-    "title": "Time Complexity Analysis of Insertion Sort",
-    "section": "",
-    "text": "The running time of the Insertion Sort algorithm is determined by calculating the time spent executing each individual line of pseudocode.\n\n\n\n\n\n\n\n\n\nLine\nInsertion-Sort(A)\ncost\ntimes\n\n\n\n\n1\nfor \\(j = 2\\) to \\(A.length\\)\n\\(c_1\\)\n\\(n\\)\n\n\n2\n    \\(key = A[j]\\)\n\\(c_2\\)\n\\(n - 1\\)\n\n\n3\n    // Insert \\(A[j]\\) into the sorted sequence \\(A[1 \\dots j - 1]\\).\n\\(0\\)\n\\(n - 1\\)\n\n\n4\n    \\(i = j - 1\\)\n\\(c_4\\)\n\\(n - 1\\)\n\n\n5\n    while \\(i &gt; 0\\) and \\(A[i] &gt; key\\)\n\\(c_5\\)\n\\(\\sum_{j=2}^n t_j\\)\n\n\n6\n        \\(A[i + 1] = A[i]\\)\n\\(c_6\\)\n\\(\\sum_{j=2}^n (t_j - 1)\\)\n\n\n7\n        \\(i = i - 1\\)\n\\(c_7\\)\n\\(\\sum_{j=2}^n (t_j - 1)\\)\n\n\n8\n    \\(A[i + 1] = key\\)\n\\(c_8\\)\n\\(n - 1\\)\n\n\n\n\n\n\n\\(c_i\\) represents the constant time cost to execute line \\(i\\) exactly once.\nDifferent operations (math, assignments, conditional checks) require slightly different processing times, hence unique costs (\\(c_1, c_2, \\dots\\)).\nComments (e.g., Line 3) are ignored by the computer, resulting in a cost of \\(0\\).\n\n\n\n\nFor an input array of size \\(n\\):\n\nOuter loop header (Line 1): Runs \\(n\\) times (once per item, plus the final exit check).\nOuter loop body (Lines 2, 4, 8): Runs \\(n - 1\\) times (one less than the header).\nInner while loop condition (Line 5): Runs \\(\\sum_{j=2}^n t_j\\) times, where \\(t_j\\) is the number of condition checks during the \\(j\\)-th pass.\nInner while loop body (Lines 6, 7): Runs \\(\\sum_{j=2}^n (t_j - 1)\\) times.\n\n\n\n\nTo find the total running time, multiply the cost (\\(c_i\\)) by the execution frequency for each line, and sum the results:\n\\[\nT(n) = c_1n + c_2(n-1) + c_4(n-1) + c_5 \\sum_{j=2}^n t_j + c_6 \\sum_{j=2}^n (t_j - 1) + c_7 \\sum_{j=2}^n (t_j - 1) + c_8(n-1)\n\\]"
-  },
-  {
-    "objectID": "posts/algorithms/insertion-sort-running-time/index.html#concrete-example-trace-a-3-1-2",
-    "href": "posts/algorithms/insertion-sort-running-time/index.html#concrete-example-trace-a-3-1-2",
-    "title": "Time Complexity Analysis of Insertion Sort",
-    "section": "2. Concrete Example Trace: \\(A = [3, 1, 2]\\)",
-    "text": "2. Concrete Example Trace: \\(A = [3, 1, 2]\\)\nLet us trace the algorithm using an input size of \\(n=3\\) and hypothetical execution cycles for each \\(c_i\\).\n\nStep A: Setting up Constants\nAssume the following clock cycle costs per execution:\n\n\\(c_1 = 2\\) cycles (checking for loop, incrementing \\(j\\))\n\\(c_2 = 1\\) cycle (reading and assigning key)\n\\(c_4 = 1\\) cycle (assigning \\(i\\))\n\\(c_5 = 3\\) cycles (checking while conditions)\n\\(c_6 = 2\\) cycles (shifting element right)\n\\(c_7 = 1\\) cycle (decrementing \\(i\\))\n\\(c_8 = 1\\) cycle (inserting key)\n\n\n\nStep B: Tracing the Loops to Find \\(t_j\\)\n\nPass \\(j = 2\\) (Inserting 1 into \\([3]\\)): The condition is checked once successfully, and once failing (\\(3&gt;1\\), then \\(0&gt;0\\) fails). Result: \\(t_2 = 2\\) (loop body runs \\(1\\) time).\nPass \\(j = 3\\) (Inserting 2 into \\([1, 3]\\)): The condition is checked once successfully, and once failing (\\(3&gt;2\\), then \\(1&gt;2\\) fails). Result: \\(t_3 = 2\\) (loop body runs \\(1\\) time).\n\n\n\nStep C: Computing Total Time \\(T(3)\\)\nSubstituting \\(n=3, t_2=2, t_3=2\\) into our frequencies:\n\nLine 1: \\(n = 3\\) times\nLines 2, 4, 8: \\(n-1 = 2\\) times each\nLine 5: \\(t_2 + t_3 = 4\\) times\nLines 6, 7: \\((t_2-1) + (t_3-1) = 2\\) times each\n\nMultiplying by the \\(c_i\\) costs and summing:\n\\[\n\\begin{aligned}\nT(3) &= (c_1 \\times 3) + (c_2 \\times 2) + (c_4 \\times 2) + (c_5 \\times 4) + (c_6 \\times 2) + (c_7 \\times 2) + (c_8 \\times 2) \\\\\n     &= (2 \\times 3) + (1 \\times 2) + (1 \\times 2) + (3 \\times 4) + (2 \\times 2) + (1 \\times 2) + (1 \\times 2) \\\\\n     &= 6 + 2 + 2 + 12 + 4 + 2 + 2 \\\\\n     &= \\mathbf{30 \\text{ cycles}}\n\\end{aligned}\n\\]\nConclusion: For this unsorted array, it takes 30 cycles. If the array were already sorted (e.g., \\([1, 2, 3]\\)), the inner loop would fail immediately (\\(t_2=1, t_3=1\\)). This eliminates Lines 6 and 7, dropping the total running time to a much faster 18 cycles."
-  },
-  {
-    "objectID": "posts/algorithms/insertion-sort-running-time/index.html#best-case-and-worst-case-scenarios",
-    "href": "posts/algorithms/insertion-sort-running-time/index.html#best-case-and-worst-case-scenarios",
-    "title": "Time Complexity Analysis of Insertion Sort",
-    "section": "3. Best-Case and Worst-Case Scenarios",
-    "text": "3. Best-Case and Worst-Case Scenarios\nEven for inputs of the exact same size \\(n\\), the algorithm’s running time can vary drastically depending on how the initial items are arranged.\n\nThe Best-Case: Already Sorted\n\nScenario: The input array is already in the correct sorted order.\nWhat happens: When the inner while loop checks if it needs to shift elements, it immediately finds they are in order (\\(A[i] \\le key\\)).\nMath impact: The condition is checked exactly once per pass (\\(t_j = 1\\)). The inner loop body never runs (\\(t_j - 1 = 0\\)).\nCalculation: Substituting \\(t_j = 1\\) into our \\(T(n)\\) formula gives:\n\n\\[\n\\begin{aligned}\nT(n) &= c_1n + c_2(n-1) + c_4(n-1) + c_5(n-1) + c_8(n-1) \\\\\n     &= (c_1 + c_2 + c_4 + c_5 + c_8)n - (c_2 + c_4 + c_5 + c_8)\n\\end{aligned}\n\\]\n\nResulting Time: We can express this running time as \\(T(n) = \\mathbf{an + b}\\) (where \\(a\\) and \\(b\\) are constants), which is a fast, linear function of \\(n\\).\n\n\n\nThe Worst-Case: Reverse Sorted\n\nScenario: The input array is completely backward (decreasing order).\nWhat happens: The inner while loop must shift every new element all the way to the very front, comparing it against every single item in the already-sorted portion.\nMath impact: The loop condition is checked \\(j\\) times per pass (\\(t_j = j\\)).\nApplying Summations: We replace the sums in our \\(T(n)\\) formula using standard math rules:\n\n\\[\n\\sum_{j=2}^n j = \\frac{n(n+1)}{2} - 1 \\quad \\text{and} \\quad \\sum_{j=2}^n (j-1) = \\frac{n(n-1)}{2}\n\\]\n\nCalculation: Substituting these formulas into our \\(T(n)\\) equation gives:\n\n\\[\n\\begin{aligned}\nT(n) &= c_1n + c_2(n-1) + c_4(n-1) + c_5\\left(\\frac{n(n+1)}{2} - 1\\right) \\\\\n     &\\quad + c_6\\left(\\frac{n(n-1)}{2}\\right) + c_7\\left(\\frac{n(n-1)}{2}\\right) + c_8(n-1) \\\\\n     &= \\left(\\frac{c_5}{2} + \\frac{c_6}{2} + \\frac{c_7}{2}\\right)n^2 + \\left(c_1 + c_2 + c_4 + \\frac{c_5}{2} - \\frac{c_6}{2} - \\frac{c_7}{2} + c_8\\right)n - (c_2 + c_4 + c_5 + c_8)\n\\end{aligned}\n\\]\n\nResulting Time: We can express this worst-case time as \\(T(n) = \\mathbf{an^2 + bn + c}\\) (where \\(a, b,\\) and \\(c\\) are constants), which is a significantly slower, quadratic function of \\(n\\)."
-  },
-  {
-    "objectID": "posts/algorithms/merge-sort-running-time/index.html",
-    "href": "posts/algorithms/merge-sort-running-time/index.html",
-    "title": "Time Complexity Analysis of Merge Sort",
-    "section": "",
-    "text": "Merge Sort is a classic divide-and-conquer algorithm. Our goal is to prove mathematically that its running time scales at \\(\\Theta(n \\log n)\\).\nTo do this, we need to translate the algorithm’s code into a mathematical equation, understand the cost of its individual parts, and then solve that equation by visualizing it as a tree. Let’s build this logic step by step."
-  },
-  {
-    "objectID": "posts/algorithms/merge-sort-running-time/index.html#the-resulting-formula",
-    "href": "posts/algorithms/merge-sort-running-time/index.html#the-resulting-formula",
-    "title": "Time Complexity Analysis of Merge Sort",
-    "section": "The Resulting Formula",
-    "text": "The Resulting Formula\nAdding these parts together gives us our foundational time budget:\n\\[\nT(n) = \\underbrace{\\Theta(1)}_{\\text{Divide}} + \\underbrace{2T(n/2)}_{\\text{Conquer}} + \\underbrace{\\Theta(n)}_{\\text{Combine}}\n\\]\nBecause the linear merging work (\\(\\Theta(n)\\)) completely eclipses the tiny constant-time work spent dividing (\\(\\Theta(1)\\)), we group all the non-recursive work into a single linear term, representing it as \\(cn\\) (where \\(c\\) is just some constant amount of time per element). This gives us our final, clean recurrence relation:\n\\[\nT(n) = 2T(n/2) + cn\n\\]"
-  },
-  {
-    "objectID": "posts/algorithms/merge-sort-running-time/index.html#the-math-behind-the-cost",
-    "href": "posts/algorithms/merge-sort-running-time/index.html#the-math-behind-the-cost",
-    "title": "Time Complexity Analysis of Merge Sort",
-    "section": "The Math Behind the Cost",
-    "text": "The Math Behind the Cost\nFor every single empty slot in array \\(A\\), the computer performs a fixed, simple set of actions. This basic unit of work takes a tiny, constant amount of time, let’s call it \\(c\\). Because there are \\(n\\) slots to fill, the CPU performs that unit of work exactly \\(n\\) times.\n\\[\n\\text{Total Work} = c \\times n = cn\n\\]\nThis proves that merging scales perfectly linearly with the data size."
-  },
-  {
-    "objectID": "posts/algorithms/merge-sort-running-time/index.html#the-width-work-per-level",
-    "href": "posts/algorithms/merge-sort-running-time/index.html#the-width-work-per-level",
-    "title": "Time Complexity Analysis of Merge Sort",
-    "section": "The Width: Work Per Level",
-    "text": "The Width: Work Per Level\n\nTop level: We start with 1 problem of size \\(n\\). The merge work is just \\(cn\\).\nLevel 1: We split into 2 problems of size \\(n/2\\). The merge work is \\(c(n/2) + c(n/2) = cn\\).\nLevel 2: We split into 4 problems of size \\(n/4\\). The merge work is \\(4 \\times c(n/4) = cn\\).\n\n\nThe Golden Rule\nNotice a pattern? When you break a problem in half, you double the number of subproblems (\\(1 \\to 2 \\to 4 \\dots\\)), but you also cut the work per subproblem in half (\\(cn \\to cn/2 \\to cn/4 \\dots\\)). The doubling and the halving perfectly cancel out. Therefore, every single level of the tree requires exactly \\(cn\\) work.\nWait, what about the very bottom leaf nodes (size 1)? Even though an array of 1 element does not need to be sorted, the CPU still has to allocate stack memory, check the base case (if p &lt; r), and return. This takes a constant time, \\(c\\). Since there are exactly \\(n\\) leaf nodes at the bottom, their total cost is \\(n \\times c = cn\\). The rule holds true all the way to the bottom."
-  },
-  {
-    "objectID": "posts/algorithms/merge-sort-running-time/index.html#the-height-number-of-levels",
-    "href": "posts/algorithms/merge-sort-running-time/index.html#the-height-number-of-levels",
-    "title": "Time Complexity Analysis of Merge Sort",
-    "section": "The Height: Number of Levels",
-    "text": "The Height: Number of Levels\nHow tall is this tree? The height is determined by how many times we can divide \\(n\\) by 2 until we reach arrays of size 1.\nIn mathematics, this question—“How many times do I divide \\(n\\) by 2 to get 1?”—is answered by the base-2 logarithm: \\(\\log_2 n\\) (often written in computer science as just \\(\\lg n\\)).\nAs \\(n\\) grows, \\(\\lg n\\) grows incredibly slowly:\n\n\\(n = 8 \\implies \\lg 8 = 3\\) splits\n\\(n = 1,024 \\implies \\lg 1024 = 10\\) splits\n\\(n = 1,000,000 \\implies \\lg 1,000,000 \\approx 20\\) splits\n\nIncluding the very first top level, the total height of our tree is \\(\\lg n + 1\\) levels."
-  },
-  {
-    "objectID": "posts/algorithms/merge-sort-running-time/index.html#concrete-example-tree-for-n8",
-    "href": "posts/algorithms/merge-sort-running-time/index.html#concrete-example-tree-for-n8",
-    "title": "Time Complexity Analysis of Merge Sort",
-    "section": "Concrete Example: Tree for \\(n=8\\)",
-    "text": "Concrete Example: Tree for \\(n=8\\)\nTo visualize this final calculation, here is exactly what the tree looks like for an array of 8 elements.\nLevel 0 (Root):                  8c                              = 8c\n                             /        \\\nLevel 1:                   4c          4c                        = 8c\n                          /  \\        /  \\\nLevel 2:                2c    2c    2c    2c                     = 8c\n                       / \\   / \\   / \\   / \\\nLevel 3 (Leaves):     c   c c   c c   c c   c                    = 8c\n----------------------------------------------------------------------\nTotal Work:                                                      = 32c\n\nWidth: \\(8c\\) work per level.\nHeight: \\(\\log_2(8) + 1 = 3 + 1 = 4\\) levels.\nTotal: \\(4 \\times 8c = 32c\\).\n\nSince \\(32c = 8c \\log_2(8) + 8c\\), it perfectly matches our \\(cn \\lg n + cn\\) formula."
-  },
-  {
-    "objectID": "posts/algorithms/merge-sort-running-time/index.html#the-tug-of-war",
-    "href": "posts/algorithms/merge-sort-running-time/index.html#the-tug-of-war",
-    "title": "Time Complexity Analysis of Merge Sort",
-    "section": "The Tug of War",
-    "text": "The Tug of War\nThe true power of this blueprint is that it reveals a mathematical tug-of-war happening inside the algorithm.\nOn one side, you have the proliferation rate (determined by \\(a\\)) multiplying the number of problems. On the other side, you have the shrinkage rate (determined by \\(b\\)) and the overhead cost of merging (\\(C(n)\\)). Who wins this tug-of-war determines the shape of the tree and the final Big-\\(\\Theta\\) complexity."
-  },
-  {
-    "objectID": "posts/algorithms/merge-sort-running-time/index.html#example-1-merge-sort-the-perfect-tie",
-    "href": "posts/algorithms/merge-sort-running-time/index.html#example-1-merge-sort-the-perfect-tie",
-    "title": "Time Complexity Analysis of Merge Sort",
-    "section": "Example 1: Merge Sort (The Perfect Tie)",
-    "text": "Example 1: Merge Sort (The Perfect Tie)\nAs we discovered earlier, for Merge Sort:\n\n\\(a = 2\\) (splits into 2 arrays)\n\\(b = 2\\) (each array is half the size)\n\\(D(n) + C(n) = \\Theta(n)\\) (linear time to merge)\n\nBecause the rate at which the problems double (\\(a = 2\\)) perfectly balances the rate at which the workload shrinks (\\(b = 2\\)), the total work done at every single level of the tree remains a constant \\(cn\\). A perfectly rectangular tree of width \\(n\\) and height \\(\\log n\\) gives us \\(\\Theta(n \\log n)\\)."
-  },
-  {
-    "objectID": "posts/algorithms/merge-sort-running-time/index.html#example-2-binary-search-the-shrinking-tree",
-    "href": "posts/algorithms/merge-sort-running-time/index.html#example-2-binary-search-the-shrinking-tree",
-    "title": "Time Complexity Analysis of Merge Sort",
-    "section": "Example 2: Binary Search (The Shrinking Tree)",
-    "text": "Example 2: Binary Search (The Shrinking Tree)\nLet’s apply the blueprint to an entirely different algorithm: finding a number in a sorted array using binary search.\nIn binary search, you look at the middle element. If it is not what you’re looking for, you discard half the array and recursively search the remaining half.\n\n\\(a = 1\\) (you only search one half; the other is thrown away)\n\\(b = 2\\) (the array you search is cut in half)\n\\(D(n) + C(n) = \\Theta(1)\\) (finding the middle takes constant time, and there is nothing to merge)\n\nPlugging this into our blueprint gives:\n\\[\nT(n) = 1 \\cdot T(n/2) + \\Theta(1)\n\\]\nThink about what this recursion tree looks like. Because \\(a = 1\\), the tree never branches out. It is just a straight, single line going down.\n\nLevel 0: 1 problem of size \\(n\\), costing \\(c\\)\nLevel 1: 1 problem of size \\(n/2\\), costing \\(c\\)\nLevel 2: 1 problem of size \\(n/4\\), costing \\(c\\)\n\nEvery level costs a tiny constant amount \\(c\\). How many levels are there? Just like before, dividing by 2 means there are \\(\\lg n\\) levels.\nMultiplying the width (\\(c\\)) by the height (\\(\\lg n\\)) gives us the final complexity for binary search:\n\\[\n\\Theta(\\log n)\n\\]\nBy simply breaking an algorithm down into its \\(a\\), \\(b\\), and overhead costs, the Master Blueprint allows you to instantly visualize the shape of the workload and calculate the runtime."
-  },
-  {
-    "objectID": "posts/english/english_1/index.html",
-    "href": "posts/english/english_1/index.html",
-    "title": "English Word Dictionary Day 1",
-    "section": "",
-    "text": "Note\n\n\n\n💡 使用說明：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。"
-  },
-  {
-    "objectID": "posts/english/english_1/index.html#生字快速索引",
-    "href": "posts/english/english_1/index.html#生字快速索引",
-    "title": "English Word Dictionary Day 1",
-    "section": "🔍 生字快速索引",
-    "text": "🔍 生字快速索引\n\n\n\n\n\n\n\n\n\n\n英文生字\n音標 (IPA)\n詞性\n廣東話地道意思\n難度/常用度\n\n\n\n\nbe overcome with\n/bi ˌəʊ.vəˈkʌm wɪð/\nphr.\n俾（某種強烈情緒）控制住 / 湧上心頭\n⭐⭐⭐\n\n\nriddled\n/ˈrɪd.əld/\nadj.\n充滿（負面嘢）、滿佈、千瘡百孔\n⭐⭐⭐\n\n\ntorment\n/ˈtɔː.ment/ (n.)  /tɔːˈment/ (v.)\nn. / v.\n折磨、極度痛苦、死纏爛打\n⭐⭐⭐\n\n\nattributed\n/əˈtrɪb.jə.tɪd/\nv.\n歸功於、歸咎於、被認為係出自（某人）\n⭐⭐⭐\n\n\ndebase\n/dɪˈbeɪs/\nv.\n貶低、降低價值、搞 Cheap\n⭐⭐⭐⭐\n\n\namasses\n/əˈmæs.ɪz/\nv.\n累積、積聚（財富/知識）\n⭐⭐⭐\n\n\npeerless\n/ˈpɪə.ləs/\nadj.\n無與倫比、超班、冇得頂\n⭐⭐⭐⭐\n\n\nplagued\n/pleɪɡd/\nv. / adj.\n備受困擾、纏繞、搞到一鑊泡\n⭐⭐⭐\n\n\npursuit\n/pəˈsjuːt/\nn.\n追求、追捕、嗜好/消遣\n⭐⭐⭐\n\n\ntoddler\n/ˈtɒd.lər/\nn.\n啱啱學行嘅BB、幼兒\n⭐⭐\n\n\nholds up\n/həʊldz ʌp/\nphr. v.\n站得住腳、經得起考驗 / 阻滯\n⭐⭐⭐\n\n\nbeset\n/bɪˈset/\nv. / adj.\n困擾、充滿（困難/問題）\n⭐⭐⭐⭐\n\n\nlaunch pad\n/ˈlɔːntʃ ˌpæd/\nn.\n發射台、起步點、跳板\n⭐⭐\n\n\ninferiority complex\n/ɪnˌfɪə.riˈɒr.ə.ti ˌkɒm.pleks/\nn.\n自卑感、自卑情結\n⭐⭐⭐⭐\n\n\nutter\n/ˈʌt.ər/\nadj. / v.\n徹頭徹尾、完全的 / 講出口\n⭐⭐⭐\n\n\nOedipus complex\n/ˈiː.dɪ.pəs ˌkɒm.pleks/\nn.\n戀母情結\n⭐⭐⭐⭐⭐\n\n\nnuances\n/ˈnjuː.ɑːnsɪz/\nn.\n細微差別、細節位\n⭐⭐⭐⭐\n\n\nwith regard to\n/wɪð rɪˈɡɑːd tuː/\nphr.\n關於、至於\n⭐⭐⭐\n\n\nresolved to\n/rɪˈzɒlvd tuː/\nphr. v.\n下定決心去做\n⭐⭐⭐\n\n\nwhatsoever\n/ˌwɒt.səʊˈev.ər/\nadv.\n絲毫、一啲都（無）\n⭐⭐⭐"
-  },
-  {
-    "objectID": "posts/english/english_1/index.html#生字詳細解析",
-    "href": "posts/english/english_1/index.html#生字詳細解析",
-    "title": "English Word Dictionary Day 1",
-    "section": "📚 生字詳細解析",
-    "text": "📚 生字詳細解析\n\n1. be overcome with (something)\n\n詞性：片語 (Phrase)\n讀音：/bi ˌəʊ.vəˈkʌm wɪð/\n廣東話解法：指突然之間俾一種好強烈嘅情緒（例如悲傷、恐懼、喜悅等）淹沒或者控制，搞到個人無法自控。廣東話通常會話「俾（某種情緒）控制住」、「成個人都係…」或者「（情緒）湧晒上嚟」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: She was overcome with emotion when she won the award.\n廣東話口語: 佢贏咗個獎嗰陣，激動到控制唔到自己（啲情緒湧晒上嚟）。\nEnglish: I was overcome with guilt after lying to him.\n廣東話口語: 我同佢講完大話之後，覺得超級內疚（內疚感湧晒出嚟 / 俾內疚感浸沒咗）。\n\n\n\n常見搭配 (Collocations)： * overcome with grief：傷心欲絕 / 傷心到崩潰 * overcome with joy：開心到癲 / 狂喜 * overcome with fear：驚到呆咗 / 俾恐懼支配\n\n\n\n2. riddled (with something)\n\n詞性：形容詞 (Adjective)\n讀音：/ˈrɪd.əld/\n廣東話解法：通常用嚟形容「充滿咗啲唔好嘅嘢」（例如錯誤、疾病、貪污或者子彈窿）。廣東話會視乎配搭譯做「滿佈」、「千瘡百孔」、「錯漏百出」或者「周身都係」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: His report was riddled with errors.\n廣東話口語: 佢份報告錯漏百出（周圍都係錯處）。\nEnglish: The car was riddled with bullets.\n廣東話口語: 架車俾人開槍打到變咗馬蜂窩（滿佈子彈窿）。\n\n\n\n常見搭配 (Collocations)： * riddled with errors / mistakes：錯漏百出 * riddled with corruption：充滿貪污腐敗 * riddled with disease：百病叢生 / 周身病痛 * riddled with bullet holes：滿佈子彈窿 / 打到變馬蜂窩\n\n\n\n3. torment\n\n詞性：名詞 (Noun) / 動詞 (Verb)\n讀音：名詞讀音為 /ˈtɔː.ment/，動詞讀音為 /tɔːˈment/（重音喺後面）\n廣東話解法：\n\n做名詞時，指肉體或精神上受到嘅「極大痛苦」或者「折磨」。\n做動詞時，指特登去「折磨」人、「玩殘」人，或者不斷令對方覺得好煩、好痛苦。\n\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish (Noun): Waiting for the medical test results was absolute torment.\n廣東話口語: 等緊驗身報告出嗰段時間，真係一種折磨（痛苦到死）。\nEnglish (Verb): The older kids used to torment him at school.\n廣東話口語: 以前喺學校啲大個仔成日恰佢 / 玩殘佢（特登去折磨佢）。\n\n\n\n常見搭配 (Collocations)： * in agony and torment：極度痛苦 * mental torment：精神折磨\n\n\n\n4. attributed (to someone / something)\n\n詞性：動詞 (Verb - 過去式 / 過去分詞)\n讀音：/əˈtrɪb.jə.tɪd/\n廣東話解法：最常用係 be attributed to，指將一件事嘅發生（例如成功或失敗）「歸功於」或者「歸咎於」某個原因或某人。另外，亦可以解作一幅畫、一句說話「被認為係出自」某人之手。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Her success can be attributed to hard work and determination.\n廣東話口語: 佢咁成功，可以歸功於（全靠）佢夠勤力同有決心。\nEnglish: The quote is widely attributed to Albert Einstein, but he never actually said it.\n廣東話口語: 呢句金句好多人都話係出自愛因斯坦（以為係佢講），但其實佢根本無講過。\n\n\n\n常見搭配 (Collocations)： * widely attributed to：普遍認為係…造成 / 出自… * directly attributed to：直接歸因於 / 直接因為…而起\n\n\n\n5. debase\n\n詞性：動詞 (Verb)\n讀音：/dɪˈbeɪs/\n廣東話解法：指降低一樣嘢嘅價值、品質，或者降低一個人嘅品格。廣東話通常會講「貶低」、「搞到好 Cheap」或者「拉低個層次」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: He wouldn’t debase himself by asking them for money.\n廣東話口語: 佢唔會為咗問佢哋攞錢而貶低自己（搞到自己咁 Cheap）。\nEnglish: The currency was debased by the government.\n廣東話口語: 啲貨幣俾政府搞到貶晒值。\n\n\n\n常見搭配 (Collocations)： * debase yourself：貶低自己 * debase the currency：貨幣貶值 / 降低貨幣價值\n\n\n\n6. amasses (amass 嘅第三人稱單數)\n\n詞性：動詞 (Verb)\n讀音：/əˈmæs.ɪz/ (原型讀音為 /əˈmæs/)\n廣東話解法：指大量地收集或者累積（通常係指財富、知識或者證據）。廣東話會講「積聚」、「儲埋儲埋一大堆」或者「積埋積埋」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: By the time he was 40, he had amassed a fortune.\n廣東話口語: 佢四十歲嗰陣，已經積聚咗一大筆財富（儲埋儲埋好多錢）。\nEnglish: She amasses evidence for her research.\n廣東話口語: 佢為咗自己個研究，周圍收集（儲埋）好多證據。\n\n\n\n常見搭配 (Collocations)： * amass a fortune / wealth：累積財富 * amass evidence / data：收集大量證據 / 數據\n\n\n\n7. peerless\n\n詞性：形容詞 (Adjective)\n讀音：/ˈpɪə.ləs/\n廣東話解法：指冇人能夠比得上。廣東話通常會講「無與倫比」、「超班」、「冇得頂」或者「天下無雙」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: As a martial artist, Bruce Lee was peerless.\n廣東話口語: 作為一個武術家，李小龍真係超晒班（冇人夠佢打 / 無與倫比）。\nEnglish: The hotel offers peerless service.\n廣東話口語: 呢間酒店嘅服務真係冇得頂（無人能及）。\n\n\n\n常見搭配 (Collocations)： * peerless beauty：絕色 / 無雙嘅美貌 * peerless performance：無與倫比嘅表現\n\n\n\n8. plagued (plague 嘅過去式 / 過去分詞)\n\n詞性：動詞 (Verb) / 亦可作被動語態形容詞\n讀音：/pleɪɡd/\n廣東話解法：指不斷受到某啲壞事或麻煩嘅折磨。廣東話通常會講「備受困擾」、「纏繞住」、「煩死」或者「搞到一鑊泡」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: The project has been plagued by financial problems from the start.\n廣東話口語: 個項目一開始就一路俾財務問題困擾住（搞到一鑊泡）。\nEnglish: He has been plagued with leg injuries this season.\n廣東話口語: 佢今季一直俾啲腳傷纏繞住。\n\n\n\n常見搭配 (Collocations)： * plagued by problems / doubts：被問題 / 疑慮困擾 * plagued with injuries / disease：傷患 / 疾病纏身\n\n\n\n9. pursuit\n\n詞性：名詞 (Noun)\n讀音：/pəˈsjuːt/\n廣東話解法：主要有三個解法：第一係「追求」（例如追求夢想、學問）；第二係「追捕 / 追擊」；第三（通常加 s 變眾數 pursuits）可以解作「消遣」或者「嗜好」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: She travelled the world in pursuit of her dreams.\n廣東話口語: 佢為咗追求自己嘅夢想，去咗環遊世界。\nEnglish: The police are in hot pursuit of the stolen car.\n廣東話口語: 啲警察窮追不捨緊（狂追）架失車。\nEnglish: He enjoys outdoor pursuits like hiking and cycling.\n廣東話口語: 佢好鍾意行山同踩單車呢類戶外活動（消遣）。\n\n\n\n常見搭配 (Collocations)： * in pursuit of：為咗追求… / 追捕緊… * hot pursuit：窮追不捨 * leisure / outdoor pursuits：休閒 / 戶外消遣活動\n\n\n\n10. toddler\n\n詞性：名詞 (Noun)\n讀音：/ˈtɒd.lər/\n廣東話解法：指啱啱開始學行路（大概一至三歲）嘅細路仔。因為佢哋行路通常跌跌撞撞（toddle），所以英文叫 toddler。廣東話通常會叫「學行BB」、「BB」或者「幼兒」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: The toddler took a few steps and fell down.\n廣東話口語: 個啱啱學行嘅BB行咗幾步就跌低咗。\nEnglish: We bought some educational toys for toddlers.\n廣東話口語: 我哋買咗啲俾幼兒玩嘅益智玩具。\n\n\n\n常見搭配 (Collocations)： * toddler years：幼兒時期（通常指 1-3 歲） * toddler group：幼兒遊戲小組 / Playgroup\n\n\n\n11. holds up\n\n詞性：片語動詞 (Phrasal Verb)\n讀音：/həʊldz ʌp/\n廣東話解法：常見有兩個意思：第一係指一個論點、藉口或者質素「站得住腳」、「經得起考驗」；第二係指事情或者交通受到「阻滯 / 拖延」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: His excuse for being late just doesn’t hold up.\n廣東話口語: 佢遲到個藉口根本站唔住腳（講唔通 / 呃唔到人）。\nEnglish: Sorry I’m late, I was held up in traffic.\n廣東話口語: 唔好意思遲咗，頭先塞車阻住咗（有阻滯）。\n\n\n\n常見搭配 (Collocations)： * argument holds up：論點站得住腳 * held up by (something)：俾（某啲嘢）拖延 / 阻滯\n\n\n\n12. beset\n\n詞性：動詞 (Verb) / 被動語態形容詞\n讀音：/bɪˈset/\n廣東話解法：指四方八面都係困難、問題或者危險。廣東話通常會講「困擾」、「充滿（困難）」、「困難重重」或者「俾麻煩圍住晒」。同 plagued 意思相近。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: The project was beset by financial difficulties.\n廣東話口語: 個項目遇到重重財務困難（俾財困問題纏繞住）。\nEnglish: She is beset with self-doubt.\n廣東話口語: 佢充滿自我懷疑（成日都覺得自己唔得）。\n\n\n\n常見搭配 (Collocations)： * beset by / with problems：困難重重 * beset with danger：危機四伏\n\n\n\n13. launch pad\n\n詞性：名詞 (Noun)\n讀音：/ˈlɔːntʃ ˌpæd/\n廣東話解法：字面意思係火箭嘅「發射台」。通常用作比喻，指事業或者某項計劃嘅「起步點」或者「跳板」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: He used the job as a launch pad for his political career.\n廣東話口語: 佢當呢份工係佢政治生涯嘅跳板（起步點）。\nEnglish: The new policy will serve as a launch pad for economic growth.\n廣東話口語: 呢個新政策將會成為經濟增長嘅推動力（發射台）。\n\n\n\n常見搭配 (Collocations)： * act as a launch pad：作為跳板 / 起步點 * provide a launch pad：提供一個發揮嘅平台\n\n\n\n14. inferiority complex\n\n詞性：名詞 (Noun)\n讀音：/ɪnˌfɪə.riˈɒr.ə.ti ˌkɒm.pleks/\n廣東話解法：心理學名詞，指人有一種強烈覺得自己唔夠人哋好、低人一等嘅心態。廣東話通常會叫「自卑感」或者「自卑情結」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: She has a massive inferiority complex when it comes to her looks.\n廣東話口語: 一講到自己個樣，佢就有好嚴重嘅自卑感。\nEnglish: He constantly criticizes others to hide his own inferiority complex.\n廣東話口語: 佢成日踩低人，其實係想掩飾自己嘅自卑。\n\n\n\n常見搭配 (Collocations)： * have / suffer from an inferiority complex：有自卑感 * massive inferiority complex：極度自卑\n\n\n\n15. utter\n\n詞性：形容詞 (Adjective) / 動詞 (Verb)\n讀音：/ˈʌt.ər/\n廣東話解法：\n\n做形容詞時，用嚟強調程度，解作「完全的」、「徹頭徹尾的」。廣東話會講「十足十」、「完全係」。\n做動詞時，指「講出口」、「發出聲音」。廣東話會講「出聲」、「講嘢」。\n\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish (Adj): What you are saying is absolute and utter nonsense.\n廣東話口語: 你講嗰啲根本就係徹頭徹尾嘅廢話。\nEnglish (Verb): She sat there without uttering a single word.\n廣東話口語: 佢坐喺度一粒聲都無出過。\n\n\n\n常見搭配 (Collocations)： * utter chaos / nonsense / disaster：完全混亂 / 徹頭徹尾嘅廢話 / 徹底嘅災難 * not utter a word：隻字不提 / 一聲都唔出\n\n\n\n16. Oedipus complex\n\n詞性：名詞 (Noun)\n讀音：/ˈiː.dɪ.pəs ˌkɒm.pleks/\n廣東話解法：心理學名詞（由佛洛伊德提出），指兒子潛意識對母親有愛慕甚至佔有慾，同時對父親有敵意。廣東話叫「戀母情結」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Psychoanalysts suggested that the character’s behavior stemmed from an unresolved Oedipus complex.\n廣東話口語: 心理分析師話個角色嘅行為，係源自佢未解決嘅戀母情結。\n\n\n\n常見搭配 (Collocations)： * unresolved Oedipus complex：未解決嘅戀母情結\n\n\n\n17. nuances (nuance 嘅眾數)\n\n詞性：名詞 (Noun)\n讀音：/ˈnjuː.ɑːnsɪz/\n廣東話解法：指意思、聲音、感覺或者顏色上好微小嘅差異。廣東話通常會講「細微差別」、「細節位」或者「微妙之處」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: You need to understand the nuances of the Cantonese language.\n廣東話口語: 你要明白廣東話入面啲好微妙嘅細節（細微嘅分別）。\nEnglish: The actor captured all the nuances of the character.\n廣東話口語: 個演員捕捉到個角色所有嘅細微變化（演得好細膩）。\n\n\n\n常見搭配 (Collocations)： * understand / grasp the nuances：理解當中嘅細微差別 * subtle nuances：微妙嘅細節\n\n\n\n18. with regard to\n\n詞性：片語 (Phrase)\n讀音：/wɪð rɪˈɡɑːd tuː/\n廣東話解法：比較正式嘅寫法，解作「關於」、「至於」或者「講開…」。口語通常會講「關於」、「講起…」或者「喺…方面」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: With regard to your request, we will get back to you shortly.\n廣東話口語: 關於你嘅要求，我哋會好快覆返你。\nEnglish: I am writing with regard to my recent order.\n廣東話口語: （寫信常用）我寫呢封信係關於我最近嘅訂單。\n\n\n\n常見搭配 (Collocations)： * with regard to (something)：關於某事\n\n\n\n19. resolved to\n\n詞性：片語動詞 (Phrasal Verb)\n讀音：/rɪˈzɒlvd tuː/\n廣東話解法：指做咗一個好堅定嘅決定去完成一件事。廣東話通常會講「下定決心去做」、「決定咗」或者「立定心腸」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: She resolved to quit smoking this year.\n廣東話口語: 佢下定決心今年一定要戒煙。\nEnglish: He resolved to work harder.\n廣東話口語: 佢立定心腸要更加勤力做嘢。\n\n\n\n常見搭配 (Collocations)： * resolved to do (something)：下定決心做某事\n\n\n\n20. whatsoever\n\n詞性：副詞 (Adverb)\n讀音：/ˌwɒt.səʊˈev.ər/\n廣東話解法：通常用喺否定句嘅最尾，用嚟加強語氣，解作「絲毫（都沒有）」或者「無論如何都唔…」。廣東話會講「一啲都（無）」、「絕對唔…」或者「完全無」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: I have no doubt whatsoever about his ability.\n廣東話口語: 我對佢嘅能力絕對無絲毫懷疑（一啲懷疑都無）。\nEnglish: There is no evidence whatsoever to support that claim.\n廣東話口語: 完全無任何證據去支持嗰個講法。\n\n\n\n常見搭配 (Collocations)： * none whatsoever / nothing whatsoever：完全無 / 一啲都無 * no doubt whatsoever：毫無疑問"
-  },
-  {
-    "objectID": "posts/english/english_3/index.html",
-    "href": "posts/english/english_3/index.html",
-    "title": "English Word Dictionary Day 3",
-    "section": "",
-    "text": "Note\n\n\n\n💡 使用說明：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。"
-  },
-  {
-    "objectID": "posts/english/english_3/index.html#生字快速索引",
-    "href": "posts/english/english_3/index.html#生字快速索引",
-    "title": "English Word Dictionary Day 3",
-    "section": "🔍 生字快速索引",
-    "text": "🔍 生字快速索引\n\n\n\n\n\n\n\n\n\n\n英文生字\n音標 (IPA)\n詞性\n廣東話地道意思\n難度/常用度\n\n\n\n\nbraggarts\n/ˈbræɡ.əts/\nn.\n愛認叻嘅人、沙塵友、吹水佬\n⭐⭐⭐⭐\n\n\nharbor\n/ˈhɑː.bər/\nv.\n懷有（心事/情緒）、包庇、心存\n⭐⭐⭐\n\n\ndiligent\n/ˈdɪl.ɪ.dʒənt/\nadj.\n勤力、用心、盡責\n⭐⭐⭐\n\n\nobscured\n/əbˈskjʊəd/\nv. / adj.\n遮蔽、掩蓋、令人睇唔清\n⭐⭐⭐⭐\n\n\nbravado\n/brəˈvɑː.dəʊ/\nn.\n虛張聲勢、靠嚇、逞強\n⭐⭐⭐⭐\n\n\nallegiance\n/əˈliː.dʒəns/\nn.\n忠誠、效忠\n⭐⭐⭐⭐\n\n\nboast\n/bəʊst/\nv. / n.\n認叻、吹噓、自誇\n⭐⭐⭐\n\n\nflaunt\n/flɔːnt/\nv.\n炫耀、晒命\n⭐⭐⭐\n\n\nmanifests\n/ˈmæn.ɪ.fests/\nv.\n表現出嚟、顯現、證明\n⭐⭐⭐⭐\n\n\nbrag about\n/bræɡ əˈbaʊt/\nphr. v.\n吹噓（某事）、四圍認叻\n⭐⭐⭐\n\n\na boil about to burst\n/ə bɔɪl əˈbaʊt tə bɜːst/\nidiom\n爆發邊緣、壓力/積怨去到極點\n⭐⭐⭐⭐⭐\n\n\ncircumspect\n/ˈsɜː.kəm.spekt/\nadj.\n謹慎、小心翼翼、步步為營\n⭐⭐⭐⭐⭐\n\n\nanguish\n/ˈæŋ.ɡwɪʃ/\nn.\n極度痛苦、煎熬、悲痛\n⭐⭐⭐⭐"
-  },
-  {
-    "objectID": "posts/english/english_3/index.html#生字詳細解析",
-    "href": "posts/english/english_3/index.html#生字詳細解析",
-    "title": "English Word Dictionary Day 3",
-    "section": "📚 生字詳細解析",
-    "text": "📚 生字詳細解析\n\n1. braggarts (braggart 嘅眾數)\n\n詞性：名詞 (Noun)\n讀音：/ˈbræɡ.əts/ (美音: /ˈbræɡ.ɚts/)\n廣東話解法：指嗰啲好鍾意周圍同人講自己有幾叻、有幾威嘅人。廣東話通常會講「愛認叻嘅人」、「沙塵友」或者「吹水佬」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Nobody likes braggarts who constantly talk about their wealth.\n廣東話口語: 無人會鍾意啲成日將自己有幾多錢掛喺嘴邊嘅沙塵友（認叻嘅人）。\n\n\n\n常見搭配 (Collocations)： * an empty braggart：得個吹字嘅人\n\n\n\n2. harbor (動詞用法)\n\n詞性：動詞 (Verb)\n讀音：/ˈhɑː.bər/\n廣東話解法：做名詞係海港，但做動詞時，通常指喺心入面長時期「懷有」某種情緒（特別係負面情緒，例如怨恨、希望、恐懼），或者指「包庇」罪犯。廣東話會講「心存」、「一直懷有」或「包庇」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: He still harbors a deep resentment against his former boss.\n廣東話口語: 佢心入面依然對以前個老闆懷有好深嘅怨恨。\n\n\n\n常見搭配 (Collocations)： * harbor a grudge / resentment：懷恨在心 / 記仇 * harbor fugitives：包庇逃犯\n\n\n\n3. diligent\n\n詞性：形容詞 (Adjective)\n讀音：/ˈdɪl.ɪ.dʒənt/\n廣東話解法：指做嘢非常上心、努力同埋細心。廣東話通常會講「勤力」、「用心」或者「盡責」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: She is a diligent student who always completes her assignments on time.\n廣東話口語: 佢係個好勤力（盡責）嘅學生，每次都準時交功課。\n\n\n\n常見搭配 (Collocations)： * diligent effort / work：勤奮嘅努力 / 盡責嘅工作 * diligent student / employee：勤力嘅學生 / 員工\n\n\n\n4. obscured\n\n詞性：動詞過去式/過去分詞 (Verb) / 形容詞 (Adjective)\n讀音：/əbˈskjʊəd/\n廣東話解法：指將某樣嘢遮住、掩蓋，令到人睇唔清楚或者難以理解。廣東話通常會講「遮蔽」、「掩蓋」或者「搞到睇唔清」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: The moon was obscured by heavy clouds.\n廣東話口語: 個月亮俾啲厚雲遮住咗。\nEnglish: The true meaning of his words was obscured by his complicated language.\n廣東話口語: 佢講嘢太過複雜，掩蓋咗佢真正想表達嘅意思。\n\n\n\n常見搭配 (Collocations)： * obscured by (something)：俾…遮蔽 * vision is obscured：視線受阻\n\n\n\n5. bravado\n\n詞性：名詞 (Noun)\n讀音：/brəˈvɑː.dəʊ/\n廣東話解法：指表面上扮到好大膽、好威水，想令人覺得自己好勁，但其實內心可能好怯。廣東話通常會講「虛張聲勢」、「靠嚇」或者「逞強」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Behind all his bravado, he is actually very insecure.\n廣東話口語: 佢表面上虛張聲勢（扮晒嘢），其實內心極度缺乏安全感。\n\n\n\n常見搭配 (Collocations)： * false bravado：假嘅虛張聲勢 / 扮鎮定 * an act of bravado：逞強嘅行為\n\n\n\n6. allegiance\n\n詞性：名詞 (Noun)\n讀音：/əˈliː.dʒəns/\n廣東話解法：指對國家、領袖、信仰或者群體嘅忠誠同支持。廣東話通常會講「忠誠」或者「效忠」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: Soldiers have to swear an oath of allegiance to their country.\n廣東話口語: 士兵必須宣誓對國家效忠。\n\n\n\n常見搭配 (Collocations)： * pledge / swear allegiance to：宣誓效忠於… * switch allegiance：倒戈 / 改變陣營\n\n\n\n7. boast\n\n詞性：動詞 (Verb) / 名詞 (Noun)\n讀音：/bəʊst/\n廣東話解法：指帶住極大嘅驕傲去講述自己嘅成就、財產或者能力。廣東話通常會講「認叻」、「吹噓」或者「自誇」。(做名詞時即係「自誇嘅說話」)\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: He likes to boast that he is the smartest person in the room.\n廣東話口語: 佢好鍾意認叻（吹噓），話自己係全場最聰明嗰個。\n\n\n\n常見搭配 (Collocations)： * boast about / of：吹噓… * make a boast：自誇\n\n\n\n8. flaunt\n\n詞性：動詞 (Verb)\n讀音：/flɔːnt/\n廣東話解法：指好張揚咁展示自己擁有嘅好嘢（例如名牌、財富、身材），目的係惹人艷羨或者挑釁。廣東話通常會講「炫耀」或者「晒命」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: She arrived in a sports car to flaunt her new wealth.\n廣東話口語: 佢揸架跑車出場，為咗晒命（炫耀）佢新賺返嚟嘅財富。\nEnglish: If you’ve got it, flaunt it!\n廣東話口語: 有本錢就梗係要晒啦！\n\n\n\n常見搭配 (Collocations)： * flaunt one's wealth / success：炫富 / 晒命自己有幾成功 * flaunt the rules：公然藐視規則（有時會同 flout 撈亂用）\n\n\n\n9. manifests\n\n詞性：動詞 (Verb, 第三人稱單數)\n讀音：/ˈmæn.ɪ.fests/\n廣東話解法：指某種特質、情緒或病徵，透過行為或者外表清楚咁展現出嚟。廣東話通常會講「表現出嚟」、「顯現」或者「證明」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: His frustration often manifests as anger.\n廣東話口語: 佢嘅挫敗感通常會以憤怒嘅形式表現出嚟。\n\n\n\n常見搭配 (Collocations)： * manifests itself as / in：以…形式顯現出嚟 * manifest a desire / symptom：表現出渴望 / 顯現病徵\n\n\n\n10. brag about\n\n詞性：片語動詞 (Phrasal Verb)\n讀音：/bræɡ əˈbaʊt/\n廣東話解法：同 boast about 好似，都係指自大咁講自己嘅威水史。廣東話通常會講「吹噓某事」或者「四圍認叻」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: She is always bragging about how much money she makes.\n廣東話口語: 佢成日四圍認叻（吹噓）自己賺幾多錢。\n\n\n\n常見搭配 (Collocations)： * brag about one's achievements：吹噓自己嘅成就 * nothing to brag about：無咩好認叻（指表現一般般）\n\n\n\n11. a boil about to burst\n\n詞性：習語 / 片語 (Idiom / Phrase)\n讀音：/ə bɔɪl əˈbaʊt tə bɜːst/\n廣東話解法：Boil 喺度解作「毒瘡」。成句字面解「一粒就快爆嘅大毒瘡」，比喻一個充滿張力、壓力或者積怨嘅局面，去到臨界點就快要爆發。廣東話會講「爆發邊緣」或者「好似個就快爆嘅大毒瘡」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: The tension in the meeting room felt like a boil about to burst.\n廣東話口語: 會議室入面嘅緊張氣氛，就好似個就快爆嘅大毒瘡（瀕臨爆發邊緣）咁。\n\n\n\n常見搭配 (Collocations)： * like a boil about to burst：好似就快爆發咁 * bring a boil to a head：令危機到達頂點（類似用法）\n\n\n\n12. circumspect\n\n詞性：形容詞 (Adjective)\n讀音：/ˈsɜː.kəm.spekt/\n廣東話解法：指做決定或行動之前考慮得非常周到，唔願意冒險。廣東話通常會講「謹慎」、「小心翼翼」或者「步步為營」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: He was very circumspect in his statement to the press.\n廣東話口語: 佢同傳媒發表聲明嗰陣非常之謹慎（小心翼翼）。\n\n\n\n常見搭配 (Collocations)： * circumspect behavior / approach：謹慎嘅行為 / 做法 * be circumspect about：對…好審慎\n\n\n\n13. anguish\n\n詞性：名詞 (Noun) / 有時作動詞\n讀音：/ˈæŋ.ɡwɪʃ/\n廣東話解法：指精神上或者肉體上極度嘅痛苦、煎熬。廣東話通常會講「極度痛苦」、「煎熬」或者「悲痛」。\n\n\n\n\n\n\n\nTip地道廣東話例句\n\n\n\n\nEnglish: He groaned in anguish when he heard the terrible news.\n廣東話口語: 佢聽到個噩耗之後，極度悲痛（痛苦）到呻吟出嚟。\n\n\n\n常見搭配 (Collocations)： * mental / physical anguish：精神上 / 肉體上嘅極度痛苦 * cries of anguish：痛苦嘅呼喊聲"
   }
 ]

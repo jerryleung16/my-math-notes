@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/python/class/index.html",
       "/posts/algorithms/merge-sort-running-time/index.html",
       "/posts/english/english_3/index.html",
       "/posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html",
