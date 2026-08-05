@@ -35,6 +35,41 @@
     "text": "Python Is Doing Something Behind the Scenes\nWhen you write:\nmy_robot.beep()\nPython effectively treats this as:\nRobot.beep(my_robot)\nIn other words, Python automatically passes the object that called the method as the first argument.\nThat object needs somewhere to go.\nThat is why we write:\ndef beep(self):\nThe self parameter is the place where Python passes the current object.\nYou can think of it like this:\nmy_robot.beep()\n      ↓\nPython automatically passes my_robot\n      ↓\nRobot.beep(my_robot)\n      ↓\n             self\n              ↓\n        \"this robot\"\nSo when you forget self, Python is essentially saying:\n\n“I tried to give you the robot object, but your method doesn’t have a parameter to receive it!”"
   },
   {
+    "objectID": "posts/python/class/index.html#the-default-value-method",
+    "href": "posts/python/class/index.html#the-default-value-method",
+    "title": "Class",
+    "section": "1. The “Default Value” Method",
+    "text": "1. The “Default Value” Method\nThe most straightforward way to create an optional attribute is to give the parameter a default value inside __init__.\nYou use the equals sign (=) to specify the default.\nclass Dog:\n\n    # name is REQUIRED.\n    # collar_color is OPTIONAL and defaults to \"Red\".\n    def __init__(self, name, collar_color=\"Red\"):\n        self.name = name\n        self.collar_color = collar_color\n\n\n# We only provide the name.\n# Python automatically uses \"Red\".\ndog_1 = Dog(\"Buddy\")\n\nprint(f\"{dog_1.name} has a {dog_1.collar_color} collar.\")\n# Buddy has a Red collar.\n\n\n# We provide both values.\n# Python uses \"Blue\" instead of the default.\ndog_2 = Dog(\"Daisy\", \"Blue\")\n\nprint(f\"{dog_2.name} has a {dog_2.collar_color} collar.\")\n# Daisy has a Blue collar.\nThe important idea is:\ncollar_color=\"Red\"\nmeans:\n\n“If the user doesn’t provide a collar color, use Red.”\n\nBut if the user does provide a value:\nDog(\"Daisy\", \"Blue\")\nPython uses \"Blue\" instead."
+  },
+  {
+    "objectID": "posts/python/class/index.html#the-none-method-when-information-is-missing",
+    "href": "posts/python/class/index.html#the-none-method-when-information-is-missing",
+    "title": "Class",
+    "section": "2. The None Method — When Information Is Missing",
+    "text": "2. The None Method — When Information Is Missing\nSometimes an attribute is optional because the information might not exist yet.\nIn Python, we can use the special value None to represent:\n\n“There is currently no value.”\n\nFor example, imagine creating a user profile where a phone number is optional.\nclass UserProfile:\n\n    # phone_number is optional.\n    # If no number is provided, it is set to None.\n    def __init__(self, username, phone_number=None):\n        self.username = username\n        self.phone_number = phone_number\n\n    def show_profile(self):\n        print(f\"User: {self.username}\")\n\n        # Check whether a phone number was provided.\n        if self.phone_number is None:\n            print(\"Phone: No number provided.\")\n        else:\n            print(f\"Phone: {self.phone_number}\")\n\n\n# Create a user without a phone number\nuser_1 = UserProfile(\"CoolSkater99\")\n\nuser_1.show_profile()\nThe output would be:\nUser: CoolSkater99\nPhone: No number provided.\nHere, None doesn’t mean that the phone number is zero or an empty string.\nIt means:\n\n“No phone number has been provided.”"
+  },
+  {
+    "objectID": "posts/python/class/index.html#example-pizza-with-any-number-of-toppings",
+    "href": "posts/python/class/index.html#example-pizza-with-any-number-of-toppings",
+    "title": "Class",
+    "section": "Example: Pizza with Any Number of Toppings",
+    "text": "Example: Pizza with Any Number of Toppings\nclass Pizza:\n\n    # size is required.\n    # *args catches all additional unnamed arguments.\n    def __init__(self, size, *args):\n        self.size = size\n        self.toppings = args\n\n    def describe(self):\n        print(f\"A {self.size} pizza with:\")\n\n        for topping in self.toppings:\n            print(f\"- {topping}\")\n\n\n# One topping\ncheese_pizza = Pizza(\"Medium\", \"Extra Cheese\")\n\n\n# Four toppings\nsupreme = Pizza(\n    \"Large\",\n    \"Pepperoni\",\n    \"Sausage\",\n    \"Onions\",\n    \"Peppers\"\n)\n\nsupreme.describe()\nThe *args parameter collects the toppings into a tuple.\nConceptually:\nargs\n ↓\n(\"Pepperoni\", \"Sausage\", \"Onions\", \"Peppers\")\nThe output would be:\nA Large pizza with:\n- Pepperoni\n- Sausage\n- Onions\n- Peppers"
+  },
+  {
+    "objectID": "posts/python/class/index.html#example-a-flexible-smartphone-class",
+    "href": "posts/python/class/index.html#example-a-flexible-smartphone-class",
+    "title": "Class",
+    "section": "Example: A Flexible Smartphone Class",
+    "text": "Example: A Flexible Smartphone Class\nclass SmartPhone:\n\n    # brand is required.\n    # **kwargs catches all custom specifications.\n    def __init__(self, brand, **kwargs):\n        self.brand = brand\n\n        # kwargs is a dictionary.\n        self.specs = kwargs\n\n    def show_specs(self):\n        print(f\"--- {self.brand} Phone ---\")\n\n        for key, value in self.specs.items():\n            print(f\"{key}: {value}\")\n\n\n# We can provide any number of custom specifications.\nmy_phone = SmartPhone(\n    \"Apple\",\n    storage=\"256GB\",\n    color=\"Midnight\",\n    has_headphone_jack=False\n)\n\nmy_phone.show_specs()\nConceptually, kwargs contains:\n{\n    \"storage\": \"256GB\",\n    \"color\": \"Midnight\",\n    \"has_headphone_jack\": False\n}\nThe output would be:\n--- Apple Phone ---\nstorage: 256GB\ncolor: Midnight\nhas_headphone_jack: False\nThe key advantage is flexibility.\nWe don’t have to predict every possible specification when we create the class."
+  },
+  {
+    "objectID": "posts/python/class/index.html#example-video-game-character",
+    "href": "posts/python/class/index.html#example-video-game-character",
+    "title": "Class",
+    "section": "Example: Video Game Character",
+    "text": "Example: Video Game Character\nclass VideoGameCharacter:\n\n    def __init__(self, name, *args, **kwargs):\n        self.name = name\n        self.inventory = args\n        self.stats = kwargs\n\n\nhero = VideoGameCharacter(\n    \"Link\",\n\n    # *args\n    \"Sword\",\n    \"Shield\",\n\n    # **kwargs\n    health=100,\n    magic=50\n)\nThe information is stored like this:\nname\n ↓\n\"Link\"\n\ninventory\n ↓\n(\"Sword\", \"Shield\")\n\nstats\n ↓\n{\n    \"health\": 100,\n    \"magic\": 50\n}\nSo one object can contain three different types of information:\nVideoGameCharacter\n        │\n        ├── name\n        │     └── \"Link\"\n        │\n        ├── inventory\n        │     └── (\"Sword\", \"Shield\")\n        │\n        └── stats\n              ├── health = 100\n              └── magic = 50\nThis makes classes extremely flexible."
+  },
+  {
     "objectID": "posts/english/english_3/index.html",
     "href": "posts/english/english_3/index.html",
     "title": "English Word Dictionary Day 3",

@@ -325,9 +325,422 @@ Robot.beep(my_robot)
 <hr>
 </section>
 </section>
+<section id="optional-attributes" class="level1">
+<h1>Optional Attributes</h1>
+<p>An <strong>optional attribute</strong> simply means that when you create a new object, you <strong>don’t have to provide that particular piece of information</strong>.</p>
+<p>If you leave it out, Python uses a <strong>default value</strong> instead.</p>
+<p>We actually used an optional attribute earlier in our <code>BankAccount</code> example.</p>
+<p>Consider:</p>
+<pre class="text"><code>def __init__(self, owner, starting_balance=0.0):</code></pre>
+<p>Here:</p>
+<ul>
+<li><code>owner</code> is <strong>required</strong>.</li>
+<li><code>starting_balance</code> is <strong>optional</strong>.</li>
+<li>If no starting balance is provided, Python uses <code>0.0</code>.</li>
+</ul>
+<p>For example:</p>
+<pre class="text"><code>alice_account = BankAccount("Alice", 100.0)</code></pre>
+<p>Alice starts with <code>$100</code>.</p>
+<p>But:</p>
+<pre class="text"><code>bob_account = BankAccount("Bob")</code></pre>
+<p>Bob automatically starts with <code>$0</code>.</p>
+<p>This is the basic idea behind optional attributes.</p>
+<hr>
+<section id="the-default-value-method" class="level2">
+<h2 class="anchored" data-anchor-id="the-default-value-method">1. The “Default Value” Method</h2>
+<p>The most straightforward way to create an optional attribute is to give the parameter a <strong>default value</strong> inside <code>__init__</code>.</p>
+<p>You use the equals sign (<code>=</code>) to specify the default.</p>
+<pre class="text"><code>class Dog:
+
+    # name is REQUIRED.
+    # collar_color is OPTIONAL and defaults to "Red".
+    def __init__(self, name, collar_color="Red"):
+        self.name = name
+        self.collar_color = collar_color
+
+
+# We only provide the name.
+# Python automatically uses "Red".
+dog_1 = Dog("Buddy")
+
+print(f"{dog_1.name} has a {dog_1.collar_color} collar.")
+# Buddy has a Red collar.
+
+
+# We provide both values.
+# Python uses "Blue" instead of the default.
+dog_2 = Dog("Daisy", "Blue")
+
+print(f"{dog_2.name} has a {dog_2.collar_color} collar.")
+# Daisy has a Blue collar.</code></pre>
+<p>The important idea is:</p>
+<pre class="text"><code>collar_color="Red"</code></pre>
+<p>means:</p>
+<blockquote class="blockquote">
+<p>“If the user doesn’t provide a collar color, use <code>Red</code>.”</p>
+</blockquote>
+<p>But if the user does provide a value:</p>
+<pre class="text"><code>Dog("Daisy", "Blue")</code></pre>
+<p>Python uses <code>"Blue"</code> instead.</p>
+<hr>
+</section>
+<section id="the-none-method-when-information-is-missing" class="level2">
+<h2 class="anchored" data-anchor-id="the-none-method-when-information-is-missing">2. The <code>None</code> Method — When Information Is Missing</h2>
+<p>Sometimes an attribute is optional because the information <strong>might not exist yet</strong>.</p>
+<p>In Python, we can use the special value <code>None</code> to represent:</p>
+<blockquote class="blockquote">
+<p><strong>“There is currently no value.”</strong></p>
+</blockquote>
+<p>For example, imagine creating a user profile where a phone number is optional.</p>
+<pre class="text"><code>class UserProfile:
+
+    # phone_number is optional.
+    # If no number is provided, it is set to None.
+    def __init__(self, username, phone_number=None):
+        self.username = username
+        self.phone_number = phone_number
+
+    def show_profile(self):
+        print(f"User: {self.username}")
+
+        # Check whether a phone number was provided.
+        if self.phone_number is None:
+            print("Phone: No number provided.")
+        else:
+            print(f"Phone: {self.phone_number}")
+
+
+# Create a user without a phone number
+user_1 = UserProfile("CoolSkater99")
+
+user_1.show_profile()</code></pre>
+<p>The output would be:</p>
+<pre class="text"><code>User: CoolSkater99
+Phone: No number provided.</code></pre>
+<p>Here, <code>None</code> doesn’t mean that the phone number is zero or an empty string.</p>
+<p>It means:</p>
+<blockquote class="blockquote">
+<p><strong>“No phone number has been provided.”</strong></p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="the-golden-rule-of-optional-attributes" class="level1">
+<h1>⚠️ The Golden Rule of Optional Attributes</h1>
+<p>When defining your <code>__init__</code> method, <strong>all required parameters must come before optional parameters</strong>.</p>
+<section id="correct" class="level3">
+<h3 class="anchored" data-anchor-id="correct">✅ Correct</h3>
+<pre class="text"><code>def __init__(self, name, age, color="Brown"):</code></pre>
+<p>Here:</p>
+<ul>
+<li><code>name</code> is required.</li>
+<li><code>age</code> is required.</li>
+<li><code>color</code> is optional.</li>
+</ul>
+</section>
+<section id="incorrect" class="level3">
+<h3 class="anchored" data-anchor-id="incorrect">❌ Incorrect</h3>
+<pre class="text"><code>def __init__(self, color="Brown", name, age):</code></pre>
+<p>This causes a <code>SyntaxError</code> because Python does not allow a required parameter to appear after a parameter with a default value.</p>
+<p>A simple rule to remember is:</p>
+<blockquote class="blockquote">
+<p><strong>Required first, optional last.</strong></p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="flexible-classes-with-args-and-kwargs" class="level1">
+<h1>Flexible Classes with <code>*args</code> and <code>**kwargs</code></h1>
+<p>Sometimes, when you build a class, you don’t know exactly how much information the user will provide.</p>
+<p>Imagine creating a <code>Pizza</code> class.</p>
+<p>One customer might order:</p>
+<pre class="text"><code>Medium + Extra Cheese</code></pre>
+<p>while another customer might order:</p>
+<pre class="text"><code>Large + Pepperoni + Sausage + Onions + Peppers</code></pre>
+<p>It would be inconvenient to create a separate parameter for every possible topping.</p>
+<p>Python gives us two powerful tools for handling an <strong>unlimited number of arguments</strong>:</p>
+<ul>
+<li><code>*args</code></li>
+<li><code>**kwargs</code></li>
+</ul>
+<p>The magic is in the <strong>asterisks (<code>*</code> and <code>**</code>)</strong>.</p>
+<p>The names <code>args</code> and <code>kwargs</code> are simply common naming conventions. They are not special keywords.</p>
+<p>For example, these work the same way:</p>
+<pre class="text"><code>*args
+*toppings
+*items</code></pre>
+<p>and:</p>
+<pre class="text"><code>**kwargs
+**options
+**settings</code></pre>
+<p>The asterisks are what matter.</p>
+<hr>
+</section>
+<section id="args-the-grab-bag" class="level1">
+<h1>1. <code>*args</code> — The Grab Bag</h1>
+<p><code>*args</code> allows you to pass any number of <strong>regular, unnamed arguments</strong> to a function or class.</p>
+<p>Python collects all those extra arguments and stores them in a <strong>tuple</strong>.</p>
+<p>A tuple is similar to a list, except that its contents cannot normally be changed after it is created.</p>
+<p>Think of <code>*args</code> like calling out pizza toppings:</p>
+<blockquote class="blockquote">
+<p>“Pepperoni, onions, olives!”</p>
+</blockquote>
+<p>These are individual values without labels.</p>
+<hr>
+<section id="example-pizza-with-any-number-of-toppings" class="level2">
+<h2 class="anchored" data-anchor-id="example-pizza-with-any-number-of-toppings">Example: Pizza with Any Number of Toppings</h2>
+<pre class="text"><code>class Pizza:
+
+    # size is required.
+    # *args catches all additional unnamed arguments.
+    def __init__(self, size, *args):
+        self.size = size
+        self.toppings = args
+
+    def describe(self):
+        print(f"A {self.size} pizza with:")
+
+        for topping in self.toppings:
+            print(f"- {topping}")
+
+
+# One topping
+cheese_pizza = Pizza("Medium", "Extra Cheese")
+
+
+# Four toppings
+supreme = Pizza(
+    "Large",
+    "Pepperoni",
+    "Sausage",
+    "Onions",
+    "Peppers"
+)
+
+supreme.describe()</code></pre>
+<p>The <code>*args</code> parameter collects the toppings into a tuple.</p>
+<p>Conceptually:</p>
+<pre class="text"><code>args
+ ↓
+("Pepperoni", "Sausage", "Onions", "Peppers")</code></pre>
+<p>The output would be:</p>
+<pre class="text"><code>A Large pizza with:
+- Pepperoni
+- Sausage
+- Onions
+- Peppers</code></pre>
+<hr>
+</section>
+</section>
+<section id="kwargs-the-custom-order-form" class="level1">
+<h1>2. <code>**kwargs</code> — The Custom Order Form</h1>
+<p><code>**kwargs</code> stands for <strong>Keyword Arguments</strong>.</p>
+<p>It allows you to pass any number of <strong>labeled arguments</strong> using the <code>name=value</code> format.</p>
+<p>Python collects these labeled values into a <strong>dictionary</strong>.</p>
+<p>Think of <code>**kwargs</code> as filling out a custom order form:</p>
+<pre class="text"><code>crust = thin
+sauce = spicy
+well_done = True</code></pre>
+<p>Each value has a label, or <strong>key</strong>.</p>
+<hr>
+<section id="example-a-flexible-smartphone-class" class="level2">
+<h2 class="anchored" data-anchor-id="example-a-flexible-smartphone-class">Example: A Flexible Smartphone Class</h2>
+<pre class="text"><code>class SmartPhone:
+
+    # brand is required.
+    # **kwargs catches all custom specifications.
+    def __init__(self, brand, **kwargs):
+        self.brand = brand
+
+        # kwargs is a dictionary.
+        self.specs = kwargs
+
+    def show_specs(self):
+        print(f"--- {self.brand} Phone ---")
+
+        for key, value in self.specs.items():
+            print(f"{key}: {value}")
+
+
+# We can provide any number of custom specifications.
+my_phone = SmartPhone(
+    "Apple",
+    storage="256GB",
+    color="Midnight",
+    has_headphone_jack=False
+)
+
+my_phone.show_specs()</code></pre>
+<p>Conceptually, <code>kwargs</code> contains:</p>
+<pre class="text"><code>{
+    "storage": "256GB",
+    "color": "Midnight",
+    "has_headphone_jack": False
+}</code></pre>
+<p>The output would be:</p>
+<pre class="text"><code>--- Apple Phone ---
+storage: 256GB
+color: Midnight
+has_headphone_jack: False</code></pre>
+<p>The key advantage is flexibility.</p>
+<p>We don’t have to predict every possible specification when we create the class.</p>
+<hr>
+</section>
+</section>
+<section id="putting-args-and-kwargs-together" class="level1">
+<h1>Putting <code>*args</code> and <code>**kwargs</code> Together</h1>
+<p>You can use both <code>*args</code> and <code>**kwargs</code> in the same class.</p>
+<p>However, Python requires them to appear in a specific order.</p>
+<p>The general pattern is:</p>
+<ol type="1">
+<li><strong>Regular required parameters</strong></li>
+<li><strong><code>*args</code></strong></li>
+<li><strong><code>**kwargs</code></strong></li>
+</ol>
+<p>Think of it as:</p>
+<pre class="text"><code>Required → Unnamed extras → Named extras</code></pre>
+<hr>
+<section id="example-video-game-character" class="level2">
+<h2 class="anchored" data-anchor-id="example-video-game-character">Example: Video Game Character</h2>
+<pre class="text"><code>class VideoGameCharacter:
+
+    def __init__(self, name, *args, **kwargs):
+        self.name = name
+        self.inventory = args
+        self.stats = kwargs
+
+
+hero = VideoGameCharacter(
+    "Link",
+
+    # *args
+    "Sword",
+    "Shield",
+
+    # **kwargs
+    health=100,
+    magic=50
+)</code></pre>
+<p>The information is stored like this:</p>
+<pre class="text"><code>name
+ ↓
+"Link"
+
+inventory
+ ↓
+("Sword", "Shield")
+
+stats
+ ↓
+{
+    "health": 100,
+    "magic": 50
+}</code></pre>
+<p>So one object can contain three different types of information:</p>
+<pre class="text"><code>VideoGameCharacter
+        │
+        ├── name
+        │     └── "Link"
+        │
+        ├── inventory
+        │     └── ("Sword", "Shield")
+        │
+        └── stats
+              ├── health = 100
+              └── magic = 50</code></pre>
+<p>This makes classes extremely flexible.</p>
+<hr>
+</section>
+</section>
+<section id="args-vs.-kwargs" class="level1">
+<h1><code>*args</code> vs.&nbsp;<code>**kwargs</code></h1>
+<p>It is helpful to compare the two directly.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;"><code>*args</code></th>
+<th style="text-align: left;"><code>**kwargs</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Accepts</td>
+<td style="text-align: left;">Extra unnamed arguments</td>
+<td style="text-align: left;">Extra named arguments</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Stored as</td>
+<td style="text-align: left;">Tuple</td>
+<td style="text-align: left;">Dictionary</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Example</td>
+<td style="text-align: left;"><code>"Sword", "Shield"</code></td>
+<td style="text-align: left;"><code>health=100, magic=50</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Think of it as</td>
+<td style="text-align: left;">A grab bag</td>
+<td style="text-align: left;">A custom order form</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Asterisk</td>
+<td style="text-align: left;"><code>*</code></td>
+<td style="text-align: left;"><code>**</code></td>
+</tr>
+</tbody>
+</table>
+<p>For example:</p>
+<pre class="text"><code>*args</code></pre>
+<p>might collect:</p>
+<pre class="text"><code>("Sword", "Shield", "Potion")</code></pre>
+<p>while:</p>
+<pre class="text"><code>**kwargs</code></pre>
+<p>might collect:</p>
+<pre class="text"><code>{
+    "health": 100,
+    "magic": 50,
+    "level": 10
+}</code></pre>
+<hr>
+</section>
+<section id="the-big-picture-making-flexible-classes" class="level1">
+<h1>The Big Picture: Making Flexible Classes</h1>
+<p>We have now seen several ways to make classes flexible.</p>
+<section id="required-attributes" class="level3">
+<h3 class="anchored" data-anchor-id="required-attributes">Required attributes</h3>
+<p>These must be provided:</p>
+<pre class="text"><code>def __init__(self, name, age):</code></pre>
+</section>
+<section id="optional-attributes-with-default-values" class="level3">
+<h3 class="anchored" data-anchor-id="optional-attributes-with-default-values">Optional attributes with default values</h3>
+<p>These can be omitted:</p>
+<pre class="text"><code>def __init__(self, name, age=0):</code></pre>
+</section>
+<section id="optional-information-using-none" class="level3">
+<h3 class="anchored" data-anchor-id="optional-information-using-none">Optional information using <code>None</code></h3>
+<p>This represents information that may not exist:</p>
+<pre class="text"><code>def __init__(self, name, phone=None):</code></pre>
+</section>
+<section id="unlimited-unnamed-information-with-args" class="level3">
+<h3 class="anchored" data-anchor-id="unlimited-unnamed-information-with-args">Unlimited unnamed information with <code>*args</code></h3>
+<pre class="text"><code>def __init__(self, name, *items):</code></pre>
+</section>
+<section id="unlimited-named-information-with-kwargs" class="level3">
+<h3 class="anchored" data-anchor-id="unlimited-named-information-with-kwargs">Unlimited named information with <code>**kwargs</code></h3>
+<pre class="text"><code>def __init__(self, name, **options):</code></pre>
+</section>
+<section id="all-together" class="level3">
+<h3 class="anchored" data-anchor-id="all-together">All together</h3>
+<pre class="text"><code>def __init__(self, name, age=0, *args, **kwargs):</code></pre>
+<p>This gives us a powerful range of possibilities for designing classes.</p>
+<hr>
+</section>
+</section>
 <section id="a-real-world-example-bank-accounts" class="level1">
 <h1>A Real-World Example: Bank Accounts</h1>
-<p>Let’s apply everything we’ve learned to a more practical example.</p>
+<p>Let’s apply everything we’ve learned to a practical example.</p>
 <p>A <strong>bank account</strong> is something we can easily understand in the real world.</p>
 <p>A bank account has:</p>
 <section id="attributes-what-the-account-has" class="level3">
@@ -502,6 +915,11 @@ bob_account.balance
 </blockquote>
 <p>Classes allow us to package <strong>data</strong> and <strong>actions</strong> together.</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 23%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">OOP Concept</th>
@@ -540,6 +958,26 @@ bob_account.balance
 <td style="text-align: left;"><code>__init__()</code></td>
 <td style="text-align: left;">Sets up a new object</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Default value</strong></td>
+<td style="text-align: left;"><code>balance=0.0</code></td>
+<td style="text-align: left;">Provides a fallback value</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>None</code></strong></td>
+<td style="text-align: left;"><code>phone=None</code></td>
+<td style="text-align: left;">Represents missing information</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>*args</code></strong></td>
+<td style="text-align: left;"><code>*toppings</code></td>
+<td style="text-align: left;">Collects extra unnamed arguments</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>**kwargs</code></strong></td>
+<td style="text-align: left;"><code>**options</code></td>
+<td style="text-align: left;">Collects extra named arguments</td>
+</tr>
 </tbody>
 </table>
 <p>A useful mental model is:</p>
@@ -554,7 +992,10 @@ bob_account.balance
       Data    Data    Data
         +       +       +
      Actions  Actions  Actions</code></pre>
-<p>Once you understand <strong>classes, objects, attributes, methods, and <code>self</code></strong>, you have learned the foundation of Python’s Object-Oriented Programming.</p>
+<p>Once you understand <strong>classes, objects, attributes, methods, <code>self</code>, default values, <code>None</code>, <code>*args</code>, and <code>**kwargs</code></strong>, you have learned the foundation for creating flexible Python classes.</p>
+<blockquote class="blockquote">
+<p><strong>Start with a blueprint, give each object its own data, and use methods to define what each object can do.</strong></p>
+</blockquote>
 
 
 </section>
