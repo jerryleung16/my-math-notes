@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-08-01">
+
+<title>Deep Learning with Python Ch.2 Summary – My Math Notes</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-172ba59bd5e0b52282274ba0c0cc16fc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">My Math Notes</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">Jerry’s Notes</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Deep Learning with Python Ch.2 Summary</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Deep Learning</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 1, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#tensors" id="toc-tensors" class="nav-link active" data-scroll-target="#tensors">1. Tensors</a></li>
+  <li><a href="#three-key-tensor-attributes" id="toc-three-key-tensor-attributes" class="nav-link" data-scroll-target="#three-key-tensor-attributes">2. Three Key Tensor Attributes</a>
+  <ul class="collapse">
+  <li><a href="#rank-ndim" id="toc-rank-ndim" class="nav-link" data-scroll-target="#rank-ndim">Rank (<code>ndim</code>)</a></li>
+  <li><a href="#shape" id="toc-shape" class="nav-link" data-scroll-target="#shape">Shape</a></li>
+  <li><a href="#data-type-dtype" id="toc-data-type-dtype" class="nav-link" data-scroll-target="#data-type-dtype">Data Type (<code>dtype</code>)</a></li>
+  </ul></li>
+  <li><a href="#tensor-slicing" id="toc-tensor-slicing" class="nav-link" data-scroll-target="#tensor-slicing">3. Tensor Slicing</a>
+  <ul class="collapse">
+  <li><a href="#select-images-1099" id="toc-select-images-1099" class="nav-link" data-scroll-target="#select-images-1099">Select images #10–99</a></li>
+  <li><a href="#bottom-right-1414-pixels" id="toc-bottom-right-1414-pixels" class="nav-link" data-scroll-target="#bottom-right-1414-pixels">Bottom-right 14×14 pixels</a></li>
+  <li><a href="#center-1414-crop" id="toc-center-1414-crop" class="nav-link" data-scroll-target="#center-1414-crop">Center 14×14 crop</a></li>
+  </ul></li>
+  <li><a href="#data-batches" id="toc-data-batches" class="nav-link" data-scroll-target="#data-batches">4. Data Batches</a></li>
+  <li><a href="#real-world-tensor-examples" id="toc-real-world-tensor-examples" class="nav-link" data-scroll-target="#real-world-tensor-examples">5. Real-World Tensor Examples</a>
+  <ul class="collapse">
+  <li><a href="#rank-2-tensor-vector-data" id="toc-rank-2-tensor-vector-data" class="nav-link" data-scroll-target="#rank-2-tensor-vector-data">Rank-2 Tensor (Vector Data)</a></li>
+  <li><a href="#rank-3-tensor-sequence-data" id="toc-rank-3-tensor-sequence-data" class="nav-link" data-scroll-target="#rank-3-tensor-sequence-data">Rank-3 Tensor (Sequence Data)</a></li>
+  <li><a href="#rank-4-tensor-image-data" id="toc-rank-4-tensor-image-data" class="nav-link" data-scroll-target="#rank-4-tensor-image-data">Rank-4 Tensor (Image Data)</a></li>
+  <li><a href="#rank-5-tensor-video-data" id="toc-rank-5-tensor-video-data" class="nav-link" data-scroll-target="#rank-5-tensor-video-data">Rank-5 Tensor (Video Data)</a></li>
+  </ul></li>
+  <li><a href="#tensor-operations" id="toc-tensor-operations" class="nav-link" data-scroll-target="#tensor-operations">6. Tensor Operations</a></li>
+  <li><a href="#broadcasting" id="toc-broadcasting" class="nav-link" data-scroll-target="#broadcasting">7. Broadcasting</a>
+  <ul class="collapse">
+  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1">Example 1</a></li>
+  <li><a href="#example-2" id="toc-example-2" class="nav-link" data-scroll-target="#example-2">Example 2</a></li>
+  <li><a href="#example-3" id="toc-example-3" class="nav-link" data-scroll-target="#example-3">Example 3</a></li>
+  <li><a href="#example-4" id="toc-example-4" class="nav-link" data-scroll-target="#example-4">Example 4</a></li>
+  </ul></li>
+  <li><a href="#tensor-product-matrix-multiplication" id="toc-tensor-product-matrix-multiplication" class="nav-link" data-scroll-target="#tensor-product-matrix-multiplication">8. Tensor Product (Matrix Multiplication)</a></li>
+  <li><a href="#tensor-reshaping" id="toc-tensor-reshaping" class="nav-link" data-scroll-target="#tensor-reshaping">9. Tensor Reshaping</a>
+  <ul class="collapse">
+  <li><a href="#transpose" id="toc-transpose" class="nav-link" data-scroll-target="#transpose">Transpose</a></li>
+  </ul></li>
+  <li><a href="#geometric-interpretation-of-tensor-operations" id="toc-geometric-interpretation-of-tensor-operations" class="nav-link" data-scroll-target="#geometric-interpretation-of-tensor-operations">10. Geometric Interpretation of Tensor Operations</a>
+  <ul class="collapse">
+  <li><a href="#linear-layers" id="toc-linear-layers" class="nav-link" data-scroll-target="#linear-layers">Linear Layers</a></li>
+  <li><a href="#why-activations" id="toc-why-activations" class="nav-link" data-scroll-target="#why-activations">Why Activations?</a></li>
+  <li><a href="#role-of-relu" id="toc-role-of-relu" class="nav-link" data-scroll-target="#role-of-relu">Role of ReLU</a></li>
+  <li><a href="#neural-networks-as-geometry" id="toc-neural-networks-as-geometry" class="nav-link" data-scroll-target="#neural-networks-as-geometry">Neural Networks as Geometry</a></li>
+  <li><a href="#crumpled-paper-analogy" id="toc-crumpled-paper-analogy" class="nav-link" data-scroll-target="#crumpled-paper-analogy">Crumpled Paper Analogy</a></li>
+  </ul></li>
+  <li><a href="#gradient-based-optimization" id="toc-gradient-based-optimization" class="nav-link" data-scroll-target="#gradient-based-optimization">11. Gradient-Based Optimization</a>
+  <ul class="collapse">
+  <li><a href="#trainable-parameters" id="toc-trainable-parameters" class="nav-link" data-scroll-target="#trainable-parameters">Trainable Parameters</a></li>
+  <li><a href="#training-loop" id="toc-training-loop" class="nav-link" data-scroll-target="#training-loop">Training Loop</a></li>
+  <li><a href="#why-not-guess" id="toc-why-not-guess" class="nav-link" data-scroll-target="#why-not-guess">Why Not Guess?</a></li>
+  <li><a href="#gradient-descent" id="toc-gradient-descent" class="nav-link" data-scroll-target="#gradient-descent">Gradient Descent</a></li>
+  <li><a href="#learning-rate" id="toc-learning-rate" class="nav-link" data-scroll-target="#learning-rate">Learning Rate</a></li>
+  <li><a href="#mini-batch-sgd" id="toc-mini-batch-sgd" class="nav-link" data-scroll-target="#mini-batch-sgd">Mini-batch SGD</a></li>
+  <li><a href="#momentum" id="toc-momentum" class="nav-link" data-scroll-target="#momentum">Momentum</a></li>
+  </ul></li>
+  <li><a href="#chain-rule-backpropagation" id="toc-chain-rule-backpropagation" class="nav-link" data-scroll-target="#chain-rule-backpropagation">12. Chain Rule &amp; Backpropagation</a>
+  <ul class="collapse">
+  <li><a href="#chain-rule" id="toc-chain-rule" class="nav-link" data-scroll-target="#chain-rule">Chain Rule</a></li>
+  <li><a href="#computation-graph" id="toc-computation-graph" class="nav-link" data-scroll-target="#computation-graph">Computation Graph</a></li>
+  <li><a href="#forward-pass" id="toc-forward-pass" class="nav-link" data-scroll-target="#forward-pass">Forward Pass</a></li>
+  <li><a href="#backward-pass" id="toc-backward-pass" class="nav-link" data-scroll-target="#backward-pass">Backward Pass</a></li>
+  <li><a href="#simple-example" id="toc-simple-example" class="nav-link" data-scroll-target="#simple-example">Simple Example</a></li>
+  <li><a href="#automatic-differentiation" id="toc-automatic-differentiation" class="nav-link" data-scroll-target="#automatic-differentiation">Automatic Differentiation</a></li>
+  </ul></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key Takeaways</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="tensors" class="level2">
+<h2 class="anchored" data-anchor-id="tensors">1. Tensors</h2>
+<p>A <strong>tensor</strong> is a container for numerical data.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Rank</th>
+<th>Name</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td>Scalar</td>
+<td><code>5</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td>Vector</td>
+<td><code>[1,2,3]</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td>Matrix</td>
+<td>2D table</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td>3D Tensor</td>
+<td>Cube of numbers</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">k</td>
+<td>Rank-k Tensor</td>
+<td>General multidimensional array</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="three-key-tensor-attributes" class="level2">
+<h2 class="anchored" data-anchor-id="three-key-tensor-attributes">2. Three Key Tensor Attributes</h2>
+<section id="rank-ndim" class="level3">
+<h3 class="anchored" data-anchor-id="rank-ndim">Rank (<code>ndim</code>)</h3>
+<p>Number of axes.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x.ndim</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Examples:</p>
+<ul>
+<li>Scalar → <code>0</code></li>
+<li>Vector → <code>1</code></li>
+<li>Matrix → <code>2</code></li>
+</ul>
+</section>
+<section id="shape" class="level3">
+<h3 class="anchored" data-anchor-id="shape">Shape</h3>
+<p>Dimension along each axis.</p>
+<p>Examples:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tensor</th>
+<th>Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Scalar</td>
+<td><code>()</code></td>
+</tr>
+<tr class="even">
+<td>Vector</td>
+<td><code>(5,)</code></td>
+</tr>
+<tr class="odd">
+<td>Matrix</td>
+<td><code>(3,5)</code></td>
+</tr>
+<tr class="even">
+<td>Rank-3 Tensor</td>
+<td><code>(3,3,5)</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="data-type-dtype" class="level3">
+<h3 class="anchored" data-anchor-id="data-type-dtype">Data Type (<code>dtype</code>)</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x.dtype</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Common types:</p>
+<ul>
+<li><code>float16</code></li>
+<li><code>float32</code></li>
+<li><code>float64</code></li>
+<li><code>uint8</code></li>
+<li><code>bool</code></li>
+<li><code>string</code></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="tensor-slicing" class="level2">
+<h2 class="anchored" data-anchor-id="tensor-slicing">3. Tensor Slicing</h2>
+<section id="select-images-1099" class="level3">
+<h3 class="anchored" data-anchor-id="select-images-1099">Select images #10–99</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>my_slice <span class="op">=</span> train_images[<span class="dv">10</span>:<span class="dv">100</span>]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>my_slice.shape</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># (90, 28, 28)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="bottom-right-1414-pixels" class="level3">
+<h3 class="anchored" data-anchor-id="bottom-right-1414-pixels">Bottom-right 14×14 pixels</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_slice <span class="op">=</span> train_images[:, <span class="dv">14</span>:, <span class="dv">14</span>:]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="center-1414-crop" class="level3">
+<h3 class="anchored" data-anchor-id="center-1414-crop">Center 14×14 crop</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>my_slice <span class="op">=</span> train_images[:, <span class="dv">7</span>:<span class="op">-</span><span class="dv">7</span>, <span class="dv">7</span>:<span class="op">-</span><span class="dv">7</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="data-batches" class="level2">
+<h2 class="anchored" data-anchor-id="data-batches">4. Data Batches</h2>
+<p>The <strong>first axis (axis 0)</strong> is the <strong>sample axis</strong> (or <strong>batch axis</strong>).</p>
+<p>Batch size = 128</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>batch <span class="op">=</span> train_images[:<span class="dv">128</span>]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>batch <span class="op">=</span> train_images[<span class="dv">128</span>:<span class="dv">256</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>batch <span class="op">=</span> train_images[<span class="dv">128</span><span class="op">*</span>n : <span class="dv">128</span><span class="op">*</span>(n<span class="op">+</span><span class="dv">1</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+<section id="real-world-tensor-examples" class="level2">
+<h2 class="anchored" data-anchor-id="real-world-tensor-examples">5. Real-World Tensor Examples</h2>
+<section id="rank-2-tensor-vector-data" class="level3">
+<h3 class="anchored" data-anchor-id="rank-2-tensor-vector-data">Rank-2 Tensor (Vector Data)</h3>
+<p>Shape:</p>
+<pre class="text"><code>(samples, features)</code></pre>
+<p>Examples</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Demographic data</td>
+<td><code>(100000, 3)</code></td>
+</tr>
+<tr class="even">
+<td>Bag-of-Words</td>
+<td><code>(500, 20000)</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="rank-3-tensor-sequence-data" class="level3">
+<h3 class="anchored" data-anchor-id="rank-3-tensor-sequence-data">Rank-3 Tensor (Sequence Data)</h3>
+<p>Shape</p>
+<pre class="text"><code>(samples, timesteps, features)</code></pre>
+<p>Examples</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Stock prices</td>
+<td><code>(250,390,3)</code></td>
+</tr>
+<tr class="even">
+<td>Tweets</td>
+<td><code>(1000000,280,128)</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="rank-4-tensor-image-data" class="level3">
+<h3 class="anchored" data-anchor-id="rank-4-tensor-image-data">Rank-4 Tensor (Image Data)</h3>
+<p>Shape</p>
+<pre class="text"><code>(samples, height, width, channels)</code></pre>
+<p>Examples</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Grayscale images</td>
+<td><code>(128,256,256,1)</code></td>
+</tr>
+<tr class="even">
+<td>RGB images</td>
+<td><code>(128,256,256,3)</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="rank-5-tensor-video-data" class="level3">
+<h3 class="anchored" data-anchor-id="rank-5-tensor-video-data">Rank-5 Tensor (Video Data)</h3>
+<p>Shape</p>
+<pre class="text"><code>(samples, frames, height, width, channels)</code></pre>
+<p>Example</p>
+<pre class="text"><code>(4,1800,144,256,3)</code></pre>
+<hr>
+</section>
+</section>
+<section id="tensor-operations" class="level2">
+<h2 class="anchored" data-anchor-id="tensor-operations">6. Tensor Operations</h2>
+<p>Typical neural network computation</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> relu(matmul(<span class="bu">input</span>, W) <span class="op">+</span> b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Operations involved</p>
+<ol type="1">
+<li>Matrix multiplication (<code>matmul</code>)</li>
+<li>Addition (<code>+</code>)</li>
+<li>ReLU activation</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> x <span class="op">+</span> y</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> np.maximum(z, <span class="fl">0.0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>where</p>
+<pre class="text"><code>relu(x) = max(x, 0)</code></pre>
+<hr>
+</section>
+<section id="broadcasting" class="level2">
+<h2 class="anchored" data-anchor-id="broadcasting">7. Broadcasting</h2>
+<p>Broadcasting allows tensors with different shapes to participate in element-wise operations.</p>
+<p>Rules:</p>
+<ol type="1">
+<li>Add missing axes to the smaller tensor.</li>
+<li>Repeat along axes of size 1 until shapes match.</li>
+</ol>
+<section id="example-1" class="level3">
+<h3 class="anchored" data-anchor-id="example-1">Example 1</h3>
+<p>Shapes</p>
+<pre class="text"><code>(3,5) + (5,)</code></pre>
+<p>✅ Compatible</p>
+<p>Vector is copied across rows.</p>
+<hr>
+</section>
+<section id="example-2" class="level3">
+<h3 class="anchored" data-anchor-id="example-2">Example 2</h3>
+<p>Shapes</p>
+<pre class="text"><code>(3,5) + (3,)</code></pre>
+<p>❌ Incompatible</p>
+<p>Rightmost dimensions are <code>5</code> and <code>3</code>.</p>
+<hr>
+</section>
+<section id="example-3" class="level3">
+<h3 class="anchored" data-anchor-id="example-3">Example 3</h3>
+<p>Shapes</p>
+<pre class="text"><code>(3,5,5) + (5,5)</code></pre>
+<p>✅ Compatible</p>
+<p>The <code>(5,5)</code> tensor is copied three times.</p>
+<hr>
+</section>
+<section id="example-4" class="level3">
+<h3 class="anchored" data-anchor-id="example-4">Example 4</h3>
+<p>Shapes</p>
+<pre class="text"><code>(5,4) * (5,1)</code></pre>
+<p>✅ Compatible</p>
+<p>Column vector is stretched across columns.</p>
+<hr>
+</section>
+</section>
+<section id="tensor-product-matrix-multiplication" class="level2">
+<h2 class="anchored" data-anchor-id="tensor-product-matrix-multiplication">8. Tensor Product (Matrix Multiplication)</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.random((<span class="dv">32</span>,))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.random.random((<span class="dv">32</span>,))</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> np.matmul(x, y)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># equivalent</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> x <span class="op">@</span> y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>NumPy:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>np.matmul()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Keras:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>keras.ops.matmul()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+<section id="tensor-reshaping" class="level2">
+<h2 class="anchored" data-anchor-id="tensor-reshaping">9. Tensor Reshaping</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([[<span class="fl">0.</span>,<span class="fl">1.</span>],</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>              [<span class="fl">2.</span>,<span class="fl">3.</span>],</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>              [<span class="fl">4.</span>,<span class="fl">5.</span>]])</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>x.shape</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># (3,2)</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> x.reshape((<span class="dv">6</span>,<span class="dv">1</span>))</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> x.reshape((<span class="dv">2</span>,<span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Important</strong></p>
+<p>The total number of elements must remain unchanged.</p>
+<section id="transpose" class="level3">
+<h3 class="anchored" data-anchor-id="transpose">Transpose</h3>
+<p>Rows become columns.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.zeros((<span class="dv">300</span>,<span class="dv">20</span>))</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.transpose(x)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>x.shape</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># (20,300)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Equivalent to</p>
+<pre class="text"><code>x[i,:] → x[:,i]</code></pre>
+<hr>
+</section>
+</section>
+<section id="geometric-interpretation-of-tensor-operations" class="level2">
+<h2 class="anchored" data-anchor-id="geometric-interpretation-of-tensor-operations">10. Geometric Interpretation of Tensor Operations</h2>
+<section id="linear-layers" class="level3">
+<h3 class="anchored" data-anchor-id="linear-layers">Linear Layers</h3>
+<p>Stacking linear layers without activation is equivalent to a single linear layer.</p>
+</section>
+<section id="why-activations" class="level3">
+<h3 class="anchored" data-anchor-id="why-activations">Why Activations?</h3>
+<p>Without nonlinear activation functions, deep networks are only linear models.</p>
+</section>
+<section id="role-of-relu" class="level3">
+<h3 class="anchored" data-anchor-id="role-of-relu">Role of ReLU</h3>
+<p>Activation functions allow networks to learn nonlinear transformations.</p>
+</section>
+<section id="neural-networks-as-geometry" class="level3">
+<h3 class="anchored" data-anchor-id="neural-networks-as-geometry">Neural Networks as Geometry</h3>
+<p>A neural network performs a sequence of geometric transformations in high-dimensional space.</p>
+</section>
+<section id="crumpled-paper-analogy" class="level3">
+<h3 class="anchored" data-anchor-id="crumpled-paper-analogy">Crumpled Paper Analogy</h3>
+<p>Think of two colored sheets crumpled together.</p>
+<p>Each layer gradually <strong>untangles</strong> the data until different classes become separable.</p>
+<hr>
+</section>
+</section>
+<section id="gradient-based-optimization" class="level2">
+<h2 class="anchored" data-anchor-id="gradient-based-optimization">11. Gradient-Based Optimization</h2>
+<section id="trainable-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="trainable-parameters">Trainable Parameters</h3>
+<ul>
+<li>Weights</li>
+<li>Biases</li>
+</ul>
+<p>They start from random values.</p>
+<hr>
+</section>
+<section id="training-loop" class="level3">
+<h3 class="anchored" data-anchor-id="training-loop">Training Loop</h3>
+<ol type="1">
+<li>Sample a mini-batch.</li>
+<li>Forward pass.</li>
+<li>Compute loss.</li>
+<li>Compute gradients.</li>
+<li>Update parameters.</li>
+</ol>
+<hr>
+</section>
+<section id="why-not-guess" class="level3">
+<h3 class="anchored" data-anchor-id="why-not-guess">Why Not Guess?</h3>
+<p>Trying one parameter at a time would be extremely slow.</p>
+<hr>
+</section>
+<section id="gradient-descent" class="level3">
+<h3 class="anchored" data-anchor-id="gradient-descent">Gradient Descent</h3>
+<p>Update rule</p>
+<p><span class="math display">\[
+W = W - \eta \nabla W
+\]</span></p>
+<p>where</p>
+<ul>
+<li><span class="math inline">\(\eta\)</span> = learning rate</li>
+<li><span class="math inline">\(\nabla W\)</span> = gradient</li>
+</ul>
+<hr>
+</section>
+<section id="learning-rate" class="level3">
+<h3 class="anchored" data-anchor-id="learning-rate">Learning Rate</h3>
+<ul>
+<li>Too small → slow learning</li>
+<li>Too large → unstable updates</li>
+</ul>
+<hr>
+</section>
+<section id="mini-batch-sgd" class="level3">
+<h3 class="anchored" data-anchor-id="mini-batch-sgd">Mini-batch SGD</h3>
+<p>For each iteration:</p>
+<ol type="1">
+<li>Sample mini-batch</li>
+<li>Forward pass</li>
+<li>Compute loss</li>
+<li>Backward pass</li>
+<li>Update weights</li>
+</ol>
+<hr>
+</section>
+<section id="momentum" class="level3">
+<h3 class="anchored" data-anchor-id="momentum">Momentum</h3>
+<p>Momentum uses previous updates to accelerate optimization.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>past_velocity <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>momentum <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> loss <span class="op">&gt;</span> <span class="fl">0.01</span>:</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    w, loss, gradient <span class="op">=</span> get_current_parameters()</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    velocity <span class="op">=</span> past_velocity <span class="op">*</span> momentum <span class="op">-</span> learning_rate <span class="op">*</span> gradient</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> w <span class="op">+</span> momentum <span class="op">*</span> velocity <span class="op">-</span> learning_rate <span class="op">*</span> gradient</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    past_velocity <span class="op">=</span> velocity</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    update_parameter(w)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="chain-rule-backpropagation" class="level2">
+<h2 class="anchored" data-anchor-id="chain-rule-backpropagation">12. Chain Rule &amp; Backpropagation</h2>
+<p>Backpropagation efficiently computes gradients using the <strong>chain rule</strong>.</p>
+<section id="chain-rule" class="level3">
+<h3 class="anchored" data-anchor-id="chain-rule">Chain Rule</h3>
+<p>If</p>
+<pre class="text"><code>y = f(g(x))</code></pre>
+<p>then</p>
+<p><span class="math display">\[
+\frac{\partial y}{\partial x}
+=
+\frac{\partial y}{\partial g}
+\cdot
+\frac{\partial g}{\partial x}
+\]</span></p>
+<p>For longer chains,</p>
+<pre class="text"><code>x → j → h → g → f → y</code></pre>
+<p>gradients are multiplied along the chain.</p>
+<hr>
+</section>
+<section id="computation-graph" class="level3">
+<h3 class="anchored" data-anchor-id="computation-graph">Computation Graph</h3>
+<p>A neural network is represented as a graph.</p>
+<pre class="text"><code>Inputs
+   │
+MatMul
+   │
+ + b1
+   │
+ReLU
+   │
+MatMul
+   │
+ + b2
+   │
+Softmax
+   │
+Loss</code></pre>
+<hr>
+</section>
+<section id="forward-pass" class="level3">
+<h3 class="anchored" data-anchor-id="forward-pass">Forward Pass</h3>
+<p>Compute predictions and loss.</p>
+<pre class="text"><code>Input
+   ↓
+Hidden Layers
+   ↓
+Prediction
+   ↓
+Loss</code></pre>
+<hr>
+</section>
+<section id="backward-pass" class="level3">
+<h3 class="anchored" data-anchor-id="backward-pass">Backward Pass</h3>
+<p>Propagate gradients from loss back to parameters.</p>
+<pre class="text"><code>Loss
+ ↑
+x₂
+ ↑
+x₁
+ ↑
+ w</code></pre>
+<p>Example</p>
+<p><span class="math display">\[
+\frac{\partial Loss}{\partial w}
+=
+\frac{\partial Loss}{\partial x_2}
+\cdot
+\frac{\partial x_2}{\partial x_1}
+\cdot
+\frac{\partial x_1}{\partial w}
+\]</span></p>
+<p>If multiple paths exist, <strong>sum</strong> the gradients.</p>
+<hr>
+</section>
+<section id="simple-example" class="level3">
+<h3 class="anchored" data-anchor-id="simple-example">Simple Example</h3>
+<p>Forward pass</p>
+<pre class="text"><code>x₁ = x · w
+x₂ = x₁ + b
+Loss = |y_true - x₂|</code></pre>
+<p>Given</p>
+<pre class="text"><code>x = 2
+w = 3
+b = 1
+y_true = 4</code></pre>
+<p>Forward computation</p>
+<pre class="text"><code>x₁ = 6
+x₂ = 7
+Loss = 3</code></pre>
+<p>Backward computation</p>
+<pre class="text"><code>∂Loss/∂x₂ = 1
+∂x₂/∂x₁ = 1
+∂x₁/∂w = 2
+∂x₂/∂b = 1</code></pre>
+<p>Therefore,</p>
+<p><span class="math display">\[
+\frac{\partial Loss}{\partial w}=2
+\]</span></p>
+<p><span class="math display">\[
+\frac{\partial Loss}{\partial b}=1
+\]</span></p>
+<hr>
+</section>
+<section id="automatic-differentiation" class="level3">
+<h3 class="anchored" data-anchor-id="automatic-differentiation">Automatic Differentiation</h3>
+<p>Frameworks such as</p>
+<ul>
+<li>TensorFlow</li>
+<li>PyTorch</li>
+<li>JAX</li>
+</ul>
+<p>automatically</p>
+<ol type="1">
+<li>Build the computation graph.</li>
+<li>Record operations.</li>
+<li>Apply backpropagation.</li>
+<li>Compute gradients.</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-takeaways">Key Takeaways</h2>
+<ul>
+<li>A tensor is a multidimensional array.</li>
+<li>Every tensor has <strong>rank</strong>, <strong>shape</strong>, and <strong>dtype</strong>.</li>
+<li>Broadcasting allows element-wise operations on compatible shapes.</li>
+<li>Neural networks are built from tensor operations such as <strong>matmul</strong>, <strong>addition</strong>, and <strong>ReLU</strong>.</li>
+<li>Deep learning works because nonlinear activation functions enable complex geometric transformations.</li>
+<li>Training follows the cycle:</li>
+</ul>
+<pre class="text"><code>Forward Pass
+      ↓
+Compute Loss
+      ↓
+Backward Pass
+      ↓
+Update Weights</code></pre>
+<ul>
+<li>Backpropagation uses the <strong>chain rule</strong> to compute gradients efficiently.</li>
+<li>Modern frameworks automatically perform differentiation and optimization.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/jerryleung16\.github\.io\/my-math-notes\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
