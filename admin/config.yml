@@ -1,0 +1,19 @@
+backend:
+  name: github
+  repo: jerryleung16/my-math-notes
+  branch: main
+
+media_folder: "images"
+publish_mode: editorial_workflow
+
+collections:
+  - name: "posts"
+    label: "Posts"
+    folder: "posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
