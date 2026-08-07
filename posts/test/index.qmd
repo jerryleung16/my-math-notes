@@ -4,7 +4,7 @@ date: "2026-08-07"
 categories: [Algorithms]
 ---
 
-## Asymptotically Non-negative Functions
+## Asymptotically Non-negative Functions 
 
 Throughout this note, we assume that $f(n)$ is **asymptotically non-negative**, meaning there exists some integer $n_0$ such that
 
