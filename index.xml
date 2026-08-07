@@ -731,13 +731,13 @@ def full_name(self):
 <section id="asymptotically-non-negative-functions" class="level2">
 <h2 class="anchored" data-anchor-id="asymptotically-non-negative-functions">Asymptotically Non-negative Functions</h2>
 <p>Throughout this note, we assume that <img src="https://latex.codecogs.com/png.latex?f(n)"> is <strong>asymptotically non-negative</strong>, meaning there exists some integer <img src="https://latex.codecogs.com/png.latex?n_0"> such that</p>
-<p>[ f(n) n n_0. ]</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Af(n)%20%5Cge%200%0A%5Cqquad%0A%5Ctext%7Bfor%20all%20%7D%20n%20%5Cge%20n_0.%0A"></p>
 <p>This is a standard assumption in algorithm analysis because running time and memory usage are always non-negative for sufficiently large input sizes.</p>
 <hr>
 </section>
 <section id="theta-notation-tight-bound" class="level2">
 <h2 class="anchored" data-anchor-id="theta-notation-tight-bound"><img src="https://latex.codecogs.com/png.latex?%5CTheta">-Notation (Tight Bound)</h2>
-<p>[ (g(n)) = { f(n): , c_1,c_2&gt;0,; n_0 0c_1g(n)f(n)c_2g(n) nn_0 }. ]</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5CTheta(g(n))%0A=%0A%5Cleft%5C%7B%0Af(n):%0A%5Cexists%5C,%20c_1,c_2%3E0,%5C;%20n_0%0A%5Ctext%7B%20such%20that%20%7D%0A0%20%5Cle%20c_1g(n)%20%5Cle%20f(n)%20%5Cle%20c_2g(n)%0A%5Ctext%7B%20for%20all%20%7D%20n%20%5Cge%20n_0%0A%5Cright%5C%7D.%0A"></p>
 <section id="interpretation" class="level3">
 <h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
 <p>A function <img src="https://latex.codecogs.com/png.latex?f(n)"> belongs to <img src="https://latex.codecogs.com/png.latex?%5CTheta(g(n))"> if, for sufficiently large <img src="https://latex.codecogs.com/png.latex?n">, it is sandwiched between two constant multiples of <img src="https://latex.codecogs.com/png.latex?g(n)">.</p>
@@ -750,7 +750,7 @@ def full_name(self):
 </section>
 <section id="mathcalo-notation-upper-bound" class="level2">
 <h2 class="anchored" data-anchor-id="mathcalo-notation-upper-bound"><img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BO%7D">-Notation (Upper Bound)</h2>
-<p>[ (g(n)) = { f(n): , c&gt;0,; n_0 0f(n)cg(n) nn_0 }. ]</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmathcal%7BO%7D(g(n))%0A=%0A%5Cleft%5C%7B%0Af(n):%0A%5Cexists%5C,%20c%3E0,%5C;%20n_0%0A%5Ctext%7B%20such%20that%20%7D%0A0%20%5Cle%20f(n)%20%5Cle%20cg(n)%0A%5Ctext%7B%20for%20all%20%7D%20n%20%5Cge%20n_0%0A%5Cright%5C%7D.%0A"></p>
 <section id="interpretation-1" class="level3">
 <h3 class="anchored" data-anchor-id="interpretation-1">Interpretation</h3>
 <p>A function <img src="https://latex.codecogs.com/png.latex?f(n)"> belongs to <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BO%7D(g(n))"> if it is eventually bounded above by a constant multiple of <img src="https://latex.codecogs.com/png.latex?g(n)">.</p>
@@ -763,7 +763,7 @@ def full_name(self):
 </section>
 <section id="omega-notation-lower-bound" class="level2">
 <h2 class="anchored" data-anchor-id="omega-notation-lower-bound"><img src="https://latex.codecogs.com/png.latex?%5COmega">-Notation (Lower Bound)</h2>
-<p>[ (g(n)) = { f(n): , c&gt;0,; n_0 0cg(n)f(n) nn_0 }. ]</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5COmega(g(n))%0A=%0A%5Cleft%5C%7B%0Af(n):%0A%5Cexists%5C,%20c%3E0,%5C;%20n_0%0A%5Ctext%7B%20such%20that%20%7D%0A0%20%5Cle%20cg(n)%20%5Cle%20f(n)%0A%5Ctext%7B%20for%20all%20%7D%20n%20%5Cge%20n_0%0A%5Cright%5C%7D.%0A"></p>
 <section id="interpretation-2" class="level3">
 <h3 class="anchored" data-anchor-id="interpretation-2">Interpretation</h3>
 <p>A function <img src="https://latex.codecogs.com/png.latex?f(n)"> belongs to <img src="https://latex.codecogs.com/png.latex?%5COmega(g(n))"> if it is eventually bounded below by a constant multiple of <img src="https://latex.codecogs.com/png.latex?g(n)">.</p>
@@ -776,43 +776,43 @@ def full_name(self):
 </section>
 <section id="o-notation-strict-upper-bound" class="level2">
 <h2 class="anchored" data-anchor-id="o-notation-strict-upper-bound"><img src="https://latex.codecogs.com/png.latex?o">-Notation (Strict Upper Bound)</h2>
-<p>[ o(g(n)) = { f(n): , c&gt;0,; , n_0 0f(n)&lt;cg(n) nn_0 }. ]</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ao(g(n))%0A=%0A%5Cleft%5C%7B%0Af(n):%0A%5Cforall%5C,%20c%3E0,%5C;%0A%5Cexists%5C,%20n_0%0A%5Ctext%7B%20such%20that%20%7D%0A0%20%5Cle%20f(n)%20%3C%20cg(n)%0A%5Ctext%7B%20for%20all%20%7D%20n%20%5Cge%20n_0%0A%5Cright%5C%7D.%0A"></p>
 <section id="interpretation-3" class="level3">
 <h3 class="anchored" data-anchor-id="interpretation-3">Interpretation</h3>
 <p>A function <img src="https://latex.codecogs.com/png.latex?f(n)"> belongs to <img src="https://latex.codecogs.com/png.latex?o(g(n))"> if it grows more slowly than <strong>every positive constant multiple</strong> of <img src="https://latex.codecogs.com/png.latex?g(n)">.</p>
 <p>Equivalently,</p>
-<p>[ _{n} = 0. ]</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Clim_%7Bn%5Cto%5Cinfty%7D%0A%5Cfrac%7Bf(n)%7D%7Bg(n)%7D%0A=%0A0.%0A"></p>
 <hr>
 </section>
 </section>
 <section id="omega-notation-strict-lower-bound" class="level2">
 <h2 class="anchored" data-anchor-id="omega-notation-strict-lower-bound"><img src="https://latex.codecogs.com/png.latex?%5Comega">-Notation (Strict Lower Bound)</h2>
 <p>A function <img src="https://latex.codecogs.com/png.latex?f(n)"> belongs to <img src="https://latex.codecogs.com/png.latex?%5Comega(g(n))"> if</p>
-<p>[ g(n)o(f(n)). ]</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ag(n)%5Cin%20o(f(n)).%0A"></p>
 <p>Equivalently,</p>
-<p>[ (g(n)) = { f(n): , c&gt;0,; , n_0 0cg(n)&lt;f(n) nn_0 }. ]</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Comega(g(n))%0A=%0A%5Cleft%5C%7B%0Af(n):%0A%5Cforall%5C,%20c%3E0,%5C;%0A%5Cexists%5C,%20n_0%0A%5Ctext%7B%20such%20that%20%7D%0A0%20%5Cle%20cg(n)%20%3C%20f(n)%0A%5Ctext%7B%20for%20all%20%7D%20n%20%5Cge%20n_0%0A%5Cright%5C%7D.%0A"></p>
 <section id="interpretation-4" class="level3">
 <h3 class="anchored" data-anchor-id="interpretation-4">Interpretation</h3>
 <p>A function <img src="https://latex.codecogs.com/png.latex?f(n)"> belongs to <img src="https://latex.codecogs.com/png.latex?%5Comega(g(n))"> if it grows faster than <strong>every positive constant multiple</strong> of <img src="https://latex.codecogs.com/png.latex?g(n)">.</p>
 <p>Equivalently,</p>
-<p>[ _{n} = , ]</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Clim_%7Bn%5Cto%5Cinfty%7D%0A%5Cfrac%7Bf(n)%7D%7Bg(n)%7D%0A=%0A%5Cinfty,%0A"></p>
 <p>or</p>
-<p>[ _{n} = 0. ]</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Clim_%7Bn%5Cto%5Cinfty%7D%0A%5Cfrac%7Bg(n)%7D%7Bf(n)%7D%0A=%0A0.%0A"></p>
 <hr>
 </section>
 </section>
 <section id="abuse-of-notation" class="level2">
 <h2 class="anchored" data-anchor-id="abuse-of-notation">Abuse of Notation</h2>
 <p>Strictly speaking,</p>
-<p>[ o(g(n)),; (g(n)),; (g(n)),; (g(n)),; (g(n)) ]</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ao(g(n)),%5C;%0A%5CTheta(g(n)),%5C;%0A%5Cmathcal%7BO%7D(g(n)),%5C;%0A%5COmega(g(n)),%5C;%0A%5Comega(g(n))%0A"></p>
 <p>are <strong>sets of functions</strong>.</p>
 <p>Therefore,</p>
-<p>[ f(n)(g(n)) ]</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Af(n)%5Cin%5CTheta(g(n))%0A"></p>
 <p>is the mathematically correct notation.</p>
 <p>However, algorithm textbooks often write</p>
-<p>[ f(n)=(g(n)) ]</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Af(n)=%5CTheta(g(n))%0A"></p>
 <p>as shorthand for</p>
-<p>[ f(n)(g(n)). ]</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Af(n)%5Cin%5CTheta(g(n)).%0A"></p>
 <p>The same convention applies to <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BO%7D">, <img src="https://latex.codecogs.com/png.latex?%5COmega">, <img src="https://latex.codecogs.com/png.latex?o">, and <img src="https://latex.codecogs.com/png.latex?%5Comega">.</p>
 <hr>
 </section>
@@ -821,16 +821,16 @@ def full_name(self):
 <p>The following table compares the five asymptotic notations with familiar inequality symbols.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 22%">
-<col style="width: 27%">
-<col style="width: 27%">
-<col style="width: 22%">
+<col style="width: 33%">
+<col style="width: 12%">
+<col style="width: 39%">
+<col style="width: 14%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Asymptotic Notation</th>
 <th style="text-align: center;">Analogy</th>
-<th style="text-align: center;">Limit Characterization*</th>
+<th style="text-align: left;">Limit Characterization*</th>
 <th style="text-align: left;">Meaning</th>
 </tr>
 </thead>
@@ -838,37 +838,37 @@ def full_name(self):
 <tr class="odd">
 <td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)=o(g(n))"></td>
 <td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%3C"></td>
-<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Cdisplaystyle%5Clim_%7Bn%5Cto%5Cinfty%7D%5Cfrac%7Bf(n)%7D%7Bg(n)%7D=0"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)"> grows strictly slower than <img src="https://latex.codecogs.com/png.latex?g(n)">.</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cdisplaystyle%5Clim_%7Bn%5Cto%5Cinfty%7D%5Cfrac%7Bf(n)%7D%7Bg(n)%7D=0"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)"> grows <strong>strictly slower</strong> than <img src="https://latex.codecogs.com/png.latex?g(n)">.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)=%5Cmathcal%7BO%7D(g(n))"></td>
 <td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Cle"></td>
-<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Cdisplaystyle%5Climsup_%7Bn%5Cto%5Cinfty%7D%5Cfrac%7Bf(n)%7D%7Bg(n)%7D%3C%5Cinfty"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)"> grows at most as fast as <img src="https://latex.codecogs.com/png.latex?g(n)">.</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cdisplaystyle%5Climsup_%7Bn%5Cto%5Cinfty%7D%5Cfrac%7Bf(n)%7D%7Bg(n)%7D%3C%5Cinfty"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)"> grows <strong>at most as fast</strong> as <img src="https://latex.codecogs.com/png.latex?g(n)"> (upper bound).</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)=%5CTheta(g(n))"></td>
 <td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?="></td>
-<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Cdisplaystyle0%3C%5Clim_%7Bn%5Cto%5Cinfty%7D%5Cfrac%7Bf(n)%7D%7Bg(n)%7D%3C%5Cinfty"> (when the limit exists)</td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)"> and <img src="https://latex.codecogs.com/png.latex?g(n)"> grow at the same rate.</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cdisplaystyle%200%3C%5Clim_%7Bn%5Cto%5Cinfty%7D%5Cfrac%7Bf(n)%7D%7Bg(n)%7D%3C%5Cinfty"> (if the limit exists)</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)"> and <img src="https://latex.codecogs.com/png.latex?g(n)"> grow at the <strong>same asymptotic rate</strong> (tight bound).</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)=%5COmega(g(n))"></td>
 <td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Cge"></td>
-<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Cdisplaystyle%5Climinf_%7Bn%5Cto%5Cinfty%7D%5Cfrac%7Bf(n)%7D%7Bg(n)%7D%3E0"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)"> grows at least as fast as <img src="https://latex.codecogs.com/png.latex?g(n)">.</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cdisplaystyle%5Climinf_%7Bn%5Cto%5Cinfty%7D%5Cfrac%7Bf(n)%7D%7Bg(n)%7D%3E0"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)"> grows <strong>at least as fast</strong> as <img src="https://latex.codecogs.com/png.latex?g(n)"> (lower bound).</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)=%5Comega(g(n))"></td>
 <td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%3E"></td>
-<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Cdisplaystyle%5Clim_%7Bn%5Cto%5Cinfty%7D%5Cfrac%7Bf(n)%7D%7Bg(n)%7D=%5Cinfty"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)"> grows strictly faster than <img src="https://latex.codecogs.com/png.latex?g(n)">.</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cdisplaystyle%5Clim_%7Bn%5Cto%5Cinfty%7D%5Cfrac%7Bf(n)%7D%7Bg(n)%7D=%5Cinfty"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)"> grows <strong>strictly faster</strong> than <img src="https://latex.codecogs.com/png.latex?g(n)">.</td>
 </tr>
 </tbody>
 </table>
 <blockquote class="blockquote">
-<p><strong>Note:</strong> The limit characterization for <img src="https://latex.codecogs.com/png.latex?%5CTheta(g(n))"> assumes that the limit exists. In general, the formal set definition given earlier is the most rigorous definition.</p>
+<p><strong>Note:</strong> The limit characterization for <img src="https://latex.codecogs.com/png.latex?%5CTheta(g(n))"> assumes that the limit exists. In general, the formal set definition is the most rigorous definition.</p>
 </blockquote>
 
 
