@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/a/index.html",
       "/posts/python/decorator (@property)/index.html",
       "/posts/english/english_5/index.html",
       "/posts/python/flexible-arguments/index.html",
