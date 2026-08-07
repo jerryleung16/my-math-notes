@@ -466,35 +466,35 @@
     "href": "posts/algorithms/big-and-small-o-or-theta/index.html#theta-notation",
     "title": "O, Theta and Omega Notations",
     "section": "\\(\\Theta\\)-notation",
-    "text": "\\(\\Theta\\)-notation\n\\(\\Theta(g(n)) = \\{f(n): \\exists\\text{ constants }\\)c_1,c_2,n_0$\\(0\\leq c_1g(n)\\leq f(n) \\leq c_2g(n)}\\)\nTranslates to: \\(f(n)\\) is in \\(\\Theta(g(n))\\) if \\(f(n)\\) is sandwiched between \\(c_1g(n)\\) and \\(c_2g(n)\\) for \\(n\\) large enough.\nOR\n\\(f(n)\\) grows in a similar rate as \\(g(n)\\)."
+    "text": "\\(\\Theta\\)-notation\n\\(\\Theta(g(n)) = \\{f(n): \\exists\\text{ constants }\\)c_1,c_2,n_0$\\(0\\leq c_1g(n)\\leq f(n) \\leq c_2g(n)\\}\\)\nTranslates to: \\(f(n)\\) is in \\(\\Theta(g(n))\\) if \\(f(n)\\) is sandwiched between \\(c_1g(n)\\) and \\(c_2g(n)\\) for \\(n\\) large enough.\nOR\n\\(f(n)\\) grows in a similar rate as \\(g(n)\\)."
   },
   {
     "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#mathcalo-notation",
     "href": "posts/algorithms/big-and-small-o-or-theta/index.html#mathcalo-notation",
     "title": "O, Theta and Omega Notations",
     "section": "\\(\\mathcal{O}\\)-notation",
-    "text": "\\(\\mathcal{O}\\)-notation\n\\(\\mathcal{O}(g(n)) = \\{f(n): \\exists\\text{ constants }\\)c,n_0$\\(0\\leq f(n) \\leq c g(n)}\\)\nTranslates to: \\(f(n)\\) is in \\(\\mathcal{O}(g(n))\\) if \\(f(n)\\) is bounded above \\(c g(n)\\) for \\(n\\) large enough.\nOR\n\\(f(n)\\) grows at most as fast as \\(g(n)\\)."
+    "text": "\\(\\mathcal{O}\\)-notation\n\\(\\mathcal{O}(g(n)) = \\{f(n): \\exists\\text{ constants }\\)c,n_0$\\(0\\leq f(n) \\leq c g(n)\\}\\)\nTranslates to: \\(f(n)\\) is in \\(\\mathcal{O}(g(n))\\) if \\(f(n)\\) is bounded above \\(c g(n)\\) for \\(n\\) large enough.\nOR\n\\(f(n)\\) grows at most as fast as \\(g(n)\\)."
   },
   {
     "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#omega-notation",
     "href": "posts/algorithms/big-and-small-o-or-theta/index.html#omega-notation",
     "title": "O, Theta and Omega Notations",
     "section": "\\(\\Omega\\)-notation",
-    "text": "\\(\\Omega\\)-notation\n\\(\\Omega(g(n)) = \\{f(n): \\exists\\text{ constants }\\)c,n_0$\\(0\\leq c g(n) \\leq f(n)}\\)\nTranslates to: \\(f(n)\\) is in \\(\\Omega(g(n))\\) if \\(f(n)\\) is bounded below by \\(cg(n)\\) for \\(n\\) large enough.\nOR\n\\(f(n)\\) grows at least as fast as \\(g(n)\\)."
+    "text": "\\(\\Omega\\)-notation\n\\(\\Omega(g(n)) = \\{f(n): \\exists\\text{ constants }\\)c,n_0$\\(0\\leq c g(n) \\leq f(n)\\}\\)\nTranslates to: \\(f(n)\\) is in \\(\\Omega(g(n))\\) if \\(f(n)\\) is bounded below by \\(cg(n)\\) for \\(n\\) large enough.\nOR\n\\(f(n)\\) grows at least as fast as \\(g(n)\\)."
   },
   {
     "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#o-notation",
     "href": "posts/algorithms/big-and-small-o-or-theta/index.html#o-notation",
     "title": "O, Theta and Omega Notations",
     "section": "\\(o\\)-notation",
-    "text": "\\(o\\)-notation\n\\(o(g(n)) = \\{f(n): \\forall\\text{ constants }\\)c&gt;0, n_0$\\(0\\leq f(n) &lt; c g(n)}\\)\nTranslates to: \\(f(n)\\) is in \\(o(g(n))\\) if \\(f(n)\\) grows strictly slower than \\(c g(n)\\) for \\(n\\) large enough [no matter how small \\(c\\) is].\nOR\n\\(\\dlim_{n \\to \\infty} \\dfrac{f(n)}{g(n)} = 0\\)"
+    "text": "\\(o\\)-notation\n\\(o(g(n)) = \\{f(n): \\forall\\text{ constants }\\)c&gt;0, n_0$\\(0\\leq f(n) &lt; c g(n)\\}\\)\nTranslates to: \\(f(n)\\) is in \\(o(g(n))\\) if \\(f(n)\\) grows strictly slower than \\(c g(n)\\) for \\(n\\) large enough [no matter how small \\(c\\) is].\nOR\n\\(\\lim_{n \\to \\infty} \\dfrac{f(n)}{g(n)} = 0\\)"
   },
   {
     "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#omega-notation-1",
     "href": "posts/algorithms/big-and-small-o-or-theta/index.html#omega-notation-1",
     "title": "O, Theta and Omega Notations",
     "section": "\\(\\omega\\)-notation",
-    "text": "\\(\\omega\\)-notation\n\\(f(n) \\in \\omega(g(n))\\) if \\(g(n) \\in o(f(n))\\).\nOR\n\\(\\omega(g(n)) = \\{f(n): \\forall\\text{ constants }\\)c&gt;0, n_0$\\(0\\leq c g(n) &lt; f(n)}\\)\nTranslates to: \\(f(n)\\) is in \\(\\omega(g(n))\\) if \\(f(n)\\) grows strictly faster than \\(c g(n)\\) for \\(n\\) large enough [no matter how small \\(c\\) is].\nOR\n\\(\\dlim_{n \\to \\infty} \\dfrac{f(n)}{g(n)} = \\infty\\)\nOR\n\\(\\dlim_{n \\to \\infty} \\dfrac{g(n)}{f(n)} = 0\\)"
+    "text": "\\(\\omega\\)-notation\n\\(f(n) \\in \\omega(g(n))\\) if \\(g(n) \\in o(f(n))\\).\nOR\n\\(\\omega(g(n)) = \\{f(n): \\forall\\text{ constants }\\)c&gt;0, n_0$\\(0\\leq c g(n) &lt; f(n)\\}\\)\nTranslates to: \\(f(n)\\) is in \\(\\omega(g(n))\\) if \\(f(n)\\) grows strictly faster than \\(c g(n)\\) for \\(n\\) large enough [no matter how small \\(c\\) is].\nOR\n\\(\\lim_{n \\to \\infty} \\dfrac{f(n)}{g(n)} = \\infty\\)\nOR\n\\(\\lim_{n \\to \\infty} \\dfrac{g(n)}{f(n)} = 0\\)"
   },
   {
     "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#abuse-of-notation",

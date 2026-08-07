@@ -734,42 +734,42 @@ def full_name(self):
 </section>
 <section id="theta-notation" class="level2">
 <h2 class="anchored" data-anchor-id="theta-notation"><img src="https://latex.codecogs.com/png.latex?%5CTheta">-notation</h2>
-<p><img src="https://latex.codecogs.com/png.latex?%5CTheta(g(n))%20=%20%5C%7Bf(n):%20%5Cexists%5Ctext%7B%20constants%20%7D">c_1,c_2,n_0$<img src="https://latex.codecogs.com/png.latex?0%5Cleq%20c_1g(n)%5Cleq%20f(n)%20%5Cleq%20c_2g(n)%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5CTheta(g(n))%20=%20%5C%7Bf(n):%20%5Cexists%5Ctext%7B%20constants%20%7D">c_1,c_2,n_0$<img src="https://latex.codecogs.com/png.latex?0%5Cleq%20c_1g(n)%5Cleq%20f(n)%20%5Cleq%20c_2g(n)%5C%7D"></p>
 <p>Translates to: <img src="https://latex.codecogs.com/png.latex?f(n)"> is in <img src="https://latex.codecogs.com/png.latex?%5CTheta(g(n))"> if <img src="https://latex.codecogs.com/png.latex?f(n)"> is sandwiched between <img src="https://latex.codecogs.com/png.latex?c_1g(n)"> and <img src="https://latex.codecogs.com/png.latex?c_2g(n)"> for <img src="https://latex.codecogs.com/png.latex?n"> large enough.</p>
 <p>OR</p>
 <p><img src="https://latex.codecogs.com/png.latex?f(n)"> grows in a similar rate as <img src="https://latex.codecogs.com/png.latex?g(n)">.</p>
 </section>
 <section id="mathcalo-notation" class="level2">
 <h2 class="anchored" data-anchor-id="mathcalo-notation"><img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BO%7D">-notation</h2>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BO%7D(g(n))%20=%20%5C%7Bf(n):%20%5Cexists%5Ctext%7B%20constants%20%7D">c,n_0$<img src="https://latex.codecogs.com/png.latex?0%5Cleq%20f(n)%20%5Cleq%20c%20g(n)%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BO%7D(g(n))%20=%20%5C%7Bf(n):%20%5Cexists%5Ctext%7B%20constants%20%7D">c,n_0$<img src="https://latex.codecogs.com/png.latex?0%5Cleq%20f(n)%20%5Cleq%20c%20g(n)%5C%7D"></p>
 <p>Translates to: <img src="https://latex.codecogs.com/png.latex?f(n)"> is in <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BO%7D(g(n))"> if <img src="https://latex.codecogs.com/png.latex?f(n)"> is bounded above <img src="https://latex.codecogs.com/png.latex?c%20g(n)"> for <img src="https://latex.codecogs.com/png.latex?n"> large enough.</p>
 <p>OR</p>
 <p><img src="https://latex.codecogs.com/png.latex?f(n)"> grows at most as fast as <img src="https://latex.codecogs.com/png.latex?g(n)">.</p>
 </section>
 <section id="omega-notation" class="level2">
 <h2 class="anchored" data-anchor-id="omega-notation"><img src="https://latex.codecogs.com/png.latex?%5COmega">-notation</h2>
-<p><img src="https://latex.codecogs.com/png.latex?%5COmega(g(n))%20=%20%5C%7Bf(n):%20%5Cexists%5Ctext%7B%20constants%20%7D">c,n_0$<img src="https://latex.codecogs.com/png.latex?0%5Cleq%20c%20g(n)%20%5Cleq%20f(n)%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5COmega(g(n))%20=%20%5C%7Bf(n):%20%5Cexists%5Ctext%7B%20constants%20%7D">c,n_0$<img src="https://latex.codecogs.com/png.latex?0%5Cleq%20c%20g(n)%20%5Cleq%20f(n)%5C%7D"></p>
 <p>Translates to: <img src="https://latex.codecogs.com/png.latex?f(n)"> is in <img src="https://latex.codecogs.com/png.latex?%5COmega(g(n))"> if <img src="https://latex.codecogs.com/png.latex?f(n)"> is bounded below by <img src="https://latex.codecogs.com/png.latex?cg(n)"> for <img src="https://latex.codecogs.com/png.latex?n"> large enough.</p>
 <p>OR</p>
 <p><img src="https://latex.codecogs.com/png.latex?f(n)"> grows at least as fast as <img src="https://latex.codecogs.com/png.latex?g(n)">.</p>
 </section>
 <section id="o-notation" class="level2">
 <h2 class="anchored" data-anchor-id="o-notation"><img src="https://latex.codecogs.com/png.latex?o">-notation</h2>
-<p><img src="https://latex.codecogs.com/png.latex?o(g(n))%20=%20%5C%7Bf(n):%20%5Cforall%5Ctext%7B%20constants%20%7D">c&gt;0, n_0$<img src="https://latex.codecogs.com/png.latex?0%5Cleq%20f(n)%20%3C%20c%20g(n)%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?o(g(n))%20=%20%5C%7Bf(n):%20%5Cforall%5Ctext%7B%20constants%20%7D">c&gt;0, n_0$<img src="https://latex.codecogs.com/png.latex?0%5Cleq%20f(n)%20%3C%20c%20g(n)%5C%7D"></p>
 <p>Translates to: <img src="https://latex.codecogs.com/png.latex?f(n)"> is in <img src="https://latex.codecogs.com/png.latex?o(g(n))"> if <img src="https://latex.codecogs.com/png.latex?f(n)"> grows strictly slower than <img src="https://latex.codecogs.com/png.latex?c%20g(n)"> for <img src="https://latex.codecogs.com/png.latex?n"> large enough <strong>[no matter how small <img src="https://latex.codecogs.com/png.latex?c"> is]</strong>.</p>
 <p>OR</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cdlim_%7Bn%20%5Cto%20%5Cinfty%7D%20%5Cdfrac%7Bf(n)%7D%7Bg(n)%7D%20=%200"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bn%20%5Cto%20%5Cinfty%7D%20%5Cdfrac%7Bf(n)%7D%7Bg(n)%7D%20=%200"></p>
 </section>
 <section id="omega-notation-1" class="level2">
 <h2 class="anchored" data-anchor-id="omega-notation-1"><img src="https://latex.codecogs.com/png.latex?%5Comega">-notation</h2>
 <p><img src="https://latex.codecogs.com/png.latex?f(n)%20%5Cin%20%5Comega(g(n))"> if <img src="https://latex.codecogs.com/png.latex?g(n)%20%5Cin%20o(f(n))">.</p>
 <p>OR</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Comega(g(n))%20=%20%5C%7Bf(n):%20%5Cforall%5Ctext%7B%20constants%20%7D">c&gt;0, n_0$<img src="https://latex.codecogs.com/png.latex?0%5Cleq%20c%20g(n)%20%3C%20f(n)%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Comega(g(n))%20=%20%5C%7Bf(n):%20%5Cforall%5Ctext%7B%20constants%20%7D">c&gt;0, n_0$<img src="https://latex.codecogs.com/png.latex?0%5Cleq%20c%20g(n)%20%3C%20f(n)%5C%7D"></p>
 <p>Translates to: <img src="https://latex.codecogs.com/png.latex?f(n)"> is in <img src="https://latex.codecogs.com/png.latex?%5Comega(g(n))"> if <img src="https://latex.codecogs.com/png.latex?f(n)"> grows strictly faster than <img src="https://latex.codecogs.com/png.latex?c%20g(n)"> for <img src="https://latex.codecogs.com/png.latex?n"> large enough <strong>[no matter how small <img src="https://latex.codecogs.com/png.latex?c"> is]</strong>.</p>
 <p>OR</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cdlim_%7Bn%20%5Cto%20%5Cinfty%7D%20%5Cdfrac%7Bf(n)%7D%7Bg(n)%7D%20=%20%5Cinfty"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bn%20%5Cto%20%5Cinfty%7D%20%5Cdfrac%7Bf(n)%7D%7Bg(n)%7D%20=%20%5Cinfty"></p>
 <p>OR</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cdlim_%7Bn%20%5Cto%20%5Cinfty%7D%20%5Cdfrac%7Bg(n)%7D%7Bf(n)%7D%20=%200"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bn%20%5Cto%20%5Cinfty%7D%20%5Cdfrac%7Bg(n)%7D%7Bf(n)%7D%20=%200"></p>
 </section>
 <section id="abuse-of-notation" class="level2">
 <h2 class="anchored" data-anchor-id="abuse-of-notation">Abuse of notation</h2>

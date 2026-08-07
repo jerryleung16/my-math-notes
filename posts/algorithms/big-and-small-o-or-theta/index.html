@@ -198,42 +198,42 @@ window.Quarto = {
 </section>
 <section id="theta-notation" class="level2">
 <h2 class="anchored" data-anchor-id="theta-notation"><span class="math inline">\(\Theta\)</span>-notation</h2>
-<p><span class="math inline">\(\Theta(g(n)) = \{f(n): \exists\text{ constants }\)</span>c_1,c_2,n_0$<span class="math inline">\(0\leq c_1g(n)\leq f(n) \leq c_2g(n)}\)</span></p>
+<p><span class="math inline">\(\Theta(g(n)) = \{f(n): \exists\text{ constants }\)</span>c_1,c_2,n_0$<span class="math inline">\(0\leq c_1g(n)\leq f(n) \leq c_2g(n)\}\)</span></p>
 <p>Translates to: <span class="math inline">\(f(n)\)</span> is in <span class="math inline">\(\Theta(g(n))\)</span> if <span class="math inline">\(f(n)\)</span> is sandwiched between <span class="math inline">\(c_1g(n)\)</span> and <span class="math inline">\(c_2g(n)\)</span> for <span class="math inline">\(n\)</span> large enough.</p>
 <p>OR</p>
 <p><span class="math inline">\(f(n)\)</span> grows in a similar rate as <span class="math inline">\(g(n)\)</span>.</p>
 </section>
 <section id="mathcalo-notation" class="level2">
 <h2 class="anchored" data-anchor-id="mathcalo-notation"><span class="math inline">\(\mathcal{O}\)</span>-notation</h2>
-<p><span class="math inline">\(\mathcal{O}(g(n)) = \{f(n): \exists\text{ constants }\)</span>c,n_0$<span class="math inline">\(0\leq f(n) \leq c g(n)}\)</span></p>
+<p><span class="math inline">\(\mathcal{O}(g(n)) = \{f(n): \exists\text{ constants }\)</span>c,n_0$<span class="math inline">\(0\leq f(n) \leq c g(n)\}\)</span></p>
 <p>Translates to: <span class="math inline">\(f(n)\)</span> is in <span class="math inline">\(\mathcal{O}(g(n))\)</span> if <span class="math inline">\(f(n)\)</span> is bounded above <span class="math inline">\(c g(n)\)</span> for <span class="math inline">\(n\)</span> large enough.</p>
 <p>OR</p>
 <p><span class="math inline">\(f(n)\)</span> grows at most as fast as <span class="math inline">\(g(n)\)</span>.</p>
 </section>
 <section id="omega-notation" class="level2">
 <h2 class="anchored" data-anchor-id="omega-notation"><span class="math inline">\(\Omega\)</span>-notation</h2>
-<p><span class="math inline">\(\Omega(g(n)) = \{f(n): \exists\text{ constants }\)</span>c,n_0$<span class="math inline">\(0\leq c g(n) \leq f(n)}\)</span></p>
+<p><span class="math inline">\(\Omega(g(n)) = \{f(n): \exists\text{ constants }\)</span>c,n_0$<span class="math inline">\(0\leq c g(n) \leq f(n)\}\)</span></p>
 <p>Translates to: <span class="math inline">\(f(n)\)</span> is in <span class="math inline">\(\Omega(g(n))\)</span> if <span class="math inline">\(f(n)\)</span> is bounded below by <span class="math inline">\(cg(n)\)</span> for <span class="math inline">\(n\)</span> large enough.</p>
 <p>OR</p>
 <p><span class="math inline">\(f(n)\)</span> grows at least as fast as <span class="math inline">\(g(n)\)</span>.</p>
 </section>
 <section id="o-notation" class="level2">
 <h2 class="anchored" data-anchor-id="o-notation"><span class="math inline">\(o\)</span>-notation</h2>
-<p><span class="math inline">\(o(g(n)) = \{f(n): \forall\text{ constants }\)</span>c&gt;0, n_0$<span class="math inline">\(0\leq f(n) &lt; c g(n)}\)</span></p>
+<p><span class="math inline">\(o(g(n)) = \{f(n): \forall\text{ constants }\)</span>c&gt;0, n_0$<span class="math inline">\(0\leq f(n) &lt; c g(n)\}\)</span></p>
 <p>Translates to: <span class="math inline">\(f(n)\)</span> is in <span class="math inline">\(o(g(n))\)</span> if <span class="math inline">\(f(n)\)</span> grows strictly slower than <span class="math inline">\(c g(n)\)</span> for <span class="math inline">\(n\)</span> large enough <strong>[no matter how small <span class="math inline">\(c\)</span> is]</strong>.</p>
 <p>OR</p>
-<p><span class="math inline">\(\dlim_{n \to \infty} \dfrac{f(n)}{g(n)} = 0\)</span></p>
+<p><span class="math inline">\(\lim_{n \to \infty} \dfrac{f(n)}{g(n)} = 0\)</span></p>
 </section>
 <section id="omega-notation-1" class="level2">
 <h2 class="anchored" data-anchor-id="omega-notation-1"><span class="math inline">\(\omega\)</span>-notation</h2>
 <p><span class="math inline">\(f(n) \in \omega(g(n))\)</span> if <span class="math inline">\(g(n) \in o(f(n))\)</span>.</p>
 <p>OR</p>
-<p><span class="math inline">\(\omega(g(n)) = \{f(n): \forall\text{ constants }\)</span>c&gt;0, n_0$<span class="math inline">\(0\leq c g(n) &lt; f(n)}\)</span></p>
+<p><span class="math inline">\(\omega(g(n)) = \{f(n): \forall\text{ constants }\)</span>c&gt;0, n_0$<span class="math inline">\(0\leq c g(n) &lt; f(n)\}\)</span></p>
 <p>Translates to: <span class="math inline">\(f(n)\)</span> is in <span class="math inline">\(\omega(g(n))\)</span> if <span class="math inline">\(f(n)\)</span> grows strictly faster than <span class="math inline">\(c g(n)\)</span> for <span class="math inline">\(n\)</span> large enough <strong>[no matter how small <span class="math inline">\(c\)</span> is]</strong>.</p>
 <p>OR</p>
-<p><span class="math inline">\(\dlim_{n \to \infty} \dfrac{f(n)}{g(n)} = \infty\)</span></p>
+<p><span class="math inline">\(\lim_{n \to \infty} \dfrac{f(n)}{g(n)} = \infty\)</span></p>
 <p>OR</p>
-<p><span class="math inline">\(\dlim_{n \to \infty} \dfrac{g(n)}{f(n)} = 0\)</span></p>
+<p><span class="math inline">\(\lim_{n \to \infty} \dfrac{g(n)}{f(n)} = 0\)</span></p>
 </section>
 <section id="abuse-of-notation" class="level2">
 <h2 class="anchored" data-anchor-id="abuse-of-notation">Abuse of notation</h2>
