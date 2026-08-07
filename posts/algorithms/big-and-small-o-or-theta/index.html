@@ -434,6 +434,40 @@ f(n)\in\Theta(g(n)).
 <blockquote class="blockquote">
 <p><strong>Note:</strong> The limit characterization for <span class="math inline">\(\Theta(g(n))\)</span> assumes that the limit exists. In general, the formal set definition is the most rigorous definition.</p>
 </blockquote>
+<blockquote class="blockquote">
+<p>[!IMPORTANT] Remark: Asymptotic Comparability</p>
+<p>The inequality analogy in the comparison table is only a <strong>conceptual aid</strong>. Unlike real numbers, <strong>not every pair of functions is asymptotically comparable</strong>.</p>
+<p>For real numbers <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, the <strong>Law of Trichotomy</strong> states that exactly one of the following is true:</p>
+<p><span class="math display">\[
+a &lt; b, \qquad a = b, \qquad \text{or} \qquad a &gt; b.
+\]</span></p>
+<p>However, asymptotic notation does <strong>not</strong> satisfy this property. For two functions <span class="math inline">\(f(n)\)</span> and <span class="math inline">\(g(n)\)</span>, it is possible that neither</p>
+<p><span class="math display">\[
+f(n)\in\mathcal{O}(g(n))
+\]</span></p>
+<p>nor</p>
+<p><span class="math display">\[
+f(n)\in\Omega(g(n))
+\]</span></p>
+<p>holds.</p>
+<h3 id="example" class="anchored">Example</h3>
+<p>Consider</p>
+<p><span class="math display">\[
+f(n)=n,\qquad
+g(n)=n^{\,1+\sin n}.
+\]</span></p>
+<p>Since <span class="math inline">\(\sin n\)</span> oscillates between <span class="math inline">\(-1\)</span> and <span class="math inline">\(1\)</span>, the exponent <span class="math inline">\(1+\sin n\)</span> oscillates between <span class="math inline">\(0\)</span> and <span class="math inline">\(2\)</span>. Consequently,</p>
+<p><span class="math display">\[
+g(n)=n^{\,1+\sin n}
+\]</span></p>
+<p>alternates between growth rates as small as <span class="math inline">\(n^0=1\)</span> and as large as <span class="math inline">\(n^2\)</span> (while taking every intermediate exponent). Therefore,</p>
+<p><span class="math display">\[
+f(n)\notin\mathcal{O}(g(n))
+\qquad\text{and}\qquad
+f(n)\notin\Omega(g(n)).
+\]</span></p>
+<p>Thus, neither function asymptotically dominates the other, illustrating that <strong>asymptotic comparisons are only partial orders, not total orders</strong>.</p>
+</blockquote>
 
 
 </section>
