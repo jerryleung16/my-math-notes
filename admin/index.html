@@ -23,7 +23,7 @@
 
     <div class="card">
       <h2>Delete a post</h2>
-      <p>To remove a post safely, delete the folder from the repository, then rebuild and publish the site.</p>
+      <p>To remove a post safely, click delete and confirm the prompt before continuing.</p>
       <p>Example: <code>python scripts/delete-post.py posts/python/intro-to-class</code></p>
     </div>
 
@@ -116,6 +116,12 @@
             deleteLink.textContent = ' (delete)';
             deleteLink.style.marginLeft = '0.5rem';
             deleteLink.style.color = '#c0392b';
+            deleteLink.addEventListener('click', (event) => {
+              event.preventDefault();
+              if (window.confirm(`Delete ${post.label} from the repository?`)) {
+                window.location.href = post.deleteUrl;
+              }
+            });
             item.appendChild(deleteLink);
             fragment.appendChild(item);
           }
