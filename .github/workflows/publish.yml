@@ -13,24 +13,14 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Install Quarto
-        run: |
-          wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.6.40/quarto-1.6.40-linux-amd64.tar.gz -O /tmp/quarto.tar.gz
-          mkdir -p /opt/quarto
-          tar -xzf /tmp/quarto.tar.gz -C /opt/quarto --strip-components=1
-          /opt/quarto/bin/quarto check
-          echo "/opt/quarto/bin" >> "$GITHUB_PATH"
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
 
       - name: Install Inkscape (For TikZ)
         run: sudo apt-get update && sudo apt-get install -y inkscape
 
       - name: Install TinyTeX (For Math)
-        run: |
-          wget https://github.com/yihui/tinytex-releases/releases/download/daily/tinytex.tar.gz -O /tmp/tinytex.tar.gz
-          mkdir -p /tmp/tinytex
-          tar -xzf /tmp/tinytex.tar.gz -C /tmp/tinytex --strip-components=1
-          /tmp/tinytex/bin/unix/tlmgr path add
-          tlmgr update --self --all --reinstall-forcibly-removed
+        uses: quarto-dev/quarto-actions/setup-tinytex@v2
 
       - name: Render site
         run: quarto render --log-level info
