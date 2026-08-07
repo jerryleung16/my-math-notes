@@ -1,0 +1,1028 @@
+---
+title: "4. Decorator (@property)"
+date: "2026-08-08"
+categories: [Python]
+---
+
+# Understanding `@property` in Python Classes
+
+One of the most useful ways to understand `@property` is to connect it to a simple mental model:
+
+> **A method is an operation. A `@property` is a dynamic characteristic.**
+
+In other words:
+
+* A **method** tells an object to **do something**.
+* A **property** asks an object **what its current value is**.
+
+Let's build this idea step by step.
+
+---
+
+# 1. A Method = An Operation
+
+A normal method represents an **action or process** that an object can perform.
+
+You can think of it as telling the object:
+
+> **"Hey object, go do this operation!"**
+
+For example:
+
+```text
+account.withdraw(50)
+robot.walk()
+user.login()
+```
+
+The parentheses `()` are an important clue.
+
+They indicate that we are **calling a method**.
+
+---
+
+## Example: A Robot
+
+Imagine a `Robot` class.
+
+A robot can have characteristics such as its name and battery level, but it can also perform actions such as walking.
+
+```text
+class Robot:
+
+    def __init__(self, name):
+        self.name = name
+        self.battery = 100
+
+    def walk(self):
+        self.battery -= 10
+        print(f"{self.name} is walking!")
+
+    def recharge(self):
+        self.battery = 100
+        print(f"{self.name} is fully charged.")
+```
+
+We can create a robot:
+
+```text
+robot = Robot("Wall-E")
+```
+
+Then we can tell it to perform an operation:
+
+```text
+robot.walk()
+```
+
+The method changes the robot's state.
+
+For example:
+
+```text
+Before:
+battery = 100
+
+robot.walk()
+
+After:
+battery = 90
+```
+
+The important idea is:
+
+> **A method represents something the object does.**
+
+---
+
+# 2. A `@property` = A Dynamic Characteristic
+
+Now let's consider something slightly different.
+
+Suppose we want to know the robot's current battery percentage.
+
+We could write a method:
+
+```text
+robot.get_battery()
+```
+
+But conceptually, **battery level isn't really an action**.
+
+We aren't telling the robot to *do* something.
+
+We are asking:
+
+> "What is your current battery level?"
+
+That sounds more like an **attribute**.
+
+This is where `@property` becomes useful.
+
+A property lets us create an attribute-like interface for a value that is actually **calculated dynamically**.
+
+---
+
+# 3. Regular Attributes vs. Dynamic Properties
+
+Before going further, let's distinguish three important concepts.
+
+| Concept               | What It Is                                       | Syntax    | Example                     |
+| :-------------------- | :----------------------------------------------- | :-------- | :-------------------------- |
+| **Regular Attribute** | A value stored directly in the object            | `obj.x`   | `self.first_name = "Bruce"` |
+| **`@property`**       | A dynamic value calculated from other attributes | `obj.x`   | `user.full_name`            |
+| **Method**            | An operation or action                           | `obj.x()` | `user.login()`              |
+
+The key difference is:
+
+```text
+Regular Attribute
+        ↓
+Stored value
+
+@property
+        ↓
+Calculated value
+
+Method
+        ↓
+Action / operation
+```
+
+---
+
+# 4. A Concrete Example: A User's Full Name
+
+Suppose we have a user with:
+
+* `first_name`
+* `last_name`
+
+We could store the full name separately:
+
+```text
+class User:
+
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.full_name = first_name + " " + last_name
+```
+
+Then:
+
+```text
+user = User("Bruce", "Wayne")
+
+print(user.full_name)
+```
+
+This works.
+
+However, there is a potential problem.
+
+What happens if we later change the first name?
+
+```text
+user.first_name = "Thomas"
+
+print(user.full_name)
+```
+
+The result might still be:
+
+```text
+Bruce Wayne
+```
+
+Why?
+
+Because `full_name` was calculated **once**, when the object was created.
+
+The stored value is now out of sync with the other attributes.
+
+---
+
+# 5. The Problem with Storing Derived Data
+
+Consider this object:
+
+```text
+user
+ ├── first_name = "Bruce"
+ ├── last_name  = "Wayne"
+ └── full_name  = "Bruce Wayne"
+```
+
+Now change the first name:
+
+```text
+user.first_name = "Thomas"
+```
+
+The object could become:
+
+```text
+user
+ ├── first_name = "Thomas"
+ ├── last_name  = "Wayne"
+ └── full_name  = "Bruce Wayne"  ← OUT OF DATE!
+```
+
+We now have two pieces of information that disagree with each other.
+
+This is exactly the kind of problem that `@property` can solve.
+
+---
+
+# 6. Using `@property`
+
+Instead of storing `full_name`, we can calculate it whenever someone asks for it.
+
+```text
+class User:
+
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
+    @property
+    def full_name(self):
+        return self.first_name + " " + self.last_name
+```
+
+Now create a user:
+
+```text
+user = User("Bruce", "Wayne")
+```
+
+We can access:
+
+```text
+user.full_name
+```
+
+Notice that we **do not use parentheses**.
+
+We don't write:
+
+```text
+user.full_name()
+```
+
+Instead:
+
+```text
+user.full_name
+```
+
+This makes `full_name` look like an ordinary attribute.
+
+But behind the scenes, Python is running the property method and calculating the value.
+
+---
+
+# 7. What Is Happening Behind the Scenes?
+
+When we write:
+
+```text
+user.full_name
+```
+
+Python effectively performs the calculation defined inside:
+
+```text
+@property
+def full_name(self):
+    return self.first_name + " " + self.last_name
+```
+
+So:
+
+```text
+user.full_name
+```
+
+can be thought of as:
+
+```text
+"Bruce" + " " + "Wayne"
+```
+
+which gives:
+
+```text
+"Bruce Wayne"
+```
+
+The important point is that the value is **calculated when we access it**.
+
+---
+
+# 8. Why Is This Better?
+
+Now let's change the first name.
+
+```text
+user.first_name = "Thomas"
+```
+
+Then ask for the full name again:
+
+```text
+print(user.full_name)
+```
+
+Python recalculates the property using the current attributes.
+
+The result is:
+
+```text
+Thomas Wayne
+```
+
+We don't have to manually update `full_name`.
+
+That is the major advantage of a dynamic property.
+
+---
+
+# 9. The Property Stays in Sync
+
+Think of the object as:
+
+```text
+             User
+              │
+       ┌──────┴──────┐
+       ↓             ↓
+ first_name      last_name
+ "Bruce"          "Wayne"
+       │             │
+       └──────┬──────┘
+              ↓
+         @property
+         full_name
+              ↓
+       "Bruce Wayne"
+```
+
+If either input changes:
+
+```text
+first_name = "Thomas"
+```
+
+the property automatically produces:
+
+```text
+full_name
+     ↓
+"Thomas Wayne"
+```
+
+The property is therefore always based on the object's **current state**.
+
+---
+
+# 10. Method vs. Property
+
+Let's compare the two approaches.
+
+## Using a Method
+
+```text
+class User:
+
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
+    def get_full_name(self):
+        return self.first_name + " " + self.last_name
+```
+
+We would call it like this:
+
+```text
+user.get_full_name()
+```
+
+The parentheses tell us:
+
+> "Perform an operation."
+
+---
+
+## Using `@property`
+
+```text
+class User:
+
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
+    @property
+    def full_name(self):
+        return self.first_name + " " + self.last_name
+```
+
+We access it like this:
+
+```text
+user.full_name
+```
+
+There are no parentheses.
+
+This tells us:
+
+> "Tell me the current value of this characteristic."
+
+---
+
+# 11. A Simple Mental Model
+
+This distinction is extremely useful.
+
+### Method
+
+```text
+object.do_something()
+```
+
+Think:
+
+> **"Go perform this operation."**
+
+Examples:
+
+```text
+account.withdraw(50)
+robot.walk()
+user.login()
+```
+
+---
+
+### `@property`
+
+```text
+object.some_value
+```
+
+Think:
+
+> **"What is your current value for this characteristic?"**
+
+Examples:
+
+```text
+user.full_name
+account.balance
+robot.battery_percentage
+```
+
+---
+
+# 12. Example: Bank Account Balance
+
+Let's look at a more realistic example.
+
+Suppose our bank account stores:
+
+* account owner
+* deposited money
+* withdrawn money
+
+We might want to know the **current balance**.
+
+The balance depends on other information, so it is a good candidate for a property.
+
+```text
+class BankAccount:
+
+    def __init__(self, owner, deposited=0):
+        self.owner = owner
+        self.deposited = deposited
+        self.withdrawn = 0
+
+    def deposit(self, amount):
+        self.deposited += amount
+
+    def withdraw(self, amount):
+        self.withdrawn += amount
+
+    @property
+    def balance(self):
+        return self.deposited - self.withdrawn
+```
+
+Create an account:
+
+```text
+account = BankAccount("Alice", 1000)
+```
+
+Ask for the current balance:
+
+```text
+print(account.balance)
+```
+
+The result is:
+
+```text
+1000
+```
+
+Now Alice deposits another `$500`:
+
+```text
+account.deposit(500)
+```
+
+The balance is automatically updated:
+
+```text
+print(account.balance)
+```
+
+Result:
+
+```text
+1500
+```
+
+Now Alice withdraws `$200`:
+
+```text
+account.withdraw(200)
+```
+
+Ask for the balance again:
+
+```text
+print(account.balance)
+```
+
+Result:
+
+```text
+1300
+```
+
+We never had to manually update a `balance` variable.
+
+The property calculates it from the current state.
+
+---
+
+# 13. Why `balance` Is a Property
+
+Think about the question:
+
+> "What is the account's current balance?"
+
+This is a **characteristic**, not an action.
+
+We therefore want:
+
+```text
+account.balance
+```
+
+rather than:
+
+```text
+account.get_balance()
+```
+
+The property makes the interface feel natural.
+
+The user of the class doesn't need to know that Python is calculating the value behind the scenes.
+
+---
+
+# 14. Example: Rectangle Area
+
+Here's another simple example.
+
+A rectangle has:
+
+* width
+* height
+
+Its area is:
+
+[
+A = width \times height
+]
+
+We don't necessarily need to store the area.
+
+We can calculate it whenever we need it.
+
+```text
+class Rectangle:
+
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    @property
+    def area(self):
+        return self.width * self.height
+```
+
+Create a rectangle:
+
+```text
+rectangle = Rectangle(10, 5)
+```
+
+Ask for its area:
+
+```text
+print(rectangle.area)
+```
+
+Result:
+
+```text
+50
+```
+
+Now change the width:
+
+```text
+rectangle.width = 20
+```
+
+Ask for the area again:
+
+```text
+print(rectangle.area)
+```
+
+Result:
+
+```text
+100
+```
+
+The property automatically reflects the new dimensions.
+
+---
+
+# 15. Property vs. Stored Attribute
+
+Let's compare two designs.
+
+## Stored Attribute
+
+```text
+class Rectangle:
+
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+        self.area = width * height
+```
+
+Here, `area` is stored.
+
+If the width changes:
+
+```text
+rectangle.width = 20
+```
+
+the stored area might become incorrect.
+
+---
+
+## Dynamic Property
+
+```text
+class Rectangle:
+
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    @property
+    def area(self):
+        return self.width * self.height
+```
+
+Now:
+
+```text
+rectangle.width = 20
+```
+
+automatically causes the next access to:
+
+```text
+rectangle.area
+```
+
+to use the new width.
+
+The property is always based on the current state.
+
+---
+
+# 16. A Property Can Also Enforce Rules
+
+`@property` is not only useful for calculations.
+
+It can also control how information is accessed.
+
+For example, suppose we have a temperature stored in Celsius, but we want to easily view it in Fahrenheit.
+
+```text
+class Temperature:
+
+    def __init__(self, celsius):
+        self.celsius = celsius
+
+    @property
+    def fahrenheit(self):
+        return self.celsius * 9 / 5 + 32
+```
+
+Now:
+
+```text
+temperature = Temperature(25)
+```
+
+We can ask:
+
+```text
+print(temperature.fahrenheit)
+```
+
+Result:
+
+```text
+77.0
+```
+
+If the Celsius temperature changes:
+
+```text
+temperature.celsius = 30
+```
+
+then:
+
+```text
+print(temperature.fahrenheit)
+```
+
+automatically gives:
+
+```text
+86.0
+```
+
+Again, the property stays synchronized with the object's current state.
+
+---
+
+# 17. `@property` Is Really a Method in Disguise
+
+This is an important detail.
+
+When we write:
+
+```text
+@property
+def area(self):
+    return self.width * self.height
+```
+
+`area` is technically implemented using a method.
+
+However, the `@property` decorator changes how we **access** it.
+
+Without `@property`:
+
+```text
+rectangle.area()
+```
+
+With `@property`:
+
+```text
+rectangle.area
+```
+
+So we can think of `@property` as:
+
+> **A method that behaves like an attribute when accessed.**
+
+This is why it is so useful for **dynamic characteristics**.
+
+---
+
+# 18. Three Concepts Side by Side
+
+Now we can put everything together.
+
+| Concept               | Meaning                                            | Syntax    | Example           |
+| :-------------------- | :------------------------------------------------- | :-------- | :---------------- |
+| **Regular Attribute** | A value stored directly in the object              | `obj.x`   | `user.first_name` |
+| **`@property`**       | A dynamic value calculated from the object's state | `obj.x`   | `user.full_name`  |
+| **Method**            | An operation or action                             | `obj.x()` | `user.login()`    |
+
+Consider our `User` example:
+
+```text
+class User:
+
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
+    @property
+    def full_name(self):
+        return self.first_name + " " + self.last_name
+
+    def login(self):
+        print("User logged in.")
+```
+
+We can now classify each part:
+
+```text
+user.first_name
+       ↓
+Regular Attribute
+"Bruce"
+
+
+user.full_name
+       ↓
+@property
+"Bruce Wayne"
+
+
+user.login()
+       ↓
+Method
+Performs an action
+```
+
+---
+
+# 19. A Practical Mental Model
+
+When designing a class, ask yourself three questions.
+
+### Question 1: Is this simply stored information?
+
+If yes, use a **regular attribute**.
+
+```text
+self.name = "Alice"
+self.age = 25
+self.color = "Blue"
+```
+
+Think:
+
+> **"What does this object have?"**
+
+---
+
+### Question 2: Is this information calculated from the object's current state?
+
+If yes, consider using a **`@property`**.
+
+```text
+@property
+def full_name(self):
+    return self.first_name + " " + self.last_name
+```
+
+Think:
+
+> **"What is this object's current characteristic?"**
+
+---
+
+### Question 3: Is this something the object actively does?
+
+If yes, use a **method**.
+
+```text
+def withdraw(self, amount):
+    ...
+```
+
+Think:
+
+> **"What operation should this object perform?"**
+
+---
+
+# 20. The Final Mental Model
+
+The distinction can be summarized as follows:
+
+```text
+                  PYTHON CLASS
+                       │
+          ┌────────────┼────────────┐
+          ↓            ↓            ↓
+     Attribute     @property      Method
+          │            │            │
+          ↓            ↓            ↓
+      Stored       Dynamic        Action
+       value      characteristic  / operation
+          │            │            │
+          ↓            ↓            ↓
+     obj.name     obj.full_name   obj.login()
+```
+
+Or, in plain English:
+
+> **Attribute:** "What information does the object store?"
+>
+> **`@property`:** "What is the object's current calculated characteristic?"
+>
+> **Method:** "What can the object do?"
+
+---
+
+# Key Takeaways
+
+The most important ideas to remember are:
+
+1. **A regular attribute stores data directly.**
+
+   ```text
+   self.first_name = "Bruce"
+   ```
+
+2. **A `@property` calculates a characteristic dynamically.**
+
+   ```text
+   @property
+   def full_name(self):
+       return self.first_name + " " + self.last_name
+   ```
+
+3. **A method represents an operation or action.**
+
+   ```text
+   def login(self):
+       ...
+   ```
+
+4. **Properties are accessed without parentheses.**
+
+   ```text
+   user.full_name
+   ```
+
+5. **Methods are called with parentheses.**
+
+   ```text
+   user.login()
+   ```
+
+6. **A property is especially useful when its value depends on other attributes.**
+
+   ```text
+   width + height
+        ↓
+      area
+   ```
+
+7. **A property automatically stays synchronized with the object's current state.**
+
+The simplest way to remember the distinction is:
+
+> **Methods DO things. Properties DESCRIBE things.**
+
+Or even more simply:
+
+```text
+METHOD
+   ↓
+"Do this!"
+
+@property
+   ↓
+"What is your current value?"
+```
+
+Once this mental model becomes natural, `@property` becomes much less mysterious. You can start recognizing when a value should be treated as an **action**, a **stored attribute**, or a **dynamic characteristic**.

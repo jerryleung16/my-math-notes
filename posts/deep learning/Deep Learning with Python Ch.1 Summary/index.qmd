@@ -1,0 +1,67 @@
+---
+title: "Deep Learning with Python Ch.1 Summary"
+date: "2026-08-01"
+categories: [Deep Learning]
+---
+
+## Acronyms
+* **DL:** Deep Learning
+* **ML:** Machine Learning
+* **AI:** Artificial Intelligence
+
+## 1. The Hierarchy: DL $\subset$ ML $\subset$ AI
+AI is the broad effort to automate intellectual tasks normally performed by humans. Machine learning is a subfield of AI, and deep learning is a specific subfield of machine learning.
+
+## 2. Symbolic AI
+The dominant paradigm in AI from the 1950s to the late 1980s. Experts believed human-level artificial intelligence could be achieved by having programmers handcraft a sufficiently large set of explicit rules for manipulating knowledge stored in explicit databases. 
+
+## 3. Machine Learning (ML)
+Unlike classical programming where a computer executes step-by-step rules, ML systems are **trained rather than explicitly programmed**. The system looks at input data and the corresponding answers to automatically figure out what the rules should be.
+
+## 4. Requirements for ML
+To do machine learning, three things are required:
+
+* **Input data points:** (e.g., sound files, images). This requires finding useful *representations* of the data (such as RGB vs. HSV color formats) that make it more amenable to the task.
+
+* **Examples of the expected output:** (e.g., human-generated transcripts or image tags).
+
+* **A way to measure whether the algorithm is doing a good job:** A feedback signal used to adjust how the algorithm works. 
+
+## 5. The "Deep" in Deep Learning
+"Deep" does not mean a deeper understanding; rather, it refers to the idea of **successive layers of representations**. Modern DL often involves tens or hundreds of layers learned automatically, acting as a multistage *information-distillation* process. This contrasts with *shallow learning*, which typically involves only one or two representation layers.
+
+## 6. Weights and Parameterization
+The specification of what a layer does to its input data is stored in the layer's **weights** (essentially a bunch of numbers). The transformation implemented by a layer is parameterized by these weights.
+
+## 7. The Flow of Training
+* **Prediction:** The network processes input data to generate an output.
+* **Loss Function:** The network calculates the distance between its prediction and the expected target to measure performance (a loss score).
+* **Optimizer & Backpropagation:** Based on the loss function, the optimizer adjusts the weights slightly in the correct direction to lower the loss score. This is done via the central deep learning algorithm called *Backpropagation*.
+* **Training Loop:** By repeating this cycle for a sufficient number of times (over thousands of examples), the network finds a set of weights that minimizes the loss function.
+
+## 8. Advantages of DL
+Deep learning's prevalence and status as a revolution are justified by three properties:
+
+* **Simplicity:** It automates *feature engineering*, learning all necessary features in one pass rather than relying on humans to manually engineer good data representations.
+* **Scalability:** It is highly amenable to parallelization on GPUs (benefiting from Moore's law) and trains over small batches, allowing for datasets of arbitrary size.
+* **Versatility and Reusability:** Models can be trained on new data without restarting from scratch (continuous online learning) and can be repurposed across new tasks (e.g., foundation models).
+
+## 9. Generative AI
+A major breakthrough where models can reconstruct a sharp image from a noisy version, predict the next word in a sentence, and more. This relies heavily on self-supervised learning, meaning the expected targets are derived directly from the input itself.
+
+## 10. Achievements in DL
+As of the mid-2020s, AI is reshaping the world:
+
+* Tens of millions rely daily on AI chatbots (ChatGPT, Gemini, Claude).
+* Hundreds of thousands interact with AI personas (Character.ai).
+* Fully autonomous driving is deployed at scale in cities like Phoenix, San Francisco, Los Angeles, and Austin.
+* DeepMind's AlphaFold predicts protein structures with unprecedented accuracy, accelerating science and mathematics.
+
+## 11. Limitations of AI
+Despite the "magic," today's machine learning systems fundamentally rely on statistical patterns; they are generally restricted to handling situations and distributions they have been specifically trained on or programmed for.
+
+## 12. The Hype Cycle and "AI Winter"
+While the AI revolution is rapidly unfolding, the field may face short-term setbacks. Just as the early internet was overhyped in 1998–1999 and experienced a crash that dried up investment in the early 2000s, AI could experience its own temporary pullbacks before reaching its full potential.
+
+## 13. Additional Context: The Ada Lovelace Objection
+The chapter notes a historical perspective from Ada Lovelace in 1843, who remarked that mechanical computers have "no pretensions whatever to originate anything" and can only do what we order them to perform. This prompted early pioneers like Alan Turing to question if computers could learn from experience or show creativity—questions that machine learning is finally answering today. As the authors conclude: *"Don’t believe the short-term hype, but do believe in the long-term vision."*

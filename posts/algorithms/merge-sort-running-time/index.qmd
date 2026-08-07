@@ -1,0 +1,218 @@
+---
+title: "Time Complexity Analysis of Merge Sort"
+date: "2026-08-04"
+categories: [Algorithms]
+---
+
+# Introduction: The Goal
+
+Merge Sort is a classic divide-and-conquer algorithm. Our goal is to prove mathematically that its running time scales at $\Theta(n \log n)$.
+
+To do this, we need to translate the algorithm's code into a mathematical equation, understand the cost of its individual parts, and then solve that equation by visualizing it as a tree. Let's build this logic step by step.
+
+# Step 1: From Code to the "Time Budget" Equation
+
+Before we can calculate the total time, we need a formula that represents the algorithm's structure. We call this formula $T(n)$, which stands for the total time required to sort an array of $n$ elements.
+
+Let's look at the underlying code logic for `MERGE-SORT` and assign a cost to each phase:
+
+1. Divide (Lines 1-2): $\Theta(1)$
+
+   - Code: `if p < r`, then `q = floor((p + r) / 2)`
+   - The cost: Calculating the middle index is a basic math operation. It takes the same fraction of a second whether the array has 4 items or 4,000,000 items. Because this cost is constant and does not grow with $n$, it is $\Theta(1)$.
+
+2. Conquer (Lines 3-4): $2T(n/2)$
+
+   - Code: `MERGE-SORT(LeftHalf)` and `MERGE-SORT(RightHalf)`
+   - The cost: We are splitting an array of $n$ elements into two halves of size $n/2$. If sorting an array takes $T(\text{size})$ time, then sorting one half takes $T(n/2)$. Because we have to sort two halves, the cost is $T(n/2) + T(n/2) = 2T(n/2)$.
+
+3. Combine (Line 5): $\Theta(n)$
+
+   - Code: `MERGE(LeftHalf, RightHalf)`
+   - The cost: The algorithm zips the two sorted halves back into a single array. As we will prove in the next section, this takes time directly proportional to the number of elements, $n$. Therefore, it costs $\Theta(n)$.
+
+## The Resulting Formula
+
+Adding these parts together gives us our foundational time budget:
+
+$$
+T(n) = \underbrace{\Theta(1)}_{\text{Divide}} + \underbrace{2T(n/2)}_{\text{Conquer}} + \underbrace{\Theta(n)}_{\text{Combine}}
+$$
+
+Because the linear merging work ($\Theta(n)$) completely eclipses the tiny constant-time work spent dividing ($\Theta(1)$), we group all the non-recursive work into a single linear term, representing it as $cn$ (where $c$ is just some constant amount of time per element). This gives us our final, clean recurrence relation:
+
+$$
+T(n) = 2T(n/2) + cn
+$$
+
+# Step 2: Why is the Combine Step Linear ($cn$)?
+
+In our formula, we claimed that merging the arrays takes $cn$ time. Why is this true? Let's trace a concrete example and count the exact actions the computer takes inside the `MERGE` procedure.
+
+Imagine merging two sorted halves into a combined array of 6 elements:
+
+- Left half $L$: `[2, 5, 8]`
+- Right half $R$: `[1, 4, 7]`
+- Combined array $A$: `[_, _, _, _, _, _]` (6 slots to fill)
+
+At each step, the CPU looks at the front items of $L$ and $R$, picks the smaller one, writes it to $A$, and advances its pointer.
+
+| Step | Comparing front items | Smaller item | Array $A$ after placement | Work done |
+|---|---|---|---|---|
+| 1 | 2 vs 1 | 1 | `[1, _, _, _, _, _]` | 1 compare + 1 write |
+| 2 | 2 vs 4 | 2 | `[1, 2, _, _, _, _]` | 1 compare + 1 write |
+| 3 | 5 vs 4 | 4 | `[1, 2, 4, _, _, _]` | 1 compare + 1 write |
+| 4 | 5 vs 7 | 5 | `[1, 2, 4, 5, _, _]` | 1 compare + 1 write |
+| 5 | 8 vs 7 | 7 | `[1, 2, 4, 5, 7, _]` | 1 compare + 1 write |
+| 6 | 8 vs $\infty$ | 8 | `[1, 2, 4, 5, 7, 8]` | 1 compare + 1 write |
+
+## The Math Behind the Cost
+
+For every single empty slot in array $A$, the computer performs a fixed, simple set of actions. This basic unit of work takes a tiny, constant amount of time, let's call it $c$. Because there are $n$ slots to fill, the CPU performs that unit of work exactly $n$ times.
+
+$$
+\text{Total Work} = c \times n = cn
+$$
+
+This proves that merging scales perfectly linearly with the data size.
+
+# Step 3: Solving the Formula with a Recursion Tree
+
+Now we know our formula is $T(n) = 2T(n/2) + cn$, and we know why. But how do we solve this equation to get the final runtime? We draw it out as a recursion tree to see the workload at every level of the divide-and-conquer process.
+
+To find the total work of the entire algorithm, we need to calculate the "area" of this tree: width (work per level) multiplied by height (number of levels).
+
+## The Width: Work Per Level
+
+- Top level: We start with 1 problem of size $n$. The merge work is just $cn$.
+- Level 1: We split into 2 problems of size $n/2$. The merge work is $c(n/2) + c(n/2) = cn$.
+- Level 2: We split into 4 problems of size $n/4$. The merge work is $4 \times c(n/4) = cn$.
+
+### The Golden Rule
+
+Notice a pattern? When you break a problem in half, you double the number of subproblems ($1 \to 2 \to 4 \dots$), but you also cut the work per subproblem in half ($cn \to cn/2 \to cn/4 \dots$). The doubling and the halving perfectly cancel out. Therefore, every single level of the tree requires exactly $cn$ work.
+
+Wait, what about the very bottom leaf nodes (size 1)? Even though an array of 1 element does not need to be sorted, the CPU still has to allocate stack memory, check the base case (`if p < r`), and return. This takes a constant time, $c$. Since there are exactly $n$ leaf nodes at the bottom, their total cost is $n \times c = cn$. The rule holds true all the way to the bottom.
+
+## The Height: Number of Levels
+
+How tall is this tree? The height is determined by how many times we can divide $n$ by 2 until we reach arrays of size 1.
+
+In mathematics, this question—"How many times do I divide $n$ by 2 to get 1?"—is answered by the base-2 logarithm: $\log_2 n$ (often written in computer science as just $\lg n$).
+
+As $n$ grows, $\lg n$ grows incredibly slowly:
+
+- $n = 8 \implies \lg 8 = 3$ splits
+- $n = 1,024 \implies \lg 1024 = 10$ splits
+- $n = 1,000,000 \implies \lg 1,000,000 \approx 20$ splits
+
+Including the very first top level, the total height of our tree is $\lg n + 1$ levels.
+
+# Step 4: Putting It All Together
+
+We have the width and the height. Now we multiply them to find the total time spent across the entire execution of the algorithm:
+
+$$
+\text{Total Cost} = (\text{Work per level}) \times (\text{Total levels})
+$$
+
+$$
+\text{Total Cost} = cn \cdot (\lg n + 1)
+$$
+
+$$
+\text{Total Cost} = cn \lg n + cn
+$$
+
+When converting to Big-$\Theta$ notation, we drop the lower-order term ($cn$) and the constant coefficient ($c$), leaving us with the final worst-case complexity:
+
+$$
+\Theta(n \log n)
+$$
+
+## Concrete Example: Tree for $n=8$
+
+To visualize this final calculation, here is exactly what the tree looks like for an array of 8 elements.
+
+```text
+Level 0 (Root):                  8c                              = 8c
+                             /        \
+Level 1:                   4c          4c                        = 8c
+                          /  \        /  \
+Level 2:                2c    2c    2c    2c                     = 8c
+                       / \   / \   / \   / \
+Level 3 (Leaves):     c   c c   c c   c c   c                    = 8c
+----------------------------------------------------------------------
+Total Work:                                                      = 32c
+```
+
+- Width: $8c$ work per level.
+- Height: $\log_2(8) + 1 = 3 + 1 = 4$ levels.
+- Total: $4 \times 8c = 32c$.
+
+Since $32c = 8c \log_2(8) + 8c$, it perfectly matches our $cn \lg n + cn$ formula.
+
+# Epilogue: The Master Blueprint
+
+Now that you deeply understand how Merge Sort's runtime is calculated, you can actually apply this logic to almost any divide-and-conquer algorithm. This generalized approach forms the foundation of what computer scientists call the Master Method.
+
+Instead of writing out a custom tree every single time, we can plug an algorithm's properties into a "Master Blueprint" formula:
+
+$$
+T(n) = aT(n/b) + D(n) + C(n)
+$$
+
+Every variable in this blueprint tells a specific story about the algorithm's behavior:
+
+- $a$: Number of subproblems. How fast does the recursion tree branch out?
+- $b$: Shrinkage factor. By what fraction does the data shrink each time?
+- $D(n)$: Divide time. The cost to split the problem apart.
+- $C(n)$: Combine time. The cost to stitch the solutions back together.
+
+## The Tug of War
+
+The true power of this blueprint is that it reveals a mathematical tug-of-war happening inside the algorithm.
+
+On one side, you have the proliferation rate (determined by $a$) multiplying the number of problems. On the other side, you have the shrinkage rate (determined by $b$) and the overhead cost of merging ($C(n)$). Who wins this tug-of-war determines the shape of the tree and the final Big-$\Theta$ complexity.
+
+## Example 1: Merge Sort (The Perfect Tie)
+
+As we discovered earlier, for Merge Sort:
+
+- $a = 2$ (splits into 2 arrays)
+- $b = 2$ (each array is half the size)
+- $D(n) + C(n) = \Theta(n)$ (linear time to merge)
+
+Because the rate at which the problems double ($a = 2$) perfectly balances the rate at which the workload shrinks ($b = 2$), the total work done at every single level of the tree remains a constant $cn$. A perfectly rectangular tree of width $n$ and height $\log n$ gives us $\Theta(n \log n)$.
+
+## Example 2: Binary Search (The Shrinking Tree)
+
+Let's apply the blueprint to an entirely different algorithm: finding a number in a sorted array using binary search.
+
+In binary search, you look at the middle element. If it is not what you're looking for, you discard half the array and recursively search the remaining half.
+
+- $a = 1$ (you only search one half; the other is thrown away)
+- $b = 2$ (the array you search is cut in half)
+- $D(n) + C(n) = \Theta(1)$ (finding the middle takes constant time, and there is nothing to merge)
+
+Plugging this into our blueprint gives:
+
+$$
+T(n) = 1 \cdot T(n/2) + \Theta(1)
+$$
+
+Think about what this recursion tree looks like. Because $a = 1$, the tree never branches out. It is just a straight, single line going down.
+
+- Level 0: 1 problem of size $n$, costing $c$
+- Level 1: 1 problem of size $n/2$, costing $c$
+- Level 2: 1 problem of size $n/4$, costing $c$
+
+Every level costs a tiny constant amount $c$. How many levels are there? Just like before, dividing by 2 means there are $\lg n$ levels.
+
+Multiplying the width ($c$) by the height ($\lg n$) gives us the final complexity for binary search:
+
+$$
+\Theta(\log n)
+$$
+
+By simply breaking an algorithm down into its $a$, $b$, and overhead costs, the Master Blueprint allows you to instantly visualize the shape of the workload and calculate the runtime.

@@ -1,0 +1,441 @@
+---
+title: "English Word Dictionary Day 1"
+date: "2026-07-31"
+categories: [English]
+---
+
+::: {.callout-note}
+💡 **使用說明**：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。
+:::
+
+## 🔍 生字快速索引
+
+| 英文生字 | 音標 (IPA) | 詞性 | 廣東話地道意思 | 難度/常用度 |
+|:---|:---|:---|:---|:---:|
+| **be overcome with** | /bi ˌəʊ.vəˈkʌm wɪð/ | *phr.* | 俾（某種強烈情緒）控制住 / 湧上心頭 | ⭐⭐⭐ |
+| **riddled** | /ˈrɪd.əld/ | *adj.* | 充滿（負面嘢）、滿佈、千瘡百孔 | ⭐⭐⭐ |
+| **torment** | /ˈtɔː.ment/ (n.) <br> /tɔːˈment/ (v.) | *n. / v.* | 折磨、極度痛苦、死纏爛打 | ⭐⭐⭐ |
+| **attributed** | /əˈtrɪb.jə.tɪd/ | *v.* | 歸功於、歸咎於、被認為係出自（某人） | ⭐⭐⭐ |
+| **debase** | /dɪˈbeɪs/ | *v.* | 貶低、降低價值、搞 Cheap | ⭐⭐⭐⭐ |
+| **amasses** | /əˈmæs.ɪz/ | *v.* | 累積、積聚（財富/知識） | ⭐⭐⭐ |
+| **peerless** | /ˈpɪə.ləs/ | *adj.* | 無與倫比、超班、冇得頂 | ⭐⭐⭐⭐ |
+| **plagued** | /pleɪɡd/ | *v. / adj.* | 備受困擾、纏繞、搞到一鑊泡 | ⭐⭐⭐ |
+| **pursuit** | /pəˈsjuːt/ | *n.* | 追求、追捕、嗜好/消遣 | ⭐⭐⭐ |
+| **toddler** | /ˈtɒd.lər/ | *n.* | 啱啱學行嘅BB、幼兒 | ⭐⭐ |
+| **holds up** | /həʊldz ʌp/ | *phr. v.* | 站得住腳、經得起考驗 / 阻滯 | ⭐⭐⭐ |
+| **beset** | /bɪˈset/ | *v. / adj.* | 困擾、充滿（困難/問題） | ⭐⭐⭐⭐ |
+| **launch pad** | /ˈlɔːntʃ ˌpæd/ | *n.* | 發射台、起步點、跳板 | ⭐⭐ |
+| **inferiority complex** | /ɪnˌfɪə.riˈɒr.ə.ti ˌkɒm.pleks/ | *n.* | 自卑感、自卑情結 | ⭐⭐⭐⭐ |
+| **utter** | /ˈʌt.ər/ | *adj. / v.* | 徹頭徹尾、完全的 / 講出口 | ⭐⭐⭐ |
+| **Oedipus complex** | /ˈiː.dɪ.pəs ˌkɒm.pleks/ | *n.* | 戀母情結 | ⭐⭐⭐⭐⭐ |
+| **nuances** | /ˈnjuː.ɑːnsɪz/ | *n.* | 細微差別、細節位 | ⭐⭐⭐⭐ |
+| **with regard to** | /wɪð rɪˈɡɑːd tuː/ | *phr.* | 關於、至於 | ⭐⭐⭐ |
+| **resolved to** | /rɪˈzɒlvd tuː/ | *phr. v.* | 下定決心去做 | ⭐⭐⭐ |
+| **whatsoever** | /ˌwɒt.səʊˈev.ər/ | *adv.* | 絲毫、一啲都（無） | ⭐⭐⭐ |
+
+---
+
+## 📚 生字詳細解析
+
+### 1. be overcome with (something)
+
+* **詞性**：片語 (Phrase)
+* **讀音**：/bi ˌəʊ.vəˈkʌm wɪð/
+* **廣東話解法**：指突然之間俾一種好強烈嘅情緒（例如悲傷、恐懼、喜悅等）淹沒或者控制，搞到個人無法自控。廣東話通常會話「俾（某種情緒）控制住」、「成個人都係...」或者「（情緒）湧晒上嚟」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: She was overcome with emotion when she won the award.
+* **廣東話口語**: 佢贏咗個獎嗰陣，激動到控制唔到自己（啲情緒湧晒上嚟）。
+
+* **English**: I was overcome with guilt after lying to him.
+* **廣東話口語**: 我同佢講完大話之後，覺得超級內疚（內疚感湧晒出嚟 / 俾內疚感浸沒咗）。
+:::
+
+**常見搭配 (Collocations)**：
+* `overcome with grief`：傷心欲絕 / 傷心到崩潰
+* `overcome with joy`：開心到癲 / 狂喜
+* `overcome with fear`：驚到呆咗 / 俾恐懼支配
+
+---
+
+### 2. riddled (with something)
+
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/ˈrɪd.əld/
+* **廣東話解法**：通常用嚟形容「充滿咗啲唔好嘅嘢」（例如錯誤、疾病、貪污或者子彈窿）。廣東話會視乎配搭譯做「滿佈」、「千瘡百孔」、「錯漏百出」或者「周身都係」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: His report was riddled with errors.
+* **廣東話口語**: 佢份報告錯漏百出（周圍都係錯處）。
+
+* **English**: The car was riddled with bullets.
+* **廣東話口語**: 架車俾人開槍打到變咗馬蜂窩（滿佈子彈窿）。
+:::
+
+**常見搭配 (Collocations)**：
+* `riddled with errors / mistakes`：錯漏百出
+* `riddled with corruption`：充滿貪污腐敗
+* `riddled with disease`：百病叢生 / 周身病痛
+* `riddled with bullet holes`：滿佈子彈窿 / 打到變馬蜂窩
+
+---
+
+### 3. torment
+
+* **詞性**：名詞 (Noun) / 動詞 (Verb)
+* **讀音**：名詞讀音為 /ˈtɔː.ment/，動詞讀音為 /tɔːˈment/（重音喺後面）
+* **廣東話解法**：
+    * 做**名詞**時，指肉體或精神上受到嘅「極大痛苦」或者「折磨」。
+    * 做**動詞**時，指特登去「折磨」人、「玩殘」人，或者不斷令對方覺得好煩、好痛苦。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English (Noun)**: Waiting for the medical test results was absolute torment.
+* **廣東話口語**: 等緊驗身報告出嗰段時間，真係一種折磨（痛苦到死）。
+
+* **English (Verb)**: The older kids used to torment him at school.
+* **廣東話口語**: 以前喺學校啲大個仔成日恰佢 / 玩殘佢（特登去折磨佢）。
+:::
+
+**常見搭配 (Collocations)**：
+* `in agony and torment`：極度痛苦
+* `mental torment`：精神折磨
+
+---
+
+### 4. attributed (to someone / something)
+
+* **詞性**：動詞 (Verb - 過去式 / 過去分詞)
+* **讀音**：/əˈtrɪb.jə.tɪd/
+* **廣東話解法**：最常用係 `be attributed to`，指將一件事嘅發生（例如成功或失敗）「歸功於」或者「歸咎於」某個原因或某人。另外，亦可以解作一幅畫、一句說話「被認為係出自」某人之手。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Her success can be attributed to hard work and determination.
+* **廣東話口語**: 佢咁成功，可以歸功於（全靠）佢夠勤力同有決心。
+
+* **English**: The quote is widely attributed to Albert Einstein, but he never actually said it.
+* **廣東話口語**: 呢句金句好多人都話係出自愛因斯坦（以為係佢講），但其實佢根本無講過。
+:::
+
+**常見搭配 (Collocations)**：
+* `widely attributed to`：普遍認為係...造成 / 出自...
+* `directly attributed to`：直接歸因於 / 直接因為...而起
+
+---
+
+### 5. debase
+
+* **詞性**：動詞 (Verb)
+* **讀音**：/dɪˈbeɪs/
+* **廣東話解法**：指降低一樣嘢嘅價值、品質，或者降低一個人嘅品格。廣東話通常會講「貶低」、「搞到好 Cheap」或者「拉低個層次」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: He wouldn't debase himself by asking them for money.
+* **廣東話口語**: 佢唔會為咗問佢哋攞錢而貶低自己（搞到自己咁 Cheap）。
+
+* **English**: The currency was debased by the government.
+* **廣東話口語**: 啲貨幣俾政府搞到貶晒值。
+:::
+
+**常見搭配 (Collocations)**：
+* `debase yourself`：貶低自己
+* `debase the currency`：貨幣貶值 / 降低貨幣價值
+
+---
+
+### 6. amasses (amass 嘅第三人稱單數)
+
+* **詞性**：動詞 (Verb)
+* **讀音**：/əˈmæs.ɪz/ (原型讀音為 /əˈmæs/)
+* **廣東話解法**：指大量地收集或者累積（通常係指財富、知識或者證據）。廣東話會講「積聚」、「儲埋儲埋一大堆」或者「積埋積埋」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: By the time he was 40, he had amassed a fortune.
+* **廣東話口語**: 佢四十歲嗰陣，已經積聚咗一大筆財富（儲埋儲埋好多錢）。
+
+* **English**: She amasses evidence for her research.
+* **廣東話口語**: 佢為咗自己個研究，周圍收集（儲埋）好多證據。
+:::
+
+**常見搭配 (Collocations)**：
+* `amass a fortune / wealth`：累積財富
+* `amass evidence / data`：收集大量證據 / 數據
+
+---
+
+### 7. peerless
+
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/ˈpɪə.ləs/
+* **廣東話解法**：指冇人能夠比得上。廣東話通常會講「無與倫比」、「超班」、「冇得頂」或者「天下無雙」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: As a martial artist, Bruce Lee was peerless.
+* **廣東話口語**: 作為一個武術家，李小龍真係超晒班（冇人夠佢打 / 無與倫比）。
+
+* **English**: The hotel offers peerless service.
+* **廣東話口語**: 呢間酒店嘅服務真係冇得頂（無人能及）。
+:::
+
+**常見搭配 (Collocations)**：
+* `peerless beauty`：絕色 / 無雙嘅美貌
+* `peerless performance`：無與倫比嘅表現
+
+---
+
+### 8. plagued (plague 嘅過去式 / 過去分詞)
+
+* **詞性**：動詞 (Verb) / 亦可作被動語態形容詞
+* **讀音**：/pleɪɡd/
+* **廣東話解法**：指不斷受到某啲壞事或麻煩嘅折磨。廣東話通常會講「備受困擾」、「纏繞住」、「煩死」或者「搞到一鑊泡」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The project has been plagued by financial problems from the start.
+* **廣東話口語**: 個項目一開始就一路俾財務問題困擾住（搞到一鑊泡）。
+
+* **English**: He has been plagued with leg injuries this season.
+* **廣東話口語**: 佢今季一直俾啲腳傷纏繞住。
+:::
+
+**常見搭配 (Collocations)**：
+* `plagued by problems / doubts`：被問題 / 疑慮困擾
+* `plagued with injuries / disease`：傷患 / 疾病纏身
+
+---
+
+### 9. pursuit
+
+* **詞性**：名詞 (Noun)
+* **讀音**：/pəˈsjuːt/
+* **廣東話解法**：主要有三個解法：第一係「追求」（例如追求夢想、學問）；第二係「追捕 / 追擊」；第三（通常加 s 變眾數 pursuits）可以解作「消遣」或者「嗜好」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: She travelled the world in pursuit of her dreams.
+* **廣東話口語**: 佢為咗追求自己嘅夢想，去咗環遊世界。
+
+* **English**: The police are in hot pursuit of the stolen car.
+* **廣東話口語**: 啲警察窮追不捨緊（狂追）架失車。
+
+* **English**: He enjoys outdoor pursuits like hiking and cycling.
+* **廣東話口語**: 佢好鍾意行山同踩單車呢類戶外活動（消遣）。
+:::
+
+**常見搭配 (Collocations)**：
+* `in pursuit of`：為咗追求... / 追捕緊...
+* `hot pursuit`：窮追不捨
+* `leisure / outdoor pursuits`：休閒 / 戶外消遣活動
+
+---
+
+### 10. toddler
+
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˈtɒd.lər/
+* **廣東話解法**：指啱啱開始學行路（大概一至三歲）嘅細路仔。因為佢哋行路通常跌跌撞撞（toddle），所以英文叫 toddler。廣東話通常會叫「學行BB」、「BB」或者「幼兒」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The toddler took a few steps and fell down.
+* **廣東話口語**: 個啱啱學行嘅BB行咗幾步就跌低咗。
+
+* **English**: We bought some educational toys for toddlers.
+* **廣東話口語**: 我哋買咗啲俾幼兒玩嘅益智玩具。
+:::
+
+**常見搭配 (Collocations)**：
+* `toddler years`：幼兒時期（通常指 1-3 歲）
+* `toddler group`：幼兒遊戲小組 / Playgroup
+
+---
+
+### 11. holds up
+
+* **詞性**：片語動詞 (Phrasal Verb)
+* **讀音**：/həʊldz ʌp/
+* **廣東話解法**：常見有兩個意思：第一係指一個論點、藉口或者質素「站得住腳」、「經得起考驗」；第二係指事情或者交通受到「阻滯 / 拖延」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: His excuse for being late just doesn't hold up.
+* **廣東話口語**: 佢遲到個藉口根本站唔住腳（講唔通 / 呃唔到人）。
+
+* **English**: Sorry I'm late, I was held up in traffic.
+* **廣東話口語**: 唔好意思遲咗，頭先塞車阻住咗（有阻滯）。
+:::
+
+**常見搭配 (Collocations)**：
+* `argument holds up`：論點站得住腳
+* `held up by (something)`：俾（某啲嘢）拖延 / 阻滯
+
+---
+
+### 12. beset
+
+* **詞性**：動詞 (Verb) / 被動語態形容詞
+* **讀音**：/bɪˈset/
+* **廣東話解法**：指四方八面都係困難、問題或者危險。廣東話通常會講「困擾」、「充滿（困難）」、「困難重重」或者「俾麻煩圍住晒」。同 *plagued* 意思相近。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The project was beset by financial difficulties.
+* **廣東話口語**: 個項目遇到重重財務困難（俾財困問題纏繞住）。
+
+* **English**: She is beset with self-doubt.
+* **廣東話口語**: 佢充滿自我懷疑（成日都覺得自己唔得）。
+:::
+
+**常見搭配 (Collocations)**：
+* `beset by / with problems`：困難重重
+* `beset with danger`：危機四伏
+
+---
+
+### 13. launch pad
+
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˈlɔːntʃ ˌpæd/
+* **廣東話解法**：字面意思係火箭嘅「發射台」。通常用作比喻，指事業或者某項計劃嘅「起步點」或者「跳板」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: He used the job as a launch pad for his political career.
+* **廣東話口語**: 佢當呢份工係佢政治生涯嘅跳板（起步點）。
+
+* **English**: The new policy will serve as a launch pad for economic growth.
+* **廣東話口語**: 呢個新政策將會成為經濟增長嘅推動力（發射台）。
+:::
+
+**常見搭配 (Collocations)**：
+* `act as a launch pad`：作為跳板 / 起步點
+* `provide a launch pad`：提供一個發揮嘅平台
+
+---
+
+### 14. inferiority complex
+
+* **詞性**：名詞 (Noun)
+* **讀音**：/ɪnˌfɪə.riˈɒr.ə.ti ˌkɒm.pleks/
+* **廣東話解法**：心理學名詞，指人有一種強烈覺得自己唔夠人哋好、低人一等嘅心態。廣東話通常會叫「自卑感」或者「自卑情結」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: She has a massive inferiority complex when it comes to her looks.
+* **廣東話口語**: 一講到自己個樣，佢就有好嚴重嘅自卑感。
+
+* **English**: He constantly criticizes others to hide his own inferiority complex.
+* **廣東話口語**: 佢成日踩低人，其實係想掩飾自己嘅自卑。
+:::
+
+**常見搭配 (Collocations)**：
+* `have / suffer from an inferiority complex`：有自卑感
+* `massive inferiority complex`：極度自卑
+
+---
+
+### 15. utter
+
+* **詞性**：形容詞 (Adjective) / 動詞 (Verb)
+* **讀音**：/ˈʌt.ər/
+* **廣東話解法**：
+    * 做**形容詞**時，用嚟強調程度，解作「完全的」、「徹頭徹尾的」。廣東話會講「十足十」、「完全係」。
+    * 做**動詞**時，指「講出口」、「發出聲音」。廣東話會講「出聲」、「講嘢」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English (Adj)**: What you are saying is absolute and utter nonsense.
+* **廣東話口語**: 你講嗰啲根本就係徹頭徹尾嘅廢話。
+
+* **English (Verb)**: She sat there without uttering a single word.
+* **廣東話口語**: 佢坐喺度一粒聲都無出過。
+:::
+
+**常見搭配 (Collocations)**：
+* `utter chaos / nonsense / disaster`：完全混亂 / 徹頭徹尾嘅廢話 / 徹底嘅災難
+* `not utter a word`：隻字不提 / 一聲都唔出
+
+---
+
+### 16. Oedipus complex
+
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˈiː.dɪ.pəs ˌkɒm.pleks/
+* **廣東話解法**：心理學名詞（由佛洛伊德提出），指兒子潛意識對母親有愛慕甚至佔有慾，同時對父親有敵意。廣東話叫「戀母情結」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Psychoanalysts suggested that the character's behavior stemmed from an unresolved Oedipus complex.
+* **廣東話口語**: 心理分析師話個角色嘅行為，係源自佢未解決嘅戀母情結。
+:::
+
+**常見搭配 (Collocations)**：
+* `unresolved Oedipus complex`：未解決嘅戀母情結
+
+---
+
+### 17. nuances (nuance 嘅眾數)
+
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˈnjuː.ɑːnsɪz/
+* **廣東話解法**：指意思、聲音、感覺或者顏色上好微小嘅差異。廣東話通常會講「細微差別」、「細節位」或者「微妙之處」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: You need to understand the nuances of the Cantonese language.
+* **廣東話口語**: 你要明白廣東話入面啲好微妙嘅細節（細微嘅分別）。
+
+* **English**: The actor captured all the nuances of the character.
+* **廣東話口語**: 個演員捕捉到個角色所有嘅細微變化（演得好細膩）。
+:::
+
+**常見搭配 (Collocations)**：
+* `understand / grasp the nuances`：理解當中嘅細微差別
+* `subtle nuances`：微妙嘅細節
+
+---
+
+### 18. with regard to
+
+* **詞性**：片語 (Phrase)
+* **讀音**：/wɪð rɪˈɡɑːd tuː/
+* **廣東話解法**：比較正式嘅寫法，解作「關於」、「至於」或者「講開...」。口語通常會講「關於」、「講起...」或者「喺...方面」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: With regard to your request, we will get back to you shortly.
+* **廣東話口語**: 關於你嘅要求，我哋會好快覆返你。
+
+* **English**: I am writing with regard to my recent order.
+* **廣東話口語**: （寫信常用）我寫呢封信係關於我最近嘅訂單。
+:::
+
+**常見搭配 (Collocations)**：
+* `with regard to (something)`：關於某事
+
+---
+
+### 19. resolved to
+
+* **詞性**：片語動詞 (Phrasal Verb)
+* **讀音**：/rɪˈzɒlvd tuː/
+* **廣東話解法**：指做咗一個好堅定嘅決定去完成一件事。廣東話通常會講「下定決心去做」、「決定咗」或者「立定心腸」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: She resolved to quit smoking this year.
+* **廣東話口語**: 佢下定決心今年一定要戒煙。
+
+* **English**: He resolved to work harder.
+* **廣東話口語**: 佢立定心腸要更加勤力做嘢。
+:::
+
+**常見搭配 (Collocations)**：
+* `resolved to do (something)`：下定決心做某事
+
+---
+
+### 20. whatsoever
+
+* **詞性**：副詞 (Adverb)
+* **讀音**：/ˌwɒt.səʊˈev.ər/
+* **廣東話解法**：通常用喺否定句嘅最尾，用嚟加強語氣，解作「絲毫（都沒有）」或者「無論如何都唔...」。廣東話會講「一啲都（無）」、「絕對唔...」或者「完全無」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: I have no doubt whatsoever about his ability.
+* **廣東話口語**: 我對佢嘅能力絕對無絲毫懷疑（一啲懷疑都無）。
+
+* **English**: There is no evidence whatsoever to support that claim.
+* **廣東話口語**: 完全無任何證據去支持嗰個講法。
+:::
+
+**常見搭配 (Collocations)**：
+* `none whatsoever / nothing whatsoever`：完全無 / 一啲都無
+* `no doubt whatsoever`：毫無疑問

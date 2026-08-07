@@ -1,0 +1,623 @@
+---
+title: "Deep Learning with Python Ch.2 Summary"
+date: "2026-08-01"
+categories: [Deep Learning]
+---
+
+## 1. Tensors
+
+A **tensor** is a container for numerical data.
+
+| Rank | Name | Example |
+|------:|------|---------|
+| 0 | Scalar | `5` |
+| 1 | Vector | `[1,2,3]` |
+| 2 | Matrix | 2D table |
+| 3 | 3D Tensor | Cube of numbers |
+| k | Rank-k Tensor | General multidimensional array |
+
+---
+
+## 2. Three Key Tensor Attributes
+
+### Rank (`ndim`)
+Number of axes.
+
+```python
+x.ndim
+```
+
+Examples:
+
+- Scalar → `0`
+- Vector → `1`
+- Matrix → `2`
+
+### Shape
+
+Dimension along each axis.
+
+Examples:
+
+| Tensor | Shape |
+|---------|-------|
+| Scalar | `()` |
+| Vector | `(5,)` |
+| Matrix | `(3,5)` |
+| Rank-3 Tensor | `(3,3,5)` |
+
+### Data Type (`dtype`)
+
+```python
+x.dtype
+```
+
+Common types:
+
+- `float16`
+- `float32`
+- `float64`
+- `uint8`
+- `bool`
+- `string`
+
+---
+
+## 3. Tensor Slicing
+
+### Select images #10–99
+
+```python
+my_slice = train_images[10:100]
+my_slice.shape
+# (90, 28, 28)
+```
+
+### Bottom-right 14×14 pixels
+
+```python
+my_slice = train_images[:, 14:, 14:]
+```
+
+### Center 14×14 crop
+
+```python
+my_slice = train_images[:, 7:-7, 7:-7]
+```
+
+---
+
+## 4. Data Batches
+
+The **first axis (axis 0)** is the **sample axis** (or **batch axis**).
+
+Batch size = 128
+
+```python
+batch = train_images[:128]
+batch = train_images[128:256]
+batch = train_images[128*n : 128*(n+1)]
+```
+
+---
+
+## 5. Real-World Tensor Examples
+
+### Rank-2 Tensor (Vector Data)
+
+Shape:
+
+```text
+(samples, features)
+```
+
+Examples
+
+| Dataset | Shape |
+|---------|-------|
+| Demographic data | `(100000, 3)` |
+| Bag-of-Words | `(500, 20000)` |
+
+---
+
+### Rank-3 Tensor (Sequence Data)
+
+Shape
+
+```text
+(samples, timesteps, features)
+```
+
+Examples
+
+| Dataset | Shape |
+|---------|-------|
+| Stock prices | `(250,390,3)` |
+| Tweets | `(1000000,280,128)` |
+
+---
+
+### Rank-4 Tensor (Image Data)
+
+Shape
+
+```text
+(samples, height, width, channels)
+```
+
+Examples
+
+| Dataset | Shape |
+|---------|-------|
+| Grayscale images | `(128,256,256,1)` |
+| RGB images | `(128,256,256,3)` |
+
+---
+
+### Rank-5 Tensor (Video Data)
+
+Shape
+
+```text
+(samples, frames, height, width, channels)
+```
+
+Example
+
+```text
+(4,1800,144,256,3)
+```
+
+---
+
+## 6. Tensor Operations
+
+Typical neural network computation
+
+```python
+output = relu(matmul(input, W) + b)
+```
+
+Operations involved
+
+1. Matrix multiplication (`matmul`)
+2. Addition (`+`)
+3. ReLU activation
+
+```python
+z = x + y
+z = np.maximum(z, 0.0)
+```
+
+where
+
+```text
+relu(x) = max(x, 0)
+```
+
+---
+
+## 7. Broadcasting
+
+Broadcasting allows tensors with different shapes to participate in element-wise operations.
+
+Rules:
+
+1. Add missing axes to the smaller tensor.
+2. Repeat along axes of size 1 until shapes match.
+
+### Example 1
+
+Shapes
+
+```text
+(3,5) + (5,)
+```
+
+✅ Compatible
+
+Vector is copied across rows.
+
+---
+
+### Example 2
+
+Shapes
+
+```text
+(3,5) + (3,)
+```
+
+❌ Incompatible
+
+Rightmost dimensions are `5` and `3`.
+
+---
+
+### Example 3
+
+Shapes
+
+```text
+(3,5,5) + (5,5)
+```
+
+✅ Compatible
+
+The `(5,5)` tensor is copied three times.
+
+---
+
+### Example 4
+
+Shapes
+
+```text
+(5,4) * (5,1)
+```
+
+✅ Compatible
+
+Column vector is stretched across columns.
+
+---
+
+## 8. Tensor Product (Matrix Multiplication)
+
+```python
+x = np.random.random((32,))
+y = np.random.random((32,))
+
+z = np.matmul(x, y)
+
+# equivalent
+z = x @ y
+```
+
+NumPy:
+
+```python
+np.matmul()
+```
+
+Keras:
+
+```python
+keras.ops.matmul()
+```
+
+---
+
+## 9. Tensor Reshaping
+
+```python
+x = np.array([[0.,1.],
+              [2.,3.],
+              [4.,5.]])
+
+x.shape
+# (3,2)
+
+x = x.reshape((6,1))
+
+x = x.reshape((2,3))
+```
+
+**Important**
+
+The total number of elements must remain unchanged.
+
+### Transpose
+
+Rows become columns.
+
+```python
+x = np.zeros((300,20))
+
+x = np.transpose(x)
+
+x.shape
+# (20,300)
+```
+
+Equivalent to
+
+```text
+x[i,:] → x[:,i]
+```
+
+---
+
+## 10. Geometric Interpretation of Tensor Operations
+
+### Linear Layers
+
+Stacking linear layers without activation is equivalent to a single linear layer.
+
+### Why Activations?
+
+Without nonlinear activation functions, deep networks are only linear models.
+
+### Role of ReLU
+
+Activation functions allow networks to learn nonlinear transformations.
+
+### Neural Networks as Geometry
+
+A neural network performs a sequence of geometric transformations in high-dimensional space.
+
+### Crumpled Paper Analogy
+
+Think of two colored sheets crumpled together.
+
+Each layer gradually **untangles** the data until different classes become separable.
+
+---
+
+## 11. Gradient-Based Optimization
+
+### Trainable Parameters
+
+- Weights
+- Biases
+
+They start from random values.
+
+---
+
+### Training Loop
+
+1. Sample a mini-batch.
+2. Forward pass.
+3. Compute loss.
+4. Compute gradients.
+5. Update parameters.
+
+---
+
+### Why Not Guess?
+
+Trying one parameter at a time would be extremely slow.
+
+---
+
+### Gradient Descent
+
+Update rule
+
+$$
+W = W - \eta \nabla W
+$$
+
+where
+
+- $\eta$ = learning rate
+- $\nabla W$ = gradient
+
+---
+
+### Learning Rate
+
+- Too small → slow learning
+- Too large → unstable updates
+
+---
+
+### Mini-batch SGD
+
+For each iteration:
+
+1. Sample mini-batch
+2. Forward pass
+3. Compute loss
+4. Backward pass
+5. Update weights
+
+---
+
+### Momentum
+
+Momentum uses previous updates to accelerate optimization.
+
+```python
+past_velocity = 0.0
+momentum = 0.1
+
+while loss > 0.01:
+    w, loss, gradient = get_current_parameters()
+    velocity = past_velocity * momentum - learning_rate * gradient
+    w = w + momentum * velocity - learning_rate * gradient
+    past_velocity = velocity
+    update_parameter(w)
+```
+
+---
+
+## 12. Chain Rule & Backpropagation
+
+Backpropagation efficiently computes gradients using the **chain rule**.
+
+### Chain Rule
+
+If
+
+```text
+y = f(g(x))
+```
+
+then
+
+$$
+\frac{\partial y}{\partial x}
+=
+\frac{\partial y}{\partial g}
+\cdot
+\frac{\partial g}{\partial x}
+$$
+
+For longer chains,
+
+```text
+x → j → h → g → f → y
+```
+
+gradients are multiplied along the chain.
+
+---
+
+### Computation Graph
+
+A neural network is represented as a graph.
+
+```text
+Inputs
+   │
+MatMul
+   │
+ + b1
+   │
+ReLU
+   │
+MatMul
+   │
+ + b2
+   │
+Softmax
+   │
+Loss
+```
+
+---
+
+### Forward Pass
+
+Compute predictions and loss.
+
+```text
+Input
+   ↓
+Hidden Layers
+   ↓
+Prediction
+   ↓
+Loss
+```
+
+---
+
+### Backward Pass
+
+Propagate gradients from loss back to parameters.
+
+```text
+Loss
+ ↑
+x₂
+ ↑
+x₁
+ ↑
+ w
+```
+
+Example
+
+$$
+\frac{\partial Loss}{\partial w}
+=
+\frac{\partial Loss}{\partial x_2}
+\cdot
+\frac{\partial x_2}{\partial x_1}
+\cdot
+\frac{\partial x_1}{\partial w}
+$$
+
+If multiple paths exist, **sum** the gradients.
+
+---
+
+### Simple Example
+
+Forward pass
+
+```text
+x₁ = x · w
+x₂ = x₁ + b
+Loss = |y_true - x₂|
+```
+
+Given
+
+```text
+x = 2
+w = 3
+b = 1
+y_true = 4
+```
+
+Forward computation
+
+```text
+x₁ = 6
+x₂ = 7
+Loss = 3
+```
+
+Backward computation
+
+```text
+∂Loss/∂x₂ = 1
+∂x₂/∂x₁ = 1
+∂x₁/∂w = 2
+∂x₂/∂b = 1
+```
+
+Therefore,
+
+$$
+\frac{\partial Loss}{\partial w}=2
+$$
+
+$$
+\frac{\partial Loss}{\partial b}=1
+$$
+
+---
+
+### Automatic Differentiation
+
+Frameworks such as
+
+- TensorFlow
+- PyTorch
+- JAX
+
+automatically
+
+1. Build the computation graph.
+2. Record operations.
+3. Apply backpropagation.
+4. Compute gradients.
+
+---
+
+## Key Takeaways
+
+- A tensor is a multidimensional array.
+- Every tensor has **rank**, **shape**, and **dtype**.
+- Broadcasting allows element-wise operations on compatible shapes.
+- Neural networks are built from tensor operations such as **matmul**, **addition**, and **ReLU**.
+- Deep learning works because nonlinear activation functions enable complex geometric transformations.
+- Training follows the cycle:
+
+```text
+Forward Pass
+      ↓
+Compute Loss
+      ↓
+Backward Pass
+      ↓
+Update Weights
+```
+
+- Backpropagation uses the **chain rule** to compute gradients efficiently.
+- Modern frameworks automatically perform differentiation and optimization.

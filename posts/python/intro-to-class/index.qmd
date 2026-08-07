@@ -1,0 +1,396 @@
+---
+title: "1. Classes in Python: A Beginner's Guide to Object-Oriented Programming"
+date: "2026-08-05"
+categories: [Python]
+---
+
+# Introduction to Object-Oriented Programming with Python
+
+Welcome to the world of **Object-Oriented Programming (OOP)**!
+
+The name may sound complicated, but the basic idea is quite simple: **OOP is a way of organizing programs by modeling things as objects**, similar to the way we think about objects in the real world.
+
+A helpful way to understand OOP is to imagine a **cookie cutter**.
+
+* **A Class** is the *cookie cutter*. It is a blueprint or template that describes what something should look like and what it can do. You cannot eat the cookie cutter, but it determines the shape of every cookie you make.
+* **An Object** is the *cookie*. It is an actual thing created from the class. One cookie cutter can be used to make many different cookies.
+
+For example, one `Dog` class can be used to create many different dog objects:
+
+```text
+Dog class
+   ↓
+ ┌─────────┬─────────┬─────────┐
+ ↓         ↓         ↓
+Buddy     Daisy     Max
+```
+
+Each object follows the same blueprint but can have its own data.
+
+---
+
+## The 4 Key OOP Vocabulary Words
+
+Before writing code, let's learn four terms that you will encounter constantly when working with classes.
+
+| Term                  | Simple Meaning                                      | Real-World Example          |
+| :-------------------- | :-------------------------------------------------- | :-------------------------- |
+| **Class**             | A blueprint or template for creating objects.       | The general idea of a "Dog" |
+| **Object** (Instance) | A specific item created from a class.               | Your pet dog, Fido          |
+| **Attribute**         | Data stored inside an object that describes it.     | Name, breed, age, fur color |
+| **Method**            | A function inside a class that describes an action. | Barking, sitting, fetching  |
+
+A useful way to remember the difference is:
+
+> **Attributes describe what an object has. Methods describe what an object can do.**
+
+---
+
+# Building Our First Class
+
+Let's turn the general idea of a **Dog** into Python code.
+
+We want our `Dog` class to have:
+
+* **Attributes**: a name and an age
+* **Method**: the ability to bark
+
+```text
+class Dog:
+
+    # The constructor: used to initialize a new object
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    # A method: an action the dog can perform
+    def bark(self):
+        print(f"{self.name} says Woof!")
+```
+
+## Breaking Down the Code
+
+Let's examine the code one piece at a time.
+
+### 1. `class Dog:`
+
+```text
+class Dog:
+```
+
+This tells Python:
+
+> "I want to create a new blueprint called `Dog`."
+
+By convention, Python class names usually begin with a **capital letter**.
+
+---
+
+### 2. `def __init__(self, name, age):`
+
+```text
+def __init__(self, name, age):
+```
+
+`__init__` is a special method called the **constructor**.
+
+It runs automatically whenever we create a new object from the class.
+
+The constructor allows us to provide the initial information needed to set up our object.
+
+For example:
+
+```text
+Dog("Buddy", 3)
+```
+
+Python uses `"Buddy"` as the name and `3` as the age when setting up the new dog.
+
+---
+
+### 3. `self.name = name`
+
+```text
+self.name = name
+self.age = age
+```
+
+The keyword `self` refers to **the particular object currently being created or used**.
+
+So:
+
+```text
+self.name = name
+```
+
+can be understood as:
+
+> "Take the name provided by the user and store it as the name of **this specific dog**."
+
+Similarly:
+
+```text
+self.age = age
+```
+
+means:
+
+> "Store this age as the age of **this specific dog**."
+
+---
+
+### 4. `def bark(self):`
+
+```text
+def bark(self):
+    print(f"{self.name} says Woof!")
+```
+
+This is a function defined inside a class, so we call it a **method**.
+
+The method also receives `self` because the dog needs to know **which dog** is performing the action.
+
+---
+
+# Bringing the Class to Life
+
+Our class is only a blueprint so far.
+
+Now let's use it to create actual objects.
+
+```text
+# Create the first dog
+dog_1 = Dog("Buddy", 3)
+
+# Create a second dog
+dog_2 = Dog("Daisy", 5)
+```
+
+We have now created two separate objects:
+
+* `dog_1` represents Buddy, who is 3 years old.
+* `dog_2` represents Daisy, who is 5 years old.
+
+Both objects were created from the same `Dog` class, but each object has its **own data**.
+
+---
+
+## Accessing Attributes and Methods
+
+We can interact with an object using the **dot operator (`.`)**.
+
+### Accessing Attributes
+
+```text
+print(dog_1.name)
+# Buddy
+
+print(dog_2.age)
+# 5
+```
+
+The dot tells Python which attribute belonging to the object we want to access.
+
+### Calling Methods
+
+```text
+dog_1.bark()
+# Buddy says Woof!
+
+dog_2.bark()
+# Daisy says Woof!
+```
+
+Notice how the same method can produce different results depending on the object that calls it.
+
+This is one of the key ideas behind OOP.
+
+---
+
+# Why Do We Use Classes?
+
+For a very small program, you may not need classes.
+
+For example, if you are writing a quick program to calculate your taxes, a class might be unnecessary.
+
+However, as programs become larger—such as:
+
+* video games,
+* web applications,
+* data dashboards,
+* simulations, or
+* business software,
+
+classes can make your code much easier to organize.
+
+Imagine a video game with two players.
+
+Without classes, you might have variables such as:
+
+```text
+player_1_health
+player_1_score
+player_2_health
+player_2_score
+```
+
+As the game becomes more complicated, you could end up with dozens or even hundreds of related variables.
+
+Instead, we can create a `Player` class and then create multiple player objects from it.
+
+```text
+Player class
+      ↓
+ ┌────┴────┐
+ ↓         ↓
+Player 1  Player 2
+```
+
+Each player object can keep track of its own health, score, name, and other information.
+
+> **A class lets us organize related data and actions into one reusable structure.**
+
+---
+
+# Understanding `self`
+
+The keyword `self` is one of the most important concepts for beginners learning Python classes.
+
+Think of a class as a blueprint for building robots.
+
+Suppose we use the blueprint to build two robots:
+
+```text
+Robot class
+     ↓
+ ┌───┴────┐
+ ↓        ↓
+Wall-E   R2-D2
+```
+
+Both robots are built from exactly the same blueprint.
+
+However, if we ask Wall-E to introduce itself, we want **Wall-E** to give its name—not R2-D2.
+
+In Python, `self` means:
+
+> **"this particular object"**
+
+or, more casually:
+
+> **"me" / "my"**
+
+Let's see this in action.
+
+```text
+class Robot:
+
+    # self.name means "MY name"
+    def __init__(self, name):
+        self.name = name
+
+    # self.name means "MY name"
+    def introduce(self):
+        print(f"Hello, my name is {self.name}.")
+
+
+# Create two different robot objects
+robot_1 = Robot("Wall-E")
+robot_2 = Robot("R2-D2")
+
+
+robot_1.introduce()
+# Hello, my name is Wall-E.
+
+robot_2.introduce()
+# Hello, my name is R2-D2.
+```
+
+Even though both robots use exactly the same class definition, each object stores its own name.
+
+```text
+robot_1.name → "Wall-E"
+robot_2.name → "R2-D2"
+```
+
+That's the power of `self`.
+
+---
+
+# What Happens If You Forget `self`?
+
+One of the most common mistakes beginners make is forgetting `self` when defining a method.
+
+Consider this example:
+
+```text
+class Robot:
+
+    # Oops! We forgot self.
+    def beep():
+        print("Beep boop!")
+
+
+my_robot = Robot()
+my_robot.beep()
+```
+
+Python will produce an error similar to:
+
+```text
+TypeError: Robot.beep() takes 0 positional arguments but 1 was given
+```
+
+At first, this error can seem strange.
+
+You might think:
+
+> "I didn't give `beep()` any arguments! The parentheses are empty!"
+
+So where did the mysterious **1 argument** come from?
+
+---
+
+## Python Is Doing Something Behind the Scenes
+
+When you write:
+
+```text
+my_robot.beep()
+```
+
+Python effectively treats this as:
+
+```text
+Robot.beep(my_robot)
+```
+
+In other words, Python automatically passes the object that called the method as the first argument.
+
+That object needs somewhere to go.
+
+That is why we write:
+
+```text
+def beep(self):
+```
+
+The `self` parameter is the place where Python passes the current object.
+
+You can think of it like this:
+
+```text
+my_robot.beep()
+      ↓
+Python automatically passes my_robot
+      ↓
+Robot.beep(my_robot)
+      ↓
+             self
+              ↓
+        "this robot"
+```
+
+So when you forget `self`, Python is essentially saying:
+
+> "I tried to give you the robot object, but your method doesn't have a parameter to receive it!"

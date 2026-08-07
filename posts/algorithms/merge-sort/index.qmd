@@ -1,0 +1,122 @@
+---
+title: "Merge Sort: A Divide-and-Conquer Algorithm"
+date: "2026-07-29"
+categories: [Algorithms]
+---
+
+## 1. Algorithm Design Approaches
+
+Algorithms can be designed using various fundamental approaches. Two primary techniques are:
+
+*   **Incremental Approach:** Used by algorithms like Insertion Sort. It builds the solution one element at a time (e.g., inserting a single element into an already sorted subarray).
+*   **Divide-and-Conquer Approach:** A highly recursive alternative that often yields significantly faster worst-case running times. It solves problems by breaking them down into smaller, manageable pieces.
+
+---
+
+## 2. The Divide-and-Conquer Paradigm
+
+This recursive approach involves three distinct steps at each level of the recursion:
+
+1.  **Divide:** Break the original problem into a number of smaller subproblems that are just smaller instances of the exact same problem.
+2.  **Conquer:** Solve the subproblems recursively. However, if the subproblem size is small enough (the recursion "bottoms out"), solve it in a straightforward, direct manner.
+3.  **Combine:** Merge the solutions of the smaller subproblems together to formulate the solution to the original, overarching problem.
+
+---
+
+## 3. Merge Sort Overview
+
+Merge Sort is a classic algorithm that strictly follows the divide-and-conquer paradigm to sort a sequence of elements:
+
+*   **Divide:** Split the sequence into two separate subsequences of equal (or near-equal) size.
+*   **Conquer:** Recursively sort both subsequences. This process bottoms out when a sequence hits a length of 1, as a single element is already inherently sorted.
+*   **Combine:** Merge the two sorted subsequences back together to produce the final, fully sorted answer.
+
+---
+
+## 4. The Engine: The `MERGE` Procedure
+
+To understand Merge Sort, you first have to understand its engine: the "combine" step. This is handled by an auxiliary procedure called `MERGE(A, p, q, r)`. 
+
+It assumes that the two subarrays $A[p \dots q]$ and $A[q+1 \dots r]$ are already sorted. Its job is to merge them into a single sorted subarray that replaces the space they currently take up ($A[p \dots r]$).
+
+> **The Card Analogy:** Imagine two sorted piles of cards face up on a table. You compare the top two cards, remove the smaller one, and place it face down in a new output pile. You repeat this constant-time comparison step until all cards are merged. 
+> 
+> To prevent constantly checking if either pile is completely empty, a special "sentinel" card containing the value infinity ($\infty$) is placed at the bottom of each pile. This guarantees that the core sorting logic stops exactly when all real data has been merged.
+
+### `MERGE` Pseudocode
+
+Below is the pseudocode for the merging process, demonstrating the use of the new temporary arrays ($L$ and $R$) and the sentinel values.
+
+| Line | `MERGE(A, p, q, r)` |
+|---:|:---|
+| 1 | $n_1 = q - p + 1$ |
+| 2 | $n_2 = r - q$ |
+| 3 | let $L[1 \dots n_1 + 1]$ and $R[1 \dots n_2 + 1]$ be new arrays |
+| 4 | **for** $i = 1$ **to** $n_1$ |
+| 5 | &nbsp;&nbsp;&nbsp;&nbsp;$L[i] = A[p + i - 1]$ |
+| 6 | **for** $j = 1$ **to** $n_2$ |
+| 7 | &nbsp;&nbsp;&nbsp;&nbsp;$R[j] = A[q + j]$ |
+| 8 | $L[n_1 + 1] = \infty$ &nbsp;&nbsp;&nbsp;&nbsp;`// Sentinel value` |
+| 9 | $R[n_2 + 1] = \infty$ &nbsp;&nbsp;&nbsp;&nbsp;`// Sentinel value` |
+| 10 | $i = 1$ |
+| 11 | $j = 1$ |
+| 12 | **for** $k = p$ **to** $r$ |
+| 13 | &nbsp;&nbsp;&nbsp;&nbsp;**if** $L[i] \le R[j]$ |
+| 14 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$A[k] = L[i]$ |
+| 15 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$i = i + 1$ |
+| 16 | &nbsp;&nbsp;&nbsp;&nbsp;**else** $A[k] = R[j]$ |
+| 17 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$j = j + 1$ |
+
+Because each basic step compares two cards and takes constant time, merging $n$ total elements takes $\Theta(n)$ time.
+
+### Tracing the `MERGE` Procedure
+
+Imagine we have a 1-indexed array $A = [8, 4, 7, 2, 5, 9]$. We want to merge two already-sorted sections in the middle: the left pile $[4, 7]$ and the right pile $[2, 5]$. We call `MERGE(A, 2, 3, 5)`.
+
+1.  **Sizing & Copying:** The algorithm calculates the sizes ($n_1 = 2$, $n_2 = 2$) and creates temporary arrays $L$ and $R$ with an extra slot for the $\infty$ sentinel.
+    *   $L$ becomes $[4, 7, \infty]$
+    *   $R$ becomes $[2, 5, \infty]$
+2.  **The Loop:** Pointers $i$ and $j$ start at 1. The main loop iterates from $k = 2$ to $5$, overwriting $A$ by picking the smaller of $L[i]$ and $R[j]$:
+    *   **$k=2$:** $L[1]$ (4) vs $R[1]$ (2). Right is smaller. $A[2]$ becomes 2. $j$ increments.
+    *   **$k=3$:** $L[1]$ (4) vs $R[2]$ (5). Left is smaller. $A[3]$ becomes 4. $i$ increments.
+    *   **$k=4$:** $L[2]$ (7) vs $R[2]$ (5). Right is smaller. $A[4]$ becomes 5. $j$ increments.
+    *   **$k=5$:** $L[2]$ (7) vs $R[3]$ ($\infty$). Left is smaller. $A[5]$ becomes 7. $i$ increments.
+3.  **Result:** The target section is overwritten. Array $A$ goes from $[8, 4, 7, 2, 5, 9]$ to $[8, 2, 4, 5, 7, 9]$.
+
+---
+
+## 5. The Driver: The `MERGE-SORT` Procedure
+
+Now that we have the engine, we need the driver. The recursive `MERGE-SORT` function traces the array indices all the way down to the base cases (single elements) first, and only then uses our `MERGE` engine on the way back up the call stack.
+
+| Line | `MERGE-SORT(A, p, r)` |
+|---:|:---|
+| 1 | **if** $p < r$ |
+| 2 | &nbsp;&nbsp;&nbsp;&nbsp;$q = \lfloor(p + r)/2\rfloor$ |
+| 3 | &nbsp;&nbsp;&nbsp;&nbsp;`MERGE-SORT(A, p, q)` |
+| 4 | &nbsp;&nbsp;&nbsp;&nbsp;`MERGE-SORT(A, q + 1, r)` |
+| 5 | &nbsp;&nbsp;&nbsp;&nbsp;`MERGE(A, p, q, r)` |
+
+To sort an entire sequence, we make the initial call `MERGE-SORT(A, 1, A.length)`.
+
+---
+
+## 6. Putting It Together: A Full Execution Trace
+
+Let us trace the algorithm end-to-end on an unsorted 8-element array: $A = [5, 2, 4, 7, 1, 3, 2, 6]$.
+
+**Phase 1: The Divide Phase (Top-Down)**
+The `MERGE-SORT` function recursively splits the array in half. No sorting happens yet; it just calculates midpoints ($q$) and pushes calls onto the stack until every subsequence is length 1.
+
+*   **Split 1:** $[5, 2, 4, 7]$ and $[1, 3, 2, 6]$
+*   **Split 2:** $[5, 2]$, $[4, 7]$, $[1, 3]$, and $[2, 6]$
+*   **Base Case (Length 1):** $[5]$, $[2]$, $[4]$, $[7]$, $[1]$, $[3]$, $[2]$, and $[6]$
+
+At this point, the recursion bottoms out because single elements are trivially sorted.
+
+**Phase 2: The Combine Phase (Bottom-Up)**
+As the recursive calls resolve, the `MERGE` procedure kicks in, combining the small sorted subarrays back together level-by-level:
+
+*   **Merge to size 2:** $[2, 5]$, $[4, 7]$, $[1, 3]$, and $[2, 6]$
+*   **Merge to size 4:** $[2, 4, 5, 7]$ and $[1, 2, 3, 6]$
+*   **Final Merge to size 8:** We call `MERGE` on the two halves, yielding the final sorted array: $[1, 2, 2, 3, 4, 5, 6, 7]$.

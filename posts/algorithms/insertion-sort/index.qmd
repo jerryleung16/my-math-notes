@@ -1,0 +1,47 @@
+---
+title: "Insertion Sort Algorithm"
+date: "2026-07-27"
+categories: [Algorithms]
+---
+## The Core Concept
+
+An **insertion sort** works exactly like sorting a hand of playing cards: you pick up cards one by one from an unsorted pile and slide each new card into its correct position among the cards you are already holding.
+
+## Visualizing the Partition
+
+To see this in action, let's sort five numbers from smallest to largest: `[5, 3, 8, 4, 2]`.
+
+Imagine dividing the list into two sections separated by a vertical bar: a **sorted section** on the left, and an **unsorted section** on the right.
+
+## The Step-by-Step Trace
+
+### Starting Position: `[5 | 3, 8, 4, 2]`
+
+We start by looking at the very first number, `5`. Since it is the only number in our "sorted hand," it is already sorted by default.
+
+### Step 1: Pick up `3`
+
+We look at the first unsorted number (`3`) and compare it to the sorted section on the left. Since `3` is smaller than `5`, we shift `5` one spot to the right and drop `3` into the empty space at the front.
+
+**Current state:** `[3, 5 | 8, 4, 2]`
+
+### Step 2: Pick up `8`
+
+We take the next unsorted number (`8`) and compare it moving from right to left in our sorted section. Is `8` smaller than `5`? No. Since it is already larger than the biggest number in our hand, we don't need to shift anything — it simply locks into place on the end.
+
+**Current state:** `[3, 5, 8 | 4, 2]`
+
+### Step 3: Pick up `4`
+
+We take `4` and compare it moving leftwards:
+
+**Smaller than 8?** Yes — shift `8` to the right.
+**Smaller than 5?** Yes — shift `5` to the right.
+**Smaller than 3?** No! We stop here and insert `4` into the spot right between `3` and `5`.
+**Current state:** `[3, 4, 5, 8 | 2]`
+
+### Step 4: Pick up `2`
+
+Finally, we take `2` and compare it against our sorted hand. Since `2` is smaller than `8`, `5`, `4`, and `3`, all four of those numbers shift one position to the right, opening up the very first spot for `2`.
+
+**Final sorted list:** `[2, 3, 4, 5, 8]`

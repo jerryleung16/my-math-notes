@@ -1,0 +1,269 @@
+---
+title: "O, Theta and Omega Notations"
+date: "2026-08-07"
+categories: [Algorithms]
+---
+
+## Asymptotically Non-negative Functions
+
+Throughout this note, we assume that $f(n)$ is **asymptotically non-negative**, meaning there exists some integer $n_0$ such that
+
+$$
+f(n) \ge 0
+\qquad
+\text{for all } n \ge n_0.
+$$
+
+This is a standard assumption in algorithm analysis because running time and memory usage are always non-negative for sufficiently large input sizes.
+
+---
+
+## $\Theta$-Notation (Tight Bound)
+
+$$
+\Theta(g(n))
+=
+\left\{
+f(n):
+\exists\, c_1,c_2>0,\; n_0
+\text{ such that }
+0 \le c_1g(n) \le f(n) \le c_2g(n)
+\text{ for all } n \ge n_0
+\right\}.
+$$
+
+### Interpretation
+
+A function $f(n)$ belongs to $\Theta(g(n))$ if, for sufficiently large $n$, it is sandwiched between two constant multiples of $g(n)$.
+
+Equivalently,
+
+- $f(n)$ and $g(n)$ grow at the **same asymptotic rate**.
+
+---
+
+## $\mathcal{O}$-Notation (Upper Bound)
+
+$$
+\mathcal{O}(g(n))
+=
+\left\{
+f(n):
+\exists\, c>0,\; n_0
+\text{ such that }
+0 \le f(n) \le cg(n)
+\text{ for all } n \ge n_0
+\right\}.
+$$
+
+### Interpretation
+
+A function $f(n)$ belongs to $\mathcal{O}(g(n))$ if it is eventually bounded above by a constant multiple of $g(n)$.
+
+Equivalently,
+
+- $f(n)$ grows **at most as fast** as $g(n)$.
+
+---
+
+## $\Omega$-Notation (Lower Bound)
+
+$$
+\Omega(g(n))
+=
+\left\{
+f(n):
+\exists\, c>0,\; n_0
+\text{ such that }
+0 \le cg(n) \le f(n)
+\text{ for all } n \ge n_0
+\right\}.
+$$
+
+### Interpretation
+
+A function $f(n)$ belongs to $\Omega(g(n))$ if it is eventually bounded below by a constant multiple of $g(n)$.
+
+Equivalently,
+
+- $f(n)$ grows **at least as fast** as $g(n)$.
+
+---
+
+## $o$-Notation (Strict Upper Bound)
+
+$$
+o(g(n))
+=
+\left\{
+f(n):
+\forall\, c>0,\;
+\exists\, n_0
+\text{ such that }
+0 \le f(n) < cg(n)
+\text{ for all } n \ge n_0
+\right\}.
+$$
+
+### Interpretation
+
+A function $f(n)$ belongs to $o(g(n))$ if it grows more slowly than **every positive constant multiple** of $g(n)$.
+
+Equivalently,
+
+$$
+\lim_{n\to\infty}
+\frac{f(n)}{g(n)}
+=
+0.
+$$
+
+---
+
+## $\omega$-Notation (Strict Lower Bound)
+
+A function $f(n)$ belongs to $\omega(g(n))$ if
+
+$$
+g(n)\in o(f(n)).
+$$
+
+Equivalently,
+
+$$
+\omega(g(n))
+=
+\left\{
+f(n):
+\forall\, c>0,\;
+\exists\, n_0
+\text{ such that }
+0 \le cg(n) < f(n)
+\text{ for all } n \ge n_0
+\right\}.
+$$
+
+### Interpretation
+
+A function $f(n)$ belongs to $\omega(g(n))$ if it grows faster than **every positive constant multiple** of $g(n)$.
+
+Equivalently,
+
+$$
+\lim_{n\to\infty}
+\frac{f(n)}{g(n)}
+=
+\infty,
+$$
+
+or
+
+$$
+\lim_{n\to\infty}
+\frac{g(n)}{f(n)}
+=
+0.
+$$
+
+---
+
+## Abuse of Notation
+
+Strictly speaking,
+
+$$
+o(g(n)),\;
+\Theta(g(n)),\;
+\mathcal{O}(g(n)),\;
+\Omega(g(n)),\;
+\omega(g(n))
+$$
+
+are **sets of functions**.
+
+Therefore,
+
+$$
+f(n)\in\Theta(g(n))
+$$
+
+is the mathematically correct notation.
+
+However, algorithm textbooks often write
+
+$$
+f(n)=\Theta(g(n))
+$$
+
+as shorthand for
+
+$$
+f(n)\in\Theta(g(n)).
+$$
+
+The same convention applies to $\mathcal{O}$, $\Omega$, $o$, and $\omega$.
+
+---
+
+## Comparison Table
+
+The following table compares the five asymptotic notations with familiar inequality symbols.
+
+| Asymptotic Notation | Analogy | Limit Characterization* | Meaning |
+|:--------------------|:------:|:------------------------|:--------|
+| $f(n)=o(g(n))$ | $<$ | $\displaystyle\lim_{n\to\infty}\frac{f(n)}{g(n)}=0$ | $f(n)$ grows **strictly slower** than $g(n)$. |
+| $f(n)=\mathcal{O}(g(n))$ | $\le$ | $\displaystyle\limsup_{n\to\infty}\frac{f(n)}{g(n)}<\infty$ | $f(n)$ grows **at most as fast** as $g(n)$ (upper bound). |
+| $f(n)=\Theta(g(n))$ | $=$ | $\displaystyle 0<\lim_{n\to\infty}\frac{f(n)}{g(n)}<\infty$ (if the limit exists) | $f(n)$ and $g(n)$ grow at the **same asymptotic rate** (tight bound). |
+| $f(n)=\Omega(g(n))$ | $\ge$ | $\displaystyle\liminf_{n\to\infty}\frac{f(n)}{g(n)}>0$ | $f(n)$ grows **at least as fast** as $g(n)$ (lower bound). |
+| $f(n)=\omega(g(n))$ | $>$ | $\displaystyle\lim_{n\to\infty}\frac{f(n)}{g(n)}=\infty$ | $f(n)$ grows **strictly faster** than $g(n)$. |
+
+> **Note:** The limit characterization for $\Theta(g(n))$ assumes that the limit exists. In general, the formal set definition is the most rigorous definition.
+
+> [!IMPORTANT] Remark: Asymptotic Comparability
+>
+> The inequality analogy in the comparison table is only a **conceptual aid**. Unlike real numbers, **not every pair of functions is asymptotically comparable**.
+>
+> For real numbers $a$ and $b$, the **Law of Trichotomy** states that exactly one of the following is true:
+>
+> $$
+> a < b, \qquad a = b, \qquad \text{or} \qquad a > b.
+> $$
+>
+> However, asymptotic notation does **not** satisfy this property. For two functions $f(n)$ and $g(n)$, it is possible that neither
+>
+> $$
+> f(n)\in\mathcal{O}(g(n))
+> $$
+>
+> nor
+>
+> $$
+> f(n)\in\Omega(g(n))
+> $$
+>
+> holds.
+>
+> ### Example
+>
+> Consider
+>
+> $$
+> f(n)=n,\qquad
+> g(n)=n^{\,1+\sin n}.
+> $$
+>
+> Since $\sin n$ oscillates between $-1$ and $1$, the exponent $1+\sin n$ oscillates between $0$ and $2$. Consequently,
+>
+> $$
+> g(n)=n^{\,1+\sin n}
+> $$
+>
+> alternates between growth rates as small as $n^0=1$ and as large as $n^2$ (while taking every intermediate exponent). Therefore,
+>
+> $$
+> f(n)\notin\mathcal{O}(g(n))
+> \qquad\text{and}\qquad
+> f(n)\notin\Omega(g(n)).
+> $$
+>
+> Thus, neither function asymptotically dominates the other, illustrating that **asymptotic comparisons are only partial orders, not total orders**.

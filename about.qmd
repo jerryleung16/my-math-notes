@@ -1,5 +1,5 @@
 ---
-title: "About"
+title: "Jerry's Notes"
 image: profile.jpg
 about:
   template: jolla
@@ -16,4 +16,4 @@ about:
 
 ---
 
-About this blog
+This is a personal website for my notes on mathematics, computer science, and other topics. The content is written in Markdown and rendered using Quarto. You can find the source code for this website on [GitHub](https://github.com).

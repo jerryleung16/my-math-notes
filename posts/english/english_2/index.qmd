@@ -1,0 +1,437 @@
+---
+title: "English Word Dictionary Day 2"
+date: "2026-08-01"
+categories: [English]
+---
+
+::: {.callout-note}
+💡 **使用說明**：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。
+:::
+
+## 🔍 生字快速索引
+
+| 英文生字 | 音標 (IPA) | 詞性 | 廣東話地道意思 | 難度/常用度 |
+|:---|:---|:---|:---|:---:|
+| **encompass** | /ɪnˈkʌm.pəs/ | *v.* | 涵蓋、包含埋、包羅 | ⭐⭐⭐ |
+| **paradigm** | /ˈpær.ə.daɪm/ | *n.* | 典範、模式、思考框架 | ⭐⭐⭐⭐ |
+| **pretensions** | /prɪˈten.ʃənz/ | *n.* | 野心、架子、妄想 / 自命不凡 | ⭐⭐⭐⭐ |
+| **province** | /ˈprɒv.ɪns/ | *n.* | 職責範圍、專屬領域 | ⭐⭐⭐⭐ |
+| **acquainted with** | /əˈkweɪn.tɪd wɪð/ | *phr.* | 熟悉、認識、搞清楚 | ⭐⭐⭐ |
+| **arresting** | /əˈres.tɪŋ/ | *adj.* | 震撼、好吸睛、引人注目 | ⭐⭐⭐⭐ |
+| **provocative** | /prəˈvɒk.ə.tɪv/ | *adj.* | 具挑釁性、引人爭議/思考 | ⭐⭐⭐ |
+| **shroud of** | /ʃraʊd əv/ | *phr. n.* | 一層籠罩住嘅（神秘/面紗） | ⭐⭐⭐⭐ |
+| **mystique** | /mɪˈstiːk/ | *n.* | 神秘感、光環 | ⭐⭐⭐⭐ |
+| **amenable** | /əˈmiː.nə.bəl/ | *adj.* | 易於處理/配合、順從 | ⭐⭐⭐⭐ |
+| **culminating with** | /ˈkʌl.mɪ.neɪ.tɪŋ wɪð/ | *phr. v.* | 以...告終、最終達致 | ⭐⭐⭐⭐ |
+| **eluded** | /ɪˈluː.dɪd/ | *v.* | 逃過、困擾/令人摸唔透 | ⭐⭐⭐⭐ |
+| **grounded** | /ˈɡraʊn.dɪd/ | *adj.* | 踏實、有根有據、接地氣 | ⭐⭐⭐ |
+| **pundits** | /ˈpʌn.dɪts/ | *n.* | 專家、評論員、名嘴 | ⭐⭐⭐ |
+| **dent** | /dent/ | *n. / v.* | 削弱、打擊、凹痕 | ⭐⭐⭐ |
+| **pales** | /peɪlz/ | *v.* | 相形見絀、比落去差得遠 | ⭐⭐⭐⭐ |
+| **ample** | /ˈæm.pəl/ | *adj.* | 充足、大量、大把 | ⭐⭐⭐ |
+| **robust** | /rəʊˈbʌst/ | *adj.* | 穩健、完善、強健/襟用 | ⭐⭐⭐⭐ |
+| **sentient** | /ˈsen.ʃənt/ | *adj.* | 有意識嘅、有知覺嘅 | ⭐⭐⭐⭐⭐ |
+| **on the verge of** | /ɒn ðə vɜːdʒ əv/ | *phr.* | 喺...嘅邊緣、就快、爭啲 | ⭐⭐⭐ |
+
+---
+
+## 📚 生字詳細解析
+
+### 1. encompass
+
+* **詞性**：動詞 (Verb)
+* **讀音**：/ɪnˈkʌm.pəs/
+* **廣東話解法**：指包涵、涵蓋或者包含咗唔同嘅領域或內容。廣東話通常會講「涵蓋」、「包羅」或者「包含埋」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: AI is a general field that encompasses machine learning and deep learning.
+* **廣東話口語**: 人工智能係一個大範疇，涵蓋咗（包含埋）機器學習同深度學習。
+
+* **English**: The course encompasses a wide range of topics.
+* **廣東話口語**: 呢個課程包含咗好廣泛嘅課題。
+:::
+
+**常見搭配 (Collocations)**：
+* `encompass a wide range of...`：涵蓋好廣泛嘅...
+* `encompass everything`：包含埋所有嘢
+
+---
+
+### 2. paradigm
+
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˈpær.ə.daɪm/
+* **廣東話解法**：指一種主導嘅模式、思考框架或者典型範例。廣東話會講「主流模式」、「典範」或者「一套玩法」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Symbolic AI was the dominant paradigm from the 1950s to the 1980s.
+* **廣東話口語**: 喺 1950 至 1980 年代，符號化 AI（Symbolic AI）係當時嘅主流模式（ dominant paradigm）。
+
+* **English**: The internet caused a paradigm shift in how we work.
+* **廣東話口語**: 互聯網帶來咗工作模式上嘅重大轉變（Paradigm shift）。
+:::
+
+**常見搭配 (Collocations)**：
+* `paradigm shift`：模式轉變 / 典範轉移
+* `dominant paradigm`：主流模式 / 主導框架
+
+---
+
+### 3. pretensions (pretension 嘅眾數)
+
+* **詞性**：名詞 (Noun)
+* **讀音**：/prɪˈten.ʃənz/
+* **廣東話解法**：指自命不凡、吹噓、裝模作樣，或者指某種高遠（甚至不切實際）嘅意圖同野心。廣東話會講「擺架子」、「吹噓」、「妄想」或者「意圖」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The engine has no pretensions whatever to originate anything.
+* **廣東話口語**: 呢部引擎完全冇妄想 / 意圖去原創任何新嘢。
+
+* **English**: He has pretensions of being a great writer.
+* **廣東話口語**: 佢自命（妄想）自己係個偉大嘅作家。
+:::
+
+**常見搭配 (Collocations)**：
+* `have pretensions to / of being...`：自命係... / 妄想成為...
+* `without any pretensions`：完全冇架子 / 唔吹噓
+
+---
+
+### 4. province
+
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˈprɒv.ɪns/
+* **廣東話解法**：除咗解作「省份」之外，引申意思係指某人或某領域嘅「職責範圍」、「專屬領域」或者「管轄範圍」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Its province is to assist us in making available what we're already acquainted with.
+* **廣東話口語**: 佢嘅職責範圍（角色），只係幫我哋活用已經掌握咗嘅嘢。
+
+* **English**: Marketing is not really my province; you should ask Sarah.
+* **廣東話口語**: 市場推廣唔太算係我嘅專長 / 範疇，你問 Sarah 啦。
+:::
+
+**常見搭配 (Collocations)**：
+* `outside one's province`：超出某人嘅職責/專業範圍
+* `the province of (experts)`：...嘅專屬領域
+
+---
+
+### 5. acquainted with
+
+* **詞性**：片語 (Phrase)
+* **讀音**：/əˈkweɪn.tɪd wɪð/
+* **廣東話解法**：指對某樣嘢有所認識、了解或者熟悉；亦可指認識某個人。廣東話通常講「熟悉」、「搞清楚」或者「認識」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Are you acquainted with the basic principles of machine learning?
+* **廣東話口語**: 你熟唔熟悉機器學習嘅基本原理？
+
+* **English**: I need to get acquainted with the new office rules.
+* **廣東話口語**: 我要盡快搞清楚（熟悉）公司新嘅規矩。
+:::
+
+**常見搭配 (Collocations)**：
+* `be acquainted with (something)`：熟悉某事
+* `get acquainted with`：去了解 / 搞熟
+
+---
+
+### 6. arresting
+
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/əˈres.tɪŋ/
+* **廣東話解法**：字面係逮捕，但作形容詞時指非常吸引人注意、令人印象深刻或者極具震撼力。廣東話會講「好吸睛」、「好震撼」或者「極引人注目」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Lady Lovelace's observation remains arresting even today.
+* **廣東話口語**: 愛達·勒芙蕾絲嘅觀察，就算到咗今日依然係好震撼 / 咁引人注目。
+
+* **English**: She has an arresting smile that captures everyone's attention.
+* **廣東話口語**: 佢有個好吸睛嘅笑容，吸引咗所有人嘅注意。
+:::
+
+**常見搭配 (Collocations)**：
+* `arresting image / performance`：好吸睛嘅畫面 / 演出
+* `arresting observation`：令人印象深刻嘅觀察
+
+---
+
+### 7. provocative
+
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/prəˈvɒk.ə.tɪv/
+* **廣東話解法**：指能夠引發爭議、激起思考，或者帶有挑釁意味嘅。廣東話通常講「具挑釁性」、「引人爭議」或者「好衝擊/引人深思」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Turing's opinion was highly provocative at the time.
+* **廣東話口語**: 圖靈嘅觀點喺當時嚟講係極具爭議（震撼/衝擊）嘅。
+
+* **English**: He made a provocative speech to spark a debate.
+* **廣東話口語**: 佢發表咗一段極具挑釁性 / 激發思考嘅演講嚟引起討論。
+:::
+
+**常見搭配 (Collocations)**：
+* `provocative statement / question`：引人爭議/深思嘅言論 / 問題
+* `provocative behavior`：挑釁行為
+
+---
+
+### 8. shroud of
+
+* **詞性**：名詞片語 (Noun Phrase)
+* **讀音**：/ʃraʊd əv/
+* **廣東話解法**：shroud 原意係裹屍布或遮蓋物。`shroud of` 指籠罩住某樣嘢嘅「一層面紗」或者「一層陰影/迷霧」。廣東話會講「一層...嘅面紗」或者「籠罩住」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: You don't need that shroud of mystique and mystery around AI.
+* **廣東話口語**: 你唔需要喺 AI 圍繞住嗰層「神秘嘅面紗」。
+
+* **English**: The event was hidden under a shroud of secrecy.
+* **廣東話口語**: 呢件事被籠罩喺一層嚴密嘅保密面紗之下。
+:::
+
+**常見搭配 (Collocations)**：
+* `a shroud of secrecy / mystery`：一層保密 / 神秘嘅面紗
+* `shrouded in darkness`：籠罩喺黑暗之中
+
+---
+
+### 9. mystique
+
+* **詞性**：名詞 (Noun)
+* **讀音**：/mɪˈstiːk/
+* **廣東話解法**：指某樣嘢因為神秘、特殊或不可思議而產生嘅「神秘感」、「神秘色彩」或者「光環」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Deep learning is just mathematics; forget the pop-science mystique.
+* **廣東話口語**: 深度學習只係數學，唔好理大眾科學包裝出嚟嘅神秘光環。
+
+* **English**: The brand lost its mystique over time.
+* **廣東話口語**: 呢個品牌隨住時間流逝失去咗以前嗰種神秘吸引力（光環）。
+:::
+
+**常見搭配 (Collocations)**：
+* `air of mystique`：神秘嘅氛圍
+* `remove / debunk the mystique`：揭開神秘面紗 / 打破光環
+
+---
+
+### 10. amenable
+
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/əˈmiː.nə.bəl/
+* **廣東話解法**：形容人時指「聽話、順從」；形容事物時指「易於處理、適合...嘅、好配合嘅」。廣東話會講「好配合」、「方便處理/適應」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Transform data into representations that are more amenable to the task.
+* **廣東話口語**: 將數據轉化成更加方便（易於）處理嗰項任務嘅形式。
+
+* **English**: He was amenable to the proposed changes.
+* **廣東話口語**: 佢好配合（接受）所提議嘅改動。
+:::
+
+**常見搭配 (Collocations)**：
+* `amenable to change / advice`：接受改變 / 聽勸
+* `amenable to processing`：易於 / 方便處理
+
+---
+
+### 11. culminating with (或 culminating in)
+
+* **詞性**：片語動詞 (Phrasal Verb)
+* **讀音**：/ˈkʌl.mɪ.neɪ.tɪŋ wɪð/
+* **廣東話解法**：指經過一段時間嘅發展，最後以某個成果、高潮或結局作結。廣東話通常講「以...告終」、「最終達致」或者「最後以...作結」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: A months-long investigation culminated with several arrests.
+* **廣東話口語**: 經過幾個月嘅調查，最終以逮捕幾個人告終。
+
+* **English**: Years of research culminated in a major discovery.
+* **廣東話口語**: 多年嘅研究，最後以一個重大發現作為完美結尾。
+:::
+
+**常見搭配 (Collocations)**：
+* `culminate in success`：最終以成功告終
+* `culminate with a presentation`：最後以簡報畫上句號
+
+---
+
+### 12. eluded (elude 嘅過去式)
+
+* **詞性**：動詞 (Verb)
+* **讀音**：/ɪˈluː.dɪd/
+* **廣東話解法**：可以指「避開/逃過」；如果指目標、理解或記憶，指「得唔到」、「令人摸唔透」或者「諗唔起」。廣東話會講「逃過」、「摸唔透」或者「得唔到手」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: A satisfactory answer to this question has eluded scientists for decades.
+* **廣東話口語**: 幾十年嚟，科學家一直都摸唔透（搵唔到）呢個問題嘅滿意答案。
+
+* **English**: The thief eluded the police by hiding in the crowd.
+* **廣東話口語**: 個賊匿喺人群入面逃過咗警察嘅追捕。
+:::
+
+**常見搭配 (Collocations)**：
+* `elude capture`：逃過捕獵 / 抓捕
+* `elude one's understanding`：令人理解唔到 / 摸唔透
+
+---
+
+### 13. grounded
+
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/ˈɡraʊn.dɪd/
+* **廣東話解法**：指一個人好踏實、理性；或者指某種理論/想法「有根有據」、「扎根於現實」。廣東話會講「踏實」、「有根有據」或者「接地氣」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Good AI research should be grounded in empirical evidence.
+* **廣東話口語**: 好嘅 AI 研究應該要有根有據（扎根於實驗數據）。
+
+* **English**: Despite his fame, he remains very grounded.
+* **廣東話口語**: 雖然佢好出名，但佢個人依然好踏實（無飄）。
+:::
+
+**常見搭配 (Collocations)**：
+* `grounded in reality / fact`：基於現實 / 事實
+* `keep someone grounded`：令某人保持踏實
+
+---
+
+### 14. pundits (pundit 嘅眾數)
+
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˈpʌn.dɪts/
+* **廣東話解法**：指經常喺媒體上發表意見嘅專家、評論員或者「名嘴」。廣東話通常講「專家」、「時事評論員」或者「名嘴」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Tech pundits are constantly debating the future of generative AI.
+* **廣東話口語**: 科技名嘴（評論員）成日喺度爭論生成式 AI 嘅未來。
+
+* **English**: Political pundits predicted a different outcome.
+* **廣東話口語**: 政治評論員預測咗個完全唔同嘅結果。
+:::
+
+**常見搭配 (Collocations)**：
+* `industry / tech pundits`：行業 / 科技專家評論員
+* `political pundits`：政治名嘴
+
+---
+
+### 15. dent
+
+* **詞性**：名詞 (Noun) / 動詞 (Verb)
+* **讀音**：/dent/
+* **廣東話解法**：字面係「凹痕」。比喻上指對某樣嘢（如信心、數量、進度）造成「打擊」、「削弱」或者「減少」。廣東話會講「削弱」、「打擊」或者「凹咗一塊」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The high cost barely made a dent in his massive fortune.
+* **廣東話口語**: 咁昂貴嘅開支，對佢龐大嘅財產嚟講根本微不足道（傷唔到佢筋骨 / 凹都冇凹過）。
+
+* **English**: Failure didn't dent her confidence at all.
+* **廣東話口語**: 失敗完全冇打擊（削弱）到佢嘅信心。
+:::
+
+**常見搭配 (Collocations)**：
+* `make a dent in (something)`：削弱 / 減少 / 造成打擊
+* `dent someone's confidence`：打擊某人嘅信心
+
+---
+
+### 16. pales (pale in comparison)
+
+* **詞性**：動詞 (Verb)
+* **讀音**：/peɪlz/
+* **廣東話解法**：通常配搭 `pale in comparison to` 使用，指同另一樣嘢相比之下「相形見絀」、「顯得微不足道」或者「差幾班」。廣東話會講「比起嚟差得遠」、「顯得好微不足道」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Early AI achievements pale in comparison to what modern deep learning can do.
+* **廣東話口語**: 早期 AI 嘅成就，同現代深度學習做得到嘅嘢比起嚟，簡直係相形見絀（差得遠）。
+
+* **English**: My problem pales in comparison to yours.
+* **廣東話口語**: 同你嗰個問題比起嚟，我嗰個根本微不足道。
+:::
+
+**常見搭配 (Collocations)**：
+* `pale in comparison to / with`：同...相比顯得微不足道 / 相形見絀
+
+---
+
+### 17. ample
+
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/ˈæm.pəl/
+* **廣東話解法**：指數量上非常足夠，甚至多過你需要嘅。廣東話通常會講「充足」、「大量」或者「大把」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: AI excels at solving problems where ample precise examples are available.
+* **廣東話口語**: AI 最擅長解決嗰啲有**大量（大把）**精確例子可以參考嘅問題。
+
+* **English**: There is ample evidence to support his theory.
+* **廣東話口語**: 有**充足嘅**證據去支持佢嘅理論。
+:::
+
+**常見搭配 (Collocations)**：
+* `ample evidence / time / space`：充足嘅證據 / 時間 / 空間
+* `ample opportunity`：大把機會
+
+---
+
+### 18. robust
+
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/rəʊˈbʌst/
+* **廣東話解法**：形容人時指「強健」；形容系統、機制或數據時指「穩健」、「完善」、「經得起考驗」或者「好襟用 / 唔易壞」。廣東話通常會講「穩健」、「紮實」或者「完善」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: We need a robust security system to protect our data.
+* **廣東話口語**: 我哋需要一個**穩健（完善）嘅**保安系統嚟保護啲數據。
+
+* **English**: The company showed robust growth this quarter.
+* **廣東話口語**: 間公司今季展現咗**強勁（紮實）嘅**增長。
+:::
+
+**常見搭配 (Collocations)**：
+* `robust system / framework`：穩健嘅系統 / 框架
+* `robust economic growth`：強勁嘅經濟增長
+
+---
+
+### 19. sentient
+
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/ˈsen.ʃənt/
+* **廣東話解法**：指有知覺、能夠感受事物同埋有自我意識嘅。喺討論 AI 嘅時候經常出現。廣東話通常會講「有意識嘅」、「有知覺嘅」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Some people fear that AI will eventually become sentient.
+* **廣東話口語**: 有啲人擔心 AI 遲早會變成**有自我意識**。
+
+* **English**: Humans and animals are sentient beings.
+* **廣東話口語**: 人類同動物都係**有知覺嘅（有情）**眾生。
+:::
+
+**常見搭配 (Collocations)**：
+* `sentient being`：有感知能力嘅生物 / 有情眾生
+* `become sentient`：變得有自我意識
+
+---
+
+### 20. on the verge of
+
+* **詞性**：片語 (Phrase)
+* **讀音**：/ɒn ðə vɜːdʒ əv/
+* **廣東話解法**：指非常接近某個狀態或者即將發生某件事。廣東話通常會講「喺...嘅邊緣」、「就快...」或者「爭啲就...」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Scientists are on the verge of a major breakthrough in cancer research.
+* **廣東話口語**: 科學家喺癌症研究上**就快（去到邊緣）**有重大突破。
+
+* **English**: She was on the verge of tears.
+* **廣東話口語**: 佢**爭啲就（就快）**喊出嚟。
+:::
+
+**常見搭配 (Collocations)**：
+* `on the verge of collapse / bankruptcy`：瀕臨崩潰 / 破產邊緣
+* `on the verge of tears`：眼淚都快啲跌落嚟 / 瀕臨崩潰邊緣
+
+---

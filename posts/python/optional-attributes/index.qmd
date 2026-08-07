@@ -1,0 +1,175 @@
+---
+title: "2. Optional Attributes"
+date: "2026-08-06"
+categories: [Python]
+---
+
+# Optional Attributes
+
+An **optional attribute** simply means that when you create a new object, you **don't have to provide that particular piece of information**.
+
+If you leave it out, Python uses a **default value** instead.
+
+We actually used an optional attribute earlier in our `BankAccount` example.
+
+Consider:
+
+```text
+def __init__(self, owner, starting_balance=0.0):
+```
+
+Here:
+
+* `owner` is **required**.
+* `starting_balance` is **optional**.
+* If no starting balance is provided, Python uses `0.0`.
+
+For example:
+
+```text
+alice_account = BankAccount("Alice", 100.0)
+```
+
+Alice starts with `$100`.
+
+But:
+
+```text
+bob_account = BankAccount("Bob")
+```
+
+Bob automatically starts with `$0`.
+
+This is the basic idea behind optional attributes.
+
+---
+
+## 1. The "Default Value" Method
+
+The most straightforward way to create an optional attribute is to give the parameter a **default value** inside `__init__`.
+
+You use the equals sign (`=`) to specify the default.
+
+```text
+class Dog:
+
+    # name is REQUIRED.
+    # collar_color is OPTIONAL and defaults to "Red".
+    def __init__(self, name, collar_color="Red"):
+        self.name = name
+        self.collar_color = collar_color
+
+
+# We only provide the name.
+# Python automatically uses "Red".
+dog_1 = Dog("Buddy")
+
+print(f"{dog_1.name} has a {dog_1.collar_color} collar.")
+# Buddy has a Red collar.
+
+
+# We provide both values.
+# Python uses "Blue" instead of the default.
+dog_2 = Dog("Daisy", "Blue")
+
+print(f"{dog_2.name} has a {dog_2.collar_color} collar.")
+# Daisy has a Blue collar.
+```
+
+The important idea is:
+
+```text
+collar_color="Red"
+```
+
+means:
+
+> "If the user doesn't provide a collar color, use `Red`."
+
+But if the user does provide a value:
+
+```text
+Dog("Daisy", "Blue")
+```
+
+Python uses `"Blue"` instead.
+
+---
+
+## 2. The `None` Method — When Information Is Missing
+
+Sometimes an attribute is optional because the information **might not exist yet**.
+
+In Python, we can use the special value `None` to represent:
+
+> **"There is currently no value."**
+
+For example, imagine creating a user profile where a phone number is optional.
+
+```text
+class UserProfile:
+
+    # phone_number is optional.
+    # If no number is provided, it is set to None.
+    def __init__(self, username, phone_number=None):
+        self.username = username
+        self.phone_number = phone_number
+
+    def show_profile(self):
+        print(f"User: {self.username}")
+
+        # Check whether a phone number was provided.
+        if self.phone_number is None:
+            print("Phone: No number provided.")
+        else:
+            print(f"Phone: {self.phone_number}")
+
+
+# Create a user without a phone number
+user_1 = UserProfile("CoolSkater99")
+
+user_1.show_profile()
+```
+
+The output would be:
+
+```text
+User: CoolSkater99
+Phone: No number provided.
+```
+
+Here, `None` doesn't mean that the phone number is zero or an empty string.
+
+It means:
+
+> **"No phone number has been provided."**
+
+---
+
+# ⚠️ The Golden Rule of Optional Attributes
+
+When defining your `__init__` method, **all required parameters must come before optional parameters**.
+
+### ✅ Correct
+
+```text
+def __init__(self, name, age, color="Brown"):
+```
+
+Here:
+
+* `name` is required.
+* `age` is required.
+* `color` is optional.
+
+### ❌ Incorrect
+
+```text
+def __init__(self, color="Brown", name, age):
+```
+
+This causes a `SyntaxError` because Python does not allow a required parameter to appear after a parameter with a default value.
+
+A simple rule to remember is:
+
+> **Required first, optional last.**

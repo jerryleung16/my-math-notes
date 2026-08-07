@@ -1,0 +1,608 @@
+---
+title: "3. Flexible Arguments"
+date: "2026-08-07"
+categories: [Python]
+---
+
+# Flexible Classes with `*args` and `**kwargs`
+
+Sometimes, when you build a class, you don't know exactly how much information the user will provide.
+
+Imagine creating a `Pizza` class.
+
+One customer might order:
+
+```text
+Medium + Extra Cheese
+```
+
+while another customer might order:
+
+```text
+Large + Pepperoni + Sausage + Onions + Peppers
+```
+
+It would be inconvenient to create a separate parameter for every possible topping.
+
+Python gives us two powerful tools for handling an **unlimited number of arguments**:
+
+* `*args`
+* `**kwargs`
+
+The magic is in the **asterisks (`*` and `**`)**.
+
+The names `args` and `kwargs` are simply common naming conventions. They are not special keywords.
+
+For example, these work the same way:
+
+```text
+*args
+*toppings
+*items
+```
+
+and:
+
+```text
+**kwargs
+**options
+**settings
+```
+
+The asterisks are what matter.
+
+---
+
+# 1. `*args` — The Grab Bag
+
+`*args` allows you to pass any number of **regular, unnamed arguments** to a function or class.
+
+Python collects all those extra arguments and stores them in a **tuple**.
+
+A tuple is similar to a list, except that its contents cannot normally be changed after it is created.
+
+Think of `*args` like calling out pizza toppings:
+
+> "Pepperoni, onions, olives!"
+
+These are individual values without labels.
+
+---
+
+## Example: Pizza with Any Number of Toppings
+
+```text
+class Pizza:
+
+    # size is required.
+    # *args catches all additional unnamed arguments.
+    def __init__(self, size, *args):
+        self.size = size
+        self.toppings = args
+
+    def describe(self):
+        print(f"A {self.size} pizza with:")
+
+        for topping in self.toppings:
+            print(f"- {topping}")
+
+
+# One topping
+cheese_pizza = Pizza("Medium", "Extra Cheese")
+
+
+# Four toppings
+supreme = Pizza(
+    "Large",
+    "Pepperoni",
+    "Sausage",
+    "Onions",
+    "Peppers"
+)
+
+supreme.describe()
+```
+
+The `*args` parameter collects the toppings into a tuple.
+
+Conceptually:
+
+```text
+args
+ ↓
+("Pepperoni", "Sausage", "Onions", "Peppers")
+```
+
+The output would be:
+
+```text
+A Large pizza with:
+- Pepperoni
+- Sausage
+- Onions
+- Peppers
+```
+
+---
+
+# 2. `**kwargs` — The Custom Order Form
+
+`**kwargs` stands for **Keyword Arguments**.
+
+It allows you to pass any number of **labeled arguments** using the `name=value` format.
+
+Python collects these labeled values into a **dictionary**.
+
+Think of `**kwargs` as filling out a custom order form:
+
+```text
+crust = thin
+sauce = spicy
+well_done = True
+```
+
+Each value has a label, or **key**.
+
+---
+
+## Example: A Flexible Smartphone Class
+
+```text
+class SmartPhone:
+
+    # brand is required.
+    # **kwargs catches all custom specifications.
+    def __init__(self, brand, **kwargs):
+        self.brand = brand
+
+        # kwargs is a dictionary.
+        self.specs = kwargs
+
+    def show_specs(self):
+        print(f"--- {self.brand} Phone ---")
+
+        for key, value in self.specs.items():
+            print(f"{key}: {value}")
+
+
+# We can provide any number of custom specifications.
+my_phone = SmartPhone(
+    "Apple",
+    storage="256GB",
+    color="Midnight",
+    has_headphone_jack=False
+)
+
+my_phone.show_specs()
+```
+
+Conceptually, `kwargs` contains:
+
+```text
+{
+    "storage": "256GB",
+    "color": "Midnight",
+    "has_headphone_jack": False
+}
+```
+
+The output would be:
+
+```text
+--- Apple Phone ---
+storage: 256GB
+color: Midnight
+has_headphone_jack: False
+```
+
+The key advantage is flexibility.
+
+We don't have to predict every possible specification when we create the class.
+
+---
+
+# Putting `*args` and `**kwargs` Together
+
+You can use both `*args` and `**kwargs` in the same class.
+
+However, Python requires them to appear in a specific order.
+
+The general pattern is:
+
+1. **Regular required parameters**
+2. **`*args`**
+3. **`**kwargs`**
+
+Think of it as:
+
+```text
+Required → Unnamed extras → Named extras
+```
+
+---
+
+## Example: Video Game Character
+
+```text
+class VideoGameCharacter:
+
+    def __init__(self, name, *args, **kwargs):
+        self.name = name
+        self.inventory = args
+        self.stats = kwargs
+
+
+hero = VideoGameCharacter(
+    "Link",
+
+    # *args
+    "Sword",
+    "Shield",
+
+    # **kwargs
+    health=100,
+    magic=50
+)
+```
+
+The information is stored like this:
+
+```text
+name
+ ↓
+"Link"
+
+inventory
+ ↓
+("Sword", "Shield")
+
+stats
+ ↓
+{
+    "health": 100,
+    "magic": 50
+}
+```
+
+So one object can contain three different types of information:
+
+```text
+VideoGameCharacter
+        │
+        ├── name
+        │     └── "Link"
+        │
+        ├── inventory
+        │     └── ("Sword", "Shield")
+        │
+        └── stats
+              ├── health = 100
+              └── magic = 50
+```
+
+This makes classes extremely flexible.
+
+---
+
+# `*args` vs. `**kwargs`
+
+It is helpful to compare the two directly.
+
+| Feature        | `*args`                 | `**kwargs`             |
+| :------------- | :---------------------- | :--------------------- |
+| Accepts        | Extra unnamed arguments | Extra named arguments  |
+| Stored as      | Tuple                   | Dictionary             |
+| Example        | `"Sword", "Shield"`     | `health=100, magic=50` |
+| Think of it as | A grab bag              | A custom order form    |
+| Asterisk       | `*`                     | `**`                   |
+
+For example:
+
+```text
+*args
+```
+
+might collect:
+
+```text
+("Sword", "Shield", "Potion")
+```
+
+while:
+
+```text
+**kwargs
+```
+
+might collect:
+
+```text
+{
+    "health": 100,
+    "magic": 50,
+    "level": 10
+}
+```
+
+---
+
+# The Big Picture: Making Flexible Classes
+
+We have now seen several ways to make classes flexible.
+
+### Required attributes
+
+These must be provided:
+
+```text
+def __init__(self, name, age):
+```
+
+### Optional attributes with default values
+
+These can be omitted:
+
+```text
+def __init__(self, name, age=0):
+```
+
+### Optional information using `None`
+
+This represents information that may not exist:
+
+```text
+def __init__(self, name, phone=None):
+```
+
+### Unlimited unnamed information with `*args`
+
+```text
+def __init__(self, name, *items):
+```
+
+### Unlimited named information with `**kwargs`
+
+```text
+def __init__(self, name, **options):
+```
+
+### All together
+
+```text
+def __init__(self, name, age=0, *args, **kwargs):
+```
+
+This gives us a powerful range of possibilities for designing classes.
+
+---
+
+# A Real-World Example: Bank Accounts
+
+Let's apply everything we've learned to a practical example.
+
+A **bank account** is something we can easily understand in the real world.
+
+A bank account has:
+
+### Attributes — What the account has
+
+* Owner's name
+* Current balance
+
+### Methods — What the account can do
+
+* Deposit money
+* Withdraw money
+* Check the balance
+
+Let's build a `BankAccount` class step by step.
+
+---
+
+# Step 1: Create the Blueprint
+
+First, we define our class and its constructor.
+
+```text
+class BankAccount:
+
+    # Create a new account
+    def __init__(self, owner, starting_balance=0.0):
+        self.owner = owner
+        self.balance = starting_balance
+```
+
+The parameter:
+
+```text
+starting_balance=0.0
+```
+
+provides a **default value**.
+
+Therefore, if someone creates an account without specifying a starting balance, the account automatically starts with `$0.00`.
+
+For example:
+
+```text
+alice_account = BankAccount("Alice", 100.0)
+```
+
+Alice starts with `$100`.
+
+But:
+
+```text
+bob_account = BankAccount("Bob")
+```
+
+Bob starts with `$0`.
+
+---
+
+# Step 2: Add Methods
+
+Now let's teach our `BankAccount` class how to handle money.
+
+We will create three methods:
+
+1. `deposit()`
+2. `withdraw()`
+3. `check_balance()`
+
+```text
+class BankAccount:
+
+    def __init__(self, owner, starting_balance=0.0):
+        self.owner = owner
+        self.balance = starting_balance
+
+    # ACTION 1: Deposit money
+    def deposit(self, amount):
+
+        if amount > 0:
+            self.balance += amount
+            print(
+                f"Deposited ${amount}. "
+                f"New balance is ${self.balance}."
+            )
+        else:
+            print("You must deposit a positive amount!")
+
+    # ACTION 2: Withdraw money
+    def withdraw(self, amount):
+
+        # Make sure there is enough money
+        if amount > self.balance:
+            print(
+                f"Declined! You only have "
+                f"${self.balance} in your account."
+            )
+
+        elif amount <= 0:
+            print("You must withdraw a positive amount!")
+
+        else:
+            self.balance -= amount
+            print(
+                f"Withdrew ${amount}. "
+                f"New balance is ${self.balance}."
+            )
+
+    # ACTION 3: Check the balance
+    def check_balance(self):
+        print(
+            f"Account Owner: {self.owner} | "
+            f"Current Balance: ${self.balance}"
+        )
+```
+
+Notice that **every method has `self` as its first parameter**.
+
+This is necessary because each method needs to know which particular bank account it is working with.
+
+For example:
+
+```text
+self.balance
+```
+
+means:
+
+> "The balance belonging to this particular account."
+
+---
+
+# Step 3: Create and Test Our Objects
+
+Our blueprint is now complete.
+
+Let's create some actual bank account objects and test them.
+
+```text
+# Create an account for Alice with $100
+alice_account = BankAccount("Alice", 100.0)
+
+# Create an account for Bob with $0
+bob_account = BankAccount("Bob")
+```
+
+We now have two separate objects:
+
+```text
+BankAccount class
+       ↓
+ ┌─────┴─────┐
+ ↓           ↓
+Alice       Bob
+$100         $0
+```
+
+Let's make some transactions.
+
+```text
+# Alice deposits $50
+alice_account.deposit(50)
+# Deposited $50. New balance is $150.0.
+
+# Alice withdraws $20
+alice_account.withdraw(20)
+# Withdrew $20. New balance is $130.0.
+```
+
+Now let's see what happens when Bob tries to withdraw more money than he has.
+
+```text
+bob_account.withdraw(500)
+# Declined! You only have $0.0 in your account.
+```
+
+Finally, let's check both accounts.
+
+```text
+alice_account.check_balance()
+# Account Owner: Alice | Current Balance: $130.0
+
+bob_account.check_balance()
+# Account Owner: Bob | Current Balance: $0.0
+```
+
+---
+
+# Putting Everything Together
+
+Our `BankAccount` class combines **data** and **actions** into one organized structure.
+
+```text
+                 BankAccount
+                      │
+          ┌───────────┴───────────┐
+          │                       │
+      Attributes               Methods
+          │                       │
+    ┌─────┴─────┐        ┌────────┼────────┐
+    │           │        │        │        │
+  owner      balance   deposit  withdraw  check_balance
+```
+
+Each object created from the class has its own attributes.
+
+```text
+alice_account.owner
+# Alice
+
+alice_account.balance
+# 130.0
+```
+
+while:
+
+```text
+bob_account.owner
+# Bob
+
+bob_account.balance
+# 0.0
+```
+
+The same class can therefore be used to create as many independent bank accounts as we need.

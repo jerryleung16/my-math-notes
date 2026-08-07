@@ -1,0 +1,142 @@
+---
+title: "English Word Dictionary Day 4"
+date: "2026-08-07"
+categories: [English]
+---
+
+::: {.callout-note}
+💡 **使用說明**：此字典專為廣東話使用者而設，提供地道廣東話解釋、句式文法拆解同埋口語翻譯。
+:::
+
+## 🔍 內容快速索引
+
+### ✍️ 實用句式 (Sentence Patterns)
+1. `... though they clearly were, ...` (倒裝讓步句式)
+2. `What is it about [X] that [Y]?` (疑問強調句式)
+3. `It is in [X] that [Y].` (分裂強調句)
+4. `lie in wait... at the drop of a hat` (連續動作/俚語組合)
+
+### 📚 重點生字 (Vocabulary)
+| 英文生字 | 音標 (IPA) | 詞性 | 廣東話地道意思 |
+|:---|:---|:---|:---|
+| **renounce** | /rɪˈnaʊns/ | *v.* | 放棄、聲明決裂、拒絕承認 |
+| **uphold** | /ʌpˈhəʊld/ | *v.* | 維護、捍衛、堅持 |
+| **necessitates** | /nəˈses.ɪ.teɪts/ | *v.* | 令...成為必要、迫使 |
+| **bootstraps** | /ˈbuːt.stræps/ | *n.* | 自力更生、靠自己雙手 |
+| **amid** | /əˈmɪd/ | *prep.* | 喺...之中、喺...氣氛/環境下 |
+| **tie up the loose ends** | /taɪ ʌp ðə luːs endz/ | *idiom* | 執手尾、搞掂剩低嘅細節 |
+| **outset** | /ˈaʊt.set/ | *n.* | 開端、一開始 |
+| **scorn** | /skɔːn/ | *n. / v.* | 輕蔑、鄙視、嘲笑 |
+| **perilous** | /ˈper.əl.əs/ | *adj.* | 極度危險嘅 |
+| **a dig at me** | /ə dɪɡ ət miː/ | *idiom* | 單打我、挖苦/暗寸我 |
+| **berated** | /bɪˈreɪ.tɪd/ | *v.* | 痛斥、狂鬧、嚴厲責罵 |
+| **steeped** | /stiːpt/ | *adj.* | 沉浸於、充滿住 (steeped in) |
+| **schema** | /ˈskiː.mə/ | *n.* | 基模、認知架構、既定模式 |
+| **triumph over** | /ˈtraɪ.əmf ˈəʊ.vər/ | *phr. v.* | 戰勝、擊敗、克服 |
+| **ample** | /ˈæm.pəl/ | *adj.* | 充足、大量、大把 |
+| **coolheaded** | /ˌkuːlˈhed.ɪd/ | *adj.* | 冷靜嘅、臨危不亂嘅 |
+| **pent-up** | /ˌpentˈʌp/ | *adj.* | 壓抑嘅、鬱積嘅 (情緒) |
+
+---
+
+## 🧠 實用句式解析 (Sentence Patterns)
+
+### 1. 倒裝讓步句式
+> **原文**：Psychology keywords **though they clearly were**, the truths they contained differed greatly from the youth’s imagined meanings.
+
+* **文法拆解**：呢度用咗倒裝句 `[名詞/形容詞] + though + [主語] + [動詞]`，語氣上比普通的 "Although they were clearly psychology keywords" 更強烈，用嚟強調最前面嗰個字眼（心理學關鍵字）。
+* **廣東話翻譯**：雖然呢啲**的確係**心理學嘅關鍵字，但裡面包含嘅真相同個後生仔想像嘅意思有好大出入。
+* **應用例子**：*Hard though it was, we finished the project.* (雖然好難，但我哋都完成咗個項目。)
+
+### 2. 疑問強調句式
+> **原文**：**What is it about** all this **that** I’m having a hard time accepting?
+
+* **文法拆解**：`What is it about [X] that [Y]?` 係一個好靚嘅強調句型。你唔係單純問 "Why can't I accept this?"，而係深究「究竟 X **入面有啲咩特質**，搞到 Y 咁樣？」
+* **廣東話翻譯**：究竟呢一切入面**有啲咩**，令到我咁難去接受？
+* **應用例子**：*What is it about him that makes everyone angry?* (究竟佢個人有啲咩特質，搞到個個都咁嬲？)
+
+### 3. 分裂強調句 (Cleft Sentence)
+> **原文**：**It is in** trying to progress past who one is now **that** there is value.
+
+* **文法拆解**：`It is [強調部分] that [剩餘部分]`。作者想強調「價值」並唔係存在於結果，而係存在於「嘗試超越自我」**呢個過程之中**。
+* **廣東話翻譯**：價值**正正係存在於**「努力去超越現在嘅自己」呢個過程之中。
+
+### 4. 俚語連續動作組合
+> **原文**：**lie in wait** for any opening and attack **at the drop of a hat**.
+
+* **文法拆解**：呢句由兩個生動嘅片語組成。`lie in wait` 指埋伏、伺機而動；`at the drop of a hat` 指一有信號就即刻做（毫不猶豫）。
+* **廣東話翻譯**：（佢哋）伏擊等緊任何破綻，一有機會就**毫不猶豫咁（一觸即發）**發動攻擊。
+
+---
+
+## 📚 生字詳細解析 (Vocabulary)
+
+### 1. renounce /rɪˈnaʊns/ (v.)
+* **廣東話解法**：正式宣佈放棄（信仰、權利或行為），或者聲明決裂。口語通常講「放棄」、「唔再要」或者「割席」。
+* **例句**：He decided to **renounce** his former beliefs. (佢決定放棄佢以前嘅信仰。)
+
+### 2. uphold /ʌpˈhəʊld/ (v.)
+* **廣東話解法**：支持或者維護（法律、決定或原則）。口語通常講「力撐」、「維持」或者「捍衛」。
+* **例句**：We will **uphold** the law at all costs. (我哋會不惜一切捍衛法律。)
+
+### 3. necessitates /nəˈses.ɪ.teɪts/ (v.)
+* **廣東話解法**：令到某樣嘢變成必需。口語通常講「迫使」或者「無可避免要...」。
+* **例句**：The new rules **necessitate** a change in our strategy. (新嘅規矩迫使我哋必須改變策略。)
+
+### 4. bootstraps /ˈbuːt.stræps/ (n.)
+* **廣東話解法**：「Bootstraps」（靴襻/拔靴帶）原意指靴子後方的拉環。指唔靠外力，單靠自己雙手同努力去改善處境。口語講「自力更生」、「靠自己捱出頭」。
+* **例句**：He built his business by his **bootstraps**. (佢靠自己雙手白手興家。)
+
+### 5. amid /əˈmɪd/ (prep.)
+* **廣東話解法**：被...包圍，或者處於某種氣氛/環境之中。口語通常講「喺...之中」或者「喺...氣氛下」。
+* **例句**：He resigned **amid** rumors of corruption. (佢喺貪污嘅謠言聲之中辭職。)
+
+### 6. tie up the loose ends (idiom)
+* **廣東話解法**：處理埋剩低未搞掂嘅小問題或者細節。口語通常講「執手尾」、「搞埋啲手尾」或者「跟進埋啲蘇州屎」。
+* **例句**：We just need to **tie up a few loose ends** before launching the product. (推出產品之前，我哋淨係要執埋少少手尾就得。)
+
+### 7. outset /ˈaʊt.set/ (n.)
+* **廣東話解法**：事情的開端、開始。通常用 `at/from the outset`。口語講「一開始」或者「開頭」。
+* **例句**：I told him **from the outset** that it wouldn't work. (我一開始已經同佢講咗咁樣係行唔通嘅。)
+
+### 8. scorn /skɔːn/ (n. / v.)
+* **廣東話解法**：強烈嘅輕蔑或者鄙視。口語講「睇唔起」、「奚落」或者「不屑」。
+* **例句**：She looked at him with **scorn**. (佢用好鄙視嘅眼神望住佢。)
+
+### 9. perilous /ˈper.əl.əs/ (adj.)
+* **廣東話解法**：充滿危險嘅。口語講「極度危險」或者「步步驚心」。
+* **例句**：The journey through the jungle was **perilous**. (穿越叢林嘅旅程極度危險。)
+
+### 10. a dig at me (idiom)
+* **廣東話解法**：對某人作出嘲諷或者挖苦。口語講「單打我」、「暗寸我」或者「潤我」。
+* **例句**：Was that remark **a dig at me**? (頭先嗰句話係咪暗寸緊我？)
+
+### 11. berated /bɪˈreɪ.tɪd/ (v. 過去式)
+* **廣東話解法**：嚴厲咁責罵某人。口語講「狂鬧」、「鬧到一面屁」或者「痛斥」。
+* **例句**：The boss **berated** him for his mistake. (老闆因為佢個失誤狂鬧佢。)
+
+### 12. steeped /stiːpt/ (adj.)
+* **廣東話解法**：通常配搭 `steeped in`，指深深沉浸喺某種事物之中（如歷史、傳統）。口語講「浸淫喺」、「充滿住」。
+* **例句**：The city is **steeped in** history. (呢個城市充滿住濃厚嘅歷史氣息。)
+
+### 13. schema /ˈskiː.mə/ (n.)
+* **廣東話解法**：心理學術語，指人腦中組織知識嘅「基模」或者圖式。口語可以理解為「既定模式」、「認知框架」。
+* **例句**：Our **schema** affects how we process new information. (我哋嘅認知框架會影響我哋點樣處理新資訊。)
+
+### 14. triumph over /ˈtraɪ.əmf ˈəʊ.vər/ (phr. v.)
+* **廣東話解法**：經過巨大努力後戰勝困難或敵人。口語講「戰勝」、「克服」或者「贏咗」。
+* **例句**：She finally **triumphed over** her illness. (佢最終戰勝咗病魔。)
+
+### 15. ample /ˈæm.pəl/ (adj.)
+* **廣東話解法**：數量上非常足夠。口語講「充足」、「大把」或者「好夠」。
+* **例句**：We have **ample** time to prepare. (我哋有大把時間準備。)
+
+### 16. coolheaded /ˌkuːlˈhed.ɪd/ (adj.)
+* **廣東話解法**：喺緊急或困難情況下保持頭腦清醒。口語講「冷靜」、「臨危不亂」。
+* **例句**：You need to remain **coolheaded** during a crisis. (危機發生嗰陣你需要保持臨危不亂。)
+
+### 17. pent-up /ˌpentˈʌp/ (adj.)
+* **廣東話解法**：通常用嚟形容被壓抑咗好耐無法釋放嘅情緒或力量。口語講「壓抑咗好耐」、「屈住屈住」。
+* **例句**：He screamed to release his **pent-up** frustration. (佢大聲叫出嚟，釋放壓抑咗好耐嘅挫敗感。)
+
+---

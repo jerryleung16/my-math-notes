@@ -1,14 +1,25 @@
 project:
   type: website
+  resources:
+    - admin/config.yml
+    - admin/index.html
 
 website:
   title: "My Math Notes"
-  site-url: "https://my-math-notes.example.com"
+  site-url: "https://jerryleung16.github.io/my-math-notes/"
+  repo-url: "https://github.com/jerryleung16/my-math-notes"
+  repo-branch: main
+  repo-actions: [edit, issue]
   navbar:
     left:
       - href: index.qmd
         text: Home
       - about.qmd
+    right:
+      - text: New Post
+        href: admin/
+      - text: Edit Posts
+        href: admin/
 
 format:
   html:
