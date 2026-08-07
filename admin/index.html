@@ -23,8 +23,8 @@
 
     <div class="card">
       <h2>Delete a post</h2>
-      <p>To remove a post safely, click delete and confirm the prompt before continuing.</p>
-      <p>Example: <code>python scripts/delete-post.py posts/python/intro-to-class</code></p>
+      <p>To remove a post safely, choose delete and republish, confirm the prompt, and GitHub will open the workflow page so the site can be rebuilt automatically.</p>
+      <p>Example: <code>posts/python/intro-to-class</code></p>
     </div>
 
     <div class="card">
@@ -111,15 +111,20 @@
             link.textContent = post.label;
             item.appendChild(link);
 
-            const deleteLink = document.createElement('a');
-            deleteLink.href = post.deleteUrl;
-            deleteLink.textContent = ' (delete)';
+            const deleteLink = document.createElement('button');
+            deleteLink.type = 'button';
+            deleteLink.textContent = ' (delete and republish)';
             deleteLink.style.marginLeft = '0.5rem';
             deleteLink.style.color = '#c0392b';
+            deleteLink.style.background = 'transparent';
+            deleteLink.style.border = 'none';
+            deleteLink.style.padding = '0';
+            deleteLink.style.cursor = 'pointer';
             deleteLink.addEventListener('click', (event) => {
               event.preventDefault();
-              if (window.confirm(`Delete ${post.label} from the repository?`)) {
-                window.location.href = post.deleteUrl;
+              if (window.confirm(`Delete ${post.label} and republish the site?`)) {
+                const workflowUrl = `https://github.com/${repoOwner}/${repoName}/actions/workflows/delete-post.yml`;
+                window.open(workflowUrl, '_blank', 'noopener,noreferrer');
               }
             });
             item.appendChild(deleteLink);
