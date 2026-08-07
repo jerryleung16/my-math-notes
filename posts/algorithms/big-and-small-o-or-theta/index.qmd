@@ -1,5 +1,5 @@
 ---
-title: "O, Theta and Omega Notations Ji"
+title: "O, Theta and Omega Notations"
 date: "2026-08-07"
 categories: [Algorithms]
 ---
