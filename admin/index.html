@@ -23,25 +23,95 @@
 
     <div class="card">
       <h2>Edit existing posts</h2>
-      <ul>
-        <li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/algorithms/big-and-small-o-or-theta/index.qmd">Algorithms: Big and Small O / Theta</a></li>
-        <li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/algorithms/insertion-sort/index.qmd">Algorithms: Insertion Sort</a></li>
-        <li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/algorithms/insertion-sort-running-time/index.qmd">Algorithms: Insertion Sort Running Time</a></li>
-        <li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/algorithms/merge-sort/index.qmd">Algorithms: Merge Sort</a></li>
-        <li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/algorithms/merge-sort-running-time/index.qmd">Algorithms: Merge Sort Running Time</a></li>
-        <li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/deep%20learning/Deep%20Learning%20with%20Python%20Ch.1%20Summary/index.qmd">Deep Learning Ch. 1 Summary</a></li>
-        <li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/deep%20learning/Deep%20Learning%20with%20Python%20Ch.2%20Summary/index.qmd">Deep Learning Ch. 2 Summary</a></li>
-        <li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/english/english_1/index.qmd">English 1</a></li>
-        <li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/english/english_2/index.qmd">English 2</a></li>
-        <li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/english/english_3/index.qmd">English 3</a></li>
-        <li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/english/english_4/index.qmd">English 4</a></li>
-        <li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/english/english_5/index.qmd">English 5</a></li>
-        <li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/japanese/japanese_1/index.qmd">Japanese 1</a></li>
-        <li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/python/decorator%20(@property)/index.qmd">Python: decorator (@property)</a></li>
-        <li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/python/flexible-arguments/index.qmd">Python: Flexible Arguments</a></li>
-        <li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/python/intro-to-class/index.qmd">Python: Intro to Class</a></li>
-        <li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/python/optional-attributes/index.qmd">Python: Optional Attributes</a></li>
+      <p>The list below is loaded from the repository so new posts appear automatically.</p>
+      <ul id="post-list">
+        <li>Loading posts…</li>
       </ul>
     </div>
+
+    <script>
+      const repoOwner = 'jerryleung16';
+      const repoName = 'my-math-notes';
+      const branch = 'main';
+      const apiBase = `https://api.github.com/repos/${repoOwner}/${repoName}/contents`;
+
+      function toTitleCase(value) {
+        return value
+          .replace(/[_-]+/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim()
+          .split(' ')
+          .filter(Boolean)
+          .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+          .join(' ');
+      }
+
+      function buildLabel(path) {
+        const parts = path.split('/').filter(Boolean);
+        const segments = parts.slice(1, -1);
+        if (segments.length === 0) {
+          return 'Post';
+        }
+        return segments.map(toTitleCase).join(' / ');
+      }
+
+      async function fetchPosts(path = 'posts') {
+        const url = `${apiBase}/${path}?ref=${branch}`;
+        const response = await fetch(url, {
+          headers: { Accept: 'application/vnd.github+json' }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Unable to load posts: ${response.status}`);
+        }
+
+        const entries = await response.json();
+        const posts = [];
+
+        for (const entry of entries) {
+          if (entry.type === 'dir') {
+            const nested = await fetchPosts(entry.path);
+            posts.push(...nested);
+          } else if (entry.type === 'file' && entry.name === 'index.qmd') {
+            const editUrl = `https://github.com/${repoOwner}/${repoName}/edit/${branch}/${entry.path}`;
+            posts.push({
+              label: buildLabel(entry.path),
+              editUrl
+            });
+          }
+        }
+
+        return posts;
+      }
+
+      async function renderPosts() {
+        const list = document.getElementById('post-list');
+        try {
+          const posts = await fetchPosts();
+          list.innerHTML = '';
+          if (posts.length === 0) {
+            list.innerHTML = '<li>No posts found yet.</li>';
+            return;
+          }
+
+          const fragment = document.createDocumentFragment();
+          posts.sort((a, b) => a.label.localeCompare(b.label));
+          for (const post of posts) {
+            const item = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = post.editUrl;
+            link.textContent = post.label;
+            item.appendChild(link);
+            fragment.appendChild(item);
+          }
+          list.appendChild(fragment);
+        } catch (error) {
+          list.innerHTML = '<li>Unable to load posts right now. Please open the GitHub posts folder directly.</li>';
+          console.error(error);
+        }
+      }
+
+      renderPosts();
+    </script>
   </body>
 </html>
