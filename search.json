@@ -434,6 +434,13 @@
     "text": "The Step-by-Step Trace\n\nStarting Position: [5 | 3, 8, 4, 2]\nWe start by looking at the very first number, 5. Since it is the only number in our “sorted hand,” it is already sorted by default.\n\n\nStep 1: Pick up 3\nWe look at the first unsorted number (3) and compare it to the sorted section on the left. Since 3 is smaller than 5, we shift 5 one spot to the right and drop 3 into the empty space at the front.\nCurrent state: [3, 5 | 8, 4, 2]\n\n\nStep 2: Pick up 8\nWe take the next unsorted number (8) and compare it moving from right to left in our sorted section. Is 8 smaller than 5? No. Since it is already larger than the biggest number in our hand, we don’t need to shift anything — it simply locks into place on the end.\nCurrent state: [3, 5, 8 | 4, 2]\n\n\nStep 3: Pick up 4\nWe take 4 and compare it moving leftwards:\nSmaller than 8? Yes — shift 8 to the right. Smaller than 5? Yes — shift 5 to the right. Smaller than 3? No! We stop here and insert 4 into the spot right between 3 and 5. Current state: [3, 4, 5, 8 | 2]\n\n\nStep 4: Pick up 2\nFinally, we take 2 and compare it against our sorted hand. Since 2 is smaller than 8, 5, 4, and 3, all four of those numbers shift one position to the right, opening up the very first spot for 2.\nFinal sorted list: [2, 3, 4, 5, 8]"
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "my-math-notes",
+    "section": "",
+    "text": "4. Decorator (@property)\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 8, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nO, Theta and Omega Notations\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nAug 7, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 4\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 7, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n3. Flexible Arguments\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 7, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n2. Optional Attributes\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 6, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n1. Classes in Python: A Beginner’s Guide to Object-Oriented Programming\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 5, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Merge Sort\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 3\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning with Python Ch.1 Summary\n\n\n\nDeep Learning\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning with Python Ch.2 Summary\n\n\n\nDeep Learning\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 2\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 1\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n日文生字字典（廣東話解釋）Day 1\n\n\n\nJapanese\n\n\n\n\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nMerge Sort: A Divide-and-Conquer Algorithm\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 29, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nInsertion Sort Algorithm\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Insertion Sort\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\nNo matching items"
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "Jerry’s Notes",
@@ -441,11 +448,67 @@
     "text": "This is a personal website for my notes on mathematics, computer science, and other topics. The content is written in Markdown and rendered using Quarto. You can find the source code for this website on GitHub."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "my-math-notes",
+    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html",
+    "href": "posts/algorithms/big-and-small-o-or-theta/index.html",
+    "title": "O, Theta and Omega Notations",
     "section": "",
-    "text": "4. Decorator (@property)\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 8, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 4\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 7, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n3. Flexible Arguments\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 7, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n2. Optional Attributes\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 6, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n1. Classes in Python: A Beginner’s Guide to Object-Oriented Programming\n\n\n\nPython\n\n\n\n\n\n\n\n\n\nAug 5, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Merge Sort\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 3\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning with Python Ch.1 Summary\n\n\n\nDeep Learning\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning with Python Ch.2 Summary\n\n\n\nDeep Learning\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 2\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 1\n\n\n\nEnglish\n\n\n\n\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n日文生字字典（廣東話解釋）Day 1\n\n\n\nJapanese\n\n\n\n\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nMerge Sort: A Divide-and-Conquer Algorithm\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 29, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nInsertion Sort Algorithm\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Insertion Sort\n\n\n\nAlgorithms\n\n\n\n\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\nNo matching items"
+    "text": "In this note, \\(f(n)\\) is assumed to be asymptotically non-negative, i.e. \\(f(n) \\geq 0\\) for all \\(n\\) large enough. This is a common assumption in algorithm analysis, as we are usually interested in the growth of functions that represent time or space complexity, which are non-negative by nature."
+  },
+  {
+    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#asymptotically-positive",
+    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#asymptotically-positive",
+    "title": "O, Theta and Omega Notations",
+    "section": "",
+    "text": "In this note, \\(f(n)\\) is assumed to be asymptotically non-negative, i.e. \\(f(n) \\geq 0\\) for all \\(n\\) large enough. This is a common assumption in algorithm analysis, as we are usually interested in the growth of functions that represent time or space complexity, which are non-negative by nature."
+  },
+  {
+    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#theta-notation",
+    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#theta-notation",
+    "title": "O, Theta and Omega Notations",
+    "section": "\\(\\Theta\\)-notation",
+    "text": "\\(\\Theta\\)-notation\n\\(\\Theta(g(n)) = \\{f(n): \\exists\\text{ constants }\\)c_1,c_2,n_0$\\(0\\leq c_1g(n)\\leq f(n) \\leq c_2g(n)}\\)\nTranslates to: \\(f(n)\\) is in \\(\\Theta(g(n))\\) if \\(f(n)\\) is sandwiched between \\(c_1g(n)\\) and \\(c_2g(n)\\) for \\(n\\) large enough.\nOR\n\\(f(n)\\) grows in a similar rate as \\(g(n)\\)."
+  },
+  {
+    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#mathcalo-notation",
+    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#mathcalo-notation",
+    "title": "O, Theta and Omega Notations",
+    "section": "\\(\\mathcal{O}\\)-notation",
+    "text": "\\(\\mathcal{O}\\)-notation\n\\(\\mathcal{O}(g(n)) = \\{f(n): \\exists\\text{ constants }\\)c,n_0$\\(0\\leq f(n) \\leq c g(n)}\\)\nTranslates to: \\(f(n)\\) is in \\(\\mathcal{O}(g(n))\\) if \\(f(n)\\) is bounded above \\(c g(n)\\) for \\(n\\) large enough.\nOR\n\\(f(n)\\) grows at most as fast as \\(g(n)\\)."
+  },
+  {
+    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#omega-notation",
+    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#omega-notation",
+    "title": "O, Theta and Omega Notations",
+    "section": "\\(\\Omega\\)-notation",
+    "text": "\\(\\Omega\\)-notation\n\\(\\Omega(g(n)) = \\{f(n): \\exists\\text{ constants }\\)c,n_0$\\(0\\leq c g(n) \\leq f(n)}\\)\nTranslates to: \\(f(n)\\) is in \\(\\Omega(g(n))\\) if \\(f(n)\\) is bounded below by \\(cg(n)\\) for \\(n\\) large enough.\nOR\n\\(f(n)\\) grows at least as fast as \\(g(n)\\)."
+  },
+  {
+    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#o-notation",
+    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#o-notation",
+    "title": "O, Theta and Omega Notations",
+    "section": "\\(o\\)-notation",
+    "text": "\\(o\\)-notation\n\\(o(g(n)) = \\{f(n): \\forall\\text{ constants }\\)c&gt;0, n_0$\\(0\\leq f(n) &lt; c g(n)}\\)\nTranslates to: \\(f(n)\\) is in \\(o(g(n))\\) if \\(f(n)\\) grows strictly slower than \\(c g(n)\\) for \\(n\\) large enough [no matter how small \\(c\\) is].\nOR\n\\(\\dlim_{n \\to \\infty} \\dfrac{f(n)}{g(n)} = 0\\)"
+  },
+  {
+    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#omega-notation-1",
+    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#omega-notation-1",
+    "title": "O, Theta and Omega Notations",
+    "section": "\\(\\omega\\)-notation",
+    "text": "\\(\\omega\\)-notation\n\\(f(n) \\in \\omega(g(n))\\) if \\(g(n) \\in o(f(n))\\).\nOR\n\\(\\omega(g(n)) = \\{f(n): \\forall\\text{ constants }\\)c&gt;0, n_0$\\(0\\leq c g(n) &lt; f(n)}\\)\nTranslates to: \\(f(n)\\) is in \\(\\omega(g(n))\\) if \\(f(n)\\) grows strictly faster than \\(c g(n)\\) for \\(n\\) large enough [no matter how small \\(c\\) is].\nOR\n\\(\\dlim_{n \\to \\infty} \\dfrac{f(n)}{g(n)} = \\infty\\)\nOR\n\\(\\dlim_{n \\to \\infty} \\dfrac{g(n)}{f(n)} = 0\\)"
+  },
+  {
+    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#abuse-of-notation",
+    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#abuse-of-notation",
+    "title": "O, Theta and Omega Notations",
+    "section": "Abuse of notation",
+    "text": "Abuse of notation\ne.g. \\(f(n) = o(g(n))\\) is often used to mean \\(f(n) \\in o(g(n))\\)."
+  },
+  {
+    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#comparison-table",
+    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#comparison-table",
+    "title": "O, Theta and Omega Notations",
+    "section": "Comparison Table",
+    "text": "Comparison Table\nThe following table demonstrates the conceptual analogy between asymptotic bounds and standard inequality signs when comparing the growth rates of two functions, \\(f(n)\\) and \\(g(n)\\).\n\n\n\n\n\n\n\n\n\nAsymptotic Notation\nInequality Analogy\nLimit Definition (as \\(n \\to \\infty\\))\nDescription\n\n\n\n\n\\(f(n) = o(g(n))\\)\n\\(&lt;\\)\n\\(\\lim \\frac{f(n)}{g(n)} = 0\\)\n\\(f(n)\\) grows strictly slower than \\(g(n)\\).\n\n\n\\(f(n) = \\mathcal{O}(g(n))\\)\n\\(\\leq\\)\n\\(\\limsup \\frac{f(n)}{g(n)} &lt; \\infty\\)\n\\(f(n)\\) grows at most as fast as \\(g(n)\\) (Upper bound).\n\n\n\\(f(n) = \\Theta(g(n))\\)\n\\(=\\)\n\\(0 &lt; \\lim \\frac{f(n)}{g(n)} &lt; \\infty\\)\n\\(f(n)\\) grows at the exact same rate as \\(g(n)\\) (Tight bound).\n\n\n\\(f(n) = \\Omega(g(n))\\)\n\\(\\geq\\)\n\\(\\liminf \\frac{f(n)}{g(n)} &gt; 0\\)\n\\(f(n)\\) grows at least as fast as \\(g(n)\\) (Lower bound).\n\n\n\\(f(n) = \\omega(g(n))\\)\n\\(&gt;\\)\n\\(\\lim \\frac{f(n)}{g(n)} = \\infty\\)\n\\(f(n)\\) grows strictly faster than \\(g(n)\\)."
   },
   {
     "objectID": "posts/algorithms/insertion-sort-running-time/index.html",
@@ -683,7 +746,7 @@
     "href": "posts/english/english_4/index.html#生字詳細解析-vocabulary",
     "title": "English Word Dictionary Day 4",
     "section": "📚 生字詳細解析 (Vocabulary)",
-    "text": "📚 生字詳細解析 (Vocabulary)\n\n1. renounce /rɪˈnaʊns/ (v.)\n\n廣東話解法：正式宣佈放棄（信仰、權利或行為），或者聲明決裂。口語通常講「放棄」、「唔再要」或者「割席」。\n例句：He decided to renounce his former beliefs. (佢決定放棄佢以前嘅信仰。)\n\n\n\n2. uphold /ʌpˈhəʊld/ (v.)\n\n廣東話解法：支持或者維護（法律、決定或原則）。口語通常講「力撐」、「維持」或者「捍衛」。\n例句：We will uphold the law at all costs. (我哋會不惜一切捍衛法律。)\n\n\n\n3. necessitates /nəˈses.ɪ.teɪts/ (v.)\n\n廣東話解法：令到某樣嘢變成必需。口語通常講「迫使」或者「無可避免要…」。\n例句：The new rules necessitate a change in our strategy. (新嘅規矩迫使我哋必須改變策略。)\n\n\n\n4. bootstraps /ˈbuːt.stræps/ (n.)\n\n廣東話解法：通常出自習語 pull oneself up by one's bootstraps，指唔靠外力，單靠自己雙手同努力去改善處境。口語講「自力更生」、「靠自己捱出頭」。\n例句：He built his business by his bootstraps. (佢靠自己雙手白手興家。)\n\n\n\n5. amid /əˈmɪd/ (prep.)\n\n廣東話解法：被…包圍，或者處於某種氣氛/環境之中。口語通常講「喺…之中」或者「喺…氣氛下」。\n例句：He resigned amid rumors of corruption. (佢喺貪污嘅謠言聲之中辭職。)\n\n\n\n6. tie up the loose ends (idiom)\n\n廣東話解法：處理埋剩低未搞掂嘅小問題或者細節。口語通常講「執手尾」、「搞埋啲手尾」或者「跟進埋啲蘇州屎」。\n例句：We just need to tie up a few loose ends before launching the product. (推出產品之前，我哋淨係要執埋少少手尾就得。)\n\n\n\n7. outset /ˈaʊt.set/ (n.)\n\n廣東話解法：事情的開端、開始。通常用 at/from the outset。口語講「一開始」或者「開頭」。\n例句：I told him from the outset that it wouldn’t work. (我一開始已經同佢講咗咁樣係行唔通嘅。)\n\n\n\n8. scorn /skɔːn/ (n. / v.)\n\n廣東話解法：強烈嘅輕蔑或者鄙視。口語講「睇唔起」、「奚落」或者「不屑」。\n例句：She looked at him with scorn. (佢用好鄙視嘅眼神望住佢。)\n\n\n\n9. perilous /ˈper.əl.əs/ (adj.)\n\n廣東話解法：充滿危險嘅。口語講「極度危險」或者「步步驚心」。\n例句：The journey through the jungle was perilous. (穿越叢林嘅旅程極度危險。)\n\n\n\n10. a dig at me (idiom)\n\n廣東話解法：對某人作出嘲諷或者挖苦。口語講「單打我」、「暗寸我」或者「潤我」。\n例句：Was that remark a dig at me? (頭先嗰句話係咪暗寸緊我？)\n\n\n\n11. berated /bɪˈreɪ.tɪd/ (v. 過去式)\n\n廣東話解法：嚴厲咁責罵某人。口語講「狂鬧」、「鬧到一面屁」或者「痛斥」。\n例句：The boss berated him for his mistake. (老闆因為佢個失誤狂鬧佢。)\n\n\n\n12. steeped /stiːpt/ (adj.)\n\n廣東話解法：通常配搭 steeped in，指深深沉浸喺某種事物之中（如歷史、傳統）。口語講「浸淫喺」、「充滿住」。\n例句：The city is steeped in history. (呢個城市充滿住濃厚嘅歷史氣息。)\n\n\n\n13. schema /ˈskiː.mə/ (n.)\n\n廣東話解法：心理學術語，指人腦中組織知識嘅「基模」或者圖式。口語可以理解為「既定模式」、「認知框架」。\n例句：Our schema affects how we process new information. (我哋嘅認知框架會影響我哋點樣處理新資訊。)\n\n\n\n14. triumph over /ˈtraɪ.əmf ˈəʊ.vər/ (phr. v.)\n\n廣東話解法：經過巨大努力後戰勝困難或敵人。口語講「戰勝」、「克服」或者「贏咗」。\n例句：She finally triumphed over her illness. (佢最終戰勝咗病魔。)\n\n\n\n15. ample /ˈæm.pəl/ (adj.)\n\n廣東話解法：數量上非常足夠。口語講「充足」、「大把」或者「好夠」。\n例句：We have ample time to prepare. (我哋有大把時間準備。)\n\n\n\n16. coolheaded /ˌkuːlˈhed.ɪd/ (adj.)\n\n廣東話解法：喺緊急或困難情況下保持頭腦清醒。口語講「冷靜」、「臨危不亂」。\n例句：You need to remain coolheaded during a crisis. (危機發生嗰陣你需要保持臨危不亂。)\n\n\n\n17. pent-up /ˌpentˈʌp/ (adj.)\n\n廣東話解法：通常用嚟形容被壓抑咗好耐無法釋放嘅情緒或力量。口語講「壓抑咗好耐」、「屈住屈住」。\n例句：He screamed to release his pent-up frustration. (佢大聲叫出嚟，釋放壓抑咗好耐嘅挫敗感。)"
+    "text": "📚 生字詳細解析 (Vocabulary)\n\n1. renounce /rɪˈnaʊns/ (v.)\n\n廣東話解法：正式宣佈放棄（信仰、權利或行為），或者聲明決裂。口語通常講「放棄」、「唔再要」或者「割席」。\n例句：He decided to renounce his former beliefs. (佢決定放棄佢以前嘅信仰。)\n\n\n\n2. uphold /ʌpˈhəʊld/ (v.)\n\n廣東話解法：支持或者維護（法律、決定或原則）。口語通常講「力撐」、「維持」或者「捍衛」。\n例句：We will uphold the law at all costs. (我哋會不惜一切捍衛法律。)\n\n\n\n3. necessitates /nəˈses.ɪ.teɪts/ (v.)\n\n廣東話解法：令到某樣嘢變成必需。口語通常講「迫使」或者「無可避免要…」。\n例句：The new rules necessitate a change in our strategy. (新嘅規矩迫使我哋必須改變策略。)\n\n\n\n4. bootstraps /ˈbuːt.stræps/ (n.)\n\n廣東話解法：「Bootstraps」（靴襻/拔靴帶）原意指靴子後方的拉環。指唔靠外力，單靠自己雙手同努力去改善處境。口語講「自力更生」、「靠自己捱出頭」。\n例句：He built his business by his bootstraps. (佢靠自己雙手白手興家。)\n\n\n\n5. amid /əˈmɪd/ (prep.)\n\n廣東話解法：被…包圍，或者處於某種氣氛/環境之中。口語通常講「喺…之中」或者「喺…氣氛下」。\n例句：He resigned amid rumors of corruption. (佢喺貪污嘅謠言聲之中辭職。)\n\n\n\n6. tie up the loose ends (idiom)\n\n廣東話解法：處理埋剩低未搞掂嘅小問題或者細節。口語通常講「執手尾」、「搞埋啲手尾」或者「跟進埋啲蘇州屎」。\n例句：We just need to tie up a few loose ends before launching the product. (推出產品之前，我哋淨係要執埋少少手尾就得。)\n\n\n\n7. outset /ˈaʊt.set/ (n.)\n\n廣東話解法：事情的開端、開始。通常用 at/from the outset。口語講「一開始」或者「開頭」。\n例句：I told him from the outset that it wouldn’t work. (我一開始已經同佢講咗咁樣係行唔通嘅。)\n\n\n\n8. scorn /skɔːn/ (n. / v.)\n\n廣東話解法：強烈嘅輕蔑或者鄙視。口語講「睇唔起」、「奚落」或者「不屑」。\n例句：She looked at him with scorn. (佢用好鄙視嘅眼神望住佢。)\n\n\n\n9. perilous /ˈper.əl.əs/ (adj.)\n\n廣東話解法：充滿危險嘅。口語講「極度危險」或者「步步驚心」。\n例句：The journey through the jungle was perilous. (穿越叢林嘅旅程極度危險。)\n\n\n\n10. a dig at me (idiom)\n\n廣東話解法：對某人作出嘲諷或者挖苦。口語講「單打我」、「暗寸我」或者「潤我」。\n例句：Was that remark a dig at me? (頭先嗰句話係咪暗寸緊我？)\n\n\n\n11. berated /bɪˈreɪ.tɪd/ (v. 過去式)\n\n廣東話解法：嚴厲咁責罵某人。口語講「狂鬧」、「鬧到一面屁」或者「痛斥」。\n例句：The boss berated him for his mistake. (老闆因為佢個失誤狂鬧佢。)\n\n\n\n12. steeped /stiːpt/ (adj.)\n\n廣東話解法：通常配搭 steeped in，指深深沉浸喺某種事物之中（如歷史、傳統）。口語講「浸淫喺」、「充滿住」。\n例句：The city is steeped in history. (呢個城市充滿住濃厚嘅歷史氣息。)\n\n\n\n13. schema /ˈskiː.mə/ (n.)\n\n廣東話解法：心理學術語，指人腦中組織知識嘅「基模」或者圖式。口語可以理解為「既定模式」、「認知框架」。\n例句：Our schema affects how we process new information. (我哋嘅認知框架會影響我哋點樣處理新資訊。)\n\n\n\n14. triumph over /ˈtraɪ.əmf ˈəʊ.vər/ (phr. v.)\n\n廣東話解法：經過巨大努力後戰勝困難或敵人。口語講「戰勝」、「克服」或者「贏咗」。\n例句：She finally triumphed over her illness. (佢最終戰勝咗病魔。)\n\n\n\n15. ample /ˈæm.pəl/ (adj.)\n\n廣東話解法：數量上非常足夠。口語講「充足」、「大把」或者「好夠」。\n例句：We have ample time to prepare. (我哋有大把時間準備。)\n\n\n\n16. coolheaded /ˌkuːlˈhed.ɪd/ (adj.)\n\n廣東話解法：喺緊急或困難情況下保持頭腦清醒。口語講「冷靜」、「臨危不亂」。\n例句：You need to remain coolheaded during a crisis. (危機發生嗰陣你需要保持臨危不亂。)\n\n\n\n17. pent-up /ˌpentˈʌp/ (adj.)\n\n廣東話解法：通常用嚟形容被壓抑咗好耐無法釋放嘅情緒或力量。口語講「壓抑咗好耐」、「屈住屈住」。\n例句：He screamed to release his pent-up frustration. (佢大聲叫出嚟，釋放壓抑咗好耐嘅挫敗感。)"
   },
   {
     "objectID": "posts/python/decorator (@property)/index.html",

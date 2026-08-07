@@ -3,6 +3,7 @@
     "listing": "/index.html",
     "items": [
       "/posts/python/decorator (@property)/index.html",
+      "/posts/algorithms/big-and-small-o-or-theta/index.html",
       "/posts/english/english_4/index.html",
       "/posts/python/flexible-arguments/index.html",
       "/posts/python/optional-attributes/index.html",

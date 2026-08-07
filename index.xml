@@ -720,6 +720,122 @@ def full_name(self):
   <pubDate>Fri, 07 Aug 2026 16:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>O, Theta and Omega Notations</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/algorithms/big-and-small-o-or-theta/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="asymptotically-positive" class="level2">
+<h2 class="anchored" data-anchor-id="asymptotically-positive">Asymptotically positive</h2>
+<p>In this note, <img src="https://latex.codecogs.com/png.latex?f(n)"> is assumed to be <strong>asymptotically non-negative</strong>, i.e.&nbsp;<img src="https://latex.codecogs.com/png.latex?f(n)%20%5Cgeq%200"> for all <img src="https://latex.codecogs.com/png.latex?n"> large enough. This is a common assumption in algorithm analysis, as we are usually interested in the growth of functions that represent time or space complexity, which are non-negative by nature.</p>
+</section>
+<section id="theta-notation" class="level2">
+<h2 class="anchored" data-anchor-id="theta-notation"><img src="https://latex.codecogs.com/png.latex?%5CTheta">-notation</h2>
+<p><img src="https://latex.codecogs.com/png.latex?%5CTheta(g(n))%20=%20%5C%7Bf(n):%20%5Cexists%5Ctext%7B%20constants%20%7D">c_1,c_2,n_0$<img src="https://latex.codecogs.com/png.latex?0%5Cleq%20c_1g(n)%5Cleq%20f(n)%20%5Cleq%20c_2g(n)%7D"></p>
+<p>Translates to: <img src="https://latex.codecogs.com/png.latex?f(n)"> is in <img src="https://latex.codecogs.com/png.latex?%5CTheta(g(n))"> if <img src="https://latex.codecogs.com/png.latex?f(n)"> is sandwiched between <img src="https://latex.codecogs.com/png.latex?c_1g(n)"> and <img src="https://latex.codecogs.com/png.latex?c_2g(n)"> for <img src="https://latex.codecogs.com/png.latex?n"> large enough.</p>
+<p>OR</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(n)"> grows in a similar rate as <img src="https://latex.codecogs.com/png.latex?g(n)">.</p>
+</section>
+<section id="mathcalo-notation" class="level2">
+<h2 class="anchored" data-anchor-id="mathcalo-notation"><img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BO%7D">-notation</h2>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BO%7D(g(n))%20=%20%5C%7Bf(n):%20%5Cexists%5Ctext%7B%20constants%20%7D">c,n_0$<img src="https://latex.codecogs.com/png.latex?0%5Cleq%20f(n)%20%5Cleq%20c%20g(n)%7D"></p>
+<p>Translates to: <img src="https://latex.codecogs.com/png.latex?f(n)"> is in <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BO%7D(g(n))"> if <img src="https://latex.codecogs.com/png.latex?f(n)"> is bounded above <img src="https://latex.codecogs.com/png.latex?c%20g(n)"> for <img src="https://latex.codecogs.com/png.latex?n"> large enough.</p>
+<p>OR</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(n)"> grows at most as fast as <img src="https://latex.codecogs.com/png.latex?g(n)">.</p>
+</section>
+<section id="omega-notation" class="level2">
+<h2 class="anchored" data-anchor-id="omega-notation"><img src="https://latex.codecogs.com/png.latex?%5COmega">-notation</h2>
+<p><img src="https://latex.codecogs.com/png.latex?%5COmega(g(n))%20=%20%5C%7Bf(n):%20%5Cexists%5Ctext%7B%20constants%20%7D">c,n_0$<img src="https://latex.codecogs.com/png.latex?0%5Cleq%20c%20g(n)%20%5Cleq%20f(n)%7D"></p>
+<p>Translates to: <img src="https://latex.codecogs.com/png.latex?f(n)"> is in <img src="https://latex.codecogs.com/png.latex?%5COmega(g(n))"> if <img src="https://latex.codecogs.com/png.latex?f(n)"> is bounded below by <img src="https://latex.codecogs.com/png.latex?cg(n)"> for <img src="https://latex.codecogs.com/png.latex?n"> large enough.</p>
+<p>OR</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(n)"> grows at least as fast as <img src="https://latex.codecogs.com/png.latex?g(n)">.</p>
+</section>
+<section id="o-notation" class="level2">
+<h2 class="anchored" data-anchor-id="o-notation"><img src="https://latex.codecogs.com/png.latex?o">-notation</h2>
+<p><img src="https://latex.codecogs.com/png.latex?o(g(n))%20=%20%5C%7Bf(n):%20%5Cforall%5Ctext%7B%20constants%20%7D">c&gt;0, n_0$<img src="https://latex.codecogs.com/png.latex?0%5Cleq%20f(n)%20%3C%20c%20g(n)%7D"></p>
+<p>Translates to: <img src="https://latex.codecogs.com/png.latex?f(n)"> is in <img src="https://latex.codecogs.com/png.latex?o(g(n))"> if <img src="https://latex.codecogs.com/png.latex?f(n)"> grows strictly slower than <img src="https://latex.codecogs.com/png.latex?c%20g(n)"> for <img src="https://latex.codecogs.com/png.latex?n"> large enough <strong>[no matter how small <img src="https://latex.codecogs.com/png.latex?c"> is]</strong>.</p>
+<p>OR</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cdlim_%7Bn%20%5Cto%20%5Cinfty%7D%20%5Cdfrac%7Bf(n)%7D%7Bg(n)%7D%20=%200"></p>
+</section>
+<section id="omega-notation-1" class="level2">
+<h2 class="anchored" data-anchor-id="omega-notation-1"><img src="https://latex.codecogs.com/png.latex?%5Comega">-notation</h2>
+<p><img src="https://latex.codecogs.com/png.latex?f(n)%20%5Cin%20%5Comega(g(n))"> if <img src="https://latex.codecogs.com/png.latex?g(n)%20%5Cin%20o(f(n))">.</p>
+<p>OR</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Comega(g(n))%20=%20%5C%7Bf(n):%20%5Cforall%5Ctext%7B%20constants%20%7D">c&gt;0, n_0$<img src="https://latex.codecogs.com/png.latex?0%5Cleq%20c%20g(n)%20%3C%20f(n)%7D"></p>
+<p>Translates to: <img src="https://latex.codecogs.com/png.latex?f(n)"> is in <img src="https://latex.codecogs.com/png.latex?%5Comega(g(n))"> if <img src="https://latex.codecogs.com/png.latex?f(n)"> grows strictly faster than <img src="https://latex.codecogs.com/png.latex?c%20g(n)"> for <img src="https://latex.codecogs.com/png.latex?n"> large enough <strong>[no matter how small <img src="https://latex.codecogs.com/png.latex?c"> is]</strong>.</p>
+<p>OR</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cdlim_%7Bn%20%5Cto%20%5Cinfty%7D%20%5Cdfrac%7Bf(n)%7D%7Bg(n)%7D%20=%20%5Cinfty"></p>
+<p>OR</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cdlim_%7Bn%20%5Cto%20%5Cinfty%7D%20%5Cdfrac%7Bg(n)%7D%7Bf(n)%7D%20=%200"></p>
+</section>
+<section id="abuse-of-notation" class="level2">
+<h2 class="anchored" data-anchor-id="abuse-of-notation">Abuse of notation</h2>
+<p>e.g.&nbsp;<img src="https://latex.codecogs.com/png.latex?f(n)%20=%20o(g(n))"> is often used to mean <img src="https://latex.codecogs.com/png.latex?f(n)%20%5Cin%20o(g(n))">.</p>
+</section>
+<section id="comparison-table" class="level2">
+<h2 class="anchored" data-anchor-id="comparison-table">Comparison Table</h2>
+<p>The following table demonstrates the conceptual analogy between asymptotic bounds and standard inequality signs when comparing the growth rates of two functions, <img src="https://latex.codecogs.com/png.latex?f(n)"> and <img src="https://latex.codecogs.com/png.latex?g(n)">.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 29%">
+<col style="width: 23%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Asymptotic Notation</th>
+<th style="text-align: center;">Inequality Analogy</th>
+<th style="text-align: left;">Limit Definition (as <img src="https://latex.codecogs.com/png.latex?n%20%5Cto%20%5Cinfty">)</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)%20=%20o(g(n))"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%3C"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Clim%20%5Cfrac%7Bf(n)%7D%7Bg(n)%7D%20=%200"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)"> grows <strong>strictly slower</strong> than <img src="https://latex.codecogs.com/png.latex?g(n)">.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)%20=%20%5Cmathcal%7BO%7D(g(n))"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Cleq"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Climsup%20%5Cfrac%7Bf(n)%7D%7Bg(n)%7D%20%3C%20%5Cinfty"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)"> grows <strong>at most as fast</strong> as <img src="https://latex.codecogs.com/png.latex?g(n)"> (Upper bound).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)%20=%20%5CTheta(g(n))"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?="></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?0%20%3C%20%5Clim%20%5Cfrac%7Bf(n)%7D%7Bg(n)%7D%20%3C%20%5Cinfty"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)"> grows at the <strong>exact same rate</strong> as <img src="https://latex.codecogs.com/png.latex?g(n)"> (Tight bound).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)%20=%20%5COmega(g(n))"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Cgeq"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Climinf%20%5Cfrac%7Bf(n)%7D%7Bg(n)%7D%20%3E%200"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)"> grows <strong>at least as fast</strong> as <img src="https://latex.codecogs.com/png.latex?g(n)"> (Lower bound).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)%20=%20%5Comega(g(n))"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%3E"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Clim%20%5Cfrac%7Bf(n)%7D%7Bg(n)%7D%20=%20%5Cinfty"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?f(n)"> grows <strong>strictly faster</strong> than <img src="https://latex.codecogs.com/png.latex?g(n)">.</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+
+ ]]></description>
+  <category>Algorithms</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/algorithms/big-and-small-o-or-theta/</guid>
+  <pubDate>Thu, 06 Aug 2026 16:00:00 GMT</pubDate>
+</item>
+<item>
   <title>English Word Dictionary Day 4</title>
   <link>https://jerryleung16.github.io/my-math-notes/posts/english/english_4/</link>
   <description><![CDATA[ 
@@ -949,7 +1065,7 @@ Note
 <section id="bootstraps-ˈbuːt.stræps-n." class="level3">
 <h3 class="anchored" data-anchor-id="bootstraps-ˈbuːt.stræps-n.">4. bootstraps /ˈbuːt.stræps/ (n.)</h3>
 <ul>
-<li><strong>廣東話解法</strong>：通常出自習語 <code>pull oneself up by one's bootstraps</code>，指唔靠外力，單靠自己雙手同努力去改善處境。口語講「自力更生」、「靠自己捱出頭」。</li>
+<li><strong>廣東話解法</strong>：「Bootstraps」（靴襻/拔靴帶）原意指靴子後方的拉環。指唔靠外力，單靠自己雙手同努力去改善處境。口語講「自力更生」、「靠自己捱出頭」。</li>
 <li><strong>例句</strong>：He built his business by his <strong>bootstraps</strong>. (佢靠自己雙手白手興家。)</li>
 </ul>
 </section>
