@@ -1,0 +1,34 @@
+name: Delete post and republish
+
+on:
+  workflow_dispatch:
+    inputs:
+      post_path:
+        description: Repository-relative path to the post folder, for example posts/python/intro-to-class
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  delete-and-republish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Inkscape (For TikZ)
+        run: sudo apt-get update && sudo apt-get install -y inkscape
+
+      - name: Delete post and republish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/delete-post.py "${{ inputs.post_path }}"
