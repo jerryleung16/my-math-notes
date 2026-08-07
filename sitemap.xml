@@ -2,82 +2,78 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jerryleung16.github.io/my-math-notes/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.433Z</lastmod>
+    <lastmod>2026-08-07T19:52:51.287Z</lastmod>
   </url>
   <url>
     <loc>https://jerryleung16.github.io/my-math-notes/posts/deep learning/Deep Learning with Python Ch.1 Summary/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.434Z</lastmod>
+    <lastmod>2026-08-07T19:52:51.288Z</lastmod>
   </url>
   <url>
     <loc>https://jerryleung16.github.io/my-math-notes/posts/algorithms/merge-sort/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.433Z</lastmod>
+    <lastmod>2026-08-07T19:52:51.288Z</lastmod>
   </url>
   <url>
     <loc>https://jerryleung16.github.io/my-math-notes/posts/algorithms/merge-sort-running-time/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.433Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jerryleung16.github.io/my-math-notes/posts/a/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.433Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jerryleung16.github.io/my-math-notes/posts/english/english_2/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.434Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jerryleung16.github.io/my-math-notes/posts/english/english_4/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.434Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jerryleung16.github.io/my-math-notes/posts/english/english_1/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.434Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jerryleung16.github.io/my-math-notes/posts/python/optional-attributes/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.435Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jerryleung16.github.io/my-math-notes/posts/python/decorator (@property)/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.435Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jerryleung16.github.io/my-math-notes/about.html</loc>
-    <lastmod>2026-08-07T19:46:02.432Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jerryleung16.github.io/my-math-notes/posts/python/intro-to-class/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.435Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jerryleung16.github.io/my-math-notes/posts/python/flexible-arguments/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.435Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jerryleung16.github.io/my-math-notes/posts/english/english_5/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.434Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jerryleung16.github.io/my-math-notes/posts/english/english_3/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.434Z</lastmod>
+    <lastmod>2026-08-07T19:52:51.288Z</lastmod>
   </url>
   <url>
     <loc>https://jerryleung16.github.io/my-math-notes/posts/japanese/japanese_1/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.435Z</lastmod>
+    <lastmod>2026-08-07T19:52:51.289Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jerryleung16.github.io/my-math-notes/posts/english/english_3/index.html</loc>
+    <lastmod>2026-08-07T19:52:51.288Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jerryleung16.github.io/my-math-notes/posts/english/english_5/index.html</loc>
+    <lastmod>2026-08-07T19:52:51.288Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jerryleung16.github.io/my-math-notes/posts/python/flexible-arguments/index.html</loc>
+    <lastmod>2026-08-07T19:52:51.289Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jerryleung16.github.io/my-math-notes/posts/python/intro-to-class/index.html</loc>
+    <lastmod>2026-08-07T19:52:51.289Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jerryleung16.github.io/my-math-notes/about.html</loc>
+    <lastmod>2026-08-07T19:52:51.287Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jerryleung16.github.io/my-math-notes/posts/python/decorator (@property)/index.html</loc>
+    <lastmod>2026-08-07T19:52:51.289Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jerryleung16.github.io/my-math-notes/posts/python/optional-attributes/index.html</loc>
+    <lastmod>2026-08-07T19:52:51.289Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jerryleung16.github.io/my-math-notes/posts/english/english_1/index.html</loc>
+    <lastmod>2026-08-07T19:52:51.288Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jerryleung16.github.io/my-math-notes/posts/english/english_4/index.html</loc>
+    <lastmod>2026-08-07T19:52:51.288Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jerryleung16.github.io/my-math-notes/posts/english/english_2/index.html</loc>
+    <lastmod>2026-08-07T19:52:51.288Z</lastmod>
   </url>
   <url>
     <loc>https://jerryleung16.github.io/my-math-notes/posts/algorithms/insertion-sort-running-time/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.433Z</lastmod>
+    <lastmod>2026-08-07T19:52:51.288Z</lastmod>
   </url>
   <url>
     <loc>https://jerryleung16.github.io/my-math-notes/posts/algorithms/big-and-small-o-or-theta/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.433Z</lastmod>
+    <lastmod>2026-08-07T19:52:51.288Z</lastmod>
   </url>
   <url>
     <loc>https://jerryleung16.github.io/my-math-notes/posts/algorithms/insertion-sort/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.433Z</lastmod>
+    <lastmod>2026-08-07T19:52:51.288Z</lastmod>
   </url>
   <url>
     <loc>https://jerryleung16.github.io/my-math-notes/posts/deep learning/Deep Learning with Python Ch.2 Summary/index.html</loc>
-    <lastmod>2026-08-07T19:46:02.434Z</lastmod>
+    <lastmod>2026-08-07T19:52:51.288Z</lastmod>
   </url>
 </urlset>
