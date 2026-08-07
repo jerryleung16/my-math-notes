@@ -80,9 +80,11 @@
             posts.push(...nested);
           } else if (entry.type === 'file' && entry.name === 'index.qmd') {
             const editUrl = `https://github.com/${repoOwner}/${repoName}/edit/${branch}/${entry.path}`;
+            const deleteUrl = `https://github.com/${repoOwner}/${repoName}/delete/${branch}/${encodeURIComponent(entry.path)}`;
             posts.push({
               label: buildLabel(entry.path),
-              editUrl
+              editUrl,
+              deleteUrl
             });
           }
         }
@@ -108,6 +110,13 @@
             link.href = post.editUrl;
             link.textContent = post.label;
             item.appendChild(link);
+
+            const deleteLink = document.createElement('a');
+            deleteLink.href = post.deleteUrl;
+            deleteLink.textContent = ' (delete)';
+            deleteLink.style.marginLeft = '0.5rem';
+            deleteLink.style.color = '#c0392b';
+            item.appendChild(deleteLink);
             fragment.appendChild(item);
           }
           list.appendChild(fragment);
