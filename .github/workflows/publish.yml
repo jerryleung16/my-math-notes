@@ -1,14 +1,14 @@
+name: Render and Publish
 on:
   push:
-    branches: main
+    branches: [main]
 
-name: Render and Publish
+permissions:
+  contents: write
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -21,8 +21,9 @@ jobs:
 
       - name: Install TinyTeX (For Math)
         uses: quarto-dev/quarto-actions/setup-tinytex@v2
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Render site
+        run: quarto render
 
       - name: Publish to GitHub Pages
         uses: quarto-dev/quarto-actions/publish@v2
