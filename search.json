@@ -452,63 +452,63 @@
     "href": "posts/algorithms/big-and-small-o-or-theta/index.html",
     "title": "O, Theta and Omega Notations",
     "section": "",
-    "text": "In this note, \\(f(n)\\) is assumed to be asymptotically non-negative, i.e. \\(f(n) \\geq 0\\) for all \\(n\\) large enough. This is a common assumption in algorithm analysis, as we are usually interested in the growth of functions that represent time or space complexity, which are non-negative by nature."
+    "text": "Throughout this note, we assume that \\(f(n)\\) is asymptotically non-negative, meaning there exists some integer \\(n_0\\) such that\n[ f(n) n n_0. ]\nThis is a standard assumption in algorithm analysis because running time and memory usage are always non-negative for sufficiently large input sizes."
   },
   {
-    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#asymptotically-positive",
-    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#asymptotically-positive",
+    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#asymptotically-non-negative-functions",
+    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#asymptotically-non-negative-functions",
     "title": "O, Theta and Omega Notations",
     "section": "",
-    "text": "In this note, \\(f(n)\\) is assumed to be asymptotically non-negative, i.e. \\(f(n) \\geq 0\\) for all \\(n\\) large enough. This is a common assumption in algorithm analysis, as we are usually interested in the growth of functions that represent time or space complexity, which are non-negative by nature."
+    "text": "Throughout this note, we assume that \\(f(n)\\) is asymptotically non-negative, meaning there exists some integer \\(n_0\\) such that\n[ f(n) n n_0. ]\nThis is a standard assumption in algorithm analysis because running time and memory usage are always non-negative for sufficiently large input sizes."
   },
   {
-    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#theta-notation",
-    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#theta-notation",
+    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#theta-notation-tight-bound",
+    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#theta-notation-tight-bound",
     "title": "O, Theta and Omega Notations",
-    "section": "\\(\\Theta\\)-notation",
-    "text": "\\(\\Theta\\)-notation\n\\(\\Theta(g(n)) = \\{f(n): \\exists\\text{ constants }\\)c_1,c_2,n_0$\\(0\\leq c_1g(n)\\leq f(n) \\leq c_2g(n)\\}\\)\nTranslates to: \\(f(n)\\) is in \\(\\Theta(g(n))\\) if \\(f(n)\\) is sandwiched between \\(c_1g(n)\\) and \\(c_2g(n)\\) for \\(n\\) large enough.\nOR\n\\(f(n)\\) grows in a similar rate as \\(g(n)\\)."
+    "section": "\\(\\Theta\\)-Notation (Tight Bound)",
+    "text": "\\(\\Theta\\)-Notation (Tight Bound)\n[ (g(n)) = { f(n): , c_1,c_2&gt;0,; n_0 0c_1g(n)f(n)c_2g(n) nn_0 }. ]\n\nInterpretation\nA function \\(f(n)\\) belongs to \\(\\Theta(g(n))\\) if, for sufficiently large \\(n\\), it is sandwiched between two constant multiples of \\(g(n)\\).\nEquivalently,\n\n\\(f(n)\\) and \\(g(n)\\) grow at the same asymptotic rate."
   },
   {
-    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#mathcalo-notation",
-    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#mathcalo-notation",
+    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#mathcalo-notation-upper-bound",
+    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#mathcalo-notation-upper-bound",
     "title": "O, Theta and Omega Notations",
-    "section": "\\(\\mathcal{O}\\)-notation",
-    "text": "\\(\\mathcal{O}\\)-notation\n\\(\\mathcal{O}(g(n)) = \\{f(n): \\exists\\text{ constants }\\)c,n_0$\\(0\\leq f(n) \\leq c g(n)\\}\\)\nTranslates to: \\(f(n)\\) is in \\(\\mathcal{O}(g(n))\\) if \\(f(n)\\) is bounded above \\(c g(n)\\) for \\(n\\) large enough.\nOR\n\\(f(n)\\) grows at most as fast as \\(g(n)\\)."
+    "section": "\\(\\mathcal{O}\\)-Notation (Upper Bound)",
+    "text": "\\(\\mathcal{O}\\)-Notation (Upper Bound)\n[ (g(n)) = { f(n): , c&gt;0,; n_0 0f(n)cg(n) nn_0 }. ]\n\nInterpretation\nA function \\(f(n)\\) belongs to \\(\\mathcal{O}(g(n))\\) if it is eventually bounded above by a constant multiple of \\(g(n)\\).\nEquivalently,\n\n\\(f(n)\\) grows at most as fast as \\(g(n)\\)."
   },
   {
-    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#omega-notation",
-    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#omega-notation",
+    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#omega-notation-lower-bound",
+    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#omega-notation-lower-bound",
     "title": "O, Theta and Omega Notations",
-    "section": "\\(\\Omega\\)-notation",
-    "text": "\\(\\Omega\\)-notation\n\\(\\Omega(g(n)) = \\{f(n): \\exists\\text{ constants }\\)c,n_0$\\(0\\leq c g(n) \\leq f(n)\\}\\)\nTranslates to: \\(f(n)\\) is in \\(\\Omega(g(n))\\) if \\(f(n)\\) is bounded below by \\(cg(n)\\) for \\(n\\) large enough.\nOR\n\\(f(n)\\) grows at least as fast as \\(g(n)\\)."
+    "section": "\\(\\Omega\\)-Notation (Lower Bound)",
+    "text": "\\(\\Omega\\)-Notation (Lower Bound)\n[ (g(n)) = { f(n): , c&gt;0,; n_0 0cg(n)f(n) nn_0 }. ]\n\nInterpretation\nA function \\(f(n)\\) belongs to \\(\\Omega(g(n))\\) if it is eventually bounded below by a constant multiple of \\(g(n)\\).\nEquivalently,\n\n\\(f(n)\\) grows at least as fast as \\(g(n)\\)."
   },
   {
-    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#o-notation",
-    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#o-notation",
+    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#o-notation-strict-upper-bound",
+    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#o-notation-strict-upper-bound",
     "title": "O, Theta and Omega Notations",
-    "section": "\\(o\\)-notation",
-    "text": "\\(o\\)-notation\n\\(o(g(n)) = \\{f(n): \\forall\\text{ constants }\\)c&gt;0, n_0$\\(0\\leq f(n) &lt; c g(n)\\}\\)\nTranslates to: \\(f(n)\\) is in \\(o(g(n))\\) if \\(f(n)\\) grows strictly slower than \\(c g(n)\\) for \\(n\\) large enough [no matter how small \\(c\\) is].\nOR\n\\(\\lim_{n \\to \\infty} \\dfrac{f(n)}{g(n)} = 0\\)"
+    "section": "\\(o\\)-Notation (Strict Upper Bound)",
+    "text": "\\(o\\)-Notation (Strict Upper Bound)\n[ o(g(n)) = { f(n): , c&gt;0,; , n_0 0f(n)&lt;cg(n) nn_0 }. ]\n\nInterpretation\nA function \\(f(n)\\) belongs to \\(o(g(n))\\) if it grows more slowly than every positive constant multiple of \\(g(n)\\).\nEquivalently,\n[ _{n} = 0. ]"
   },
   {
-    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#omega-notation-1",
-    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#omega-notation-1",
+    "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#omega-notation-strict-lower-bound",
+    "href": "posts/algorithms/big-and-small-o-or-theta/index.html#omega-notation-strict-lower-bound",
     "title": "O, Theta and Omega Notations",
-    "section": "\\(\\omega\\)-notation",
-    "text": "\\(\\omega\\)-notation\n\\(f(n) \\in \\omega(g(n))\\) if \\(g(n) \\in o(f(n))\\).\nOR\n\\(\\omega(g(n)) = \\{f(n): \\forall\\text{ constants }\\)c&gt;0, n_0$\\(0\\leq c g(n) &lt; f(n)\\}\\)\nTranslates to: \\(f(n)\\) is in \\(\\omega(g(n))\\) if \\(f(n)\\) grows strictly faster than \\(c g(n)\\) for \\(n\\) large enough [no matter how small \\(c\\) is].\nOR\n\\(\\lim_{n \\to \\infty} \\dfrac{f(n)}{g(n)} = \\infty\\)\nOR\n\\(\\lim_{n \\to \\infty} \\dfrac{g(n)}{f(n)} = 0\\)"
+    "section": "\\(\\omega\\)-Notation (Strict Lower Bound)",
+    "text": "\\(\\omega\\)-Notation (Strict Lower Bound)\nA function \\(f(n)\\) belongs to \\(\\omega(g(n))\\) if\n[ g(n)o(f(n)). ]\nEquivalently,\n[ (g(n)) = { f(n): , c&gt;0,; , n_0 0cg(n)&lt;f(n) nn_0 }. ]\n\nInterpretation\nA function \\(f(n)\\) belongs to \\(\\omega(g(n))\\) if it grows faster than every positive constant multiple of \\(g(n)\\).\nEquivalently,\n[ _{n} = , ]\nor\n[ _{n} = 0. ]"
   },
   {
     "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#abuse-of-notation",
     "href": "posts/algorithms/big-and-small-o-or-theta/index.html#abuse-of-notation",
     "title": "O, Theta and Omega Notations",
-    "section": "Abuse of notation",
-    "text": "Abuse of notation\ne.g. \\(f(n) = o(g(n))\\) is often used to mean \\(f(n) \\in o(g(n))\\)."
+    "section": "Abuse of Notation",
+    "text": "Abuse of Notation\nStrictly speaking,\n[ o(g(n)),; (g(n)),; (g(n)),; (g(n)),; (g(n)) ]\nare sets of functions.\nTherefore,\n[ f(n)(g(n)) ]\nis the mathematically correct notation.\nHowever, algorithm textbooks often write\n[ f(n)=(g(n)) ]\nas shorthand for\n[ f(n)(g(n)). ]\nThe same convention applies to \\(\\mathcal{O}\\), \\(\\Omega\\), \\(o\\), and \\(\\omega\\)."
   },
   {
     "objectID": "posts/algorithms/big-and-small-o-or-theta/index.html#comparison-table",
     "href": "posts/algorithms/big-and-small-o-or-theta/index.html#comparison-table",
     "title": "O, Theta and Omega Notations",
     "section": "Comparison Table",
-    "text": "Comparison Table\nThe following table demonstrates the conceptual analogy between asymptotic bounds and standard inequality signs when comparing the growth rates of two functions, \\(f(n)\\) and \\(g(n)\\).\n\n\n\n\n\n\n\n\n\nAsymptotic Notation\nInequality Analogy\nLimit Definition (as \\(n \\to \\infty\\))\nDescription\n\n\n\n\n\\(f(n) = o(g(n))\\)\n\\(&lt;\\)\n\\(\\lim \\frac{f(n)}{g(n)} = 0\\)\n\\(f(n)\\) grows strictly slower than \\(g(n)\\).\n\n\n\\(f(n) = \\mathcal{O}(g(n))\\)\n\\(\\leq\\)\n\\(\\limsup \\frac{f(n)}{g(n)} &lt; \\infty\\)\n\\(f(n)\\) grows at most as fast as \\(g(n)\\) (Upper bound).\n\n\n\\(f(n) = \\Theta(g(n))\\)\n\\(=\\)\n\\(0 &lt; \\lim \\frac{f(n)}{g(n)} &lt; \\infty\\)\n\\(f(n)\\) grows at the exact same rate as \\(g(n)\\) (Tight bound).\n\n\n\\(f(n) = \\Omega(g(n))\\)\n\\(\\geq\\)\n\\(\\liminf \\frac{f(n)}{g(n)} &gt; 0\\)\n\\(f(n)\\) grows at least as fast as \\(g(n)\\) (Lower bound).\n\n\n\\(f(n) = \\omega(g(n))\\)\n\\(&gt;\\)\n\\(\\lim \\frac{f(n)}{g(n)} = \\infty\\)\n\\(f(n)\\) grows strictly faster than \\(g(n)\\)."
+    "text": "Comparison Table\nThe following table compares the five asymptotic notations with familiar inequality symbols.\n\n\n\n\n\n\n\n\n\nAsymptotic Notation\nAnalogy\nLimit Characterization*\nMeaning\n\n\n\n\n\\(f(n)=o(g(n))\\)\n\\(&lt;\\)\n\\(\\displaystyle\\lim_{n\\to\\infty}\\frac{f(n)}{g(n)}=0\\)\n\\(f(n)\\) grows strictly slower than \\(g(n)\\).\n\n\n\\(f(n)=\\mathcal{O}(g(n))\\)\n\\(\\le\\)\n\\(\\displaystyle\\limsup_{n\\to\\infty}\\frac{f(n)}{g(n)}&lt;\\infty\\)\n\\(f(n)\\) grows at most as fast as \\(g(n)\\).\n\n\n\\(f(n)=\\Theta(g(n))\\)\n\\(=\\)\n\\(\\displaystyle0&lt;\\lim_{n\\to\\infty}\\frac{f(n)}{g(n)}&lt;\\infty\\) (when the limit exists)\n\\(f(n)\\) and \\(g(n)\\) grow at the same rate.\n\n\n\\(f(n)=\\Omega(g(n))\\)\n\\(\\ge\\)\n\\(\\displaystyle\\liminf_{n\\to\\infty}\\frac{f(n)}{g(n)}&gt;0\\)\n\\(f(n)\\) grows at least as fast as \\(g(n)\\).\n\n\n\\(f(n)=\\omega(g(n))\\)\n\\(&gt;\\)\n\\(\\displaystyle\\lim_{n\\to\\infty}\\frac{f(n)}{g(n)}=\\infty\\)\n\\(f(n)\\) grows strictly faster than \\(g(n)\\).\n\n\n\n\nNote: The limit characterization for \\(\\Theta(g(n))\\) assumes that the limit exists. In general, the formal set definition given earlier is the most rigorous definition."
   },
   {
     "objectID": "posts/algorithms/insertion-sort-running-time/index.html",

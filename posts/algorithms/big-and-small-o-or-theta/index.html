@@ -174,13 +174,28 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#asymptotically-positive" id="toc-asymptotically-positive" class="nav-link active" data-scroll-target="#asymptotically-positive">Asymptotically positive</a></li>
-  <li><a href="#theta-notation" id="toc-theta-notation" class="nav-link" data-scroll-target="#theta-notation"><span class="math inline">\(\Theta\)</span>-notation</a></li>
-  <li><a href="#mathcalo-notation" id="toc-mathcalo-notation" class="nav-link" data-scroll-target="#mathcalo-notation"><span class="math inline">\(\mathcal{O}\)</span>-notation</a></li>
-  <li><a href="#omega-notation" id="toc-omega-notation" class="nav-link" data-scroll-target="#omega-notation"><span class="math inline">\(\Omega\)</span>-notation</a></li>
-  <li><a href="#o-notation" id="toc-o-notation" class="nav-link" data-scroll-target="#o-notation"><span class="math inline">\(o\)</span>-notation</a></li>
-  <li><a href="#omega-notation-1" id="toc-omega-notation-1" class="nav-link" data-scroll-target="#omega-notation-1"><span class="math inline">\(\omega\)</span>-notation</a></li>
-  <li><a href="#abuse-of-notation" id="toc-abuse-of-notation" class="nav-link" data-scroll-target="#abuse-of-notation">Abuse of notation</a></li>
+  <li><a href="#asymptotically-non-negative-functions" id="toc-asymptotically-non-negative-functions" class="nav-link active" data-scroll-target="#asymptotically-non-negative-functions">Asymptotically Non-negative Functions</a></li>
+  <li><a href="#theta-notation-tight-bound" id="toc-theta-notation-tight-bound" class="nav-link" data-scroll-target="#theta-notation-tight-bound"><span class="math inline">\(\Theta\)</span>-Notation (Tight Bound)</a>
+  <ul class="collapse">
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  </ul></li>
+  <li><a href="#mathcalo-notation-upper-bound" id="toc-mathcalo-notation-upper-bound" class="nav-link" data-scroll-target="#mathcalo-notation-upper-bound"><span class="math inline">\(\mathcal{O}\)</span>-Notation (Upper Bound)</a>
+  <ul class="collapse">
+  <li><a href="#interpretation-1" id="toc-interpretation-1" class="nav-link" data-scroll-target="#interpretation-1">Interpretation</a></li>
+  </ul></li>
+  <li><a href="#omega-notation-lower-bound" id="toc-omega-notation-lower-bound" class="nav-link" data-scroll-target="#omega-notation-lower-bound"><span class="math inline">\(\Omega\)</span>-Notation (Lower Bound)</a>
+  <ul class="collapse">
+  <li><a href="#interpretation-2" id="toc-interpretation-2" class="nav-link" data-scroll-target="#interpretation-2">Interpretation</a></li>
+  </ul></li>
+  <li><a href="#o-notation-strict-upper-bound" id="toc-o-notation-strict-upper-bound" class="nav-link" data-scroll-target="#o-notation-strict-upper-bound"><span class="math inline">\(o\)</span>-Notation (Strict Upper Bound)</a>
+  <ul class="collapse">
+  <li><a href="#interpretation-3" id="toc-interpretation-3" class="nav-link" data-scroll-target="#interpretation-3">Interpretation</a></li>
+  </ul></li>
+  <li><a href="#omega-notation-strict-lower-bound" id="toc-omega-notation-strict-lower-bound" class="nav-link" data-scroll-target="#omega-notation-strict-lower-bound"><span class="math inline">\(\omega\)</span>-Notation (Strict Lower Bound)</a>
+  <ul class="collapse">
+  <li><a href="#interpretation-4" id="toc-interpretation-4" class="nav-link" data-scroll-target="#interpretation-4">Interpretation</a></li>
+  </ul></li>
+  <li><a href="#abuse-of-notation" id="toc-abuse-of-notation" class="nav-link" data-scroll-target="#abuse-of-notation">Abuse of Notation</a></li>
   <li><a href="#comparison-table" id="toc-comparison-table" class="nav-link" data-scroll-target="#comparison-table">Comparison Table</a></li>
   </ul>
 </nav>
@@ -192,104 +207,148 @@ window.Quarto = {
 
 
 
-<section id="asymptotically-positive" class="level2">
-<h2 class="anchored" data-anchor-id="asymptotically-positive">Asymptotically positive</h2>
-<p>In this note, <span class="math inline">\(f(n)\)</span> is assumed to be <strong>asymptotically non-negative</strong>, i.e.&nbsp;<span class="math inline">\(f(n) \geq 0\)</span> for all <span class="math inline">\(n\)</span> large enough. This is a common assumption in algorithm analysis, as we are usually interested in the growth of functions that represent time or space complexity, which are non-negative by nature.</p>
+<section id="asymptotically-non-negative-functions" class="level2">
+<h2 class="anchored" data-anchor-id="asymptotically-non-negative-functions">Asymptotically Non-negative Functions</h2>
+<p>Throughout this note, we assume that <span class="math inline">\(f(n)\)</span> is <strong>asymptotically non-negative</strong>, meaning there exists some integer <span class="math inline">\(n_0\)</span> such that</p>
+<p>[ f(n) n n_0. ]</p>
+<p>This is a standard assumption in algorithm analysis because running time and memory usage are always non-negative for sufficiently large input sizes.</p>
+<hr>
 </section>
-<section id="theta-notation" class="level2">
-<h2 class="anchored" data-anchor-id="theta-notation"><span class="math inline">\(\Theta\)</span>-notation</h2>
-<p><span class="math inline">\(\Theta(g(n)) = \{f(n): \exists\text{ constants }\)</span>c_1,c_2,n_0$<span class="math inline">\(0\leq c_1g(n)\leq f(n) \leq c_2g(n)\}\)</span></p>
-<p>Translates to: <span class="math inline">\(f(n)\)</span> is in <span class="math inline">\(\Theta(g(n))\)</span> if <span class="math inline">\(f(n)\)</span> is sandwiched between <span class="math inline">\(c_1g(n)\)</span> and <span class="math inline">\(c_2g(n)\)</span> for <span class="math inline">\(n\)</span> large enough.</p>
-<p>OR</p>
-<p><span class="math inline">\(f(n)\)</span> grows in a similar rate as <span class="math inline">\(g(n)\)</span>.</p>
+<section id="theta-notation-tight-bound" class="level2">
+<h2 class="anchored" data-anchor-id="theta-notation-tight-bound"><span class="math inline">\(\Theta\)</span>-Notation (Tight Bound)</h2>
+<p>[ (g(n)) = { f(n): , c_1,c_2&gt;0,; n_0 0c_1g(n)f(n)c_2g(n) nn_0 }. ]</p>
+<section id="interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
+<p>A function <span class="math inline">\(f(n)\)</span> belongs to <span class="math inline">\(\Theta(g(n))\)</span> if, for sufficiently large <span class="math inline">\(n\)</span>, it is sandwiched between two constant multiples of <span class="math inline">\(g(n)\)</span>.</p>
+<p>Equivalently,</p>
+<ul>
+<li><span class="math inline">\(f(n)\)</span> and <span class="math inline">\(g(n)\)</span> grow at the <strong>same asymptotic rate</strong>.</li>
+</ul>
+<hr>
 </section>
-<section id="mathcalo-notation" class="level2">
-<h2 class="anchored" data-anchor-id="mathcalo-notation"><span class="math inline">\(\mathcal{O}\)</span>-notation</h2>
-<p><span class="math inline">\(\mathcal{O}(g(n)) = \{f(n): \exists\text{ constants }\)</span>c,n_0$<span class="math inline">\(0\leq f(n) \leq c g(n)\}\)</span></p>
-<p>Translates to: <span class="math inline">\(f(n)\)</span> is in <span class="math inline">\(\mathcal{O}(g(n))\)</span> if <span class="math inline">\(f(n)\)</span> is bounded above <span class="math inline">\(c g(n)\)</span> for <span class="math inline">\(n\)</span> large enough.</p>
-<p>OR</p>
-<p><span class="math inline">\(f(n)\)</span> grows at most as fast as <span class="math inline">\(g(n)\)</span>.</p>
 </section>
-<section id="omega-notation" class="level2">
-<h2 class="anchored" data-anchor-id="omega-notation"><span class="math inline">\(\Omega\)</span>-notation</h2>
-<p><span class="math inline">\(\Omega(g(n)) = \{f(n): \exists\text{ constants }\)</span>c,n_0$<span class="math inline">\(0\leq c g(n) \leq f(n)\}\)</span></p>
-<p>Translates to: <span class="math inline">\(f(n)\)</span> is in <span class="math inline">\(\Omega(g(n))\)</span> if <span class="math inline">\(f(n)\)</span> is bounded below by <span class="math inline">\(cg(n)\)</span> for <span class="math inline">\(n\)</span> large enough.</p>
-<p>OR</p>
-<p><span class="math inline">\(f(n)\)</span> grows at least as fast as <span class="math inline">\(g(n)\)</span>.</p>
+<section id="mathcalo-notation-upper-bound" class="level2">
+<h2 class="anchored" data-anchor-id="mathcalo-notation-upper-bound"><span class="math inline">\(\mathcal{O}\)</span>-Notation (Upper Bound)</h2>
+<p>[ (g(n)) = { f(n): , c&gt;0,; n_0 0f(n)cg(n) nn_0 }. ]</p>
+<section id="interpretation-1" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-1">Interpretation</h3>
+<p>A function <span class="math inline">\(f(n)\)</span> belongs to <span class="math inline">\(\mathcal{O}(g(n))\)</span> if it is eventually bounded above by a constant multiple of <span class="math inline">\(g(n)\)</span>.</p>
+<p>Equivalently,</p>
+<ul>
+<li><span class="math inline">\(f(n)\)</span> grows <strong>at most as fast</strong> as <span class="math inline">\(g(n)\)</span>.</li>
+</ul>
+<hr>
 </section>
-<section id="o-notation" class="level2">
-<h2 class="anchored" data-anchor-id="o-notation"><span class="math inline">\(o\)</span>-notation</h2>
-<p><span class="math inline">\(o(g(n)) = \{f(n): \forall\text{ constants }\)</span>c&gt;0, n_0$<span class="math inline">\(0\leq f(n) &lt; c g(n)\}\)</span></p>
-<p>Translates to: <span class="math inline">\(f(n)\)</span> is in <span class="math inline">\(o(g(n))\)</span> if <span class="math inline">\(f(n)\)</span> grows strictly slower than <span class="math inline">\(c g(n)\)</span> for <span class="math inline">\(n\)</span> large enough <strong>[no matter how small <span class="math inline">\(c\)</span> is]</strong>.</p>
-<p>OR</p>
-<p><span class="math inline">\(\lim_{n \to \infty} \dfrac{f(n)}{g(n)} = 0\)</span></p>
 </section>
-<section id="omega-notation-1" class="level2">
-<h2 class="anchored" data-anchor-id="omega-notation-1"><span class="math inline">\(\omega\)</span>-notation</h2>
-<p><span class="math inline">\(f(n) \in \omega(g(n))\)</span> if <span class="math inline">\(g(n) \in o(f(n))\)</span>.</p>
-<p>OR</p>
-<p><span class="math inline">\(\omega(g(n)) = \{f(n): \forall\text{ constants }\)</span>c&gt;0, n_0$<span class="math inline">\(0\leq c g(n) &lt; f(n)\}\)</span></p>
-<p>Translates to: <span class="math inline">\(f(n)\)</span> is in <span class="math inline">\(\omega(g(n))\)</span> if <span class="math inline">\(f(n)\)</span> grows strictly faster than <span class="math inline">\(c g(n)\)</span> for <span class="math inline">\(n\)</span> large enough <strong>[no matter how small <span class="math inline">\(c\)</span> is]</strong>.</p>
-<p>OR</p>
-<p><span class="math inline">\(\lim_{n \to \infty} \dfrac{f(n)}{g(n)} = \infty\)</span></p>
-<p>OR</p>
-<p><span class="math inline">\(\lim_{n \to \infty} \dfrac{g(n)}{f(n)} = 0\)</span></p>
+<section id="omega-notation-lower-bound" class="level2">
+<h2 class="anchored" data-anchor-id="omega-notation-lower-bound"><span class="math inline">\(\Omega\)</span>-Notation (Lower Bound)</h2>
+<p>[ (g(n)) = { f(n): , c&gt;0,; n_0 0cg(n)f(n) nn_0 }. ]</p>
+<section id="interpretation-2" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-2">Interpretation</h3>
+<p>A function <span class="math inline">\(f(n)\)</span> belongs to <span class="math inline">\(\Omega(g(n))\)</span> if it is eventually bounded below by a constant multiple of <span class="math inline">\(g(n)\)</span>.</p>
+<p>Equivalently,</p>
+<ul>
+<li><span class="math inline">\(f(n)\)</span> grows <strong>at least as fast</strong> as <span class="math inline">\(g(n)\)</span>.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="o-notation-strict-upper-bound" class="level2">
+<h2 class="anchored" data-anchor-id="o-notation-strict-upper-bound"><span class="math inline">\(o\)</span>-Notation (Strict Upper Bound)</h2>
+<p>[ o(g(n)) = { f(n): , c&gt;0,; , n_0 0f(n)&lt;cg(n) nn_0 }. ]</p>
+<section id="interpretation-3" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-3">Interpretation</h3>
+<p>A function <span class="math inline">\(f(n)\)</span> belongs to <span class="math inline">\(o(g(n))\)</span> if it grows more slowly than <strong>every positive constant multiple</strong> of <span class="math inline">\(g(n)\)</span>.</p>
+<p>Equivalently,</p>
+<p>[ _{n} = 0. ]</p>
+<hr>
+</section>
+</section>
+<section id="omega-notation-strict-lower-bound" class="level2">
+<h2 class="anchored" data-anchor-id="omega-notation-strict-lower-bound"><span class="math inline">\(\omega\)</span>-Notation (Strict Lower Bound)</h2>
+<p>A function <span class="math inline">\(f(n)\)</span> belongs to <span class="math inline">\(\omega(g(n))\)</span> if</p>
+<p>[ g(n)o(f(n)). ]</p>
+<p>Equivalently,</p>
+<p>[ (g(n)) = { f(n): , c&gt;0,; , n_0 0cg(n)&lt;f(n) nn_0 }. ]</p>
+<section id="interpretation-4" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-4">Interpretation</h3>
+<p>A function <span class="math inline">\(f(n)\)</span> belongs to <span class="math inline">\(\omega(g(n))\)</span> if it grows faster than <strong>every positive constant multiple</strong> of <span class="math inline">\(g(n)\)</span>.</p>
+<p>Equivalently,</p>
+<p>[ _{n} = , ]</p>
+<p>or</p>
+<p>[ _{n} = 0. ]</p>
+<hr>
+</section>
 </section>
 <section id="abuse-of-notation" class="level2">
-<h2 class="anchored" data-anchor-id="abuse-of-notation">Abuse of notation</h2>
-<p>e.g.&nbsp;<span class="math inline">\(f(n) = o(g(n))\)</span> is often used to mean <span class="math inline">\(f(n) \in o(g(n))\)</span>.</p>
+<h2 class="anchored" data-anchor-id="abuse-of-notation">Abuse of Notation</h2>
+<p>Strictly speaking,</p>
+<p>[ o(g(n)),; (g(n)),; (g(n)),; (g(n)),; (g(n)) ]</p>
+<p>are <strong>sets of functions</strong>.</p>
+<p>Therefore,</p>
+<p>[ f(n)(g(n)) ]</p>
+<p>is the mathematically correct notation.</p>
+<p>However, algorithm textbooks often write</p>
+<p>[ f(n)=(g(n)) ]</p>
+<p>as shorthand for</p>
+<p>[ f(n)(g(n)). ]</p>
+<p>The same convention applies to <span class="math inline">\(\mathcal{O}\)</span>, <span class="math inline">\(\Omega\)</span>, <span class="math inline">\(o\)</span>, and <span class="math inline">\(\omega\)</span>.</p>
+<hr>
 </section>
 <section id="comparison-table" class="level2">
 <h2 class="anchored" data-anchor-id="comparison-table">Comparison Table</h2>
-<p>The following table demonstrates the conceptual analogy between asymptotic bounds and standard inequality signs when comparing the growth rates of two functions, <span class="math inline">\(f(n)\)</span> and <span class="math inline">\(g(n)\)</span>.</p>
+<p>The following table compares the five asymptotic notations with familiar inequality symbols.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 23%">
-<col style="width: 29%">
-<col style="width: 23%">
-<col style="width: 23%">
+<col style="width: 22%">
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 22%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Asymptotic Notation</th>
-<th style="text-align: center;">Inequality Analogy</th>
-<th style="text-align: left;">Limit Definition (as <span class="math inline">\(n \to \infty\)</span>)</th>
-<th style="text-align: left;">Description</th>
+<th style="text-align: center;">Analogy</th>
+<th style="text-align: center;">Limit Characterization*</th>
+<th style="text-align: left;">Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(f(n) = o(g(n))\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(f(n)=o(g(n))\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(&lt;\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\lim \frac{f(n)}{g(n)} = 0\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(f(n)\)</span> grows <strong>strictly slower</strong> than <span class="math inline">\(g(n)\)</span>.</td>
+<td style="text-align: center;"><span class="math inline">\(\displaystyle\lim_{n\to\infty}\frac{f(n)}{g(n)}=0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(f(n)\)</span> grows strictly slower than <span class="math inline">\(g(n)\)</span>.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math inline">\(f(n) = \mathcal{O}(g(n))\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\leq\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\limsup \frac{f(n)}{g(n)} &lt; \infty\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(f(n)\)</span> grows <strong>at most as fast</strong> as <span class="math inline">\(g(n)\)</span> (Upper bound).</td>
+<td style="text-align: left;"><span class="math inline">\(f(n)=\mathcal{O}(g(n))\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\le\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\displaystyle\limsup_{n\to\infty}\frac{f(n)}{g(n)}&lt;\infty\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(f(n)\)</span> grows at most as fast as <span class="math inline">\(g(n)\)</span>.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(f(n) = \Theta(g(n))\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(f(n)=\Theta(g(n))\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(=\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(0 &lt; \lim \frac{f(n)}{g(n)} &lt; \infty\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(f(n)\)</span> grows at the <strong>exact same rate</strong> as <span class="math inline">\(g(n)\)</span> (Tight bound).</td>
+<td style="text-align: center;"><span class="math inline">\(\displaystyle0&lt;\lim_{n\to\infty}\frac{f(n)}{g(n)}&lt;\infty\)</span> (when the limit exists)</td>
+<td style="text-align: left;"><span class="math inline">\(f(n)\)</span> and <span class="math inline">\(g(n)\)</span> grow at the same rate.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math inline">\(f(n) = \Omega(g(n))\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\geq\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\liminf \frac{f(n)}{g(n)} &gt; 0\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(f(n)\)</span> grows <strong>at least as fast</strong> as <span class="math inline">\(g(n)\)</span> (Lower bound).</td>
+<td style="text-align: left;"><span class="math inline">\(f(n)=\Omega(g(n))\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\ge\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\displaystyle\liminf_{n\to\infty}\frac{f(n)}{g(n)}&gt;0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(f(n)\)</span> grows at least as fast as <span class="math inline">\(g(n)\)</span>.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(f(n) = \omega(g(n))\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(f(n)=\omega(g(n))\)</span></td>
 <td style="text-align: center;"><span class="math inline">\(&gt;\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\lim \frac{f(n)}{g(n)} = \infty\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(f(n)\)</span> grows <strong>strictly faster</strong> than <span class="math inline">\(g(n)\)</span>.</td>
+<td style="text-align: center;"><span class="math inline">\(\displaystyle\lim_{n\to\infty}\frac{f(n)}{g(n)}=\infty\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(f(n)\)</span> grows strictly faster than <span class="math inline">\(g(n)\)</span>.</td>
 </tr>
 </tbody>
 </table>
+<blockquote class="blockquote">
+<p><strong>Note:</strong> The limit characterization for <span class="math inline">\(\Theta(g(n))\)</span> assumes that the limit exists. In general, the formal set definition given earlier is the most rigorous definition.</p>
+</blockquote>
 
 
 </section>
