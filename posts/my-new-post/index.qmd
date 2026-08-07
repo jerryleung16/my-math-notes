@@ -1,0 +1,9 @@
+---
+title: "My New Post"
+date: "2026-08-08"
+categories: [Python]
+---
+
+# My New Post
+
+Write your content here.
