@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-08-07">
+<meta name="dcterms.date" content="2026-07-26">
 
-<title>O, Theta and Omega Notations – My Math Notes</title>
+<title>Eigenvalues and Eigenvectors – My Math Notes</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -30,23 +30,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../../">
-<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-172ba59bd5e0b52282274ba0c0cc16fc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-172ba59bd5e0b52282274ba0c0cc16fc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -105,7 +105,7 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -115,7 +115,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">My Math Notes</span>
     </a>
   </div>
@@ -126,22 +126,12 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
-  </li>  
-</ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../../../admin/"> 
-<span class="menu-text">New Post</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../../admin/"> 
-<span class="menu-text">Edit Posts</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -154,9 +144,9 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">O, Theta and Omega Notations</h1>
+      <h1 class="title">Eigenvalues and Eigenvectors</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Algorithms</div>
+                <div class="quarto-category">Linear Algebra</div>
               </div>
                   </div>
   </div>
@@ -168,7 +158,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 7, 2026</p>
+        <p class="date">July 26, 2026</p>
       </div>
     </div>
     
@@ -184,31 +174,11 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#asymptotically-non-negative-functions" id="toc-asymptotically-non-negative-functions" class="nav-link active" data-scroll-target="#asymptotically-non-negative-functions">Asymptotically Non-negative Functions</a></li>
-  <li><a href="#theta-notation-tight-bound" id="toc-theta-notation-tight-bound" class="nav-link" data-scroll-target="#theta-notation-tight-bound"><span class="math inline">\(\Theta\)</span>-Notation (Tight Bound)</a>
-  <ul class="collapse">
-  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
-  </ul></li>
-  <li><a href="#mathcalo-notation-upper-bound" id="toc-mathcalo-notation-upper-bound" class="nav-link" data-scroll-target="#mathcalo-notation-upper-bound"><span class="math inline">\(\mathcal{O}\)</span>-Notation (Upper Bound)</a>
-  <ul class="collapse">
-  <li><a href="#interpretation-1" id="toc-interpretation-1" class="nav-link" data-scroll-target="#interpretation-1">Interpretation</a></li>
-  </ul></li>
-  <li><a href="#omega-notation-lower-bound" id="toc-omega-notation-lower-bound" class="nav-link" data-scroll-target="#omega-notation-lower-bound"><span class="math inline">\(\Omega\)</span>-Notation (Lower Bound)</a>
-  <ul class="collapse">
-  <li><a href="#interpretation-2" id="toc-interpretation-2" class="nav-link" data-scroll-target="#interpretation-2">Interpretation</a></li>
-  </ul></li>
-  <li><a href="#o-notation-strict-upper-bound" id="toc-o-notation-strict-upper-bound" class="nav-link" data-scroll-target="#o-notation-strict-upper-bound"><span class="math inline">\(o\)</span>-Notation (Strict Upper Bound)</a>
-  <ul class="collapse">
-  <li><a href="#interpretation-3" id="toc-interpretation-3" class="nav-link" data-scroll-target="#interpretation-3">Interpretation</a></li>
-  </ul></li>
-  <li><a href="#omega-notation-strict-lower-bound" id="toc-omega-notation-strict-lower-bound" class="nav-link" data-scroll-target="#omega-notation-strict-lower-bound"><span class="math inline">\(\omega\)</span>-Notation (Strict Lower Bound)</a>
-  <ul class="collapse">
-  <li><a href="#interpretation-4" id="toc-interpretation-4" class="nav-link" data-scroll-target="#interpretation-4">Interpretation</a></li>
-  </ul></li>
-  <li><a href="#abuse-of-notation" id="toc-abuse-of-notation" class="nav-link" data-scroll-target="#abuse-of-notation">Abuse of Notation</a></li>
-  <li><a href="#comparison-table" id="toc-comparison-table" class="nav-link" data-scroll-target="#comparison-table">Comparison Table</a></li>
+  <li><a href="#the-core-concept" id="toc-the-core-concept" class="nav-link active" data-scroll-target="#the-core-concept">The Core Concept</a></li>
+  <li><a href="#visualizing-the-transformation" id="toc-visualizing-the-transformation" class="nav-link" data-scroll-target="#visualizing-the-transformation">Visualizing the Transformation</a></li>
+  <li><a href="#common-2d-transformations" id="toc-common-2d-transformations" class="nav-link" data-scroll-target="#common-2d-transformations">Common 2D Transformations</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/algorithms/big-and-small-o-or-theta/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jerryleung16/my-math-notes/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+</nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -217,267 +187,62 @@ window.Quarto = {
 
 
 
-<section id="asymptotically-non-negative-functions" class="level2">
-<h2 class="anchored" data-anchor-id="asymptotically-non-negative-functions">Asymptotically Non-negative Functions</h2>
-<p>Throughout this note, we assume that <span class="math inline">\(f(n)\)</span> is <strong>asymptotically non-negative</strong>, meaning there exists some integer <span class="math inline">\(n_0\)</span> such that</p>
-<p><span class="math display">\[
-f(n) \ge 0
-\qquad
-\text{for all } n \ge n_0.
+<section id="the-core-concept" class="level2">
+<h2 class="anchored" data-anchor-id="the-core-concept">The Core Concept</h2>
+<p>An <strong>eigenvector</strong> of a square matrix <span class="math inline">\(A\)</span> is a non-zero vector <span class="math inline">\(v\)</span> that changes at most by a scalar factor when that linear transformation is applied to it. The corresponding scalar factor <span class="math inline">\(\lambda\)</span> is called the <strong>eigenvalue</strong>.</p>
+<p>The defining equation is: <span class="math display">\[
+A v = \lambda v
 \]</span></p>
-<p>This is a standard assumption in algorithm analysis because running time and memory usage are always non-negative for sufficiently large input sizes.</p>
-<hr>
 </section>
-<section id="theta-notation-tight-bound" class="level2">
-<h2 class="anchored" data-anchor-id="theta-notation-tight-bound"><span class="math inline">\(\Theta\)</span>-Notation (Tight Bound)</h2>
-<p><span class="math display">\[
-\Theta(g(n))
-=
-\left\{
-f(n):
-\exists\, c_1,c_2&gt;0,\; n_0
-\text{ such that }
-0 \le c_1g(n) \le f(n) \le c_2g(n)
-\text{ for all } n \ge n_0
-\right\}.
-\]</span></p>
-<section id="interpretation" class="level3">
-<h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
-<p>A function <span class="math inline">\(f(n)\)</span> belongs to <span class="math inline">\(\Theta(g(n))\)</span> if, for sufficiently large <span class="math inline">\(n\)</span>, it is sandwiched between two constant multiples of <span class="math inline">\(g(n)\)</span>.</p>
-<p>Equivalently,</p>
-<ul>
-<li><span class="math inline">\(f(n)\)</span> and <span class="math inline">\(g(n)\)</span> grow at the <strong>same asymptotic rate</strong>.</li>
-</ul>
-<hr>
+<section id="visualizing-the-transformation" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-the-transformation">Visualizing the Transformation</h2>
+<p>When a matrix scales a vector without changing its fundamental direction, that vector is an eigenvector. Here is a geometric representation showing an original vector <span class="math inline">\(v\)</span> and its transformation <span class="math inline">\(Av\)</span>:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="eigenvector-viz.svg" class="img-fluid figure-img" width="400"></p>
+<figcaption>Eigenvector transformation diagram</figcaption>
+</figure>
+</div>
 </section>
-</section>
-<section id="mathcalo-notation-upper-bound" class="level2">
-<h2 class="anchored" data-anchor-id="mathcalo-notation-upper-bound"><span class="math inline">\(\mathcal{O}\)</span>-Notation (Upper Bound)</h2>
-<p><span class="math display">\[
-\mathcal{O}(g(n))
-=
-\left\{
-f(n):
-\exists\, c&gt;0,\; n_0
-\text{ such that }
-0 \le f(n) \le cg(n)
-\text{ for all } n \ge n_0
-\right\}.
-\]</span></p>
-<section id="interpretation-1" class="level3">
-<h3 class="anchored" data-anchor-id="interpretation-1">Interpretation</h3>
-<p>A function <span class="math inline">\(f(n)\)</span> belongs to <span class="math inline">\(\mathcal{O}(g(n))\)</span> if it is eventually bounded above by a constant multiple of <span class="math inline">\(g(n)\)</span>.</p>
-<p>Equivalently,</p>
-<ul>
-<li><span class="math inline">\(f(n)\)</span> grows <strong>at most as fast</strong> as <span class="math inline">\(g(n)\)</span>.</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="omega-notation-lower-bound" class="level2">
-<h2 class="anchored" data-anchor-id="omega-notation-lower-bound"><span class="math inline">\(\Omega\)</span>-Notation (Lower Bound)</h2>
-<p><span class="math display">\[
-\Omega(g(n))
-=
-\left\{
-f(n):
-\exists\, c&gt;0,\; n_0
-\text{ such that }
-0 \le cg(n) \le f(n)
-\text{ for all } n \ge n_0
-\right\}.
-\]</span></p>
-<section id="interpretation-2" class="level3">
-<h3 class="anchored" data-anchor-id="interpretation-2">Interpretation</h3>
-<p>A function <span class="math inline">\(f(n)\)</span> belongs to <span class="math inline">\(\Omega(g(n))\)</span> if it is eventually bounded below by a constant multiple of <span class="math inline">\(g(n)\)</span>.</p>
-<p>Equivalently,</p>
-<ul>
-<li><span class="math inline">\(f(n)\)</span> grows <strong>at least as fast</strong> as <span class="math inline">\(g(n)\)</span>.</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="o-notation-strict-upper-bound" class="level2">
-<h2 class="anchored" data-anchor-id="o-notation-strict-upper-bound"><span class="math inline">\(o\)</span>-Notation (Strict Upper Bound)</h2>
-<p><span class="math display">\[
-o(g(n))
-=
-\left\{
-f(n):
-\forall\, c&gt;0,\;
-\exists\, n_0
-\text{ such that }
-0 \le f(n) &lt; cg(n)
-\text{ for all } n \ge n_0
-\right\}.
-\]</span></p>
-<section id="interpretation-3" class="level3">
-<h3 class="anchored" data-anchor-id="interpretation-3">Interpretation</h3>
-<p>A function <span class="math inline">\(f(n)\)</span> belongs to <span class="math inline">\(o(g(n))\)</span> if it grows more slowly than <strong>every positive constant multiple</strong> of <span class="math inline">\(g(n)\)</span>.</p>
-<p>Equivalently,</p>
-<p><span class="math display">\[
-\lim_{n\to\infty}
-\frac{f(n)}{g(n)}
-=
-0.
-\]</span></p>
-<hr>
-</section>
-</section>
-<section id="omega-notation-strict-lower-bound" class="level2">
-<h2 class="anchored" data-anchor-id="omega-notation-strict-lower-bound"><span class="math inline">\(\omega\)</span>-Notation (Strict Lower Bound)</h2>
-<p>A function <span class="math inline">\(f(n)\)</span> belongs to <span class="math inline">\(\omega(g(n))\)</span> if</p>
-<p><span class="math display">\[
-g(n)\in o(f(n)).
-\]</span></p>
-<p>Equivalently,</p>
-<p><span class="math display">\[
-\omega(g(n))
-=
-\left\{
-f(n):
-\forall\, c&gt;0,\;
-\exists\, n_0
-\text{ such that }
-0 \le cg(n) &lt; f(n)
-\text{ for all } n \ge n_0
-\right\}.
-\]</span></p>
-<section id="interpretation-4" class="level3">
-<h3 class="anchored" data-anchor-id="interpretation-4">Interpretation</h3>
-<p>A function <span class="math inline">\(f(n)\)</span> belongs to <span class="math inline">\(\omega(g(n))\)</span> if it grows faster than <strong>every positive constant multiple</strong> of <span class="math inline">\(g(n)\)</span>.</p>
-<p>Equivalently,</p>
-<p><span class="math display">\[
-\lim_{n\to\infty}
-\frac{f(n)}{g(n)}
-=
-\infty,
-\]</span></p>
-<p>or</p>
-<p><span class="math display">\[
-\lim_{n\to\infty}
-\frac{g(n)}{f(n)}
-=
-0.
-\]</span></p>
-<hr>
-</section>
-</section>
-<section id="abuse-of-notation" class="level2">
-<h2 class="anchored" data-anchor-id="abuse-of-notation">Abuse of Notation</h2>
-<p>Strictly speaking,</p>
-<p><span class="math display">\[
-o(g(n)),\;
-\Theta(g(n)),\;
-\mathcal{O}(g(n)),\;
-\Omega(g(n)),\;
-\omega(g(n))
-\]</span></p>
-<p>are <strong>sets of functions</strong>.</p>
-<p>Therefore,</p>
-<p><span class="math display">\[
-f(n)\in\Theta(g(n))
-\]</span></p>
-<p>is the mathematically correct notation.</p>
-<p>However, algorithm textbooks often write</p>
-<p><span class="math display">\[
-f(n)=\Theta(g(n))
-\]</span></p>
-<p>as shorthand for</p>
-<p><span class="math display">\[
-f(n)\in\Theta(g(n)).
-\]</span></p>
-<p>The same convention applies to <span class="math inline">\(\mathcal{O}\)</span>, <span class="math inline">\(\Omega\)</span>, <span class="math inline">\(o\)</span>, and <span class="math inline">\(\omega\)</span>.</p>
-<hr>
-</section>
-<section id="comparison-table" class="level2">
-<h2 class="anchored" data-anchor-id="comparison-table">Comparison Table</h2>
-<p>The following table compares the five asymptotic notations with familiar inequality symbols.</p>
+<section id="common-2d-transformations" class="level2">
+<h2 class="anchored" data-anchor-id="common-2d-transformations">Common 2D Transformations</h2>
+<p>Quarto handles Markdown tables beautifully for web output while still letting you use full LaTeX syntax inside the cells. Here are common 2D transformation matrices and their properties:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 12%">
-<col style="width: 39%">
-<col style="width: 14%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 27%">
+<col style="width: 27%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Asymptotic Notation</th>
-<th style="text-align: center;">Analogy</th>
-<th style="text-align: left;">Limit Characterization*</th>
-<th style="text-align: left;">Meaning</th>
+<th style="text-align: left;">Transformation Matrix <span class="math inline">\(A\)</span></th>
+<th style="text-align: left;">Geometric Effect</th>
+<th style="text-align: center;">Eigenvalue(s) <span class="math inline">\(\lambda\)</span></th>
+<th style="text-align: center;">Eigenvector(s) <span class="math inline">\(v\)</span></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(f(n)=o(g(n))\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(&lt;\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\displaystyle\lim_{n\to\infty}\frac{f(n)}{g(n)}=0\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(f(n)\)</span> grows <strong>strictly slower</strong> than <span class="math inline">\(g(n)\)</span>.</td>
+<td style="text-align: left;"><span class="math inline">\(\begin{bmatrix} c &amp; 0 \\ 0 &amp; c \end{bmatrix}\)</span></td>
+<td style="text-align: left;">Uniform scaling by <span class="math inline">\(c\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\lambda_1 = \lambda_2 = c\)</span></td>
+<td style="text-align: center;">Any non-zero vector</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math inline">\(f(n)=\mathcal{O}(g(n))\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\le\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\displaystyle\limsup_{n\to\infty}\frac{f(n)}{g(n)}&lt;\infty\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(f(n)\)</span> grows <strong>at most as fast</strong> as <span class="math inline">\(g(n)\)</span> (upper bound).</td>
+<td style="text-align: left;"><span class="math inline">\(\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 0 \end{bmatrix}\)</span></td>
+<td style="text-align: left;">Projection onto x-axis</td>
+<td style="text-align: center;"><span class="math inline">\(\lambda_1 = 1\)</span>, <span class="math inline">\(\lambda_2 = 0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\begin{bmatrix} 1 \\ 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 \\ 1 \end{bmatrix}\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(f(n)=\Theta(g(n))\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(=\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\displaystyle 0&lt;\lim_{n\to\infty}\frac{f(n)}{g(n)}&lt;\infty\)</span> (if the limit exists)</td>
-<td style="text-align: left;"><span class="math inline">\(f(n)\)</span> and <span class="math inline">\(g(n)\)</span> grow at the <strong>same asymptotic rate</strong> (tight bound).</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><span class="math inline">\(f(n)=\Omega(g(n))\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\ge\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\displaystyle\liminf_{n\to\infty}\frac{f(n)}{g(n)}&gt;0\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(f(n)\)</span> grows <strong>at least as fast</strong> as <span class="math inline">\(g(n)\)</span> (lower bound).</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(f(n)=\omega(g(n))\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(&gt;\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\displaystyle\lim_{n\to\infty}\frac{f(n)}{g(n)}=\infty\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(f(n)\)</span> grows <strong>strictly faster</strong> than <span class="math inline">\(g(n)\)</span>.</td>
+<td style="text-align: left;"><span class="math inline">\(\begin{bmatrix} 0 &amp; -1 \\ 1 &amp; 0 \end{bmatrix}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(90^\circ\)</span> Rotation</td>
+<td style="text-align: center;">None (in <span class="math inline">\(\mathbb{R}\)</span>)</td>
+<td style="text-align: center;">None (in <span class="math inline">\(\mathbb{R}\)</span>)</td>
 </tr>
 </tbody>
 </table>
-<blockquote class="blockquote">
-<p><strong>Note:</strong> The limit characterization for <span class="math inline">\(\Theta(g(n))\)</span> assumes that the limit exists. In general, the formal set definition is the most rigorous definition.</p>
-</blockquote>
-<blockquote class="blockquote">
-<p>[!IMPORTANT] Remark: Asymptotic Comparability</p>
-<p>The inequality analogy in the comparison table is only a <strong>conceptual aid</strong>. Unlike real numbers, <strong>not every pair of functions is asymptotically comparable</strong>.</p>
-<p>For real numbers <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, the <strong>Law of Trichotomy</strong> states that exactly one of the following is true:</p>
-<p><span class="math display">\[
-a &lt; b, \qquad a = b, \qquad \text{or} \qquad a &gt; b.
-\]</span></p>
-<p>However, asymptotic notation does <strong>not</strong> satisfy this property. For two functions <span class="math inline">\(f(n)\)</span> and <span class="math inline">\(g(n)\)</span>, it is possible that neither</p>
-<p><span class="math display">\[
-f(n)\in\mathcal{O}(g(n))
-\]</span></p>
-<p>nor</p>
-<p><span class="math display">\[
-f(n)\in\Omega(g(n))
-\]</span></p>
-<p>holds.</p>
-<h3 id="example" class="anchored">Example</h3>
-<p>Consider</p>
-<p><span class="math display">\[
-f(n)=n,\qquad
-g(n)=n^{\,1+\sin n}.
-\]</span></p>
-<p>Since <span class="math inline">\(\sin n\)</span> oscillates between <span class="math inline">\(-1\)</span> and <span class="math inline">\(1\)</span>, the exponent <span class="math inline">\(1+\sin n\)</span> oscillates between <span class="math inline">\(0\)</span> and <span class="math inline">\(2\)</span>. Consequently,</p>
-<p><span class="math display">\[
-g(n)=n^{\,1+\sin n}
-\]</span></p>
-<p>alternates between growth rates as small as <span class="math inline">\(n^0=1\)</span> and as large as <span class="math inline">\(n^2\)</span> (while taking every intermediate exponent). Therefore,</p>
-<p><span class="math display">\[
-f(n)\notin\mathcal{O}(g(n))
-\qquad\text{and}\qquad
-f(n)\notin\Omega(g(n)).
-\]</span></p>
-<p>Thus, neither function asymptotically dominates the other, illustrating that <strong>asymptotic comparisons are only partial orders, not total orders</strong>.</p>
-</blockquote>
 
 
 </section>
@@ -556,7 +321,7 @@ f(n)\notin\Omega(g(n)).
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/jerryleung16\.github\.io\/my-math-notes\/");
+        var filterRegex = new RegExp("https:\/\/my-math-notes\.example\.com");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -888,4 +653,4 @@ f(n)\notin\Omega(g(n)).
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/algorithms/big-and-small-o-or-theta/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jerryleung16/my-math-notes/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>
