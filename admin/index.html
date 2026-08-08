@@ -9,6 +9,12 @@
       .card { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
       a { color: #0d6efd; text-decoration: none; }
       a:hover { text-decoration: underline; }
+      label { display: inline-block; margin-right: 0.5rem; font-weight: 600; }
+      select, input, button { font: inherit; }
+      select, input[type="text"] { padding: 0.35rem 0.5rem; margin-right: 0.5rem; }
+      button.primary { background: #0d6efd; color: #fff; border: 1px solid #0d6efd; border-radius: 4px; padding: 0.4rem 0.75rem; cursor: pointer; }
+      button.primary:hover { background: #0b5ed7; border-color: #0b5ed7; }
+      .hint { color: #555; font-size: 0.95rem; }
     </style>
   </head>
   <body>
@@ -17,8 +23,20 @@
 
     <div class="card">
       <h2>Create a new post</h2>
-      <p><a href="https://github.com/jerryleung16/my-math-notes/new/main/posts">Open the posts folder in GitHub</a></p>
-      <p>Then create a new folder with an <code>index.qmd</code> file and commit it.</p>
+      <p>Pick a category, enter a new folder name, then open GitHub with a prefilled <code>index.qmd</code> path.</p>
+      <p>
+        <label for="new-post-category">Category</label>
+        <select id="new-post-category">
+          <option value="">Loading categories…</option>
+        </select>
+      </p>
+      <p>
+        <label for="new-post-slug">New folder</label>
+        <input id="new-post-slug" type="text" placeholder="for example: quicksort-notes" />
+        <button id="create-post-button" class="primary" type="button">Create in GitHub</button>
+      </p>
+      <p class="hint">This creates: <code id="new-post-preview">posts/&lt;category&gt;/&lt;new-folder&gt;/index.qmd</code></p>
+      <p><a href="https://github.com/jerryleung16/my-math-notes/new/main/posts">Open posts root manually</a></p>
     </div>
 
     <div class="card">
@@ -59,6 +77,118 @@
           return 'Post';
         }
         return segments.map(toTitleCase).join(' / ');
+      }
+
+      function slugify(value) {
+        return value
+          .toLowerCase()
+          .trim()
+          .replace(/\s+/g, '-')
+          .replace(/[^a-z0-9-]/g, '')
+          .replace(/-+/g, '-');
+      }
+
+      function buildNewPostFilePath(categoryPath, slug) {
+        return `posts/${categoryPath}/${slug}/index.qmd`;
+      }
+
+      function buildNewPostUrl(filePath, title) {
+        const template = `---\ntitle: "${title}"\n---\n\nWrite your notes here.\n`;
+        const query = new URLSearchParams({
+          filename: filePath,
+          value: template,
+          message: `Add ${filePath}`
+        });
+        return `https://github.com/${repoOwner}/${repoName}/new/${branch}?${query.toString()}`;
+      }
+
+      async function fetchTopLevelCategories() {
+        const url = `${apiBase}/posts?ref=${branch}`;
+        const response = await fetch(url, {
+          headers: { Accept: 'application/vnd.github+json' }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Unable to load categories: ${response.status}`);
+        }
+
+        const entries = await response.json();
+        return entries
+          .filter((entry) => entry.type === 'dir')
+          .map((entry) => ({
+            value: entry.path.replace(/^posts\//, ''),
+            label: toTitleCase(entry.name)
+          }))
+          .sort((a, b) => a.label.localeCompare(b.label));
+      }
+
+      function updateCreatePreview() {
+        const categorySelect = document.getElementById('new-post-category');
+        const slugInput = document.getElementById('new-post-slug');
+        const preview = document.getElementById('new-post-preview');
+
+        const category = categorySelect.value;
+        const slug = slugify(slugInput.value);
+
+        if (!category || !slug) {
+          preview.textContent = 'posts/<category>/<new-folder>/index.qmd';
+          return;
+        }
+
+        preview.textContent = buildNewPostFilePath(category, slug);
+      }
+
+      async function initializeCreatePostForm() {
+        const categorySelect = document.getElementById('new-post-category');
+        const slugInput = document.getElementById('new-post-slug');
+        const createButton = document.getElementById('create-post-button');
+
+        try {
+          const categories = await fetchTopLevelCategories();
+
+          categorySelect.innerHTML = '';
+          if (categories.length === 0) {
+            categorySelect.innerHTML = '<option value="">No categories found</option>';
+            createButton.disabled = true;
+            return;
+          }
+
+          for (const category of categories) {
+            const option = document.createElement('option');
+            option.value = category.value;
+            option.textContent = category.label;
+            categorySelect.appendChild(option);
+          }
+
+          categorySelect.addEventListener('change', updateCreatePreview);
+          slugInput.addEventListener('input', updateCreatePreview);
+
+          createButton.addEventListener('click', () => {
+            const selectedCategory = categorySelect.value;
+            const slug = slugify(slugInput.value);
+
+            if (!selectedCategory) {
+              window.alert('Please choose a category.');
+              return;
+            }
+
+            if (!slug) {
+              window.alert('Please enter a new folder name.');
+              return;
+            }
+
+            const filePath = buildNewPostFilePath(selectedCategory, slug);
+            const title = toTitleCase(slug);
+            const url = buildNewPostUrl(filePath, title);
+            window.open(url, '_blank', 'noopener,noreferrer');
+          });
+
+          updateCreatePreview();
+        } catch (error) {
+          categorySelect.innerHTML = '<option value="">Unable to load categories</option>';
+          createButton.disabled = true;
+          console.error(error);
+        }
       }
 
       async function fetchPosts(path = 'posts') {
@@ -137,6 +267,7 @@
         }
       }
 
+      initializeCreatePostForm();
       renderPosts();
     </script>
   </body>
