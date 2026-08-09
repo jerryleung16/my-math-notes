@@ -1,0 +1,336 @@
+---
+title: "English Word Dictionary Day 6"
+date: "2026-08-09"
+categories: [English]
+---
+
+::: {.callout-note}
+💡 **使用說明**：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。
+:::
+
+## 🔍 生字快速索引
+
+| 英文生字 | 音標 (IPA) | 詞性 | 廣東話地道意思 | 難度/常用度 |
+|:---|:---|:---|:---|:---:|
+| **mediocrity** | /ˌmiː.diˈɒk.rə.ti/ | *n.* | 平庸、普通、資質一般 | ⭐⭐⭐⭐ |
+| **fared** | /feəd/ | *v.* | 過得點、表現得點、情況如何 | ⭐⭐⭐ |
+| **relentless** | /rɪˈlent.ləs/ | *adj.* | 不屈不撓、鍥而不捨、毫不放鬆 | ⭐⭐⭐⭐ |
+| **aggregation of marginal gains** | /ˌæɡ.rɪˈɡeɪ.ʃən əv ˈmɑː.dʒɪ.nəl ɡeɪnz/ | *phr.* | 邊際增益的積累、微小進步加起來的力量 | ⭐⭐⭐⭐⭐ |
+| **astounding** | /əˈstaʊn.dɪŋ/ | *adj.* | 令人驚嘆的、匪夷所思的、誇張到難以置信 | ⭐⭐⭐ |
+| **that said** | /ðæt sed/ | *phr.* | 話雖如此、不過、即使這樣講 | ⭐⭐⭐ |
+| **rush in** | /rʌʃ ɪn/ | *phr. v.* | 貿然行事、衝入去、急急腳做 | ⭐⭐⭐ |
+| **feat** | /fiːt/ | *n.* | 壯舉、了不起的成就、難度極高的事 | ⭐⭐⭐ |
+| **aggravations** | /ˌæɡ.rəˈveɪ.ʃənz/ | *n.* | 煩惱、令人火大的事、激化 | ⭐⭐⭐ |
+| **hallmark** | /ˈhɔːl.mɑːk/ | *n.* | 標誌、特徵、典型特色 | ⭐⭐⭐⭐ |
+| **tangible** | /ˈtæn.dʒɪ.bəl/ | *adj.* | 實在的、看得見摸得到的、切實的 | ⭐⭐⭐⭐ |
+| **plateau** | /ˈplæt.əʊ/ | *n. / v.* | 高原 / 停滯期、樽頸位、停止進步 | ⭐⭐⭐⭐ |
+| **latent** | /ˈleɪ.tənt/ | *adj.* | 潛在的、隱而未發的、蟄伏中的 | ⭐⭐⭐⭐ |
+| **entrench** | /ɪnˈtrentʃ/ | *v.* | 根深蒂固、鞏固（習慣/地位）、深深確立 | ⭐⭐⭐⭐ |
+
+---
+
+## 📚 生字詳細解析
+
+### 1. mediocrity
+
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˌmiː.diˈɒk.rə.ti/
+* **廣東話解法**：指一種「唔好唔壞」、「普普通通」嘅狀態或者質素——唔係差，但係絕對唔出眾。廣東話通常會講「平庸」、「資質一般」或者「唔湯唔水」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: He refused to accept a life of mediocrity.
+* **廣東話口語**: 佢唔願意接受一個平庸嘅人生（唔湯唔水嘅生活）。
+
+* **English**: The film was dismissed by critics as sheer mediocrity.
+* **廣東話口語**: 呢套戲俾影評人批評係徹頭徹尾嘅平庸之作（毫無驚喜）。
+:::
+
+**常見搭配 (Collocations)**：
+* `slide into mediocrity`：滑落至平庸
+* `settle for mediocrity`：甘於平庸
+* `escape / rise above mediocrity`：擺脫平庸
+
+---
+
+### 2. fared (fare 嘅過去式)
+
+* **詞性**：動詞 (Verb)
+* **讀音**：/feəd/
+* **廣東話解法**：指在某個情況或者考驗之下，某人「過得點」或者「表現得點」。廣東話通常會問「點㗎？」或者講「表現係好定係差」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: How did you fare in the exam?
+* **廣東話口語**: 你個考試考得點？（表現點？）
+
+* **English**: The team fared badly in the first half of the season.
+* **廣東話口語**: 個隊伍喺上半季表現好差（唔掂）。
+:::
+
+**常見搭配 (Collocations)**：
+* `fare well / badly`：表現好 / 差
+* `fare better / worse than`：表現比...好 / 差
+
+---
+
+### 3. relentless
+
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/rɪˈlent.ləs/
+* **廣東話解法**：形容一種「毫不停歇」、「永不放棄」、「不斷施壓」嘅狀態。廣東話通常會講「鍥而不捨」、「無情地持續」或者「唔肯收手」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: His relentless practice eventually paid off.
+* **廣東話口語**: 佢鍥而不捨咁練習，最終都有收穫（功夫不負有心人）。
+
+* **English**: The team faced relentless pressure from their opponents.
+* **廣東話口語**: 個隊伍面對對手無情嘅持續施壓。
+:::
+
+**常見搭配 (Collocations)**：
+* `relentless pursuit`：鍥而不捨地追求
+* `relentless pressure`：持續不斷的壓力
+* `relentless effort`：不懈的努力
+
+---
+
+### 4. aggregation of marginal gains
+
+* **詞性**：名詞片語 (Noun Phrase)
+* **讀音**：/ˌæɡ.rɪˈɡeɪ.ʃən əv ˈmɑː.dʒɪ.nəl ɡeɪnz/
+* **廣東話解法**：由英國單車教練 Dave Brailsford 提出嘅概念。意思係喺每一個細節上都做到微小嘅改進（例如每次進步 1%），將呢啲細小進步加埋一齊，長遠就會帶嚟驚人嘅整體突破。廣東話會講「邊際增益積累」或者「積少成多嘅進步哲學」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The team's success was built on the aggregation of marginal gains — improving every single process by just one percent.
+* **廣東話口語**: 個隊嘅成功係建基於邊際增益積累嘅理念——喺每個細節上都做到微小嘅改進（積少成多）。
+:::
+
+**常見搭配 (Collocations)**：
+* `the philosophy of marginal gains`：邊際增益哲學
+* `aggregate small improvements`：積累細小的改進
+
+---
+
+### 5. astounding
+
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/əˈstaʊn.dɪŋ/
+* **廣東話解法**：指某事令人震驚或者驚嘆得嘴都合唔埋。廣東話通常會講「誇張到難以置信」、「令人嘩嘩聲」或者「匪夷所思」。語氣比 "surprising" 強烈得多。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The results were absolutely astounding.
+* **廣東話口語**: 個結果誇張到難以置信（令人嘩嘩聲）。
+
+* **English**: She performed an astounding number of push-ups in one minute.
+* **廣東話口語**: 佢一分鐘內做咗多到令人咋舌嘅掌上壓。
+:::
+
+**常見搭配 (Collocations)**：
+* `astounding achievement / feat`：令人驚嘆的成就 / 壯舉
+* `astounding speed`：驚人的速度
+
+---
+
+### 6. that said
+
+* **詞性**：片語 / 連接詞 (Phrase / Discourse Marker)
+* **讀音**：/ðæt sed/
+* **廣東話解法**：用嚟帶出一個對比或轉折嘅意見，相當於「話雖如此」、「不過」或者「即使係咁」。係一個好常見嘅書面同口語轉折表達方式。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The training is tough. That said, the results speak for themselves.
+* **廣東話口語**: 訓練係好辛苦，話雖如此，成績擺喺度（不過結果係講晒嘢）。
+
+* **English**: The restaurant is expensive. That said, the food quality is outstanding.
+* **廣東話口語**: 間餐廳係貴。即使係咁，食物質素係真係出色（不過都係值得嘅）。
+:::
+
+**常見搭配 (Collocations)**：
+* `that said, ...`：話雖如此，……
+
+---
+
+### 7. rush in
+
+* **詞性**：片語動詞 (Phrasal Verb)
+* **讀音**：/rʌʃ ɪn/
+* **廣東話解法**：指「貿貿然衝入去」、「唔諗清楚就急急腳去做某件事」，通常暗示魯莽或缺乏考慮。廣東話常用的說法係「冒失咁去做」或「急急腳衝入去」。常見搭配 "fools rush in"（愚者貿然行事）。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Don't rush in without thinking it through first.
+* **廣東話口語**: 唔好唔諗清楚就貿貿然衝入去（冒失行事）。
+
+* **English**: Fools rush in where angels fear to tread.
+* **廣東話口語**: 愚者貿然行事，智者反而卻步。（人細鬼大、初生之犢不怕虎——貶義版本）
+:::
+
+**常見搭配 (Collocations)**：
+* `rush in without thinking`：唔諗清楚就貿然行事
+* `fools rush in`：愚者貿然衝入
+
+---
+
+### 8. feat
+
+* **詞性**：名詞 (Noun)
+* **讀音**：/fiːt/
+* **廣東話解法**：指一件需要極大技能、勇氣或者努力才能完成嘅事，通常係令人印象深刻嘅成就或者壯舉。廣東話通常會講「壯舉」、「了不起嘅成就」或者「難度極高嘅事」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Climbing Everest alone was an incredible feat of endurance.
+* **廣東話口語**: 獨自攀登珠峰係一項令人難以置信嘅耐力壯舉。
+
+* **English**: That's no mean feat — finishing the marathon in under three hours.
+* **廣東話口語**: 喺三小時內完成馬拉松，呢個絕對係了不起嘅成就（唔係易事）。
+:::
+
+**常見搭配 (Collocations)**：
+* `an impressive / extraordinary feat`：令人印象深刻的 / 非凡的壯舉
+* `no mean feat`：絕非易事 / 了不起的成就
+* `a feat of engineering / endurance`：工程 / 耐力上的壯舉
+
+---
+
+### 9. aggravations (aggravation 嘅眾數)
+
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˌæɡ.rəˈveɪ.ʃənz/
+* **廣東話解法**：指令人感到煩惱、激怒或者加劇問題嘅事情。廣東話通常會講「煩人嘅事」、「搞到更加差嘅事」或者「令人火大」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: I can do without all these daily aggravations.
+* **廣東話口語**: 我真係唔想成日面對呢啲煩人嘢（搞到我煩死）。
+
+* **English**: The situation caused further aggravation of existing tensions.
+* **廣東話口語**: 呢個情況令到現有嘅緊張局勢進一步激化。
+:::
+
+**常見搭配 (Collocations)**：
+* `minor aggravations`：細微的煩惱
+* `aggravation of a problem`：問題的惡化 / 加劇
+
+---
+
+### 10. hallmark
+
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˈhɔːl.mɑːk/
+* **廣東話解法**：字面意思係金銀器具上嘅「鑒定印記」，但比喻意思係指某件事或某人嘅「標誌性特徵」或者「典型特色」。廣東話通常會講「標誌」、「特徵」或者「招牌特色」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Attention to detail is the hallmark of a true professional.
+* **廣東話口語**: 注重細節係真正專業人士嘅標誌（招牌特色）。
+
+* **English**: Creativity is the hallmark of his work.
+* **廣東話口語**: 創意係佢作品嘅典型特色（標誌性嘅嘢）。
+:::
+
+**常見搭配 (Collocations)**：
+* `the hallmark of greatness / excellence`：卓越嘅標誌
+* `bear the hallmark of`：帶有...嘅標誌性特色
+
+---
+
+### 11. tangible
+
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/ˈtæn.dʒɪ.bəl/
+* **廣東話解法**：指「實實在在存在」、「看得見摸得到」或者「有具體證據」嘅。廣東話通常會講「切實嘅」、「實在嘅」或者「有根有據嘅」。相反詞係 *intangible*（無形的）。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The training produced tangible results within weeks.
+* **廣東話口語**: 呢個訓練喺幾個星期之內已經帶嚟實質嘅成果（看得見嘅改變）。
+
+* **English**: We need tangible evidence before we can act.
+* **廣東話口語**: 我哋需要有具體嘅證據先可以採取行動。
+:::
+
+**常見搭配 (Collocations)**：
+* `tangible results / benefits`：實質的成果 / 好處
+* `tangible evidence / proof`：具體的證據 / 証明
+* `tangible assets`：有形資產
+
+---
+
+### 12. plateau
+
+* **詞性**：名詞 (Noun) / 動詞 (Verb)
+* **讀音**：/ˈplæt.əʊ/
+* **廣東話解法**：
+    * 做**名詞**時，字面意思係「高原」，但常見嘅比喻意思係指進步停滯不前嘅「樽頸位」或者「停滯期」。
+    * 做**動詞**時，指「進步停滯咗」、「到咗樽頸」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: After months of rapid improvement, his performance reached a plateau.
+* **廣東話口語**: 喺幾個月嘅快速進步之後，佢嘅表現到咗樽頸位（停滯不前）。
+
+* **English**: Sales have plateaued after the initial surge.
+* **廣東話口語**: 喺最初嘅急增之後，銷售額已經停滯咗（唔再增長）。
+:::
+
+**常見搭配 (Collocations)**：
+* `hit / reach a plateau`：到達停滯期 / 樽頸位
+* `performance plateau`：表現停滯期
+
+---
+
+### 13. latent
+
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/ˈleɪ.tənt/
+* **廣東話解法**：指某種能力、特質或者病症「已經存在但暫時未顯現出嚟」。廣東話通常會講「潛在嘅」、「隱而未發嘅」或者「蟄伏緊嘅」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: He has latent talent that has never been fully developed.
+* **廣東話口語**: 佢有潛在嘅天份，但從來都無完全發揮出嚟（蟄伏緊嘅潛能）。
+
+* **English**: The virus can remain latent in the body for years.
+* **廣東話口語**: 呢種病毒可以喺體內潛伏幾年都唔發作。
+:::
+
+**常見搭配 (Collocations)**：
+* `latent potential / talent`：潛在的潛力 / 天份
+* `latent infection / virus`：潛伏性感染 / 病毒
+* `remain latent`：繼續潛伏
+
+---
+
+### 14. …perhaps a hundred times without as much as a crack showing in it. （句式分析）
+
+* **句式**：without as much as + [名詞]
+* **廣東話解法**：呢個句式用嚟強調「連一丁點（某個程度）都冇」。`without as much as a crack`就係「連一條裂縫都無出現過」，暗示某樣嘢承受咗極大考驗卻紋風不動。廣東話會講「連…都冇」、「絲毫唔...」。
+
+::: {.callout-tip title="句式例子與分析"}
+* **原句**: …perhaps a hundred times without as much as a crack showing in it.
+* **廣東話解讀**: 可能打咗成百次，連一條裂縫都無出現過（紋風不動）。
+
+**句式模板**：`without as much as + 名詞/動名詞`
+* **English**: He left without as much as a goodbye.
+* **廣東話口語**: 佢走咗，連聲再見都無講（一句道別都無）。
+
+* **English**: She donated her savings without as much as a second thought.
+* **廣東話口語**: 佢連考慮都唔使考慮就捐晒佢嘅積蓄（毫不猶豫）。
+:::
+
+**常見搭配**：
+* `without as much as a word / glance / sound`：連一句話 / 一個眼神 / 一點聲音都冇
+
+---
+
+### 15. entrench
+
+* **詞性**：動詞 (Verb)
+* **讀音**：/ɪnˈtrentʃ/
+* **廣東話解法**：指將某種習慣、信念、制度或者地位「牢固地建立起嚟」，難以改變或動搖。廣東話通常會講「根深蒂固」、「鞏固（某種習慣/地位）」或者「深深確立」。通常以被動語態 `be entrenched` 出現。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: These habits become entrenched over time.
+* **廣東話口語**: 呢啲習慣隨住時間會越嚟越根深蒂固（難以改變）。
+
+* **English**: The practice has become deeply entrenched in the company culture.
+* **廣東話口語**: 呢種做法已經深深地植入公司文化入面（改唔走嘅）。
+:::
+
+**常見搭配 (Collocations)**：
+* `become entrenched`：根深蒂固 / 牢固確立
+* `deeply entrenched beliefs / habits`：根深蒂固嘅信念 / 習慣
+* `entrench one's position`：鞏固自己嘅地位
