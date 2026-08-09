@@ -1,0 +1,337 @@
+---
+title: "English Word Dictionary Day 7"
+date: "2026-08-09"
+categories: [English]
+---
+
+::: {.callout-note}
+💡 **使用說明**：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。
+:::
+
+## 🔍 生字快速索引
+
+| 英文生字 | 音標 (IPA) | 詞性 | 廣東話地道意思 | 難度/常用度 |
+|:---|:---|:---|:---|:---:|
+| **prevailing** | /prɪˈveɪ.lɪŋ/ | *adj.* | 主流嘅、普遍嘅、佔優勢嘅 | ⭐⭐⭐ |
+| **presumably** | /prɪˈzjuː.mə.bli/ | *adv.* | 大概、按道理、估計係 | ⭐⭐⭐ |
+| **pack-rat habit** | /ˈpæk.ræt ˈhæb.ɪt/ | *n. phr.* | 囤積習慣、咩都唔捨得掉 | ⭐⭐⭐ |
+| **clutter** | /ˈklʌt.ər/ | *n. / v.* | 雜物、雜亂 / 堆亂晒 | ⭐⭐ |
+| **envision** | /ɪnˈvɪʒ.ən/ | *v.* | 想像、構想、預視 | ⭐⭐⭐ |
+| **hassle** | /ˈhæs.əl/ | *n. / v.* | 麻煩事、周折 / 搞到好麻煩 | ⭐⭐ |
+| **decluttering** | /diːˈklʌt.ər.ɪŋ/ | *n. / v.* | 斷捨離、清理雜物 | ⭐⭐⭐ |
+| **sabotage** | /ˈsæb.ə.tɑːʒ/ | *v. / n.* | 暗中破壞、拖後腿 | ⭐⭐⭐⭐ |
+| **incongruent** | /ˌɪnˈkɒŋ.ɡru.ənt/ | *adj.* | 唔一致、唔協調、格格不入 | ⭐⭐⭐⭐ |
+| **morphed** | /mɔːft/ | *v.* | 逐步變成、演變成 | ⭐⭐⭐ |
+| **ritual** | /ˈrɪtʃ.u.əl/ | *n.* | 儀式、固定習慣 | ⭐⭐⭐ |
+| **manicure** | /ˈmæn.ɪ.kjʊər/ | *n. / v.* | 修甲、美甲 | ⭐⭐ |
+| **aspired to** | /əˈspaɪəd tuː/ | *phr. v.* | 立志追求、嚮往成為 | ⭐⭐⭐ |
+| **close call** | /kləʊs kɔːl/ | *n. phr.* | 好險、差啲出事 | ⭐⭐ |
+| **fight tooth and nail** | /faɪt tuːθ ən neɪl/ | *idiom* | 拼死力爭、搏到盡 | ⭐⭐⭐ |
+| **pursue** | /pəˈsjuː/ | *v.* | 追求、從事、追趕 | ⭐⭐⭐ |
+| **slumber** | /ˈslʌm.bər/ | *n. / v.* | 睡眠、沉睡 | ⭐⭐⭐ |
+| **grooves** | /ɡruːvz/ | *n.* | 溝槽；（比喻）固定模式 | ⭐⭐⭐ |
+| **embody** | /ɪmˈbɒd.i/ | *v.* | 體現、具體表達 | ⭐⭐⭐ |
+| **studious** | /ˈstjuː.di.əs/ | *adj.* | 勤力好學、用功 | ⭐⭐⭐ |
+| **virtue of** | /ˈvɜː.tʃuː əv/ | *phr.* | 憑藉、因為有...優點 | ⭐⭐⭐ |
+| **scribbled** | /ˈskrɪb.əld/ | *v.* | 亂寫、草草寫低 | ⭐⭐ |
+| **one-off** | /ˈwʌn.ɒf/ | *adj. / n.* | 一次性、唔會重複 | ⭐⭐⭐ |
+| **radical** | /ˈræd.ɪ.kəl/ | *adj.* | 激進；徹底、根本性 | ⭐⭐⭐ |
+| **unanimous** | /juːˈnæn.ɪ.məs/ | *adj.* | 一致通過、全體同意 | ⭐⭐⭐⭐ |
+| **advocate for** | /ˈæd.və.keɪt fɔːr/ | *phr. v.* | 倡議、支持、主張 | ⭐⭐⭐ |
+| **North Star** | /nɔːθ stɑːr/ | *n. phr.* | 北極星；人生/策略指引 | ⭐⭐⭐ |
+| **rudder** | /ˈrʌd.ər/ | *n.* | 舵；方向指引 | ⭐⭐⭐ |
+| **set in stone** | /set ɪn stəʊn/ | *idiom* | 已定案、唔可以改 | ⭐⭐⭐ |
+
+---
+
+## 📚 生字詳細解析
+
+### 1. prevailing
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/prɪˈveɪ.lɪŋ/
+* **廣東話解法**：指一個時期入面最普遍、最主流、最有影響力嘅做法或觀點。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The prevailing opinion is that remote work is here to stay.
+* **廣東話口語**: 而家主流睇法係遠程工作會繼續存在。
+:::
+
+### 2. presumably
+* **詞性**：副詞 (Adverb)
+* **讀音**：/prɪˈzjuː.mə.bli/
+* **廣東話解法**：按現有資料去推斷「大概係咁」。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: He is presumably on his way.
+* **廣東話口語**: 佢應該喺路上面，估計就快到。
+:::
+
+### 3. pack-rat habit
+* **詞性**：名詞片語 (Noun Phrase)
+* **讀音**：/ˈpæk.ræt ˈhæb.ɪt/
+* **廣東話解法**：形容人有囤積習慣，乜都儲起唔捨得掉。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: My pack-rat habit makes my room impossible to clean.
+* **廣東話口語**: 我咩都唔捨得掉，搞到間房好難執。
+:::
+
+### 4. clutter
+* **詞性**：名詞 / 動詞 (Noun / Verb)
+* **讀音**：/ˈklʌt.ər/
+* **廣東話解法**：名詞係雜物；動詞係堆到亂晒。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Too much clutter can make you feel stressed.
+* **廣東話口語**: 太多雜物會令人好有壓力。
+:::
+
+### 5. envision
+* **詞性**：動詞 (Verb)
+* **讀音**：/ɪnˈvɪʒ.ən/
+* **廣東話解法**：喺腦入面清楚咁想像一個未來畫面。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: I can envision a better version of this project.
+* **廣東話口語**: 我想像到呢個項目可以做到更好。
+:::
+
+### 6. hassle
+* **詞性**：名詞 / 動詞 (Noun / Verb)
+* **讀音**：/ˈhæs.əl/
+* **廣東話解法**：麻煩、周折，或者令事情變麻煩。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Filling out these forms is such a hassle.
+* **廣東話口語**: 填呢堆表真係好麻煩。
+:::
+
+### 7. decluttering
+* **詞性**：名詞 / 動名詞 (Noun / Gerund)
+* **讀音**：/diːˈklʌt.ər.ɪŋ/
+* **廣東話解法**：斷捨離，將唔需要嘅雜物清走。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Decluttering helped me focus better.
+* **廣東話口語**: 執完雜物之後，我專心咗好多。
+:::
+
+### 8. sabotage
+* **詞性**：動詞 / 名詞 (Verb / Noun)
+* **讀音**：/ˈsæb.ə.tɑːʒ/
+* **廣東話解法**：暗中破壞，令計劃做唔成。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Don't sabotage your own progress with excuses.
+* **廣東話口語**: 唔好成日搵藉口，拖自己後腿。
+:::
+
+### 9. incongruent
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/ˌɪnˈkɒŋ.ɡru.ənt/
+* **廣東話解法**：前後唔一致，或者成件事好唔夾。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: His words were incongruent with his actions.
+* **廣東話口語**: 佢講嘅同做嘅完全唔一致。
+:::
+
+### 10. morphed
+* **詞性**：動詞（過去式）(Verb, past tense)
+* **讀音**：/mɔːft/
+* **廣東話解法**：逐步演變成另一種形態或狀態。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The discussion morphed into an argument.
+* **廣東話口語**: 個討論慢慢變咗做爭拗。
+:::
+
+### 11. ritual
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˈrɪtʃ.u.əl/
+* **廣東話解法**：固定會做、帶儀式感嘅習慣。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Reading before bed is my nightly ritual.
+* **廣東話口語**: 臨瞓前睇書係我每晚固定儀式。
+:::
+
+### 12. manicure
+* **詞性**：名詞 / 動詞 (Noun / Verb)
+* **讀音**：/ˈmæn.ɪ.kjʊər/
+* **廣東話解法**：修甲、美甲，或者去做手部護理。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: She got a manicure before the wedding.
+* **廣東話口語**: 佢婚禮前去整咗個靚靚美甲。
+:::
+
+### 13. aspired to
+* **詞性**：片語動詞 (Phrasal Verb)
+* **讀音**：/əˈspaɪəd tuː/
+* **廣東話解法**：立志想達到、想成為某種人或狀態。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: She aspired to become a surgeon.
+* **廣東話口語**: 佢一直立志做外科醫生。
+:::
+
+### 14. close call
+* **詞性**：名詞片語 (Noun Phrase)
+* **讀音**：/kləʊs kɔːl/
+* **廣東話解法**：差少少出事，好險。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: That was a close call on the highway.
+* **廣東話口語**: 頭先喺公路真係好險，差啲撞車。
+:::
+
+### 15. fight tooth and nail
+* **詞性**：慣用語 (Idiom)
+* **讀音**：/faɪt tuːθ ən neɪl/
+* **廣東話解法**：用盡全力去爭取，寸步不讓。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: They fought tooth and nail for fair wages.
+* **廣東話口語**: 佢哋為咗公平人工真係搏到盡。
+:::
+
+### 16. pursue
+* **詞性**：動詞 (Verb)
+* **讀音**：/pəˈsjuː/
+* **廣東話解法**：追求目標、繼續從事，或者追趕某人。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: He decided to pursue a career in design.
+* **廣東話口語**: 佢決定追求設計呢條路。
+:::
+
+### 17. slumber
+* **詞性**：名詞 / 動詞 (Noun / Verb)
+* **讀音**：/ˈslʌm.bər/
+* **廣東話解法**：比較文雅講法，指睡眠或者沉睡。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The baby fell into a deep slumber.
+* **廣東話口語**: 個BB瞓到好沉。
+:::
+
+### 18. grooves
+* **詞性**：名詞 (Noun)
+* **讀音**：/ɡruːvz/
+* **廣東話解法**：本義係溝槽；引申可以指固定模式或節奏。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: We got back into our work grooves quickly.
+* **廣東話口語**: 我哋好快就搵返做嘢節奏。
+:::
+
+### 19. embody
+* **詞性**：動詞 (Verb)
+* **讀音**：/ɪmˈbɒd.i/
+* **廣東話解法**：將抽象概念具體咁表現出嚟。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: She embodies the spirit of teamwork.
+* **廣東話口語**: 佢完全體現咗團隊精神。
+:::
+
+### 20. studious
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/ˈstjuː.di.əs/
+* **廣東話解法**：好用功、勤力讀書或者做研究。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: He has always been a studious child.
+* **廣東話口語**: 佢由細到大都係一個好用功嘅小朋友。
+:::
+
+### 21. virtue of
+* **詞性**：片語 (Phrase)
+* **讀音**：/ˈvɜː.tʃuː əv/
+* **廣東話解法**：憑藉某種特質、優點或者條件而做到。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: She succeeded by virtue of her persistence.
+* **廣東話口語**: 佢係靠住堅持不懈先成功。
+:::
+
+### 22. scribbled
+* **詞性**：動詞（過去式）(Verb, past tense)
+* **讀音**：/ˈskrɪb.əld/
+* **廣東話解法**：急急哋、求其咁寫低。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: I scribbled a note before leaving.
+* **廣東話口語**: 我走之前求其寫低咗張字條。
+:::
+
+### 23. one-off
+* **詞性**：形容詞 / 名詞 (Adjective / Noun)
+* **讀音**：/ˈwʌn.ɒf/
+* **廣東話解法**：一次性發生，唔會經常出現。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: This is a one-off event.
+* **廣東話口語**: 呢個活動係一次性，之後未必再搞。
+:::
+
+### 24. radical
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/ˈræd.ɪ.kəl/
+* **廣東話解法**：可以指激進；亦可指徹底、根本性改變。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: They proposed a radical change to the system.
+* **廣東話口語**: 佢哋提出咗一個好徹底嘅制度改革。
+:::
+
+### 25. unanimous
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/juːˈnæn.ɪ.məs/
+* **廣東話解法**：所有人一致同意，冇反對聲音。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The committee reached a unanimous decision.
+* **廣東話口語**: 委員會一致通過咗個決定。
+:::
+
+### 26. advocate for
+* **詞性**：片語動詞 (Phrasal Verb)
+* **讀音**：/ˈæd.və.keɪt fɔːr/
+* **廣東話解法**：公開支持、倡議某個理念或政策。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: She advocates for mental health awareness.
+* **廣東話口語**: 佢一直倡議大家關注精神健康。
+:::
+
+### 27. North Star
+* **詞性**：名詞片語 (Noun Phrase)
+* **讀音**：/nɔːθ stɑːr/
+* **廣東話解法**：字面係北極星；比喻最核心、最穩定嘅方向指引。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Our mission is the North Star for every decision.
+* **廣東話口語**: 我哋嘅使命就係每個決定嘅指路明燈。
+:::
+
+### 28. rudder
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˈrʌd.ər/
+* **廣東話解法**：本義係船舵；引申做人或組織嘅方向控制。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Without clear goals, the team has no rudder.
+* **廣東話口語**: 冇清晰目標，個團隊就好似冇舵咁。
+:::
+
+### 29. set in stone
+* **詞性**：慣用語 (Idiom)
+* **讀音**：/set ɪn stəʊn/
+* **廣東話解法**：已經定咗案，通常難以更改。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The schedule isn't set in stone yet.
+* **廣東話口語**: 個時間表仲未拍板，仲有得改。
+:::
