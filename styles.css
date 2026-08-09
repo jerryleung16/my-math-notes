@@ -1,1 +1,12 @@
 /* css styles */
+
+.hover-vocab {
+  cursor: help;
+  text-decoration: underline dotted;
+  text-underline-offset: 0.15em;
+}
+
+.lyrics-excerpts li {
+  line-height: 1.9;
+  margin-bottom: 0.35rem;
+}
