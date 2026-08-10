@@ -1,0 +1,151 @@
+---
+title: "Introduction to TensorFlow"
+date: "2026-08-11"
+categories: [Deep Learning]
+---
+
+## 1. Constant Tensors
+
+TensorFlow constants are immutable. Many of their creation functions mirror NumPy.
+
+```python
+import tensorflow as tf
+
+# Equivalent to np.ones(shape=(2, 1))
+tf.ones(shape=(2, 1))
+
+# Equivalent to np.zeros(shape=(2, 1))
+tf.zeros(shape=(2, 1))
+# Returns: tf.Tensor([[0.], [0.]], shape=(2, 1), dtype=float32)
+
+# Equivalent to np.array([1, 2, 3], dtype="float32")
+tf.constant([1, 2, 3], dtype="float32")
+```
+
+## 2. Random Tensors
+
+You can generate tensors with random values sampled from various distributions.
+
+```python
+# Normal distribution
+x = tf.random.normal(shape=(3, 1), mean=0., stddev=1.)
+
+# Uniform distribution
+x = tf.random.uniform(shape=(3, 1), minval=0., maxval=1.)
+```
+
+## 3. TensorFlow Tensors are Constant
+
+Unlike NumPy arrays, standard TensorFlow tensors are not assignable (they are immutable).
+
+```python
+import numpy as np
+
+# It's OK in NumPy to assign a value to a tensor
+x_np = np.ones(shape=(2, 2))
+x_np[0, 0] = 0.0
+
+# But the following is NOT OK in TensorFlow
+x_tf = tf.ones(shape=(2, 2))
+
+# This will fail, as a tensor isn't assignable:
+# x_tf[0, 0] = 0.0 
+```
+
+## 4. Variables in TensorFlow
+
+To hold mutable state (like model weights), use `tf.Variable`. You must provide an initial value.
+
+```python
+# Initialize a variable
+v = tf.Variable(initial_value=tf.random.normal(shape=(3, 1)))
+
+# Use assign method to overwrite the state
+v.assign(tf.ones((3, 1)))
+
+# Assignment for a subset of the coefficients
+v[0, 0].assign(3.)
+# Returns: <tf.Variable ... numpy=
+# array([[3.],
+#        [1.],
+#        [1.]], dtype=float32)>
+
+# assign_add and assign_sub are efficient equivalents of += and -=
+v.assign_add(tf.ones((3, 1)))
+# Returns: <tf.Variable ... numpy=
+# array([[4.],
+#        [2.],
+#        [2.]], dtype=float32)>
+```
+
+## 5. Tensor Operations
+
+TensorFlow offers mathematical operations that are highly optimized and differentiable.
+
+```python
+a = tf.ones((2, 2))
+
+# Basic math operations
+b = tf.square(a)               # Takes the square, same as np.square
+c = tf.sqrt(a)                 # Takes the square root, same as np.sqrt
+d = b + c                      # Adds two tensors (element-wise)
+
+# Matrix operations
+e = tf.matmul(a, b)            # Takes the product of two tensors, same as np.matmul
+f = tf.concat((a, b), axis=0)  # Concatenates a and b along axis 0, same as np.concatenate
+
+# Example: A simple dense layer operation
+def dense(inputs, W, b):
+    return tf.nn.relu(tf.matmul(inputs, W) + b)
+```
+
+## 6. GradientTape
+
+TensorFlow uses `tf.GradientTape` to record operations for automatic differentiation. 
+
+```python
+# Gradient of variables (tracked automatically)
+input_var = tf.Variable(initial_value=3.0)
+with tf.GradientTape() as tape:
+    result = tf.square(input_var)
+gradient = tape.gradient(result, input_var)
+
+# Gradient of constants: Need to explicitly add tape.watch(...)
+input_const = tf.constant(3.0)
+with tf.GradientTape() as tape:
+    tape.watch(input_const)
+    result = tf.square(input_const)
+gradient = tape.gradient(result, input_const)
+```
+
+## 7. Compilation
+
+Using the `@tf.function` decorator compiles Python code into a highly efficient graph. Without it, operations run eagerly (one by one), which is slower.
+
+```python
+# Compiled program in "graph mode"
+@tf.function
+def dense(inputs, W, b):
+    return tf.nn.relu(tf.matmul(inputs, W) + b)
+
+# Compiled program in XLA (Accelerated Linear Algebra)
+@tf.function(jit_compile=True)
+def dense_xla(inputs, W, b):
+    return tf.nn.relu(tf.matmul(inputs, W) + b)
+```
+
+> **Note:** Compiling a function with XLA will often make it run faster than standard graph mode. However, it takes more time to execute the function the very first time because the compiler has more work to do.
+
+---
+
+## 8. Benefits and Flaws of TensorFlow
+
+### Benefits
+* **High Performance:** Fast execution speeds powered by graph mode and XLA compilation, generally outperforming PyTorch and NumPy.
+* **Feature-Complete Data Handling:** Supports unique data types like string and ragged tensors (allowing unpadded sequence handling) alongside a robust preprocessing API (`tf.data`).
+* **Mature Production Deployment:** The most established ecosystem for deploying models into production environments, particularly on mobile devices and in web browsers.
+
+### Flaws
+* **Sprawling API:** Features thousands of operations, making the library complex and overwhelming to navigate.
+* **Inconsistent with NumPy:** Numerical APIs occasionally diverge from standard NumPy syntax, creating a steeper learning curve.
+* **Limited Hugging Face Support:** Poorer integration on Hugging Face means new generative AI models may not always be readily available.
