@@ -10,7 +10,416 @@
 <atom:link href="https://jerryleung16.github.io/my-math-notes/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sun, 09 Aug 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 11 Aug 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Introduction to TensorFlow</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/deep learning/tensor-flow/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="constant-tensors" class="level2">
+<h2 class="anchored" data-anchor-id="constant-tensors">1. Constant Tensors</h2>
+<p>TensorFlow constants are immutable. Many of their creation functions mirror NumPy.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> tensorflow <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> tf</span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Equivalent to np.ones(shape=(2, 1))</span></span>
+<span id="cb1-4">tf.ones(shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb1-5"></span>
+<span id="cb1-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Equivalent to np.zeros(shape=(2, 1))</span></span>
+<span id="cb1-7">tf.zeros(shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb1-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Returns: tf.Tensor([[0.], [0.]], shape=(2, 1), dtype=float32)</span></span>
+<span id="cb1-9"></span>
+<span id="cb1-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Equivalent to np.array([1, 2, 3], dtype="float32")</span></span>
+<span id="cb1-11">tf.constant([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>], dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"float32"</span>)</span></code></pre></div></div>
+</section>
+<section id="random-tensors" class="level2">
+<h2 class="anchored" data-anchor-id="random-tensors">2. Random Tensors</h2>
+<p>You can generate tensors with random values sampled from various distributions.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Normal distribution</span></span>
+<span id="cb2-2">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.random.normal(shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), mean<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>, stddev<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>)</span>
+<span id="cb2-3"></span>
+<span id="cb2-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Uniform distribution</span></span>
+<span id="cb2-5">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.random.uniform(shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), minval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>, maxval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>)</span></code></pre></div></div>
+</section>
+<section id="tensorflow-tensors-are-constant" class="level2">
+<h2 class="anchored" data-anchor-id="tensorflow-tensors-are-constant">3. TensorFlow Tensors are Constant</h2>
+<p>Unlike NumPy arrays, standard TensorFlow tensors are not assignable (they are immutable).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb3-2"></span>
+<span id="cb3-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># It's OK in NumPy to assign a value to a tensor</span></span>
+<span id="cb3-4">x_np <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.ones(shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb3-5">x_np[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span></span>
+<span id="cb3-6"></span>
+<span id="cb3-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># But the following is NOT OK in TensorFlow</span></span>
+<span id="cb3-8">x_tf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.ones(shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb3-9"></span>
+<span id="cb3-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># This will fail, as a tensor isn't assignable:</span></span>
+<span id="cb3-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># x_tf[0, 0] = 0.0 </span></span></code></pre></div></div>
+</section>
+<section id="variables-in-tensorflow" class="level2">
+<h2 class="anchored" data-anchor-id="variables-in-tensorflow">4. Variables in TensorFlow</h2>
+<p>To hold mutable state (like model weights), use <code>tf.Variable</code>. You must provide an initial value.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Initialize a variable</span></span>
+<span id="cb4-2">v <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.Variable(initial_value<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>tf.random.normal(shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)))</span>
+<span id="cb4-3"></span>
+<span id="cb4-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Use assign method to overwrite the state</span></span>
+<span id="cb4-5">v.assign(tf.ones((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)))</span>
+<span id="cb4-6"></span>
+<span id="cb4-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Assignment for a subset of the coefficients</span></span>
+<span id="cb4-8">v[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>].assign(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.</span>)</span>
+<span id="cb4-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Returns: &lt;tf.Variable ... numpy=</span></span>
+<span id="cb4-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># array([[3.],</span></span>
+<span id="cb4-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#        [1.],</span></span>
+<span id="cb4-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#        [1.]], dtype=float32)&gt;</span></span>
+<span id="cb4-13"></span>
+<span id="cb4-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># assign_add and assign_sub are efficient equivalents of += and -=</span></span>
+<span id="cb4-15">v.assign_add(tf.ones((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)))</span>
+<span id="cb4-16"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Returns: &lt;tf.Variable ... numpy=</span></span>
+<span id="cb4-17"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># array([[4.],</span></span>
+<span id="cb4-18"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#        [2.],</span></span>
+<span id="cb4-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#        [2.]], dtype=float32)&gt;</span></span></code></pre></div></div>
+</section>
+<section id="tensor-operations" class="level2">
+<h2 class="anchored" data-anchor-id="tensor-operations">5. Tensor Operations</h2>
+<p>TensorFlow offers mathematical operations that are highly optimized and differentiable.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.ones((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb5-2"></span>
+<span id="cb5-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Basic math operations</span></span>
+<span id="cb5-4">b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.square(a)               <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Takes the square, same as np.square</span></span>
+<span id="cb5-5">c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.sqrt(a)                 <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Takes the square root, same as np.sqrt</span></span>
+<span id="cb5-6">d <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> c                      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Adds two tensors (element-wise)</span></span>
+<span id="cb5-7"></span>
+<span id="cb5-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Matrix operations</span></span>
+<span id="cb5-9">e <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.matmul(a, b)            <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Takes the product of two tensors, same as np.matmul</span></span>
+<span id="cb5-10">f <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.concat((a, b), axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Concatenates a and b along axis 0, same as np.concatenate</span></span>
+<span id="cb5-11"></span>
+<span id="cb5-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Example: A simple dense layer operation</span></span>
+<span id="cb5-13"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> dense(inputs, W, b):</span>
+<span id="cb5-14">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> tf.nn.relu(tf.matmul(inputs, W) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b)</span></code></pre></div></div>
+</section>
+<section id="gradienttape" class="level2">
+<h2 class="anchored" data-anchor-id="gradienttape">6. GradientTape</h2>
+<p>TensorFlow uses <code>tf.GradientTape</code> to record operations for automatic differentiation.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Gradient of variables (tracked automatically)</span></span>
+<span id="cb6-2">input_var <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.Variable(initial_value<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.0</span>)</span>
+<span id="cb6-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">with</span> tf.GradientTape() <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> tape:</span>
+<span id="cb6-4">    result <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.square(input_var)</span>
+<span id="cb6-5">gradient <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tape.gradient(result, input_var)</span>
+<span id="cb6-6"></span>
+<span id="cb6-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Gradient of constants: Need to explicitly add tape.watch(...)</span></span>
+<span id="cb6-8">input_const <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.constant(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.0</span>)</span>
+<span id="cb6-9"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">with</span> tf.GradientTape() <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> tape:</span>
+<span id="cb6-10">    tape.watch(input_const)</span>
+<span id="cb6-11">    result <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.square(input_const)</span>
+<span id="cb6-12">gradient <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tape.gradient(result, input_const)</span></code></pre></div></div>
+</section>
+<section id="compilation" class="level2">
+<h2 class="anchored" data-anchor-id="compilation">7. Compilation</h2>
+<p>Using the <code>@tf.function</code> decorator compiles Python code into a highly efficient graph. Without it, operations run eagerly (one by one), which is slower.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Compiled program in "graph mode"</span></span>
+<span id="cb7-2"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@tf.function</span></span>
+<span id="cb7-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> dense(inputs, W, b):</span>
+<span id="cb7-4">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> tf.nn.relu(tf.matmul(inputs, W) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b)</span>
+<span id="cb7-5"></span>
+<span id="cb7-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Compiled program in XLA (Accelerated Linear Algebra)</span></span>
+<span id="cb7-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@tf.function</span>(jit_compile<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb7-8"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> dense_xla(inputs, W, b):</span>
+<span id="cb7-9">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> tf.nn.relu(tf.matmul(inputs, W) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b)</span></code></pre></div></div>
+<blockquote class="blockquote">
+<p><strong>Note:</strong> Compiling a function with XLA will often make it run faster than standard graph mode. However, it takes more time to execute the function the very first time because the compiler has more work to do.</p>
+</blockquote>
+<hr>
+</section>
+<section id="benefits-and-flaws-of-tensorflow" class="level2">
+<h2 class="anchored" data-anchor-id="benefits-and-flaws-of-tensorflow">8. Benefits and Flaws of TensorFlow</h2>
+<section id="benefits" class="level3">
+<h3 class="anchored" data-anchor-id="benefits">Benefits</h3>
+<ul>
+<li><strong>High Performance:</strong> Fast execution speeds powered by graph mode and XLA compilation, generally outperforming PyTorch and NumPy.</li>
+<li><strong>Feature-Complete Data Handling:</strong> Supports unique data types like string and ragged tensors (allowing unpadded sequence handling) alongside a robust preprocessing API (<code>tf.data</code>).</li>
+<li><strong>Mature Production Deployment:</strong> The most established ecosystem for deploying models into production environments, particularly on mobile devices and in web browsers.</li>
+</ul>
+</section>
+<section id="flaws" class="level3">
+<h3 class="anchored" data-anchor-id="flaws">Flaws</h3>
+<ul>
+<li><strong>Sprawling API:</strong> Features thousands of operations, making the library complex and overwhelming to navigate.</li>
+<li><strong>Inconsistent with NumPy:</strong> Numerical APIs occasionally diverge from standard NumPy syntax, creating a steeper learning curve.</li>
+<li><strong>Limited Hugging Face Support:</strong> Poorer integration on Hugging Face means new generative AI models may not always be readily available.</li>
+</ul>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Deep Learning</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/deep learning/tensor-flow/</guid>
+  <pubDate>Tue, 11 Aug 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>English Word Dictionary Day 7</title>
   <link>https://jerryleung16.github.io/my-math-notes/posts/english/english_7/</link>
@@ -8570,59 +8979,6 @@ Note
  ]]></description>
   <category>Algorithms</category>
   <guid>https://jerryleung16.github.io/my-math-notes/posts/algorithms/insertion-sort-running-time/</guid>
-  <pubDate>Mon, 27 Jul 2026 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Insertion Sort Algorithm</title>
-  <link>https://jerryleung16.github.io/my-math-notes/posts/algorithms/insertion-sort/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="the-core-concept" class="level2">
-<h2 class="anchored" data-anchor-id="the-core-concept">The Core Concept</h2>
-<p>An <strong>insertion sort</strong> works exactly like sorting a hand of playing cards: you pick up cards one by one from an unsorted pile and slide each new card into its correct position among the cards you are already holding.</p>
-</section>
-<section id="visualizing-the-partition" class="level2">
-<h2 class="anchored" data-anchor-id="visualizing-the-partition">Visualizing the Partition</h2>
-<p>To see this in action, let’s sort five numbers from smallest to largest: <code>[5, 3, 8, 4, 2]</code>.</p>
-<p>Imagine dividing the list into two sections separated by a vertical bar: a <strong>sorted section</strong> on the left, and an <strong>unsorted section</strong> on the right.</p>
-</section>
-<section id="the-step-by-step-trace" class="level2">
-<h2 class="anchored" data-anchor-id="the-step-by-step-trace">The Step-by-Step Trace</h2>
-<section id="starting-position-5-3-8-4-2" class="level3">
-<h3 class="anchored" data-anchor-id="starting-position-5-3-8-4-2">Starting Position: <code>[5 | 3, 8, 4, 2]</code></h3>
-<p>We start by looking at the very first number, <code>5</code>. Since it is the only number in our “sorted hand,” it is already sorted by default.</p>
-</section>
-<section id="step-1-pick-up-3" class="level3">
-<h3 class="anchored" data-anchor-id="step-1-pick-up-3">Step 1: Pick up <code>3</code></h3>
-<p>We look at the first unsorted number (<code>3</code>) and compare it to the sorted section on the left. Since <code>3</code> is smaller than <code>5</code>, we shift <code>5</code> one spot to the right and drop <code>3</code> into the empty space at the front.</p>
-<p><strong>Current state:</strong> <code>[3, 5 | 8, 4, 2]</code></p>
-</section>
-<section id="step-2-pick-up-8" class="level3">
-<h3 class="anchored" data-anchor-id="step-2-pick-up-8">Step 2: Pick up <code>8</code></h3>
-<p>We take the next unsorted number (<code>8</code>) and compare it moving from right to left in our sorted section. Is <code>8</code> smaller than <code>5</code>? No.&nbsp;Since it is already larger than the biggest number in our hand, we don’t need to shift anything — it simply locks into place on the end.</p>
-<p><strong>Current state:</strong> <code>[3, 5, 8 | 4, 2]</code></p>
-</section>
-<section id="step-3-pick-up-4" class="level3">
-<h3 class="anchored" data-anchor-id="step-3-pick-up-4">Step 3: Pick up <code>4</code></h3>
-<p>We take <code>4</code> and compare it moving leftwards:</p>
-<p><strong>Smaller than 8?</strong> Yes — shift <code>8</code> to the right. <strong>Smaller than 5?</strong> Yes — shift <code>5</code> to the right. <strong>Smaller than 3?</strong> No! We stop here and insert <code>4</code> into the spot right between <code>3</code> and <code>5</code>. <strong>Current state:</strong> <code>[3, 4, 5, 8 | 2]</code></p>
-</section>
-<section id="step-4-pick-up-2" class="level3">
-<h3 class="anchored" data-anchor-id="step-4-pick-up-2">Step 4: Pick up <code>2</code></h3>
-<p>Finally, we take <code>2</code> and compare it against our sorted hand. Since <code>2</code> is smaller than <code>8</code>, <code>5</code>, <code>4</code>, and <code>3</code>, all four of those numbers shift one position to the right, opening up the very first spot for <code>2</code>.</p>
-<p><strong>Final sorted list:</strong> <code>[2, 3, 4, 5, 8]</code></p>
-
-
-</section>
-</section>
-
- ]]></description>
-  <category>Algorithms</category>
-  <guid>https://jerryleung16.github.io/my-math-notes/posts/algorithms/insertion-sort/</guid>
   <pubDate>Mon, 27 Jul 2026 00:00:00 GMT</pubDate>
 </item>
 </channel>
