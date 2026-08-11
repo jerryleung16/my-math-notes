@@ -1,0 +1,11 @@
+# Quarto local caches and temp state
+.quarto/preview/
+.quarto/project-cache/
+.quarto/quarto-session-temp*/
+.quarto/xref/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
