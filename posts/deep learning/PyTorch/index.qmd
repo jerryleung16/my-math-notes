@@ -113,9 +113,9 @@ To reset gradients, you can just set `.grad` to `None`:
 input_var.grad = None
 ```
 
-## Example: Linear Classifier (revisited in PyTorch)
+## 9. Example: Linear Classifier (revisited in PyTorch)
 
-### Step 1: Initialize W and b
+1. Initialize the trainable parameters `W` and `b`.
 
 ```python
 input_dim = 2
@@ -125,14 +125,14 @@ W = torch.rand(input_dim, output_dim, requires_grad=True)
 b = torch.zeros(output_dim, requires_grad=True)
 ```
 
-### Step 2: Define prediction model
+2. Define the prediction function.
 
 ```python
 def model(inputs, W, b):
     return torch.matmul(inputs, W) + b
 ```
 
-### Step 3: Define loss function
+3. Define the loss function.
 
 ```python
 def mean_squared_error(targets, predictions):
@@ -140,7 +140,7 @@ def mean_squared_error(targets, predictions):
     return torch.mean(per_sample_losses)
 ```
 
-### Step 4: Training step
+4. Define one training step.
 
 ```python
 learning_rate = 0.1
