@@ -1,6 +1,7 @@
 ---
 title: "English Word Dictionary Day 7"
 date: "2026-08-09"
+description: "A Cantonese-friendly English vocabulary list for Day 7 with IPA, meanings, and usage notes."
 categories: [English]
 ---
 

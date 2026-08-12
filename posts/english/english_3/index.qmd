@@ -1,6 +1,7 @@
 ---
 title: "English Word Dictionary Day 3"
 date: "2026-08-04"
+description: "A Cantonese-friendly English vocabulary list for Day 3 with IPA, meanings, and usage notes."
 categories: [English]
 ---
 

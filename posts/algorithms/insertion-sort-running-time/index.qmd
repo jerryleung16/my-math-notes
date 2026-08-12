@@ -1,6 +1,7 @@
 ---
 title: "Time Complexity Analysis of Insertion Sort"
 date: "2026-07-27"
+description: "A line-by-line analysis of insertion sort to derive its best- and worst-case running time."
 categories: [Algorithms]
 ---
 

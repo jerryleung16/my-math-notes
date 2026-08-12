@@ -1,6 +1,7 @@
 ---
 title: "O, Theta and Omega Notations"
 date: "2026-08-07"
+description: "A concise guide to Big O, Theta, and Omega notation for analyzing algorithm growth rates."
 categories: [Algorithms]
 ---
 

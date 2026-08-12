@@ -1,6 +1,7 @@
 ---
 title: "4. Decorator (@property)"
 date: "2026-08-08"
+description: "An explanation of Python's @property decorator for cleaner attribute access and validation."
 categories: [Python]
 ---
 

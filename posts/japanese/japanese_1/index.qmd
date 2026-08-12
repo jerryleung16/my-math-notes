@@ -1,6 +1,7 @@
 ---
 title: "日文生字字典（廣東話解釋）Day 1"
 date: "2026-07-31"
+description: "A Cantonese-friendly Japanese vocabulary list for Day 1 with practical meanings and usage notes."
 categories: [Japanese]
 format: html
 toc: true
