@@ -202,6 +202,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#benefits" id="toc-benefits" class="nav-link" data-scroll-target="#benefits">Benefits</a></li>
   <li><a href="#flaws" id="toc-flaws" class="nav-link" data-scroll-target="#flaws">Flaws</a></li>
   </ul></li>
+  <li><a href="#example-linear-classifier" id="toc-example-linear-classifier" class="nav-link" data-scroll-target="#example-linear-classifier">9. Example: Linear Classifier</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/deep learning/tensor-flow/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jerryleung16/my-math-notes/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -342,9 +343,191 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Inconsistent with NumPy:</strong> Numerical APIs occasionally diverge from standard NumPy syntax, creating a steeper learning curve.</li>
 <li><strong>Limited Hugging Face Support:</strong> Poorer integration on Hugging Face means new generative AI models may not always be readily available.</li>
 </ul>
-
-
+<hr>
 </section>
+</section>
+<section id="example-linear-classifier" class="level2">
+<h2 class="anchored" data-anchor-id="example-linear-classifier">9. Example: Linear Classifier</h2>
+<p>A linear classifier is an affine transformation (<code>prediction = matmul(input, W) + b</code>) trained to minimize the square of the difference between predictions and targets.</p>
+<table>
+<thead>
+<tr>
+<th>
+Step
+</th>
+<th>
+Description
+</th>
+<th>
+Code / Notes
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+1
+</td>
+<td>
+Create the data
+</td>
+<td>
+<pre><code class="language-python">import numpy as np
+
+num_samples_per_class = 1000
+negative_samples = np.random.multivariate_normal(
+        # Generates the first class of points: 1,000 random 2D points with
+        # specified mean and covariance matrix.
+        mean=[0, 3], cov=[[1, 0.5], [0.5, 1]], size=num_samples_per_class
+)
+positive_samples = np.random.multivariate_normal(
+        # Generates the second class with a different mean and the same covariance.
+        mean=[3, 0], cov=[[1, 0.5], [0.5, 1]], size=num_samples_per_class
+)</code></pre>
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+<td>
+Stack samples into shape (2000, 2)
+</td>
+<td>
+<pre><code class="language-python">inputs = np.vstack((negative_samples, positive_samples)).astype(np.float32)</code></pre>
+</td>
+</tr>
+<tr>
+<td>
+3
+</td>
+<td>
+Create labels (0 for first class, 1 for second class)
+</td>
+<td>
+<pre><code class="language-python">targets = np.vstack(
+        (
+                np.zeros((num_samples_per_class, 1), dtype="float32"),
+                np.ones((num_samples_per_class, 1), dtype="float32"),
+        )
+)</code></pre>
+</td>
+</tr>
+<tr>
+<td>
+4
+</td>
+<td>
+Plot using matplotlib
+</td>
+<td>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+
+# c=targets[:, 0] assigns different colors
+plt.scatter(inputs[:, 0], inputs[:, 1], c=targets[:, 0])
+plt.show()</code></pre>
+</td>
+</tr>
+<tr>
+<td>
+5
+</td>
+<td>
+Initialize W and b
+</td>
+<td>
+<pre><code class="language-python">import tensorflow as tf
+
+# The inputs will be 2D points.
+input_dim = 2
+output_dim = 1
+W = tf.Variable(initial_value=tf.random.uniform(shape=(input_dim, output_dim)))
+b = tf.Variable(initial_value=tf.zeros(shape=(output_dim,)))</code></pre>
+</td>
+</tr>
+<tr>
+<td>
+6
+</td>
+<td>
+Create model and loss function
+</td>
+<td>
+<pre><code class="language-python">def model(inputs, W, b):
+        return tf.matmul(inputs, W) + b
+
+def mean_squared_error(targets, predictions):
+        # Per-sample losses have the same shape as targets and predictions.
+        per_sample_losses = tf.square(targets - predictions)
+        # Average per-sample loss scores into a scalar value.
+        return tf.reduce_mean(per_sample_losses)</code></pre>
+</td>
+</tr>
+<tr>
+<td>
+7
+</td>
+<td>
+Define one training step
+</td>
+<td>
+<pre><code class="language-python">learning_rate = 0.1
+
+# Wraps the function in tf.function to speed it up
+@tf.function(jit_compile=True)
+def training_step(inputs, targets, W, b):
+        # Forward pass inside a gradient tape scope
+        with tf.GradientTape() as tape:
+                predictions = model(inputs, W, b)
+                loss = mean_squared_error(targets, predictions)
+        # Retrieves gradients of loss with regard to weights
+        grad_loss_wrt_W, grad_loss_wrt_b = tape.gradient(loss, [W, b])
+        # Updates weights
+        W.assign_sub(grad_loss_wrt_W * learning_rate)
+        b.assign_sub(grad_loss_wrt_b * learning_rate)
+        return loss</code></pre>
+</td>
+</tr>
+<tr>
+<td>
+8
+</td>
+<td>
+Loop the training step
+</td>
+<td>
+<pre><code class="language-python">for step in range(40):
+        loss = training_step(inputs, targets, W, b)
+        print(f"Loss at step {step}: {loss:.4f}")</code></pre>
+Because targets are 0 and 1, classify as “0” when prediction &lt; 0.5 and “1” when prediction &gt; 0.5.
+</td>
+</tr>
+<tr>
+<td>
+9
+</td>
+<td>
+Plot the result and decision boundary
+</td>
+<td>
+Mathematical mechanism:<br> <code>prediction = [[w1], [w2]] • [x, y] + b = w1 * x + w2 * y + b</code><br> Class “0”: <code>w1 * x + w2 * y + b &amp;lt; 0.5</code><br> Class “1”: <code>w1 * x + w2 * y + b &amp;gt; 0.5</code><br> Boundary: <code>w1 * x + w2 * y + b = 0.5</code>, equivalent to <code>y = -w1 / w2 * x + (0.5 - b) / w2</code>.
+<pre><code class="language-python"># Generates 100 regularly spaced numbers between -1 and 4
+x = np.linspace(-1, 4, 100)
+# Decision boundary line equation
+y = -W[0] / W[1] * x + (0.5 - b) / W[1]
+
+# Plot boundary as a red line
+plt.plot(x, y, "-r")
+
+# Plot model predictions
+predictions = model(inputs, W, b)
+plt.scatter(inputs[:, 0], inputs[:, 1], c=predictions[:, 0] &gt; 0.5)</code></pre>
+</td>
+</tr>
+</tbody>
+</table>
+
+
 </section>
 
 </main> <!-- /main -->
