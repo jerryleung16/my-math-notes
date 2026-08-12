@@ -10,7 +10,568 @@
 <atom:link href="https://jerryleung16.github.io/my-math-notes/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Tue, 11 Aug 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 12 Aug 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Introduction to PyTorch</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/deep learning/PyTorch/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="constant-tensor" class="level2">
+<h2 class="anchored" data-anchor-id="constant-tensor">1. Constant tensor</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> torch</span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Unlike in other frameworks, the shape argument is named "size"</span></span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># rather than "shape."</span></span>
+<span id="cb1-4">torch.ones(size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb1-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># tensor([[1.], [1.]])</span></span>
+<span id="cb1-6"></span>
+<span id="cb1-7">torch.zeros(size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb1-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># tensor([[0.], [0.]])</span></span>
+<span id="cb1-9"></span>
+<span id="cb1-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Unlike in other frameworks, you cannot pass dtype="float32" as a</span></span>
+<span id="cb1-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># string. The dtype argument must be a torch dtype instance.</span></span>
+<span id="cb1-12">torch.tensor([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>], dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>torch.float32)</span>
+<span id="cb1-13"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># tensor([1., 2., 3.])</span></span></code></pre></div></div>
+</section>
+<section id="random-tensor" class="level2">
+<h2 class="anchored" data-anchor-id="random-tensor">2. Random tensor</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Equivalent to tf.random.normal(shape=(3, 1), mean=0., stddev=1.)</span></span>
+<span id="cb2-2">torch.normal(</span>
+<span id="cb2-3">    mean<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>torch.zeros(size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)),</span>
+<span id="cb2-4">    std<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>torch.ones(size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb2-5">)</span>
+<span id="cb2-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># tensor([[-0.9613],</span></span>
+<span id="cb2-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#         [-2.0169],</span></span>
+<span id="cb2-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#         [ 0.2088]])</span></span>
+<span id="cb2-9"></span>
+<span id="cb2-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Equivalent to tf.random.uniform(shape=(3, 1), minval=0., maxval=1.)</span></span>
+<span id="cb2-11">torch.rand(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span></code></pre></div></div>
+</section>
+<section id="tensor-assignment" class="level2">
+<h2 class="anchored" data-anchor-id="tensor-assignment">3. Tensor assignment</h2>
+<p>Like NumPy arrays, but unlike TensorFlow tensors, PyTorch tensors are assignable. You can do operations like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.zeros(size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb3-2">x[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span></span>
+<span id="cb3-3">x</span>
+<span id="cb3-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># tensor([[1.],</span></span>
+<span id="cb3-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#         [0.]])</span></span></code></pre></div></div>
+<p>While you can just use a regular <code>torch.Tensor</code> to store the trainable state of a model, PyTorch does provide a specialized tensor subclass for that purpose, the <code>torch.nn.parameter.Parameter</code> class.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.zeros(size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb4-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># A Parameter can only be created using a torch.Tensor value — no</span></span>
+<span id="cb4-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># NumPy arrays allowed.</span></span>
+<span id="cb4-4">p <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.nn.parameter.Parameter(data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>x)</span></code></pre></div></div>
+</section>
+<section id="tensor-operations" class="level2">
+<h2 class="anchored" data-anchor-id="tensor-operations">4. Tensor operations</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.ones((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb5-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Takes the square, same as np.square</span></span>
+<span id="cb5-3">b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.square(a)</span>
+<span id="cb5-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Takes the square root, same as np.sqrt</span></span>
+<span id="cb5-5">c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.sqrt(a)</span>
+<span id="cb5-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Adds two tensors (element-wise)</span></span>
+<span id="cb5-7">d <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> c</span>
+<span id="cb5-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Takes the product of two tensors, same as np.matmul</span></span>
+<span id="cb5-9">e <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.matmul(a, b)</span>
+<span id="cb5-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Concatenates a and b along axis 0, same as np.concatenate</span></span>
+<span id="cb5-11">f <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.cat((a, b), dim<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb5-12"></span>
+<span id="cb5-13"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Dense layer</span></span>
+<span id="cb5-14"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> dense(inputs, W, b):</span>
+<span id="cb5-15">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> torch.nn.relu(torch.matmul(inputs, W) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b)</span></code></pre></div></div>
+</section>
+<section id="computing-gradients" class="level2">
+<h2 class="anchored" data-anchor-id="computing-gradients">5. Computing gradients</h2>
+<p>You can call <code>tensor.backward()</code> to run backpropagation through all operations previously executed that led to that tensor. Then <code>.grad</code> gives gradient.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># To compute gradients with respect to a tensor, it must be created</span></span>
+<span id="cb6-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># with requires_grad=True.</span></span>
+<span id="cb6-3">input_var <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.tensor(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.0</span>, requires_grad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb6-4">result <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.square(input_var)</span>
+<span id="cb6-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Calling backward() populates the "grad" attribute on all tensors</span></span>
+<span id="cb6-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># created with requires_grad=True.</span></span>
+<span id="cb6-7">result.backward()</span>
+<span id="cb6-8">gradient <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> input_var.grad</span>
+<span id="cb6-9">gradient</span>
+<span id="cb6-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># tensor(6.)</span></span></code></pre></div></div>
+<p>If you call <code>backward()</code> multiple times in a row, the <code>.grad</code> attribute will accumulate gradients: each new call will sum the new gradient with the preexisting one.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">result <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.square(input_var)</span>
+<span id="cb7-2">result.backward()</span>
+<span id="cb7-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># .grad will sum all gradient values from each time backward() is</span></span>
+<span id="cb7-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># called.</span></span>
+<span id="cb7-5">input_var.grad</span>
+<span id="cb7-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># tensor(12.)</span></span></code></pre></div></div>
+<p>To reset gradients, you can just set <code>.grad</code> to <code>None</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">input_var.grad <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span></code></pre></div></div>
+</section>
+<section id="example-linear-classifier-revisited-in-pytorch" class="level2">
+<h2 class="anchored" data-anchor-id="example-linear-classifier-revisited-in-pytorch">Example: Linear Classifier (revisited in PyTorch)</h2>
+<section id="step-1-initialize-w-and-b" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-initialize-w-and-b">Step 1: Initialize W and b</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">input_dim <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb9-2">output_dim <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb9-3"></span>
+<span id="cb9-4">W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.rand(input_dim, output_dim, requires_grad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb9-5">b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.zeros(output_dim, requires_grad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span></code></pre></div></div>
+</section>
+<section id="step-2-define-prediction-model" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-define-prediction-model">Step 2: Define prediction model</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> model(inputs, W, b):</span>
+<span id="cb10-2">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> torch.matmul(inputs, W) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b</span></code></pre></div></div>
+</section>
+<section id="step-3-define-loss-function" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-define-loss-function">Step 3: Define loss function</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> mean_squared_error(targets, predictions):</span>
+<span id="cb11-2">    per_sample_losses <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.square(targets <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> predictions)</span>
+<span id="cb11-3">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> torch.mean(per_sample_losses)</span></code></pre></div></div>
+</section>
+<section id="step-4-training-step" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-training-step">Step 4: Training step</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">learning_rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span></span>
+<span id="cb12-2"></span>
+<span id="cb12-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> training_step(inputs, targets, W, b):</span>
+<span id="cb12-4">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Forward pass</span></span>
+<span id="cb12-5">    predictions <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model(inputs, W, b)</span>
+<span id="cb12-6">    loss <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> mean_squared_error(targets, predictions)</span>
+<span id="cb12-7">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Computes gradients</span></span>
+<span id="cb12-8">    loss.backward()</span>
+<span id="cb12-9">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Retrieves gradients</span></span>
+<span id="cb12-10">    grad_loss_wrt_W, grad_loss_wrt_b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> W.grad, b.grad</span>
+<span id="cb12-11">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">with</span> torch.no_grad():</span>
+<span id="cb12-12">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Updates weights inside a no_grad scope</span></span>
+<span id="cb12-13">        W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-=</span> grad_loss_wrt_W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> learning_rate</span>
+<span id="cb12-14">        b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-=</span> grad_loss_wrt_b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> learning_rate</span>
+<span id="cb12-15">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Resets gradients</span></span>
+<span id="cb12-16">    W.grad <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb12-17">    b.grad <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb12-18">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> loss</span></code></pre></div></div>
+<hr>
+</section>
+</section>
+<section id="compilation" class="level2">
+<h2 class="anchored" data-anchor-id="compilation">Compilation</h2>
+<p>Similarly to how TensorFlow lets you compile functions for better performance, PyTorch lets you compile functions or even <code>Module</code> instances via the <code>torch.compile()</code> utility. This API uses PyTorch’s compiler, Dynamo.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">compiled_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">compile</span>(model)</span></code></pre></div></div>
+<p>You can also use <code>torch.compile()</code> as a function decorator:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@torch.compile</span></span>
+<span id="cb14-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> dense(inputs, W, b):</span>
+<span id="cb14-3">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> torch.nn.relu(torch.matmul(inputs, W) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b)</span></code></pre></div></div>
+</section>
+<section id="alternative-method" class="level2">
+<h2 class="anchored" data-anchor-id="alternative-method">Alternative method</h2>
+<p>PyTorch also has a higher-level, object-oriented API for performing backpropagation, which requires relying on two new classes: the <code>torch.nn.Module</code> class and an optimizer class from the <code>torch.optim</code> module, such as <code>torch.optim.SGD</code> (the equivalent of <code>keras.optimizers.SGD</code>).</p>
+<section id="step-1-define-linearmodel-class" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-define-linearmodel-class">Step 1: Define <code>LinearModel</code> class</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> LinearModel(torch.nn.Module):</span>
+<span id="cb15-2">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>):</span>
+<span id="cb15-3">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">super</span>().<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>()</span>
+<span id="cb15-4">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.nn.Parameter(torch.rand(input_dim, output_dim))</span>
+<span id="cb15-5">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.nn.Parameter(torch.zeros(output_dim))</span>
+<span id="cb15-6"></span>
+<span id="cb15-7">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> forward(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, inputs):</span>
+<span id="cb15-8">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> torch.matmul(inputs, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.W) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.b</span></code></pre></div></div>
+</section>
+<section id="step-2-instantiate-linearmodel" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-instantiate-linearmodel">Step 2: Instantiate <code>LinearModel</code></h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1">model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> LinearModel()</span></code></pre></div></div>
+</section>
+<section id="step-3-convert-inputs-and-perform-forward-pass" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-convert-inputs-and-perform-forward-pass">Step 3: Convert inputs and perform forward pass</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># This line takes your raw data (inputs), likely a Python list or NumPy array,</span></span>
+<span id="cb17-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># and converts it into a PyTorch Tensor.</span></span>
+<span id="cb17-3">torch_inputs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.tensor(inputs)</span>
+<span id="cb17-4"></span>
+<span id="cb17-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># This line takes your newly created tensor and passes it through your neural</span></span>
+<span id="cb17-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># network (model). This is known as a forward pass.</span></span>
+<span id="cb17-7">output <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model(torch_inputs)</span></code></pre></div></div>
+</section>
+<section id="step-4-create-optimizer" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-create-optimizer">Step 4: Create optimizer</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1">optimizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.optim.SGD(model.parameters(), lr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>learning_rate)</span></code></pre></div></div>
+</section>
+<section id="step-5-training-step" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-training-step">Step 5: Training step</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> training_step(inputs, targets):</span>
+<span id="cb19-2">    predictions <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model(inputs)</span>
+<span id="cb19-3">    loss <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> mean_squared_error(targets, predictions)</span>
+<span id="cb19-4">    loss.backward()</span>
+<span id="cb19-5">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># optimizer.step() updates your model's weights.</span></span>
+<span id="cb19-6">    optimizer.step()</span>
+<span id="cb19-7">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Previously we did this by hand using tensor.grad = None</span></span>
+<span id="cb19-8">    model.zero_grad()</span>
+<span id="cb19-9">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> loss</span></code></pre></div></div>
+</section>
+</section>
+<section id="pytorchs-main-strengths-and-weaknesses" class="level2">
+<h2 class="anchored" data-anchor-id="pytorchs-main-strengths-and-weaknesses">PyTorch’s main strengths and weaknesses</h2>
+<section id="strengths" class="level3">
+<h3 class="anchored" data-anchor-id="strengths">Strengths</h3>
+<ul>
+<li>Easy to debug: PyTorch runs eagerly by default, avoiding the complex compilation steps eventually required by TensorFlow and JAX.</li>
+<li>Hugging Face integration: First-class support on the popular model-sharing platform means almost any pretrained model is readily available, which is the main driver of its popularity.</li>
+</ul>
+</section>
+<section id="weaknesses" class="level3">
+<h3 class="anchored" data-anchor-id="weaknesses">Weaknesses</h3>
+<ul>
+<li>Inconsistent API: Its syntax can be frustrating to learn because it differs from NumPy and lacks internal consistency (e.g., swapping axis and dim).</li>
+<li>Slow performance: It is the slowest major framework by a wide margin. JAX, for example, can be anywhere from 20% to 5x faster.</li>
+<li>Ineffective compiler: As of 2025, <code>torch.compile()</code> remains buggy and difficult to use, leaving most users stuck with slower eager execution.</li>
+</ul>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Deep Learning</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/deep learning/PyTorch/</guid>
+  <pubDate>Wed, 12 Aug 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>さよなら 歌詞生字（廣東話解釋)</title>
   <link>https://jerryleung16.github.io/my-math-notes/posts/japanese/lyrics_2/</link>
@@ -8868,221 +9429,6 @@ Note
   <category>Japanese</category>
   <guid>https://jerryleung16.github.io/my-math-notes/posts/japanese/japanese_1/</guid>
   <pubDate>Fri, 31 Jul 2026 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Merge Sort: A Divide-and-Conquer Algorithm</title>
-  <link>https://jerryleung16.github.io/my-math-notes/posts/algorithms/merge-sort/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="algorithm-design-approaches" class="level2">
-<h2 class="anchored" data-anchor-id="algorithm-design-approaches">1. Algorithm Design Approaches</h2>
-<p>Algorithms can be designed using various fundamental approaches. Two primary techniques are:</p>
-<ul>
-<li><strong>Incremental Approach:</strong> Used by algorithms like Insertion Sort. It builds the solution one element at a time (e.g., inserting a single element into an already sorted subarray).</li>
-<li><strong>Divide-and-Conquer Approach:</strong> A highly recursive alternative that often yields significantly faster worst-case running times. It solves problems by breaking them down into smaller, manageable pieces.</li>
-</ul>
-<hr>
-</section>
-<section id="the-divide-and-conquer-paradigm" class="level2">
-<h2 class="anchored" data-anchor-id="the-divide-and-conquer-paradigm">2. The Divide-and-Conquer Paradigm</h2>
-<p>This recursive approach involves three distinct steps at each level of the recursion:</p>
-<ol type="1">
-<li><strong>Divide:</strong> Break the original problem into a number of smaller subproblems that are just smaller instances of the exact same problem.</li>
-<li><strong>Conquer:</strong> Solve the subproblems recursively. However, if the subproblem size is small enough (the recursion “bottoms out”), solve it in a straightforward, direct manner.</li>
-<li><strong>Combine:</strong> Merge the solutions of the smaller subproblems together to formulate the solution to the original, overarching problem.</li>
-</ol>
-<hr>
-</section>
-<section id="merge-sort-overview" class="level2">
-<h2 class="anchored" data-anchor-id="merge-sort-overview">3. Merge Sort Overview</h2>
-<p>Merge Sort is a classic algorithm that strictly follows the divide-and-conquer paradigm to sort a sequence of elements:</p>
-<ul>
-<li><strong>Divide:</strong> Split the sequence into two separate subsequences of equal (or near-equal) size.</li>
-<li><strong>Conquer:</strong> Recursively sort both subsequences. This process bottoms out when a sequence hits a length of 1, as a single element is already inherently sorted.</li>
-<li><strong>Combine:</strong> Merge the two sorted subsequences back together to produce the final, fully sorted answer.</li>
-</ul>
-<hr>
-</section>
-<section id="the-engine-the-merge-procedure" class="level2">
-<h2 class="anchored" data-anchor-id="the-engine-the-merge-procedure">4. The Engine: The <code>MERGE</code> Procedure</h2>
-<p>To understand Merge Sort, you first have to understand its engine: the “combine” step. This is handled by an auxiliary procedure called <code>MERGE(A, p, q, r)</code>.</p>
-<p>It assumes that the two subarrays <img src="https://latex.codecogs.com/png.latex?A%5Bp%20%5Cdots%20q%5D"> and <img src="https://latex.codecogs.com/png.latex?A%5Bq+1%20%5Cdots%20r%5D"> are already sorted. Its job is to merge them into a single sorted subarray that replaces the space they currently take up (<img src="https://latex.codecogs.com/png.latex?A%5Bp%20%5Cdots%20r%5D">).</p>
-<blockquote class="blockquote">
-<p><strong>The Card Analogy:</strong> Imagine two sorted piles of cards face up on a table. You compare the top two cards, remove the smaller one, and place it face down in a new output pile. You repeat this constant-time comparison step until all cards are merged.</p>
-<p>To prevent constantly checking if either pile is completely empty, a special “sentinel” card containing the value infinity (<img src="https://latex.codecogs.com/png.latex?%5Cinfty">) is placed at the bottom of each pile. This guarantees that the core sorting logic stops exactly when all real data has been merged.</p>
-</blockquote>
-<section id="merge-pseudocode" class="level3">
-<h3 class="anchored" data-anchor-id="merge-pseudocode"><code>MERGE</code> Pseudocode</h3>
-<p>Below is the pseudocode for the merging process, demonstrating the use of the new temporary arrays (<img src="https://latex.codecogs.com/png.latex?L"> and <img src="https://latex.codecogs.com/png.latex?R">) and the sentinel values.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: right;">Line</th>
-<th style="text-align: left;"><code>MERGE(A, p, q, r)</code></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?n_1%20=%20q%20-%20p%20+%201"></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?n_2%20=%20r%20-%20q"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">let <img src="https://latex.codecogs.com/png.latex?L%5B1%20%5Cdots%20n_1%20+%201%5D"> and <img src="https://latex.codecogs.com/png.latex?R%5B1%20%5Cdots%20n_2%20+%201%5D"> be new arrays</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">4</td>
-<td style="text-align: left;"><strong>for</strong> <img src="https://latex.codecogs.com/png.latex?i%20=%201"> <strong>to</strong> <img src="https://latex.codecogs.com/png.latex?n_1"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://latex.codecogs.com/png.latex?L%5Bi%5D%20=%20A%5Bp%20+%20i%20-%201%5D"></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">6</td>
-<td style="text-align: left;"><strong>for</strong> <img src="https://latex.codecogs.com/png.latex?j%20=%201"> <strong>to</strong> <img src="https://latex.codecogs.com/png.latex?n_2"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://latex.codecogs.com/png.latex?R%5Bj%5D%20=%20A%5Bq%20+%20j%5D"></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">8</td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?L%5Bn_1%20+%201%5D%20=%20%5Cinfty"> &nbsp;&nbsp;&nbsp;&nbsp;<code>// Sentinel value</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">9</td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?R%5Bn_2%20+%201%5D%20=%20%5Cinfty"> &nbsp;&nbsp;&nbsp;&nbsp;<code>// Sentinel value</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">10</td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?i%20=%201"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">11</td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?j%20=%201"></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">12</td>
-<td style="text-align: left;"><strong>for</strong> <img src="https://latex.codecogs.com/png.latex?k%20=%20p"> <strong>to</strong> <img src="https://latex.codecogs.com/png.latex?r"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">13</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<strong>if</strong> <img src="https://latex.codecogs.com/png.latex?L%5Bi%5D%20%5Cle%20R%5Bj%5D"></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">14</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://latex.codecogs.com/png.latex?A%5Bk%5D%20=%20L%5Bi%5D"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">15</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://latex.codecogs.com/png.latex?i%20=%20i%20+%201"></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">16</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<strong>else</strong> <img src="https://latex.codecogs.com/png.latex?A%5Bk%5D%20=%20R%5Bj%5D"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">17</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://latex.codecogs.com/png.latex?j%20=%20j%20+%201"></td>
-</tr>
-</tbody>
-</table>
-<p>Because each basic step compares two cards and takes constant time, merging <img src="https://latex.codecogs.com/png.latex?n"> total elements takes <img src="https://latex.codecogs.com/png.latex?%5CTheta(n)"> time.</p>
-</section>
-<section id="tracing-the-merge-procedure" class="level3">
-<h3 class="anchored" data-anchor-id="tracing-the-merge-procedure">Tracing the <code>MERGE</code> Procedure</h3>
-<p>Imagine we have a 1-indexed array <img src="https://latex.codecogs.com/png.latex?A%20=%20%5B8,%204,%207,%202,%205,%209%5D">. We want to merge two already-sorted sections in the middle: the left pile <img src="https://latex.codecogs.com/png.latex?%5B4,%207%5D"> and the right pile <img src="https://latex.codecogs.com/png.latex?%5B2,%205%5D">. We call <code>MERGE(A, 2, 3, 5)</code>.</p>
-<ol type="1">
-<li><strong>Sizing &amp; Copying:</strong> The algorithm calculates the sizes (<img src="https://latex.codecogs.com/png.latex?n_1%20=%202">, <img src="https://latex.codecogs.com/png.latex?n_2%20=%202">) and creates temporary arrays <img src="https://latex.codecogs.com/png.latex?L"> and <img src="https://latex.codecogs.com/png.latex?R"> with an extra slot for the <img src="https://latex.codecogs.com/png.latex?%5Cinfty"> sentinel.
-<ul>
-<li><img src="https://latex.codecogs.com/png.latex?L"> becomes <img src="https://latex.codecogs.com/png.latex?%5B4,%207,%20%5Cinfty%5D"></li>
-<li><img src="https://latex.codecogs.com/png.latex?R"> becomes <img src="https://latex.codecogs.com/png.latex?%5B2,%205,%20%5Cinfty%5D"></li>
-</ul></li>
-<li><strong>The Loop:</strong> Pointers <img src="https://latex.codecogs.com/png.latex?i"> and <img src="https://latex.codecogs.com/png.latex?j"> start at 1. The main loop iterates from <img src="https://latex.codecogs.com/png.latex?k%20=%202"> to <img src="https://latex.codecogs.com/png.latex?5">, overwriting <img src="https://latex.codecogs.com/png.latex?A"> by picking the smaller of <img src="https://latex.codecogs.com/png.latex?L%5Bi%5D"> and <img src="https://latex.codecogs.com/png.latex?R%5Bj%5D">:
-<ul>
-<li><strong><img src="https://latex.codecogs.com/png.latex?k=2">:</strong> <img src="https://latex.codecogs.com/png.latex?L%5B1%5D"> (4) vs <img src="https://latex.codecogs.com/png.latex?R%5B1%5D"> (2). Right is smaller. <img src="https://latex.codecogs.com/png.latex?A%5B2%5D"> becomes 2. <img src="https://latex.codecogs.com/png.latex?j"> increments.</li>
-<li><strong><img src="https://latex.codecogs.com/png.latex?k=3">:</strong> <img src="https://latex.codecogs.com/png.latex?L%5B1%5D"> (4) vs <img src="https://latex.codecogs.com/png.latex?R%5B2%5D"> (5). Left is smaller. <img src="https://latex.codecogs.com/png.latex?A%5B3%5D"> becomes 4. <img src="https://latex.codecogs.com/png.latex?i"> increments.</li>
-<li><strong><img src="https://latex.codecogs.com/png.latex?k=4">:</strong> <img src="https://latex.codecogs.com/png.latex?L%5B2%5D"> (7) vs <img src="https://latex.codecogs.com/png.latex?R%5B2%5D"> (5). Right is smaller. <img src="https://latex.codecogs.com/png.latex?A%5B4%5D"> becomes 5. <img src="https://latex.codecogs.com/png.latex?j"> increments.</li>
-<li><strong><img src="https://latex.codecogs.com/png.latex?k=5">:</strong> <img src="https://latex.codecogs.com/png.latex?L%5B2%5D"> (7) vs <img src="https://latex.codecogs.com/png.latex?R%5B3%5D"> (<img src="https://latex.codecogs.com/png.latex?%5Cinfty">). Left is smaller. <img src="https://latex.codecogs.com/png.latex?A%5B5%5D"> becomes 7. <img src="https://latex.codecogs.com/png.latex?i"> increments.</li>
-</ul></li>
-<li><strong>Result:</strong> The target section is overwritten. Array <img src="https://latex.codecogs.com/png.latex?A"> goes from <img src="https://latex.codecogs.com/png.latex?%5B8,%204,%207,%202,%205,%209%5D"> to <img src="https://latex.codecogs.com/png.latex?%5B8,%202,%204,%205,%207,%209%5D">.</li>
-</ol>
-<hr>
-</section>
-</section>
-<section id="the-driver-the-merge-sort-procedure" class="level2">
-<h2 class="anchored" data-anchor-id="the-driver-the-merge-sort-procedure">5. The Driver: The <code>MERGE-SORT</code> Procedure</h2>
-<p>Now that we have the engine, we need the driver. The recursive <code>MERGE-SORT</code> function traces the array indices all the way down to the base cases (single elements) first, and only then uses our <code>MERGE</code> engine on the way back up the call stack.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: right;">Line</th>
-<th style="text-align: left;"><code>MERGE-SORT(A, p, r)</code></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: left;"><strong>if</strong> <img src="https://latex.codecogs.com/png.latex?p%20%3C%20r"></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://latex.codecogs.com/png.latex?q%20=%20%5Clfloor(p%20+%20r)/2%5Crfloor"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<code>MERGE-SORT(A, p, q)</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">4</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<code>MERGE-SORT(A, q + 1, r)</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;<code>MERGE(A, p, q, r)</code></td>
-</tr>
-</tbody>
-</table>
-<p>To sort an entire sequence, we make the initial call <code>MERGE-SORT(A, 1, A.length)</code>.</p>
-<hr>
-</section>
-<section id="putting-it-together-a-full-execution-trace" class="level2">
-<h2 class="anchored" data-anchor-id="putting-it-together-a-full-execution-trace">6. Putting It Together: A Full Execution Trace</h2>
-<p>Let us trace the algorithm end-to-end on an unsorted 8-element array: <img src="https://latex.codecogs.com/png.latex?A%20=%20%5B5,%202,%204,%207,%201,%203,%202,%206%5D">.</p>
-<p><strong>Phase 1: The Divide Phase (Top-Down)</strong> The <code>MERGE-SORT</code> function recursively splits the array in half. No sorting happens yet; it just calculates midpoints (<img src="https://latex.codecogs.com/png.latex?q">) and pushes calls onto the stack until every subsequence is length 1.</p>
-<ul>
-<li><strong>Split 1:</strong> <img src="https://latex.codecogs.com/png.latex?%5B5,%202,%204,%207%5D"> and <img src="https://latex.codecogs.com/png.latex?%5B1,%203,%202,%206%5D"></li>
-<li><strong>Split 2:</strong> <img src="https://latex.codecogs.com/png.latex?%5B5,%202%5D">, <img src="https://latex.codecogs.com/png.latex?%5B4,%207%5D">, <img src="https://latex.codecogs.com/png.latex?%5B1,%203%5D">, and <img src="https://latex.codecogs.com/png.latex?%5B2,%206%5D"></li>
-<li><strong>Base Case (Length 1):</strong> <img src="https://latex.codecogs.com/png.latex?%5B5%5D">, <img src="https://latex.codecogs.com/png.latex?%5B2%5D">, <img src="https://latex.codecogs.com/png.latex?%5B4%5D">, <img src="https://latex.codecogs.com/png.latex?%5B7%5D">, <img src="https://latex.codecogs.com/png.latex?%5B1%5D">, <img src="https://latex.codecogs.com/png.latex?%5B3%5D">, <img src="https://latex.codecogs.com/png.latex?%5B2%5D">, and <img src="https://latex.codecogs.com/png.latex?%5B6%5D"></li>
-</ul>
-<p>At this point, the recursion bottoms out because single elements are trivially sorted.</p>
-<p><strong>Phase 2: The Combine Phase (Bottom-Up)</strong> As the recursive calls resolve, the <code>MERGE</code> procedure kicks in, combining the small sorted subarrays back together level-by-level:</p>
-<ul>
-<li><strong>Merge to size 2:</strong> <img src="https://latex.codecogs.com/png.latex?%5B2,%205%5D">, <img src="https://latex.codecogs.com/png.latex?%5B4,%207%5D">, <img src="https://latex.codecogs.com/png.latex?%5B1,%203%5D">, and <img src="https://latex.codecogs.com/png.latex?%5B2,%206%5D"></li>
-<li><strong>Merge to size 4:</strong> <img src="https://latex.codecogs.com/png.latex?%5B2,%204,%205,%207%5D"> and <img src="https://latex.codecogs.com/png.latex?%5B1,%202,%203,%206%5D"></li>
-<li><strong>Final Merge to size 8:</strong> We call <code>MERGE</code> on the two halves, yielding the final sorted array: <img src="https://latex.codecogs.com/png.latex?%5B1,%202,%202,%203,%204,%205,%206,%207%5D">.</li>
-</ul>
-
-
-</section>
-
- ]]></description>
-  <category>Algorithms</category>
-  <guid>https://jerryleung16.github.io/my-math-notes/posts/algorithms/merge-sort/</guid>
-  <pubDate>Wed, 29 Jul 2026 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

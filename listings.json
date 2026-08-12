@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/deep learning/PyTorch/index.html",
       "/posts/japanese/lyrics_2/index.html",
       "/posts/deep learning/tensor-flow/index.html",
       "/posts/english/english_7/index.html",
