@@ -1,0 +1,250 @@
+---
+title: "Introduction to PyTorch"
+date: "2026-08-12"
+categories: [Deep Learning]
+---
+
+## 1. Constant tensor
+
+```python
+import torch
+# Unlike in other frameworks, the shape argument is named "size"
+# rather than "shape."
+torch.ones(size=(2, 1))
+# tensor([[1.], [1.]])
+
+torch.zeros(size=(2, 1))
+# tensor([[0.], [0.]])
+
+# Unlike in other frameworks, you cannot pass dtype="float32" as a
+# string. The dtype argument must be a torch dtype instance.
+torch.tensor([1, 2, 3], dtype=torch.float32)
+# tensor([1., 2., 3.])
+```
+
+## 2. Random tensor
+
+```python
+# Equivalent to tf.random.normal(shape=(3, 1), mean=0., stddev=1.)
+torch.normal(
+    mean=torch.zeros(size=(3, 1)),
+    std=torch.ones(size=(3, 1))
+)
+# tensor([[-0.9613],
+#         [-2.0169],
+#         [ 0.2088]])
+
+# Equivalent to tf.random.uniform(shape=(3, 1), minval=0., maxval=1.)
+torch.rand(3, 1)
+```
+
+## 3. Tensor assignment
+
+Like NumPy arrays, but unlike TensorFlow tensors, PyTorch tensors are assignable. You can do operations like this:
+
+```python
+x = torch.zeros(size=(2, 1))
+x[0, 0] = 1.
+x
+# tensor([[1.],
+#         [0.]])
+```
+
+While you can just use a regular `torch.Tensor` to store the trainable state of a model, PyTorch does provide a specialized tensor subclass for that purpose, the `torch.nn.parameter.Parameter` class.
+
+```python
+x = torch.zeros(size=(2, 1))
+# A Parameter can only be created using a torch.Tensor value — no
+# NumPy arrays allowed.
+p = torch.nn.parameter.Parameter(data=x)
+```
+
+## 4. Tensor operations
+
+```python
+a = torch.ones((2, 2))
+# Takes the square, same as np.square
+b = torch.square(a)
+# Takes the square root, same as np.sqrt
+c = torch.sqrt(a)
+# Adds two tensors (element-wise)
+d = b + c
+# Takes the product of two tensors, same as np.matmul
+e = torch.matmul(a, b)
+# Concatenates a and b along axis 0, same as np.concatenate
+f = torch.cat((a, b), dim=0)
+
+# Dense layer
+def dense(inputs, W, b):
+    return torch.nn.relu(torch.matmul(inputs, W) + b)
+```
+
+## 5. Computing gradients
+
+You can call `tensor.backward()` to run backpropagation through all operations previously executed that led to that tensor. Then `.grad` gives gradient.
+
+```python
+# To compute gradients with respect to a tensor, it must be created
+# with requires_grad=True.
+input_var = torch.tensor(3.0, requires_grad=True)
+result = torch.square(input_var)
+# Calling backward() populates the "grad" attribute on all tensors
+# created with requires_grad=True.
+result.backward()
+gradient = input_var.grad
+gradient
+# tensor(6.)
+```
+
+If you call `backward()` multiple times in a row, the `.grad` attribute will accumulate gradients: each new call will sum the new gradient with the preexisting one.
+
+```python
+result = torch.square(input_var)
+result.backward()
+# .grad will sum all gradient values from each time backward() is
+# called.
+input_var.grad
+# tensor(12.)
+```
+
+To reset gradients, you can just set `.grad` to `None`:
+
+```python
+input_var.grad = None
+```
+
+## Example: Linear Classifier (revisited in PyTorch)
+
+### Step 1: Initialize W and b
+
+```python
+input_dim = 2
+output_dim = 1
+
+W = torch.rand(input_dim, output_dim, requires_grad=True)
+b = torch.zeros(output_dim, requires_grad=True)
+```
+
+### Step 2: Define prediction model
+
+```python
+def model(inputs, W, b):
+    return torch.matmul(inputs, W) + b
+```
+
+### Step 3: Define loss function
+
+```python
+def mean_squared_error(targets, predictions):
+    per_sample_losses = torch.square(targets - predictions)
+    return torch.mean(per_sample_losses)
+```
+
+### Step 4: Training step
+
+```python
+learning_rate = 0.1
+
+def training_step(inputs, targets, W, b):
+    # Forward pass
+    predictions = model(inputs, W, b)
+    loss = mean_squared_error(targets, predictions)
+    # Computes gradients
+    loss.backward()
+    # Retrieves gradients
+    grad_loss_wrt_W, grad_loss_wrt_b = W.grad, b.grad
+    with torch.no_grad():
+        # Updates weights inside a no_grad scope
+        W -= grad_loss_wrt_W * learning_rate
+        b -= grad_loss_wrt_b * learning_rate
+    # Resets gradients
+    W.grad = None
+    b.grad = None
+    return loss
+```
+
+---
+
+## Compilation
+
+Similarly to how TensorFlow lets you compile functions for better performance, PyTorch lets you compile functions or even `Module` instances via the `torch.compile()` utility. This API uses PyTorch’s compiler, Dynamo.
+
+```python
+compiled_model = torch.compile(model)
+```
+
+You can also use `torch.compile()` as a function decorator:
+
+```python
+@torch.compile
+def dense(inputs, W, b):
+    return torch.nn.relu(torch.matmul(inputs, W) + b)
+```
+
+## Alternative method
+
+PyTorch also has a higher-level, object-oriented API for performing backpropagation, which requires relying on two new classes: the `torch.nn.Module` class and an optimizer class from the `torch.optim` module, such as `torch.optim.SGD` (the equivalent of `keras.optimizers.SGD`).
+
+### Step 1: Define `LinearModel` class
+
+```python
+class LinearModel(torch.nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.W = torch.nn.Parameter(torch.rand(input_dim, output_dim))
+        self.b = torch.nn.Parameter(torch.zeros(output_dim))
+
+    def forward(self, inputs):
+        return torch.matmul(inputs, self.W) + self.b
+```
+
+### Step 2: Instantiate `LinearModel`
+
+```python
+model = LinearModel()
+```
+
+### Step 3: Convert inputs and perform forward pass
+
+```python
+# This line takes your raw data (inputs), likely a Python list or NumPy array,
+# and converts it into a PyTorch Tensor.
+torch_inputs = torch.tensor(inputs)
+
+# This line takes your newly created tensor and passes it through your neural
+# network (model). This is known as a forward pass.
+output = model(torch_inputs)
+```
+
+### Step 4: Create optimizer
+
+```python
+optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
+```
+
+### Step 5: Training step
+
+```python
+def training_step(inputs, targets):
+    predictions = model(inputs)
+    loss = mean_squared_error(targets, predictions)
+    loss.backward()
+    # optimizer.step() updates your model's weights.
+    optimizer.step()
+    # Previously we did this by hand using tensor.grad = None
+    model.zero_grad()
+    return loss
+```
+
+## PyTorch's main strengths and weaknesses
+
+### Strengths
+
+* Easy to debug: PyTorch runs eagerly by default, avoiding the complex compilation steps eventually required by TensorFlow and JAX.
+* Hugging Face integration: First-class support on the popular model-sharing platform means almost any pretrained model is readily available, which is the main driver of its popularity.
+
+### Weaknesses
+
+* Inconsistent API: Its syntax can be frustrating to learn because it differs from NumPy and lacks internal consistency (e.g., swapping axis and dim).
+* Slow performance: It is the slowest major framework by a wide margin. JAX, for example, can be anywhere from 20% to 5x faster.
+* Ineffective compiler: As of 2025, `torch.compile()` remains buggy and difficult to use, leaving most users stuck with slower eager execution.
