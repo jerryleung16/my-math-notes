@@ -1,6 +1,7 @@
 ---
 title: "3. Flexible Arguments"
 date: "2026-08-07"
+description: "How to use *args and **kwargs to build Python classes with flexible initialization."
 categories: [Python]
 ---
 

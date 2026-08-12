@@ -1,6 +1,7 @@
 ---
 title: "Time Complexity Analysis of Merge Sort"
 date: "2026-08-04"
+description: "A walkthrough of why merge sort runs in Theta(n log n) using recurrences and recursion trees."
 categories: [Algorithms]
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: "Introduction to PyTorch"
 date: "2026-08-12"
+description: "Practical PyTorch notes covering tensor creation, reshaping, math operations, and gradients."
 categories: [Deep Learning]
 ---
 

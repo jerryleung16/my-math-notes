@@ -1,6 +1,7 @@
 ---
 title: "Deep Learning with Python Ch.1 Summary"
 date: "2026-08-01"
+description: "Key ideas from Chapter 1 of Deep Learning with Python, including AI, machine learning, and deep learning."
 categories: [Deep Learning]
 ---
 

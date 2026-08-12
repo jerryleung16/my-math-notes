@@ -1,6 +1,7 @@
 ---
 title: "Merge Sort: A Divide-and-Conquer Algorithm"
 date: "2026-07-29"
+description: "An overview of merge sort and the divide-and-conquer strategy behind its recursive design."
 categories: [Algorithms]
 ---
 

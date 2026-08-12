@@ -1,6 +1,7 @@
 ---
 title: "Insertion Sort Algorithm"
 date: "2026-07-27"
+description: "A step-by-step introduction to insertion sort using card-sorting intuition and traced examples."
 categories: [Algorithms]
 ---
 ## The Core Concept

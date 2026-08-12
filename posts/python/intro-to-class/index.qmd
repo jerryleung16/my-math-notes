@@ -1,6 +1,7 @@
 ---
 title: "1. Classes in Python: A Beginner's Guide to Object-Oriented Programming"
 date: "2026-08-05"
+description: "A beginner-friendly introduction to Python classes, objects, attributes, and methods."
 categories: [Python]
 ---
 
