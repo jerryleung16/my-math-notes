@@ -1081,191 +1081,955 @@ font-style: inherit;">+</span> b)</span></code></pre></div></div>
 <section id="example-linear-classifier" class="level2">
 <h2 class="anchored" data-anchor-id="example-linear-classifier">9. Example: Linear Classifier</h2>
 <p>A linear classifier is an affine transformation (<code>prediction = matmul(input, W) + b</code>) trained to minimize the square of the difference between predictions and targets.</p>
-<table>
-<thead>
-<tr>
-<th>
-Step
-</th>
-<th>
-Description
-</th>
-<th>
-Code / Notes
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-1
-</td>
-<td>
-Create the data
-</td>
-<td>
-<pre><code class="language-python">import numpy as np
+<section id="step-1-create-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-create-the-data">Step 1: Create the data</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb8-2"></span>
+<span id="cb8-3">num_samples_per_class <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span></span>
+<span id="cb8-4">negative_samples <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.random.multivariate_normal(</span>
+<span id="cb8-5">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Generates the first class of points: 1,000 random 2D points with</span></span>
+<span id="cb8-6">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># specified mean and covariance matrix.</span></span>
+<span id="cb8-7">    mean<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>], cov<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]], size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>num_samples_per_class</span>
+<span id="cb8-8">)</span>
+<span id="cb8-9">positive_samples <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.random.multivariate_normal(</span>
+<span id="cb8-10">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Generates the second class with a different mean and the same covariance.</span></span>
+<span id="cb8-11">    mean<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], cov<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>], [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]], size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>num_samples_per_class</span>
+<span id="cb8-12">)</span></code></pre></div></div>
+</section>
+<section id="step-2-stack-the-samples-into-a-single-input-tensor" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-stack-the-samples-into-a-single-input-tensor">Step 2: Stack the samples into a single input tensor</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">inputs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.vstack((negative_samples, positive_samples)).astype(np.float32)</span></code></pre></div></div>
+<p>This gives an input array of shape <code>(2000, 2)</code>.</p>
+</section>
+<section id="step-3-create-the-labels" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-create-the-labels">Step 3: Create the labels</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">targets <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.vstack(</span>
+<span id="cb10-2">    (</span>
+<span id="cb10-3">        np.zeros((num_samples_per_class, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"float32"</span>),</span>
+<span id="cb10-4">        np.ones((num_samples_per_class, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"float32"</span>),</span>
+<span id="cb10-5">    )</span>
+<span id="cb10-6">)</span></code></pre></div></div>
+<p>The first class is labeled <code>0</code>, and the second class is labeled <code>1</code>.</p>
+</section>
+<section id="step-4-plot-the-raw-data" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-plot-the-raw-data">Step 4: Plot the raw data</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb11-2"></span>
+<span id="cb11-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># c=targets[:, 0] assigns different colors</span></span>
+<span id="cb11-4">plt.scatter(inputs[:, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], inputs[:, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], c<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>targets[:, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>])</span>
+<span id="cb11-5">plt.show()</span></code></pre></div></div>
+</section>
+<section id="step-5-initialize-w-and-b" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-initialize-w-and-b">Step 5: Initialize <code>W</code> and <code>b</code></h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> tensorflow <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> tf</span>
+<span id="cb12-2"></span>
+<span id="cb12-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># The inputs will be 2D points.</span></span>
+<span id="cb12-4">input_dim <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb12-5">output_dim <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb12-6">W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.Variable(initial_value<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>tf.random.uniform(shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(input_dim, output_dim)))</span>
+<span id="cb12-7">b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.Variable(initial_value<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>tf.zeros(shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(output_dim,)))</span></code></pre></div></div>
+</section>
+<section id="step-6-define-the-model-and-loss-function" class="level3">
+<h3 class="anchored" data-anchor-id="step-6-define-the-model-and-loss-function">Step 6: Define the model and loss function</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> model(inputs, W, b):</span>
+<span id="cb13-2">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> tf.matmul(inputs, W) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b</span>
+<span id="cb13-3"></span>
+<span id="cb13-4"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> mean_squared_error(targets, predictions):</span>
+<span id="cb13-5">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Per-sample losses have the same shape as targets and predictions.</span></span>
+<span id="cb13-6">    per_sample_losses <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.square(targets <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> predictions)</span>
+<span id="cb13-7">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Average per-sample loss scores into a scalar value.</span></span>
+<span id="cb13-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> tf.reduce_mean(per_sample_losses)</span></code></pre></div></div>
+</section>
+<section id="step-7-define-one-training-step" class="level3">
+<h3 class="anchored" data-anchor-id="step-7-define-one-training-step">Step 7: Define one training step</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1">learning_rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span></span>
+<span id="cb14-2"></span>
+<span id="cb14-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Wraps the function in tf.function to speed it up</span></span>
+<span id="cb14-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@tf.function</span>(jit_compile<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb14-5"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> training_step(inputs, targets, W, b):</span>
+<span id="cb14-6">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Forward pass inside a gradient tape scope</span></span>
+<span id="cb14-7">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">with</span> tf.GradientTape() <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> tape:</span>
+<span id="cb14-8">        predictions <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model(inputs, W, b)</span>
+<span id="cb14-9">        loss <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> mean_squared_error(targets, predictions)</span>
+<span id="cb14-10">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Retrieves gradients of loss with regard to weights</span></span>
+<span id="cb14-11">    grad_loss_wrt_W, grad_loss_wrt_b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tape.gradient(loss, [W, b])</span>
+<span id="cb14-12">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Updates weights</span></span>
+<span id="cb14-13">    W.assign_sub(grad_loss_wrt_W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> learning_rate)</span>
+<span id="cb14-14">    b.assign_sub(grad_loss_wrt_b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> learning_rate)</span>
+<span id="cb14-15">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> loss</span></code></pre></div></div>
+</section>
+<section id="step-8-train-the-classifier" class="level3">
+<h3 class="anchored" data-anchor-id="step-8-train-the-classifier">Step 8: Train the classifier</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> step <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>):</span>
+<span id="cb15-2">    loss <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> training_step(inputs, targets, W, b)</span>
+<span id="cb15-3">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Loss at step </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>step<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>loss<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.4f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<p>Because the targets are <code>0</code> and <code>1</code>, you can classify a point as class <code>0</code> when the prediction is less than <code>0.5</code>, and as class <code>1</code> when the prediction is greater than <code>0.5</code>.</p>
+</section>
+<section id="step-9-plot-the-decision-boundary" class="level3">
+<h3 class="anchored" data-anchor-id="step-9-plot-the-decision-boundary">Step 9: Plot the decision boundary</h3>
+<p>The learned prediction rule is</p>
+<p><code>prediction = [[w1], [w2]] • [x, y] + b = w1 * x + w2 * y + b</code>.</p>
+<p>That means:</p>
+<ul>
+<li>class <code>0</code> when <code>w1 * x + w2 * y + b &lt; 0.5</code></li>
+<li>class <code>1</code> when <code>w1 * x + w2 * y + b &gt; 0.5</code></li>
+<li>decision boundary when <code>w1 * x + w2 * y + b = 0.5</code></li>
+</ul>
+<p>Solving the boundary equation for <code>y</code> gives</p>
+<p><code>y = -w1 / w2 * x + (0.5 - b) / w2</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Generates 100 regularly spaced numbers between -1 and 4</span></span>
+<span id="cb16-2">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.linspace(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>)</span>
+<span id="cb16-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Decision boundary line equation</span></span>
+<span id="cb16-4">y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>W[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> W[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> b) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> W[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb16-5"></span>
+<span id="cb16-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Plot boundary as a red line</span></span>
+<span id="cb16-7">plt.plot(x, y, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-r"</span>)</span>
+<span id="cb16-8"></span>
+<span id="cb16-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Plot model predictions</span></span>
+<span id="cb16-10">predictions <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model(inputs, W, b)</span>
+<span id="cb16-11">plt.scatter(inputs[:, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], inputs[:, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], c<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>predictions[:, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span></code></pre></div></div>
 
-num_samples_per_class = 1000
-negative_samples = np.random.multivariate_normal(
-        # Generates the first class of points: 1,000 random 2D points with
-        # specified mean and covariance matrix.
-        mean=[0, 3], cov=[[1, 0.5], [0.5, 1]], size=num_samples_per_class
-)
-positive_samples = np.random.multivariate_normal(
-        # Generates the second class with a different mean and the same covariance.
-        mean=[3, 0], cov=[[1, 0.5], [0.5, 1]], size=num_samples_per_class
-)</code></pre>
-</td>
-</tr>
-<tr>
-<td>
-2
-</td>
-<td>
-Stack samples into shape (2000, 2)
-</td>
-<td>
-<pre><code class="language-python">inputs = np.vstack((negative_samples, positive_samples)).astype(np.float32)</code></pre>
-</td>
-</tr>
-<tr>
-<td>
-3
-</td>
-<td>
-Create labels (0 for first class, 1 for second class)
-</td>
-<td>
-<pre><code class="language-python">targets = np.vstack(
-        (
-                np.zeros((num_samples_per_class, 1), dtype="float32"),
-                np.ones((num_samples_per_class, 1), dtype="float32"),
-        )
-)</code></pre>
-</td>
-</tr>
-<tr>
-<td>
-4
-</td>
-<td>
-Plot using matplotlib
-</td>
-<td>
-<pre><code class="language-python">import matplotlib.pyplot as plt
 
-# c=targets[:, 0] assigns different colors
-plt.scatter(inputs[:, 0], inputs[:, 1], c=targets[:, 0])
-plt.show()</code></pre>
-</td>
-</tr>
-<tr>
-<td>
-5
-</td>
-<td>
-Initialize W and b
-</td>
-<td>
-<pre><code class="language-python">import tensorflow as tf
-
-# The inputs will be 2D points.
-input_dim = 2
-output_dim = 1
-W = tf.Variable(initial_value=tf.random.uniform(shape=(input_dim, output_dim)))
-b = tf.Variable(initial_value=tf.zeros(shape=(output_dim,)))</code></pre>
-</td>
-</tr>
-<tr>
-<td>
-6
-</td>
-<td>
-Create model and loss function
-</td>
-<td>
-<pre><code class="language-python">def model(inputs, W, b):
-        return tf.matmul(inputs, W) + b
-
-def mean_squared_error(targets, predictions):
-        # Per-sample losses have the same shape as targets and predictions.
-        per_sample_losses = tf.square(targets - predictions)
-        # Average per-sample loss scores into a scalar value.
-        return tf.reduce_mean(per_sample_losses)</code></pre>
-</td>
-</tr>
-<tr>
-<td>
-7
-</td>
-<td>
-Define one training step
-</td>
-<td>
-<pre><code class="language-python">learning_rate = 0.1
-
-# Wraps the function in tf.function to speed it up
-@tf.function(jit_compile=True)
-def training_step(inputs, targets, W, b):
-        # Forward pass inside a gradient tape scope
-        with tf.GradientTape() as tape:
-                predictions = model(inputs, W, b)
-                loss = mean_squared_error(targets, predictions)
-        # Retrieves gradients of loss with regard to weights
-        grad_loss_wrt_W, grad_loss_wrt_b = tape.gradient(loss, [W, b])
-        # Updates weights
-        W.assign_sub(grad_loss_wrt_W * learning_rate)
-        b.assign_sub(grad_loss_wrt_b * learning_rate)
-        return loss</code></pre>
-</td>
-</tr>
-<tr>
-<td>
-8
-</td>
-<td>
-Loop the training step
-</td>
-<td>
-<pre><code class="language-python">for step in range(40):
-        loss = training_step(inputs, targets, W, b)
-        print(f"Loss at step {step}: {loss:.4f}")</code></pre>
-Because targets are 0 and 1, classify as “0” when prediction &lt; 0.5 and “1” when prediction &gt; 0.5.
-</td>
-</tr>
-<tr>
-<td>
-9
-</td>
-<td>
-Plot the result and decision boundary
-</td>
-<td>
-Mathematical mechanism:<br> <code>prediction = [[w1], [w2]] • [x, y] + b = w1 * x + w2 * y + b</code><br> Class “0”: <code>w1 * x + w2 * y + b &amp;lt; 0.5</code><br> Class “1”: <code>w1 * x + w2 * y + b &amp;gt; 0.5</code><br> Boundary: <code>w1 * x + w2 * y + b = 0.5</code>, equivalent to <code>y = -w1 / w2 * x + (0.5 - b) / w2</code>.
-<pre><code class="language-python"># Generates 100 regularly spaced numbers between -1 and 4
-x = np.linspace(-1, 4, 100)
-# Decision boundary line equation
-y = -W[0] / W[1] * x + (0.5 - b) / W[1]
-
-# Plot boundary as a red line
-plt.plot(x, y, "-r")
-
-# Plot model predictions
-predictions = model(inputs, W, b)
-plt.scatter(inputs[:, 0], inputs[:, 1], c=predictions[:, 0] &gt; 0.5)</code></pre>
-</td>
-</tr>
-</tbody>
-</table>
-
-
+</section>
 </section>
 
  ]]></description>
   <category>Deep Learning</category>
   <guid>https://jerryleung16.github.io/my-math-notes/posts/deep learning/tensor-flow/</guid>
   <pubDate>Tue, 11 Aug 2026 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>English Word Dictionary Day 6</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/english/english_6/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>💡 <strong>使用說明</strong>：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。</p>
+</div>
+</div>
+<section id="生字快速索引" class="level2">
+<h2 class="anchored" data-anchor-id="生字快速索引">🔍 生字快速索引</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">英文生字</th>
+<th style="text-align: left;">音標 (IPA)</th>
+<th style="text-align: left;">詞性</th>
+<th style="text-align: left;">廣東話地道意思</th>
+<th style="text-align: center;">難度/常用度</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>mediocrity</strong></td>
+<td style="text-align: left;">/ˌmiː.diˈɒk.rə.ti/</td>
+<td style="text-align: left;"><em>n.</em></td>
+<td style="text-align: left;">平庸、普通、資質一般</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>fared</strong></td>
+<td style="text-align: left;">/feəd/</td>
+<td style="text-align: left;"><em>v.</em></td>
+<td style="text-align: left;">過得點、表現得點、情況如何</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>relentless</strong></td>
+<td style="text-align: left;">/rɪˈlent.ləs/</td>
+<td style="text-align: left;"><em>adj.</em></td>
+<td style="text-align: left;">不屈不撓、鍥而不捨、毫不放鬆</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>aggregation of marginal gains</strong></td>
+<td style="text-align: left;">/ˌæɡ.rɪˈɡeɪ.ʃən əv ˈmɑː.dʒɪ.nəl ɡeɪnz/</td>
+<td style="text-align: left;"><em>phr.</em></td>
+<td style="text-align: left;">邊際增益的積累、微小進步加起來的力量</td>
+<td style="text-align: center;">⭐⭐⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>astounding</strong></td>
+<td style="text-align: left;">/əˈstaʊn.dɪŋ/</td>
+<td style="text-align: left;"><em>adj.</em></td>
+<td style="text-align: left;">令人驚嘆的、匪夷所思的、誇張到難以置信</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>that said</strong></td>
+<td style="text-align: left;">/ðæt sed/</td>
+<td style="text-align: left;"><em>phr.</em></td>
+<td style="text-align: left;">話雖如此、不過、即使這樣講</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>rush in</strong></td>
+<td style="text-align: left;">/rʌʃ ɪn/</td>
+<td style="text-align: left;"><em>phr. v.</em></td>
+<td style="text-align: left;">貿然行事、衝入去、急急腳做</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>feat</strong></td>
+<td style="text-align: left;">/fiːt/</td>
+<td style="text-align: left;"><em>n.</em></td>
+<td style="text-align: left;">壯舉、了不起的成就、難度極高的事</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>aggravations</strong></td>
+<td style="text-align: left;">/ˌæɡ.rəˈveɪ.ʃənz/</td>
+<td style="text-align: left;"><em>n.</em></td>
+<td style="text-align: left;">煩惱、令人火大的事、激化</td>
+<td style="text-align: center;">⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>hallmark</strong></td>
+<td style="text-align: left;">/ˈhɔːl.mɑːk/</td>
+<td style="text-align: left;"><em>n.</em></td>
+<td style="text-align: left;">標誌、特徵、典型特色</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>tangible</strong></td>
+<td style="text-align: left;">/ˈtæn.dʒɪ.bəl/</td>
+<td style="text-align: left;"><em>adj.</em></td>
+<td style="text-align: left;">實在的、看得見摸得到的、切實的</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>plateau</strong></td>
+<td style="text-align: left;">/ˈplæt.əʊ/</td>
+<td style="text-align: left;"><em>n.&nbsp;/ v.</em></td>
+<td style="text-align: left;">高原 / 停滯期、樽頸位、停止進步</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>latent</strong></td>
+<td style="text-align: left;">/ˈleɪ.tənt/</td>
+<td style="text-align: left;"><em>adj.</em></td>
+<td style="text-align: left;">潛在的、隱而未發的、蟄伏中的</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>entrench</strong></td>
+<td style="text-align: left;">/ɪnˈtrentʃ/</td>
+<td style="text-align: left;"><em>v.</em></td>
+<td style="text-align: left;">根深蒂固、鞏固（習慣/地位）、深深確立</td>
+<td style="text-align: center;">⭐⭐⭐⭐</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="生字詳細解析" class="level2">
+<h2 class="anchored" data-anchor-id="生字詳細解析">📚 生字詳細解析</h2>
+<section id="mediocrity" class="level3">
+<h3 class="anchored" data-anchor-id="mediocrity">1. mediocrity</h3>
+<ul>
+<li><strong>詞性</strong>：名詞 (Noun)</li>
+<li><strong>讀音</strong>：/ˌmiː.diˈɒk.rə.ti/</li>
+<li><strong>廣東話解法</strong>：指一種「唔好唔壞」、「普普通通」嘅狀態或者質素——唔係差，但係絕對唔出眾。廣東話通常會講「平庸」、「資質一般」或者「唔湯唔水」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: He refused to accept a life of mediocrity.</p></li>
+<li><p><strong>廣東話口語</strong>: 佢唔願意接受一個平庸嘅人生（唔湯唔水嘅生活）。</p></li>
+<li><p><strong>English</strong>: The film was dismissed by critics as sheer mediocrity.</p></li>
+<li><p><strong>廣東話口語</strong>: 呢套戲俾影評人批評係徹頭徹尾嘅平庸之作（毫無驚喜）。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>slide into mediocrity</code>：滑落至平庸 * <code>settle for mediocrity</code>：甘於平庸 * <code>escape / rise above mediocrity</code>：擺脫平庸</p>
+<hr>
+</section>
+<section id="fared-fare-嘅過去式" class="level3">
+<h3 class="anchored" data-anchor-id="fared-fare-嘅過去式">2. fared (fare 嘅過去式)</h3>
+<ul>
+<li><strong>詞性</strong>：動詞 (Verb)</li>
+<li><strong>讀音</strong>：/feəd/</li>
+<li><strong>廣東話解法</strong>：指在某個情況或者考驗之下，某人「過得點」或者「表現得點」。廣東話通常會問「點㗎？」或者講「表現係好定係差」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: How did you fare in the exam?</p></li>
+<li><p><strong>廣東話口語</strong>: 你個考試考得點？（表現點？）</p></li>
+<li><p><strong>English</strong>: The team fared badly in the first half of the season.</p></li>
+<li><p><strong>廣東話口語</strong>: 個隊伍喺上半季表現好差（唔掂）。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>fare well / badly</code>：表現好 / 差 * <code>fare better / worse than</code>：表現比…好 / 差</p>
+<hr>
+</section>
+<section id="relentless" class="level3">
+<h3 class="anchored" data-anchor-id="relentless">3. relentless</h3>
+<ul>
+<li><strong>詞性</strong>：形容詞 (Adjective)</li>
+<li><strong>讀音</strong>：/rɪˈlent.ləs/</li>
+<li><strong>廣東話解法</strong>：形容一種「毫不停歇」、「永不放棄」、「不斷施壓」嘅狀態。廣東話通常會講「鍥而不捨」、「無情地持續」或者「唔肯收手」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: His relentless practice eventually paid off.</p></li>
+<li><p><strong>廣東話口語</strong>: 佢鍥而不捨咁練習，最終都有收穫（功夫不負有心人）。</p></li>
+<li><p><strong>English</strong>: The team faced relentless pressure from their opponents.</p></li>
+<li><p><strong>廣東話口語</strong>: 個隊伍面對對手無情嘅持續施壓。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>relentless pursuit</code>：鍥而不捨地追求 * <code>relentless pressure</code>：持續不斷的壓力 * <code>relentless effort</code>：不懈的努力</p>
+<hr>
+</section>
+<section id="aggregation-of-marginal-gains" class="level3">
+<h3 class="anchored" data-anchor-id="aggregation-of-marginal-gains">4. aggregation of marginal gains</h3>
+<ul>
+<li><strong>詞性</strong>：名詞片語 (Noun Phrase)</li>
+<li><strong>讀音</strong>：/ˌæɡ.rɪˈɡeɪ.ʃən əv ˈmɑː.dʒɪ.nəl ɡeɪnz/</li>
+<li><strong>廣東話解法</strong>：由英國單車教練 Dave Brailsford 提出嘅概念。意思係喺每一個細節上都做到微小嘅改進（例如每次進步 1%），將呢啲細小進步加埋一齊，長遠就會帶嚟驚人嘅整體突破。廣東話會講「邊際增益積累」或者「積少成多嘅進步哲學」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>English</strong>: The team’s success was built on the aggregation of marginal gains — improving every single process by just one percent.</li>
+<li><strong>廣東話口語</strong>: 個隊嘅成功係建基於邊際增益積累嘅理念——喺每個細節上都做到微小嘅改進（積少成多）。</li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>the philosophy of marginal gains</code>：邊際增益哲學 * <code>aggregate small improvements</code>：積累細小的改進</p>
+<hr>
+</section>
+<section id="astounding" class="level3">
+<h3 class="anchored" data-anchor-id="astounding">5. astounding</h3>
+<ul>
+<li><strong>詞性</strong>：形容詞 (Adjective)</li>
+<li><strong>讀音</strong>：/əˈstaʊn.dɪŋ/</li>
+<li><strong>廣東話解法</strong>：指某事令人震驚或者驚嘆得嘴都合唔埋。廣東話通常會講「誇張到難以置信」、「令人嘩嘩聲」或者「匪夷所思」。語氣比 “surprising” 強烈得多。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: The results were absolutely astounding.</p></li>
+<li><p><strong>廣東話口語</strong>: 個結果誇張到難以置信（令人嘩嘩聲）。</p></li>
+<li><p><strong>English</strong>: She performed an astounding number of push-ups in one minute.</p></li>
+<li><p><strong>廣東話口語</strong>: 佢一分鐘內做咗多到令人咋舌嘅掌上壓。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>astounding achievement / feat</code>：令人驚嘆的成就 / 壯舉 * <code>astounding speed</code>：驚人的速度</p>
+<hr>
+</section>
+<section id="that-said" class="level3">
+<h3 class="anchored" data-anchor-id="that-said">6. that said</h3>
+<ul>
+<li><strong>詞性</strong>：片語 / 連接詞 (Phrase / Discourse Marker)</li>
+<li><strong>讀音</strong>：/ðæt sed/</li>
+<li><strong>廣東話解法</strong>：用嚟帶出一個對比或轉折嘅意見，相當於「話雖如此」、「不過」或者「即使係咁」。係一個好常見嘅書面同口語轉折表達方式。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: The training is tough. That said, the results speak for themselves.</p></li>
+<li><p><strong>廣東話口語</strong>: 訓練係好辛苦，話雖如此，成績擺喺度（不過結果係講晒嘢）。</p></li>
+<li><p><strong>English</strong>: The restaurant is expensive. That said, the food quality is outstanding.</p></li>
+<li><p><strong>廣東話口語</strong>: 間餐廳係貴。即使係咁，食物質素係真係出色（不過都係值得嘅）。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>that said, ...</code>：話雖如此，……</p>
+<hr>
+</section>
+<section id="rush-in" class="level3">
+<h3 class="anchored" data-anchor-id="rush-in">7. rush in</h3>
+<ul>
+<li><strong>詞性</strong>：片語動詞 (Phrasal Verb)</li>
+<li><strong>讀音</strong>：/rʌʃ ɪn/</li>
+<li><strong>廣東話解法</strong>：指「貿貿然衝入去」、「唔諗清楚就急急腳去做某件事」，通常暗示魯莽或缺乏考慮。廣東話常用的說法係「冒失咁去做」或「急急腳衝入去」。常見搭配 “fools rush in”（愚者貿然行事）。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: Don’t rush in without thinking it through first.</p></li>
+<li><p><strong>廣東話口語</strong>: 唔好唔諗清楚就貿貿然衝入去（冒失行事）。</p></li>
+<li><p><strong>English</strong>: Fools rush in where angels fear to tread.</p></li>
+<li><p><strong>廣東話口語</strong>: 愚者貿然行事，智者反而卻步。（人細鬼大、初生之犢不怕虎——貶義版本）</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>rush in without thinking</code>：唔諗清楚就貿然行事 * <code>fools rush in</code>：愚者貿然衝入</p>
+<hr>
+</section>
+<section id="feat" class="level3">
+<h3 class="anchored" data-anchor-id="feat">8. feat</h3>
+<ul>
+<li><strong>詞性</strong>：名詞 (Noun)</li>
+<li><strong>讀音</strong>：/fiːt/</li>
+<li><strong>廣東話解法</strong>：指一件需要極大技能、勇氣或者努力才能完成嘅事，通常係令人印象深刻嘅成就或者壯舉。廣東話通常會講「壯舉」、「了不起嘅成就」或者「難度極高嘅事」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: Climbing Everest alone was an incredible feat of endurance.</p></li>
+<li><p><strong>廣東話口語</strong>: 獨自攀登珠峰係一項令人難以置信嘅耐力壯舉。</p></li>
+<li><p><strong>English</strong>: That’s no mean feat — finishing the marathon in under three hours.</p></li>
+<li><p><strong>廣東話口語</strong>: 喺三小時內完成馬拉松，呢個絕對係了不起嘅成就（唔係易事）。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>an impressive / extraordinary feat</code>：令人印象深刻的 / 非凡的壯舉 * <code>no mean feat</code>：絕非易事 / 了不起的成就 * <code>a feat of engineering / endurance</code>：工程 / 耐力上的壯舉</p>
+<hr>
+</section>
+<section id="aggravations-aggravation-嘅眾數" class="level3">
+<h3 class="anchored" data-anchor-id="aggravations-aggravation-嘅眾數">9. aggravations (aggravation 嘅眾數)</h3>
+<ul>
+<li><strong>詞性</strong>：名詞 (Noun)</li>
+<li><strong>讀音</strong>：/ˌæɡ.rəˈveɪ.ʃənz/</li>
+<li><strong>廣東話解法</strong>：指令人感到煩惱、激怒或者加劇問題嘅事情。廣東話通常會講「煩人嘅事」、「搞到更加差嘅事」或者「令人火大」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: I can do without all these daily aggravations.</p></li>
+<li><p><strong>廣東話口語</strong>: 我真係唔想成日面對呢啲煩人嘢（搞到我煩死）。</p></li>
+<li><p><strong>English</strong>: The situation caused further aggravation of existing tensions.</p></li>
+<li><p><strong>廣東話口語</strong>: 呢個情況令到現有嘅緊張局勢進一步激化。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>minor aggravations</code>：細微的煩惱 * <code>aggravation of a problem</code>：問題的惡化 / 加劇</p>
+<hr>
+</section>
+<section id="hallmark" class="level3">
+<h3 class="anchored" data-anchor-id="hallmark">10. hallmark</h3>
+<ul>
+<li><strong>詞性</strong>：名詞 (Noun)</li>
+<li><strong>讀音</strong>：/ˈhɔːl.mɑːk/</li>
+<li><strong>廣東話解法</strong>：字面意思係金銀器具上嘅「鑒定印記」，但比喻意思係指某件事或某人嘅「標誌性特徵」或者「典型特色」。廣東話通常會講「標誌」、「特徵」或者「招牌特色」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: Attention to detail is the hallmark of a true professional.</p></li>
+<li><p><strong>廣東話口語</strong>: 注重細節係真正專業人士嘅標誌（招牌特色）。</p></li>
+<li><p><strong>English</strong>: Creativity is the hallmark of his work.</p></li>
+<li><p><strong>廣東話口語</strong>: 創意係佢作品嘅典型特色（標誌性嘅嘢）。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>the hallmark of greatness / excellence</code>：卓越嘅標誌 * <code>bear the hallmark of</code>：帶有…嘅標誌性特色</p>
+<hr>
+</section>
+<section id="tangible" class="level3">
+<h3 class="anchored" data-anchor-id="tangible">11. tangible</h3>
+<ul>
+<li><strong>詞性</strong>：形容詞 (Adjective)</li>
+<li><strong>讀音</strong>：/ˈtæn.dʒɪ.bəl/</li>
+<li><strong>廣東話解法</strong>：指「實實在在存在」、「看得見摸得到」或者「有具體證據」嘅。廣東話通常會講「切實嘅」、「實在嘅」或者「有根有據嘅」。相反詞係 <em>intangible</em>（無形的）。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: The training produced tangible results within weeks.</p></li>
+<li><p><strong>廣東話口語</strong>: 呢個訓練喺幾個星期之內已經帶嚟實質嘅成果（看得見嘅改變）。</p></li>
+<li><p><strong>English</strong>: We need tangible evidence before we can act.</p></li>
+<li><p><strong>廣東話口語</strong>: 我哋需要有具體嘅證據先可以採取行動。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>tangible results / benefits</code>：實質的成果 / 好處 * <code>tangible evidence / proof</code>：具體的證據 / 証明 * <code>tangible assets</code>：有形資產</p>
+<hr>
+</section>
+<section id="plateau" class="level3">
+<h3 class="anchored" data-anchor-id="plateau">12. plateau</h3>
+<ul>
+<li><strong>詞性</strong>：名詞 (Noun) / 動詞 (Verb)</li>
+<li><strong>讀音</strong>：/ˈplæt.əʊ/</li>
+<li><strong>廣東話解法</strong>：
+<ul>
+<li>做<strong>名詞</strong>時，字面意思係「高原」，但常見嘅比喻意思係指進步停滯不前嘅「樽頸位」或者「停滯期」。</li>
+<li>做<strong>動詞</strong>時，指「進步停滯咗」、「到咗樽頸」。</li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: After months of rapid improvement, his performance reached a plateau.</p></li>
+<li><p><strong>廣東話口語</strong>: 喺幾個月嘅快速進步之後，佢嘅表現到咗樽頸位（停滯不前）。</p></li>
+<li><p><strong>English</strong>: Sales have plateaued after the initial surge.</p></li>
+<li><p><strong>廣東話口語</strong>: 喺最初嘅急增之後，銷售額已經停滯咗（唔再增長）。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>hit / reach a plateau</code>：到達停滯期 / 樽頸位 * <code>performance plateau</code>：表現停滯期</p>
+<hr>
+</section>
+<section id="latent" class="level3">
+<h3 class="anchored" data-anchor-id="latent">13. latent</h3>
+<ul>
+<li><strong>詞性</strong>：形容詞 (Adjective)</li>
+<li><strong>讀音</strong>：/ˈleɪ.tənt/</li>
+<li><strong>廣東話解法</strong>：指某種能力、特質或者病症「已經存在但暫時未顯現出嚟」。廣東話通常會講「潛在嘅」、「隱而未發嘅」或者「蟄伏緊嘅」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: He has latent talent that has never been fully developed.</p></li>
+<li><p><strong>廣東話口語</strong>: 佢有潛在嘅天份，但從來都無完全發揮出嚟（蟄伏緊嘅潛能）。</p></li>
+<li><p><strong>English</strong>: The virus can remain latent in the body for years.</p></li>
+<li><p><strong>廣東話口語</strong>: 呢種病毒可以喺體內潛伏幾年都唔發作。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>latent potential / talent</code>：潛在的潛力 / 天份 * <code>latent infection / virus</code>：潛伏性感染 / 病毒 * <code>remain latent</code>：繼續潛伏</p>
+<hr>
+</section>
+<section id="perhaps-a-hundred-times-without-as-much-as-a-crack-showing-in-it.-句式分析" class="level3">
+<h3 class="anchored" data-anchor-id="perhaps-a-hundred-times-without-as-much-as-a-crack-showing-in-it.-句式分析">14. …perhaps a hundred times without as much as a crack showing in it. （句式分析）</h3>
+<ul>
+<li><strong>句式</strong>：without as much as + [名詞]</li>
+<li><strong>廣東話解法</strong>：呢個句式用嚟強調「連一丁點（某個程度）都冇」。<code>without as much as a crack</code>就係「連一條裂縫都無出現過」，暗示某樣嘢承受咗極大考驗卻紋風不動。廣東話會講「連…都冇」、「絲毫唔…」。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="句式例子與分析">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>句式例子與分析
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>原句</strong>: …perhaps a hundred times without as much as a crack showing in it.</li>
+<li><strong>廣東話解讀</strong>: 可能打咗成百次，連一條裂縫都無出現過（紋風不動）。</li>
+</ul>
+<p><strong>句式模板</strong>：<code>without as much as + 名詞/動名詞</code> * <strong>English</strong>: He left without as much as a goodbye. * <strong>廣東話口語</strong>: 佢走咗，連聲再見都無講（一句道別都無）。</p>
+<ul>
+<li><strong>English</strong>: She donated her savings without as much as a second thought.</li>
+<li><strong>廣東話口語</strong>: 佢連考慮都唔使考慮就捐晒佢嘅積蓄（毫不猶豫）。</li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配</strong>： * <code>without as much as a word / glance / sound</code>：連一句話 / 一個眼神 / 一點聲音都冇</p>
+<hr>
+</section>
+<section id="entrench" class="level3">
+<h3 class="anchored" data-anchor-id="entrench">15. entrench</h3>
+<ul>
+<li><strong>詞性</strong>：動詞 (Verb)</li>
+<li><strong>讀音</strong>：/ɪnˈtrentʃ/</li>
+<li><strong>廣東話解法</strong>：指將某種習慣、信念、制度或者地位「牢固地建立起嚟」，難以改變或動搖。廣東話通常會講「根深蒂固」、「鞏固（某種習慣/地位）」或者「深深確立」。通常以被動語態 <code>be entrenched</code> 出現。</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>地道廣東話例句
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>English</strong>: These habits become entrenched over time.</p></li>
+<li><p><strong>廣東話口語</strong>: 呢啲習慣隨住時間會越嚟越根深蒂固（難以改變）。</p></li>
+<li><p><strong>English</strong>: The practice has become deeply entrenched in the company culture.</p></li>
+<li><p><strong>廣東話口語</strong>: 呢種做法已經深深地植入公司文化入面（改唔走嘅）。</p></li>
+</ul>
+</div>
+</div>
+<p><strong>常見搭配 (Collocations)</strong>： * <code>become entrenched</code>：根深蒂固 / 牢固確立 * <code>deeply entrenched beliefs / habits</code>：根深蒂固嘅信念 / 習慣 * <code>entrench one's position</code>：鞏固自己嘅地位</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>English</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/english/english_6/</guid>
+  <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>English Word Dictionary Day 7</title>
@@ -2221,584 +2985,6 @@ Note
  ]]></description>
   <category>English</category>
   <guid>https://jerryleung16.github.io/my-math-notes/posts/english/english_7/</guid>
-  <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>English Word Dictionary Day 6</title>
-  <link>https://jerryleung16.github.io/my-math-notes/posts/english/english_6/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>💡 <strong>使用說明</strong>：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。</p>
-</div>
-</div>
-<section id="生字快速索引" class="level2">
-<h2 class="anchored" data-anchor-id="生字快速索引">🔍 生字快速索引</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 19%">
-<col style="width: 19%">
-<col style="width: 19%">
-<col style="width: 19%">
-<col style="width: 23%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">英文生字</th>
-<th style="text-align: left;">音標 (IPA)</th>
-<th style="text-align: left;">詞性</th>
-<th style="text-align: left;">廣東話地道意思</th>
-<th style="text-align: center;">難度/常用度</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><strong>mediocrity</strong></td>
-<td style="text-align: left;">/ˌmiː.diˈɒk.rə.ti/</td>
-<td style="text-align: left;"><em>n.</em></td>
-<td style="text-align: left;">平庸、普通、資質一般</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>fared</strong></td>
-<td style="text-align: left;">/feəd/</td>
-<td style="text-align: left;"><em>v.</em></td>
-<td style="text-align: left;">過得點、表現得點、情況如何</td>
-<td style="text-align: center;">⭐⭐⭐</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>relentless</strong></td>
-<td style="text-align: left;">/rɪˈlent.ləs/</td>
-<td style="text-align: left;"><em>adj.</em></td>
-<td style="text-align: left;">不屈不撓、鍥而不捨、毫不放鬆</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>aggregation of marginal gains</strong></td>
-<td style="text-align: left;">/ˌæɡ.rɪˈɡeɪ.ʃən əv ˈmɑː.dʒɪ.nəl ɡeɪnz/</td>
-<td style="text-align: left;"><em>phr.</em></td>
-<td style="text-align: left;">邊際增益的積累、微小進步加起來的力量</td>
-<td style="text-align: center;">⭐⭐⭐⭐⭐</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>astounding</strong></td>
-<td style="text-align: left;">/əˈstaʊn.dɪŋ/</td>
-<td style="text-align: left;"><em>adj.</em></td>
-<td style="text-align: left;">令人驚嘆的、匪夷所思的、誇張到難以置信</td>
-<td style="text-align: center;">⭐⭐⭐</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>that said</strong></td>
-<td style="text-align: left;">/ðæt sed/</td>
-<td style="text-align: left;"><em>phr.</em></td>
-<td style="text-align: left;">話雖如此、不過、即使這樣講</td>
-<td style="text-align: center;">⭐⭐⭐</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>rush in</strong></td>
-<td style="text-align: left;">/rʌʃ ɪn/</td>
-<td style="text-align: left;"><em>phr. v.</em></td>
-<td style="text-align: left;">貿然行事、衝入去、急急腳做</td>
-<td style="text-align: center;">⭐⭐⭐</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>feat</strong></td>
-<td style="text-align: left;">/fiːt/</td>
-<td style="text-align: left;"><em>n.</em></td>
-<td style="text-align: left;">壯舉、了不起的成就、難度極高的事</td>
-<td style="text-align: center;">⭐⭐⭐</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>aggravations</strong></td>
-<td style="text-align: left;">/ˌæɡ.rəˈveɪ.ʃənz/</td>
-<td style="text-align: left;"><em>n.</em></td>
-<td style="text-align: left;">煩惱、令人火大的事、激化</td>
-<td style="text-align: center;">⭐⭐⭐</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>hallmark</strong></td>
-<td style="text-align: left;">/ˈhɔːl.mɑːk/</td>
-<td style="text-align: left;"><em>n.</em></td>
-<td style="text-align: left;">標誌、特徵、典型特色</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>tangible</strong></td>
-<td style="text-align: left;">/ˈtæn.dʒɪ.bəl/</td>
-<td style="text-align: left;"><em>adj.</em></td>
-<td style="text-align: left;">實在的、看得見摸得到的、切實的</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>plateau</strong></td>
-<td style="text-align: left;">/ˈplæt.əʊ/</td>
-<td style="text-align: left;"><em>n.&nbsp;/ v.</em></td>
-<td style="text-align: left;">高原 / 停滯期、樽頸位、停止進步</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>latent</strong></td>
-<td style="text-align: left;">/ˈleɪ.tənt/</td>
-<td style="text-align: left;"><em>adj.</em></td>
-<td style="text-align: left;">潛在的、隱而未發的、蟄伏中的</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>entrench</strong></td>
-<td style="text-align: left;">/ɪnˈtrentʃ/</td>
-<td style="text-align: left;"><em>v.</em></td>
-<td style="text-align: left;">根深蒂固、鞏固（習慣/地位）、深深確立</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
-<section id="生字詳細解析" class="level2">
-<h2 class="anchored" data-anchor-id="生字詳細解析">📚 生字詳細解析</h2>
-<section id="mediocrity" class="level3">
-<h3 class="anchored" data-anchor-id="mediocrity">1. mediocrity</h3>
-<ul>
-<li><strong>詞性</strong>：名詞 (Noun)</li>
-<li><strong>讀音</strong>：/ˌmiː.diˈɒk.rə.ti/</li>
-<li><strong>廣東話解法</strong>：指一種「唔好唔壞」、「普普通通」嘅狀態或者質素——唔係差，但係絕對唔出眾。廣東話通常會講「平庸」、「資質一般」或者「唔湯唔水」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: He refused to accept a life of mediocrity.</p></li>
-<li><p><strong>廣東話口語</strong>: 佢唔願意接受一個平庸嘅人生（唔湯唔水嘅生活）。</p></li>
-<li><p><strong>English</strong>: The film was dismissed by critics as sheer mediocrity.</p></li>
-<li><p><strong>廣東話口語</strong>: 呢套戲俾影評人批評係徹頭徹尾嘅平庸之作（毫無驚喜）。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>slide into mediocrity</code>：滑落至平庸 * <code>settle for mediocrity</code>：甘於平庸 * <code>escape / rise above mediocrity</code>：擺脫平庸</p>
-<hr>
-</section>
-<section id="fared-fare-嘅過去式" class="level3">
-<h3 class="anchored" data-anchor-id="fared-fare-嘅過去式">2. fared (fare 嘅過去式)</h3>
-<ul>
-<li><strong>詞性</strong>：動詞 (Verb)</li>
-<li><strong>讀音</strong>：/feəd/</li>
-<li><strong>廣東話解法</strong>：指在某個情況或者考驗之下，某人「過得點」或者「表現得點」。廣東話通常會問「點㗎？」或者講「表現係好定係差」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: How did you fare in the exam?</p></li>
-<li><p><strong>廣東話口語</strong>: 你個考試考得點？（表現點？）</p></li>
-<li><p><strong>English</strong>: The team fared badly in the first half of the season.</p></li>
-<li><p><strong>廣東話口語</strong>: 個隊伍喺上半季表現好差（唔掂）。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>fare well / badly</code>：表現好 / 差 * <code>fare better / worse than</code>：表現比…好 / 差</p>
-<hr>
-</section>
-<section id="relentless" class="level3">
-<h3 class="anchored" data-anchor-id="relentless">3. relentless</h3>
-<ul>
-<li><strong>詞性</strong>：形容詞 (Adjective)</li>
-<li><strong>讀音</strong>：/rɪˈlent.ləs/</li>
-<li><strong>廣東話解法</strong>：形容一種「毫不停歇」、「永不放棄」、「不斷施壓」嘅狀態。廣東話通常會講「鍥而不捨」、「無情地持續」或者「唔肯收手」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: His relentless practice eventually paid off.</p></li>
-<li><p><strong>廣東話口語</strong>: 佢鍥而不捨咁練習，最終都有收穫（功夫不負有心人）。</p></li>
-<li><p><strong>English</strong>: The team faced relentless pressure from their opponents.</p></li>
-<li><p><strong>廣東話口語</strong>: 個隊伍面對對手無情嘅持續施壓。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>relentless pursuit</code>：鍥而不捨地追求 * <code>relentless pressure</code>：持續不斷的壓力 * <code>relentless effort</code>：不懈的努力</p>
-<hr>
-</section>
-<section id="aggregation-of-marginal-gains" class="level3">
-<h3 class="anchored" data-anchor-id="aggregation-of-marginal-gains">4. aggregation of marginal gains</h3>
-<ul>
-<li><strong>詞性</strong>：名詞片語 (Noun Phrase)</li>
-<li><strong>讀音</strong>：/ˌæɡ.rɪˈɡeɪ.ʃən əv ˈmɑː.dʒɪ.nəl ɡeɪnz/</li>
-<li><strong>廣東話解法</strong>：由英國單車教練 Dave Brailsford 提出嘅概念。意思係喺每一個細節上都做到微小嘅改進（例如每次進步 1%），將呢啲細小進步加埋一齊，長遠就會帶嚟驚人嘅整體突破。廣東話會講「邊際增益積累」或者「積少成多嘅進步哲學」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><strong>English</strong>: The team’s success was built on the aggregation of marginal gains — improving every single process by just one percent.</li>
-<li><strong>廣東話口語</strong>: 個隊嘅成功係建基於邊際增益積累嘅理念——喺每個細節上都做到微小嘅改進（積少成多）。</li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>the philosophy of marginal gains</code>：邊際增益哲學 * <code>aggregate small improvements</code>：積累細小的改進</p>
-<hr>
-</section>
-<section id="astounding" class="level3">
-<h3 class="anchored" data-anchor-id="astounding">5. astounding</h3>
-<ul>
-<li><strong>詞性</strong>：形容詞 (Adjective)</li>
-<li><strong>讀音</strong>：/əˈstaʊn.dɪŋ/</li>
-<li><strong>廣東話解法</strong>：指某事令人震驚或者驚嘆得嘴都合唔埋。廣東話通常會講「誇張到難以置信」、「令人嘩嘩聲」或者「匪夷所思」。語氣比 “surprising” 強烈得多。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: The results were absolutely astounding.</p></li>
-<li><p><strong>廣東話口語</strong>: 個結果誇張到難以置信（令人嘩嘩聲）。</p></li>
-<li><p><strong>English</strong>: She performed an astounding number of push-ups in one minute.</p></li>
-<li><p><strong>廣東話口語</strong>: 佢一分鐘內做咗多到令人咋舌嘅掌上壓。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>astounding achievement / feat</code>：令人驚嘆的成就 / 壯舉 * <code>astounding speed</code>：驚人的速度</p>
-<hr>
-</section>
-<section id="that-said" class="level3">
-<h3 class="anchored" data-anchor-id="that-said">6. that said</h3>
-<ul>
-<li><strong>詞性</strong>：片語 / 連接詞 (Phrase / Discourse Marker)</li>
-<li><strong>讀音</strong>：/ðæt sed/</li>
-<li><strong>廣東話解法</strong>：用嚟帶出一個對比或轉折嘅意見，相當於「話雖如此」、「不過」或者「即使係咁」。係一個好常見嘅書面同口語轉折表達方式。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: The training is tough. That said, the results speak for themselves.</p></li>
-<li><p><strong>廣東話口語</strong>: 訓練係好辛苦，話雖如此，成績擺喺度（不過結果係講晒嘢）。</p></li>
-<li><p><strong>English</strong>: The restaurant is expensive. That said, the food quality is outstanding.</p></li>
-<li><p><strong>廣東話口語</strong>: 間餐廳係貴。即使係咁，食物質素係真係出色（不過都係值得嘅）。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>that said, ...</code>：話雖如此，……</p>
-<hr>
-</section>
-<section id="rush-in" class="level3">
-<h3 class="anchored" data-anchor-id="rush-in">7. rush in</h3>
-<ul>
-<li><strong>詞性</strong>：片語動詞 (Phrasal Verb)</li>
-<li><strong>讀音</strong>：/rʌʃ ɪn/</li>
-<li><strong>廣東話解法</strong>：指「貿貿然衝入去」、「唔諗清楚就急急腳去做某件事」，通常暗示魯莽或缺乏考慮。廣東話常用的說法係「冒失咁去做」或「急急腳衝入去」。常見搭配 “fools rush in”（愚者貿然行事）。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: Don’t rush in without thinking it through first.</p></li>
-<li><p><strong>廣東話口語</strong>: 唔好唔諗清楚就貿貿然衝入去（冒失行事）。</p></li>
-<li><p><strong>English</strong>: Fools rush in where angels fear to tread.</p></li>
-<li><p><strong>廣東話口語</strong>: 愚者貿然行事，智者反而卻步。（人細鬼大、初生之犢不怕虎——貶義版本）</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>rush in without thinking</code>：唔諗清楚就貿然行事 * <code>fools rush in</code>：愚者貿然衝入</p>
-<hr>
-</section>
-<section id="feat" class="level3">
-<h3 class="anchored" data-anchor-id="feat">8. feat</h3>
-<ul>
-<li><strong>詞性</strong>：名詞 (Noun)</li>
-<li><strong>讀音</strong>：/fiːt/</li>
-<li><strong>廣東話解法</strong>：指一件需要極大技能、勇氣或者努力才能完成嘅事，通常係令人印象深刻嘅成就或者壯舉。廣東話通常會講「壯舉」、「了不起嘅成就」或者「難度極高嘅事」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: Climbing Everest alone was an incredible feat of endurance.</p></li>
-<li><p><strong>廣東話口語</strong>: 獨自攀登珠峰係一項令人難以置信嘅耐力壯舉。</p></li>
-<li><p><strong>English</strong>: That’s no mean feat — finishing the marathon in under three hours.</p></li>
-<li><p><strong>廣東話口語</strong>: 喺三小時內完成馬拉松，呢個絕對係了不起嘅成就（唔係易事）。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>an impressive / extraordinary feat</code>：令人印象深刻的 / 非凡的壯舉 * <code>no mean feat</code>：絕非易事 / 了不起的成就 * <code>a feat of engineering / endurance</code>：工程 / 耐力上的壯舉</p>
-<hr>
-</section>
-<section id="aggravations-aggravation-嘅眾數" class="level3">
-<h3 class="anchored" data-anchor-id="aggravations-aggravation-嘅眾數">9. aggravations (aggravation 嘅眾數)</h3>
-<ul>
-<li><strong>詞性</strong>：名詞 (Noun)</li>
-<li><strong>讀音</strong>：/ˌæɡ.rəˈveɪ.ʃənz/</li>
-<li><strong>廣東話解法</strong>：指令人感到煩惱、激怒或者加劇問題嘅事情。廣東話通常會講「煩人嘅事」、「搞到更加差嘅事」或者「令人火大」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: I can do without all these daily aggravations.</p></li>
-<li><p><strong>廣東話口語</strong>: 我真係唔想成日面對呢啲煩人嘢（搞到我煩死）。</p></li>
-<li><p><strong>English</strong>: The situation caused further aggravation of existing tensions.</p></li>
-<li><p><strong>廣東話口語</strong>: 呢個情況令到現有嘅緊張局勢進一步激化。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>minor aggravations</code>：細微的煩惱 * <code>aggravation of a problem</code>：問題的惡化 / 加劇</p>
-<hr>
-</section>
-<section id="hallmark" class="level3">
-<h3 class="anchored" data-anchor-id="hallmark">10. hallmark</h3>
-<ul>
-<li><strong>詞性</strong>：名詞 (Noun)</li>
-<li><strong>讀音</strong>：/ˈhɔːl.mɑːk/</li>
-<li><strong>廣東話解法</strong>：字面意思係金銀器具上嘅「鑒定印記」，但比喻意思係指某件事或某人嘅「標誌性特徵」或者「典型特色」。廣東話通常會講「標誌」、「特徵」或者「招牌特色」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: Attention to detail is the hallmark of a true professional.</p></li>
-<li><p><strong>廣東話口語</strong>: 注重細節係真正專業人士嘅標誌（招牌特色）。</p></li>
-<li><p><strong>English</strong>: Creativity is the hallmark of his work.</p></li>
-<li><p><strong>廣東話口語</strong>: 創意係佢作品嘅典型特色（標誌性嘅嘢）。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>the hallmark of greatness / excellence</code>：卓越嘅標誌 * <code>bear the hallmark of</code>：帶有…嘅標誌性特色</p>
-<hr>
-</section>
-<section id="tangible" class="level3">
-<h3 class="anchored" data-anchor-id="tangible">11. tangible</h3>
-<ul>
-<li><strong>詞性</strong>：形容詞 (Adjective)</li>
-<li><strong>讀音</strong>：/ˈtæn.dʒɪ.bəl/</li>
-<li><strong>廣東話解法</strong>：指「實實在在存在」、「看得見摸得到」或者「有具體證據」嘅。廣東話通常會講「切實嘅」、「實在嘅」或者「有根有據嘅」。相反詞係 <em>intangible</em>（無形的）。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: The training produced tangible results within weeks.</p></li>
-<li><p><strong>廣東話口語</strong>: 呢個訓練喺幾個星期之內已經帶嚟實質嘅成果（看得見嘅改變）。</p></li>
-<li><p><strong>English</strong>: We need tangible evidence before we can act.</p></li>
-<li><p><strong>廣東話口語</strong>: 我哋需要有具體嘅證據先可以採取行動。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>tangible results / benefits</code>：實質的成果 / 好處 * <code>tangible evidence / proof</code>：具體的證據 / 証明 * <code>tangible assets</code>：有形資產</p>
-<hr>
-</section>
-<section id="plateau" class="level3">
-<h3 class="anchored" data-anchor-id="plateau">12. plateau</h3>
-<ul>
-<li><strong>詞性</strong>：名詞 (Noun) / 動詞 (Verb)</li>
-<li><strong>讀音</strong>：/ˈplæt.əʊ/</li>
-<li><strong>廣東話解法</strong>：
-<ul>
-<li>做<strong>名詞</strong>時，字面意思係「高原」，但常見嘅比喻意思係指進步停滯不前嘅「樽頸位」或者「停滯期」。</li>
-<li>做<strong>動詞</strong>時，指「進步停滯咗」、「到咗樽頸」。</li>
-</ul></li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: After months of rapid improvement, his performance reached a plateau.</p></li>
-<li><p><strong>廣東話口語</strong>: 喺幾個月嘅快速進步之後，佢嘅表現到咗樽頸位（停滯不前）。</p></li>
-<li><p><strong>English</strong>: Sales have plateaued after the initial surge.</p></li>
-<li><p><strong>廣東話口語</strong>: 喺最初嘅急增之後，銷售額已經停滯咗（唔再增長）。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>hit / reach a plateau</code>：到達停滯期 / 樽頸位 * <code>performance plateau</code>：表現停滯期</p>
-<hr>
-</section>
-<section id="latent" class="level3">
-<h3 class="anchored" data-anchor-id="latent">13. latent</h3>
-<ul>
-<li><strong>詞性</strong>：形容詞 (Adjective)</li>
-<li><strong>讀音</strong>：/ˈleɪ.tənt/</li>
-<li><strong>廣東話解法</strong>：指某種能力、特質或者病症「已經存在但暫時未顯現出嚟」。廣東話通常會講「潛在嘅」、「隱而未發嘅」或者「蟄伏緊嘅」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: He has latent talent that has never been fully developed.</p></li>
-<li><p><strong>廣東話口語</strong>: 佢有潛在嘅天份，但從來都無完全發揮出嚟（蟄伏緊嘅潛能）。</p></li>
-<li><p><strong>English</strong>: The virus can remain latent in the body for years.</p></li>
-<li><p><strong>廣東話口語</strong>: 呢種病毒可以喺體內潛伏幾年都唔發作。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>latent potential / talent</code>：潛在的潛力 / 天份 * <code>latent infection / virus</code>：潛伏性感染 / 病毒 * <code>remain latent</code>：繼續潛伏</p>
-<hr>
-</section>
-<section id="perhaps-a-hundred-times-without-as-much-as-a-crack-showing-in-it.-句式分析" class="level3">
-<h3 class="anchored" data-anchor-id="perhaps-a-hundred-times-without-as-much-as-a-crack-showing-in-it.-句式分析">14. …perhaps a hundred times without as much as a crack showing in it. （句式分析）</h3>
-<ul>
-<li><strong>句式</strong>：without as much as + [名詞]</li>
-<li><strong>廣東話解法</strong>：呢個句式用嚟強調「連一丁點（某個程度）都冇」。<code>without as much as a crack</code>就係「連一條裂縫都無出現過」，暗示某樣嘢承受咗極大考驗卻紋風不動。廣東話會講「連…都冇」、「絲毫唔…」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="句式例子與分析">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>句式例子與分析
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><strong>原句</strong>: …perhaps a hundred times without as much as a crack showing in it.</li>
-<li><strong>廣東話解讀</strong>: 可能打咗成百次，連一條裂縫都無出現過（紋風不動）。</li>
-</ul>
-<p><strong>句式模板</strong>：<code>without as much as + 名詞/動名詞</code> * <strong>English</strong>: He left without as much as a goodbye. * <strong>廣東話口語</strong>: 佢走咗，連聲再見都無講（一句道別都無）。</p>
-<ul>
-<li><strong>English</strong>: She donated her savings without as much as a second thought.</li>
-<li><strong>廣東話口語</strong>: 佢連考慮都唔使考慮就捐晒佢嘅積蓄（毫不猶豫）。</li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配</strong>： * <code>without as much as a word / glance / sound</code>：連一句話 / 一個眼神 / 一點聲音都冇</p>
-<hr>
-</section>
-<section id="entrench" class="level3">
-<h3 class="anchored" data-anchor-id="entrench">15. entrench</h3>
-<ul>
-<li><strong>詞性</strong>：動詞 (Verb)</li>
-<li><strong>讀音</strong>：/ɪnˈtrentʃ/</li>
-<li><strong>廣東話解法</strong>：指將某種習慣、信念、制度或者地位「牢固地建立起嚟」，難以改變或動搖。廣東話通常會講「根深蒂固」、「鞏固（某種習慣/地位）」或者「深深確立」。通常以被動語態 <code>be entrenched</code> 出現。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: These habits become entrenched over time.</p></li>
-<li><p><strong>廣東話口語</strong>: 呢啲習慣隨住時間會越嚟越根深蒂固（難以改變）。</p></li>
-<li><p><strong>English</strong>: The practice has become deeply entrenched in the company culture.</p></li>
-<li><p><strong>廣東話口語</strong>: 呢種做法已經深深地植入公司文化入面（改唔走嘅）。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>become entrenched</code>：根深蒂固 / 牢固確立 * <code>deeply entrenched beliefs / habits</code>：根深蒂固嘅信念 / 習慣 * <code>entrench one's position</code>：鞏固自己嘅地位</p>
-
-
-</section>
-</section>
-
- ]]></description>
-  <category>English</category>
-  <guid>https://jerryleung16.github.io/my-math-notes/posts/english/english_6/</guid>
   <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
 </item>
 <item>

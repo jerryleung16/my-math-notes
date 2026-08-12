@@ -81,7 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-6ac2aec46ad7f46b16024ee4409aa65c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-e3adbaa939bcd423dddc8c8a834270b4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -202,7 +202,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#benefits" id="toc-benefits" class="nav-link" data-scroll-target="#benefits">Benefits</a></li>
   <li><a href="#flaws" id="toc-flaws" class="nav-link" data-scroll-target="#flaws">Flaws</a></li>
   </ul></li>
-  <li><a href="#example-linear-classifier" id="toc-example-linear-classifier" class="nav-link" data-scroll-target="#example-linear-classifier">9. Example: Linear Classifier</a></li>
+  <li><a href="#example-linear-classifier" id="toc-example-linear-classifier" class="nav-link" data-scroll-target="#example-linear-classifier">9. Example: Linear Classifier</a>
+  <ul class="collapse">
+  <li><a href="#step-1-create-the-data" id="toc-step-1-create-the-data" class="nav-link" data-scroll-target="#step-1-create-the-data">Step 1: Create the data</a></li>
+  <li><a href="#step-2-stack-the-samples-into-a-single-input-tensor" id="toc-step-2-stack-the-samples-into-a-single-input-tensor" class="nav-link" data-scroll-target="#step-2-stack-the-samples-into-a-single-input-tensor">Step 2: Stack the samples into a single input tensor</a></li>
+  <li><a href="#step-3-create-the-labels" id="toc-step-3-create-the-labels" class="nav-link" data-scroll-target="#step-3-create-the-labels">Step 3: Create the labels</a></li>
+  <li><a href="#step-4-plot-the-raw-data" id="toc-step-4-plot-the-raw-data" class="nav-link" data-scroll-target="#step-4-plot-the-raw-data">Step 4: Plot the raw data</a></li>
+  <li><a href="#step-5-initialize-w-and-b" id="toc-step-5-initialize-w-and-b" class="nav-link" data-scroll-target="#step-5-initialize-w-and-b">Step 5: Initialize <code>W</code> and <code>b</code></a></li>
+  <li><a href="#step-6-define-the-model-and-loss-function" id="toc-step-6-define-the-model-and-loss-function" class="nav-link" data-scroll-target="#step-6-define-the-model-and-loss-function">Step 6: Define the model and loss function</a></li>
+  <li><a href="#step-7-define-one-training-step" id="toc-step-7-define-one-training-step" class="nav-link" data-scroll-target="#step-7-define-one-training-step">Step 7: Define one training step</a></li>
+  <li><a href="#step-8-train-the-classifier" id="toc-step-8-train-the-classifier" class="nav-link" data-scroll-target="#step-8-train-the-classifier">Step 8: Train the classifier</a></li>
+  <li><a href="#step-9-plot-the-decision-boundary" id="toc-step-9-plot-the-decision-boundary" class="nav-link" data-scroll-target="#step-9-plot-the-decision-boundary">Step 9: Plot the decision boundary</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/deep learning/tensor-flow/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jerryleung16/my-math-notes/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -349,185 +360,116 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="example-linear-classifier" class="level2">
 <h2 class="anchored" data-anchor-id="example-linear-classifier">9. Example: Linear Classifier</h2>
 <p>A linear classifier is an affine transformation (<code>prediction = matmul(input, W) + b</code>) trained to minimize the square of the difference between predictions and targets.</p>
-<table>
-<thead>
-<tr>
-<th>
-Step
-</th>
-<th>
-Description
-</th>
-<th>
-Code / Notes
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-1
-</td>
-<td>
-Create the data
-</td>
-<td>
-<pre><code class="language-python">import numpy as np
-
-num_samples_per_class = 1000
-negative_samples = np.random.multivariate_normal(
-        # Generates the first class of points: 1,000 random 2D points with
-        # specified mean and covariance matrix.
-        mean=[0, 3], cov=[[1, 0.5], [0.5, 1]], size=num_samples_per_class
-)
-positive_samples = np.random.multivariate_normal(
-        # Generates the second class with a different mean and the same covariance.
-        mean=[3, 0], cov=[[1, 0.5], [0.5, 1]], size=num_samples_per_class
-)</code></pre>
-</td>
-</tr>
-<tr>
-<td>
-2
-</td>
-<td>
-Stack samples into shape (2000, 2)
-</td>
-<td>
-<pre><code class="language-python">inputs = np.vstack((negative_samples, positive_samples)).astype(np.float32)</code></pre>
-</td>
-</tr>
-<tr>
-<td>
-3
-</td>
-<td>
-Create labels (0 for first class, 1 for second class)
-</td>
-<td>
-<pre><code class="language-python">targets = np.vstack(
-        (
-                np.zeros((num_samples_per_class, 1), dtype="float32"),
-                np.ones((num_samples_per_class, 1), dtype="float32"),
-        )
-)</code></pre>
-</td>
-</tr>
-<tr>
-<td>
-4
-</td>
-<td>
-Plot using matplotlib
-</td>
-<td>
-<pre><code class="language-python">import matplotlib.pyplot as plt
-
-# c=targets[:, 0] assigns different colors
-plt.scatter(inputs[:, 0], inputs[:, 1], c=targets[:, 0])
-plt.show()</code></pre>
-</td>
-</tr>
-<tr>
-<td>
-5
-</td>
-<td>
-Initialize W and b
-</td>
-<td>
-<pre><code class="language-python">import tensorflow as tf
-
-# The inputs will be 2D points.
-input_dim = 2
-output_dim = 1
-W = tf.Variable(initial_value=tf.random.uniform(shape=(input_dim, output_dim)))
-b = tf.Variable(initial_value=tf.zeros(shape=(output_dim,)))</code></pre>
-</td>
-</tr>
-<tr>
-<td>
-6
-</td>
-<td>
-Create model and loss function
-</td>
-<td>
-<pre><code class="language-python">def model(inputs, W, b):
-        return tf.matmul(inputs, W) + b
-
-def mean_squared_error(targets, predictions):
-        # Per-sample losses have the same shape as targets and predictions.
-        per_sample_losses = tf.square(targets - predictions)
-        # Average per-sample loss scores into a scalar value.
-        return tf.reduce_mean(per_sample_losses)</code></pre>
-</td>
-</tr>
-<tr>
-<td>
-7
-</td>
-<td>
-Define one training step
-</td>
-<td>
-<pre><code class="language-python">learning_rate = 0.1
-
-# Wraps the function in tf.function to speed it up
-@tf.function(jit_compile=True)
-def training_step(inputs, targets, W, b):
-        # Forward pass inside a gradient tape scope
-        with tf.GradientTape() as tape:
-                predictions = model(inputs, W, b)
-                loss = mean_squared_error(targets, predictions)
-        # Retrieves gradients of loss with regard to weights
-        grad_loss_wrt_W, grad_loss_wrt_b = tape.gradient(loss, [W, b])
-        # Updates weights
-        W.assign_sub(grad_loss_wrt_W * learning_rate)
-        b.assign_sub(grad_loss_wrt_b * learning_rate)
-        return loss</code></pre>
-</td>
-</tr>
-<tr>
-<td>
-8
-</td>
-<td>
-Loop the training step
-</td>
-<td>
-<pre><code class="language-python">for step in range(40):
-        loss = training_step(inputs, targets, W, b)
-        print(f"Loss at step {step}: {loss:.4f}")</code></pre>
-Because targets are 0 and 1, classify as “0” when prediction &lt; 0.5 and “1” when prediction &gt; 0.5.
-</td>
-</tr>
-<tr>
-<td>
-9
-</td>
-<td>
-Plot the result and decision boundary
-</td>
-<td>
-Mathematical mechanism:<br> <code>prediction = [[w1], [w2]] • [x, y] + b = w1 * x + w2 * y + b</code><br> Class “0”: <code>w1 * x + w2 * y + b &amp;lt; 0.5</code><br> Class “1”: <code>w1 * x + w2 * y + b &amp;gt; 0.5</code><br> Boundary: <code>w1 * x + w2 * y + b = 0.5</code>, equivalent to <code>y = -w1 / w2 * x + (0.5 - b) / w2</code>.
-<pre><code class="language-python"># Generates 100 regularly spaced numbers between -1 and 4
-x = np.linspace(-1, 4, 100)
-# Decision boundary line equation
-y = -W[0] / W[1] * x + (0.5 - b) / W[1]
-
-# Plot boundary as a red line
-plt.plot(x, y, "-r")
-
-# Plot model predictions
-predictions = model(inputs, W, b)
-plt.scatter(inputs[:, 0], inputs[:, 1], c=predictions[:, 0] &gt; 0.5)</code></pre>
-</td>
-</tr>
-</tbody>
-</table>
+<section id="step-1-create-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-create-the-data">Step 1: Create the data</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>num_samples_per_class <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>negative_samples <span class="op">=</span> np.random.multivariate_normal(</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generates the first class of points: 1,000 random 2D points with</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># specified mean and covariance matrix.</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    mean<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">3</span>], cov<span class="op">=</span>[[<span class="dv">1</span>, <span class="fl">0.5</span>], [<span class="fl">0.5</span>, <span class="dv">1</span>]], size<span class="op">=</span>num_samples_per_class</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>positive_samples <span class="op">=</span> np.random.multivariate_normal(</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generates the second class with a different mean and the same covariance.</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    mean<span class="op">=</span>[<span class="dv">3</span>, <span class="dv">0</span>], cov<span class="op">=</span>[[<span class="dv">1</span>, <span class="fl">0.5</span>], [<span class="fl">0.5</span>, <span class="dv">1</span>]], size<span class="op">=</span>num_samples_per_class</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="step-2-stack-the-samples-into-a-single-input-tensor" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-stack-the-samples-into-a-single-input-tensor">Step 2: Stack the samples into a single input tensor</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> np.vstack((negative_samples, positive_samples)).astype(np.float32)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This gives an input array of shape <code>(2000, 2)</code>.</p>
+</section>
+<section id="step-3-create-the-labels" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-create-the-labels">Step 3: Create the labels</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>targets <span class="op">=</span> np.vstack(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    (</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        np.zeros((num_samples_per_class, <span class="dv">1</span>), dtype<span class="op">=</span><span class="st">"float32"</span>),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        np.ones((num_samples_per_class, <span class="dv">1</span>), dtype<span class="op">=</span><span class="st">"float32"</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The first class is labeled <code>0</code>, and the second class is labeled <code>1</code>.</p>
+</section>
+<section id="step-4-plot-the-raw-data" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-plot-the-raw-data">Step 4: Plot the raw data</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># c=targets[:, 0] assigns different colors</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>plt.scatter(inputs[:, <span class="dv">0</span>], inputs[:, <span class="dv">1</span>], c<span class="op">=</span>targets[:, <span class="dv">0</span>])</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="step-5-initialize-w-and-b" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-initialize-w-and-b">Step 5: Initialize <code>W</code> and <code>b</code></h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The inputs will be 2D points.</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>input_dim <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>output_dim <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>W <span class="op">=</span> tf.Variable(initial_value<span class="op">=</span>tf.random.uniform(shape<span class="op">=</span>(input_dim, output_dim)))</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> tf.Variable(initial_value<span class="op">=</span>tf.zeros(shape<span class="op">=</span>(output_dim,)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="step-6-define-the-model-and-loss-function" class="level3">
+<h3 class="anchored" data-anchor-id="step-6-define-the-model-and-loss-function">Step 6: Define the model and loss function</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> model(inputs, W, b):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tf.matmul(inputs, W) <span class="op">+</span> b</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mean_squared_error(targets, predictions):</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Per-sample losses have the same shape as targets and predictions.</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    per_sample_losses <span class="op">=</span> tf.square(targets <span class="op">-</span> predictions)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Average per-sample loss scores into a scalar value.</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tf.reduce_mean(per_sample_losses)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="step-7-define-one-training-step" class="level3">
+<h3 class="anchored" data-anchor-id="step-7-define-one-training-step">Step 7: Define one training step</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>learning_rate <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Wraps the function in tf.function to speed it up</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="at">@tf.function</span>(jit_compile<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> training_step(inputs, targets, W, b):</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Forward pass inside a gradient tape scope</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> tf.GradientTape() <span class="im">as</span> tape:</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        predictions <span class="op">=</span> model(inputs, W, b)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">=</span> mean_squared_error(targets, predictions)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Retrieves gradients of loss with regard to weights</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    grad_loss_wrt_W, grad_loss_wrt_b <span class="op">=</span> tape.gradient(loss, [W, b])</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Updates weights</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    W.assign_sub(grad_loss_wrt_W <span class="op">*</span> learning_rate)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    b.assign_sub(grad_loss_wrt_b <span class="op">*</span> learning_rate)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> loss</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="step-8-train-the-classifier" class="level3">
+<h3 class="anchored" data-anchor-id="step-8-train-the-classifier">Step 8: Train the classifier</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">40</span>):</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> training_step(inputs, targets, W, b)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Loss at step </span><span class="sc">{</span>step<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>loss<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Because the targets are <code>0</code> and <code>1</code>, you can classify a point as class <code>0</code> when the prediction is less than <code>0.5</code>, and as class <code>1</code> when the prediction is greater than <code>0.5</code>.</p>
+</section>
+<section id="step-9-plot-the-decision-boundary" class="level3">
+<h3 class="anchored" data-anchor-id="step-9-plot-the-decision-boundary">Step 9: Plot the decision boundary</h3>
+<p>The learned prediction rule is</p>
+<p><code>prediction = [[w1], [w2]] • [x, y] + b = w1 * x + w2 * y + b</code>.</p>
+<p>That means:</p>
+<ul>
+<li>class <code>0</code> when <code>w1 * x + w2 * y + b &lt; 0.5</code></li>
+<li>class <code>1</code> when <code>w1 * x + w2 * y + b &gt; 0.5</code></li>
+<li>decision boundary when <code>w1 * x + w2 * y + b = 0.5</code></li>
+</ul>
+<p>Solving the boundary equation for <code>y</code> gives</p>
+<p><code>y = -w1 / w2 * x + (0.5 - b) / w2</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generates 100 regularly spaced numbers between -1 and 4</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">100</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Decision boundary line equation</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="op">-</span>W[<span class="dv">0</span>] <span class="op">/</span> W[<span class="dv">1</span>] <span class="op">*</span> x <span class="op">+</span> (<span class="fl">0.5</span> <span class="op">-</span> b) <span class="op">/</span> W[<span class="dv">1</span>]</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot boundary as a red line</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, <span class="st">"-r"</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot model predictions</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model(inputs, W, b)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>plt.scatter(inputs[:, <span class="dv">0</span>], inputs[:, <span class="dv">1</span>], c<span class="op">=</span>predictions[:, <span class="dv">0</span>] <span class="op">&gt;</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
