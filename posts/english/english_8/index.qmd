@@ -1,0 +1,338 @@
+---
+title: "English Word Dictionary Day 8"
+date: "2026-08-13"
+description: "A Cantonese-friendly English vocabulary list for Day 8 with IPA, meanings, and usage notes."
+categories: [English]
+---
+
+::: {.callout-note}
+💡 **使用說明**：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。
+:::
+
+## 🔍 生字快速索引
+
+| 英文生字 | 音標 (IPA) | 詞性 | 廣東話地道意思 | 難度/常用度 |
+|:---|:---|:---|:---|:---:|
+| **dart out** | /dɑːrt aʊt/ | *phr. v.* | 突然衝出去、急速離開 | ⭐⭐ |
+| **stumble across** | /ˈstʌm.bəl əˈkrɒs/ | *phr. v.* | 偶然發現、無意中遇到 | ⭐⭐⭐ |
+| **stumble upon** | /ˈstʌm.bəl əˈpɒn/ | *phr. v.* | 偶然發現、無意中碰到 | ⭐⭐⭐ |
+| **catalog** | /ˈkæt.ə.lɒɡ/ | *v.* | 將物品分類整理、編目 | ⭐⭐⭐ |
+| **precede** | /prɪˈsiːd/ | *v.* | 喺...之前、先於 | ⭐⭐⭐ |
+| **cues** | /kjuːz/ | *n.* | 提示、信號、暗示 | ⭐⭐⭐ |
+| **itch** | /ɪtʃ/ | *v. / n.* | 渴望、很想做某事 | ⭐⭐ |
+| **pawn off** | /pɔːn ɒf/ | *phr. v.* | 將不想要嘅嘢推俾別人、卸責 | ⭐⭐⭐ |
+| **pigeonhole** | /ˈpɪdʒ.ɪn.həʊl/ | *v.* | 將人/事物定型、貼標籤 | ⭐⭐⭐⭐ |
+| **vibrancy** | /ˈvaɪ.brən.si/ | *n.* | 活力、生氣勃勃 | ⭐⭐⭐ |
+| **spontaneity** | /ˌspɒn.təˈneɪ.ɪ.ti/ | *n.* | 自發性、隨興、即興 | ⭐⭐⭐⭐ |
+| **dialed** | /ˈdaɪ.əld/ | *adj.* | （習慣等）調校好、熟練到位 | ⭐⭐⭐ |
+| **cue** | /kjuː/ | *n.* | 提示、觸發信號 | ⭐⭐⭐ |
+| **motive** | /ˈməʊ.tɪv/ | *n.* | 動機、目的 | ⭐⭐⭐ |
+| **potent** | /ˈpəʊ.tənt/ | *adj.* | 強力、效力強、影響大 | ⭐⭐⭐ |
+| **expend** | /ɪkˈspend/ | *v.* | 花費、消耗（精力、資源） | ⭐⭐⭐ |
+| **contentment** | /kənˈtent.mənt/ | *n.* | 滿足感、心滿意足 | ⭐⭐⭐ |
+| **go about** | /ɡəʊ əˈbaʊt/ | *phr. v.* | 以某種方式進行、著手去做 | ⭐⭐⭐ |
+| **flipping on** | /ˈflɪp.ɪŋ ɒn/ | *phr.* | （隨手）打開（燈、開關等） | ⭐⭐ |
+| **stumbling** | /ˈstʌm.blɪŋ/ | *v.* | 絆腳、蹣跚；（比喻）跌跌撞撞 | ⭐⭐ |
+| **doomed** | /duːmd/ | *adj.* | 注定失敗、難逃厄運 | ⭐⭐⭐ |
+| **wither away** | /ˈwɪð.ər əˈweɪ/ | *phr. v.* | 逐漸凋零、慢慢消失 | ⭐⭐⭐ |
+| **paramedic** | /ˌpær.əˈmed.ɪk/ | *n.* | 緊急醫療人員、救護員 | ⭐⭐ |
+| **impending** | /ɪmˈpend.ɪŋ/ | *adj.* | 即將來臨（通常係壞事） | ⭐⭐⭐ |
+| **blip** | /blɪp/ | *n.* | 短暫小波折、小插曲 | ⭐⭐⭐ |
+| **fleet** | /fliːt/ | *n. / adj.* | 艦隊、一批；快速 | ⭐⭐⭐ |
+| **Museum curators** | /mjuːˈziː.əm kjʊˈreɪ.tərz/ | *n. phr.* | 博物館策展人、館長 | ⭐⭐⭐ |
+| **discern** | /dɪˈsɜːn/ | *v.* | 辨別、察覺、識別 | ⭐⭐⭐⭐ |
+| **tip off** | /tɪp ɒf/ | *phr. v.* | 密報、向人通風報信 | ⭐⭐⭐ |
+
+---
+
+## 📚 生字詳細解析
+
+### 1. dart out
+* **詞性**：片語動詞 (Phrasal Verb)
+* **讀音**：/dɑːrt aʊt/
+* **廣東話解法**：突然快速衝出去，形容動作急促。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: She darted out of the room before anyone noticed.
+* **廣東話口語**: 佢喺人哋發現之前突然衝出咗個房。
+:::
+
+### 2. stumble across
+* **詞性**：片語動詞 (Phrasal Verb)
+* **讀音**：/ˈstʌm.bəl əˈkrɒs/
+* **廣東話解法**：無意中、偶然發現某樣嘢，唔係特意去搵。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: I stumbled across an old photo while cleaning.
+* **廣東話口語**: 我執屋嗰陣無意中發現咗一張舊相。
+:::
+
+### 3. stumble upon
+* **詞性**：片語動詞 (Phrasal Verb)
+* **讀音**：/ˈstʌm.bəl əˈpɒn/
+* **廣東話解法**：與 stumble across 意思相近，偶然碰上或發現。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: He stumbled upon a great idea during his walk.
+* **廣東話口語**: 佢散步嗰陣突然諗到一個好主意。
+:::
+
+### 4. catalog
+* **詞性**：動詞 (Verb)
+* **讀音**：/ˈkæt.ə.lɒɡ/
+* **廣東話解法**：將物品或資訊有系統咁分類、整理、編目。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: She cataloged all her books by genre.
+* **廣東話口語**: 佢將所有書按類別整理好。
+:::
+
+### 5. precede
+* **詞性**：動詞 (Verb)
+* **讀音**：/prɪˈsiːd/
+* **廣東話解法**：喺某樣嘢之前發生或出現，先於。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: A warm-up should precede any exercise.
+* **廣東話口語**: 做運動之前應該要先熱身。
+:::
+
+### 6. cues
+* **詞性**：名詞（複數）(Noun, plural)
+* **讀音**：/kjuːz/
+* **廣東話解法**：提示或信號，可以係行為上、語言上或環境上嘅。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Social cues help us understand how others feel.
+* **廣東話口語**: 社交信號幫助我哋了解別人嘅感受。
+:::
+
+### 7. itch（渴望）
+* **詞性**：動詞 / 名詞 (Verb / Noun)
+* **讀音**：/ɪtʃ/
+* **廣東話解法**：比喻上渴望做某件事，好想去做、心癢癢。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: I have an itch to travel somewhere new.
+* **廣東話口語**: 我好想去一個新地方旅行，心思思。
+:::
+
+### 8. pawn off
+* **詞性**：片語動詞 (Phrasal Verb)
+* **讀音**：/pɔːn ɒf/
+* **廣東話解法**：將唔想要嘅事物或責任推俾別人，卸責。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: He pawned off the boring task onto his colleague.
+* **廣東話口語**: 佢將嗰個悶任務推俾同事。
+:::
+
+### 9. pigeonhole
+* **詞性**：動詞 (Verb)
+* **讀音**：/ˈpɪdʒ.ɪn.həʊl/
+* **廣東話解法**：將人或事物貼上固定標籤、定型，唔畀佢哋有其他可能性。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Don't pigeonhole people based on their background.
+* **廣東話口語**: 唔好因為背景就將人定型。
+:::
+
+### 10. vibrancy
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˈvaɪ.brən.si/
+* **廣東話解法**：充滿活力同生氣，形容地方、文化或人嘅朝氣。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The vibrancy of the city never fades.
+* **廣東話口語**: 呢個城市嘅活力從不消散。
+:::
+
+### 11. spontaneity
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˌspɒn.təˈneɪ.ɪ.ti/
+* **廣東話解法**：自發性、隨興而至，唔需要計劃就發生嘅事。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: A little spontaneity keeps life exciting.
+* **廣東話口語**: 生活裡有少少隨興先會更有趣。
+:::
+
+### 12. dialed（習慣調校好）
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/ˈdaɪ.əld/
+* **廣東話解法**：指習慣或流程已經調整到最佳狀態，做起嚟輕鬆自如。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Once your morning routine is dialed, it feels effortless.
+* **廣東話口語**: 當你嘅早晨習慣調校好，做起嚟就好自然。
+:::
+
+### 13. cue
+* **詞性**：名詞 (Noun)
+* **讀音**：/kjuː/
+* **廣東話解法**：單個提示或觸發信號，令你聯想起某個行為或反應。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: His yawn was my cue to leave the meeting.
+* **廣東話口語**: 佢打呵欠係我識趣離開個會議嘅信號。
+:::
+
+### 14. motive
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˈməʊ.tɪv/
+* **廣東話解法**：做某件事背後嘅原因或動機。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: What was his motive for changing jobs?
+* **廣東話口語**: 佢轉工嘅動機係乜嘢？
+:::
+
+### 15. potent
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/ˈpəʊ.tənt/
+* **廣東話解法**：效力強、影響力大，可以形容藥物、論點或人。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: This is a potent argument against the plan.
+* **廣東話口語**: 呢個係反對個計劃嘅有力論點。
+:::
+
+### 16. expend
+* **詞性**：動詞 (Verb)
+* **讀音**：/ɪkˈspend/
+* **廣東話解法**：消耗或花費資源、精力、時間等。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Don't expend all your energy on minor tasks.
+* **廣東話口語**: 唔好將所有精力花喺小事上面。
+:::
+
+### 17. contentment
+* **詞性**：名詞 (Noun)
+* **讀音**：/kənˈtent.mənt/
+* **廣東話解法**：心滿意足、對現狀感到滿足，唔需要更多。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Simple living can bring deep contentment.
+* **廣東話口語**: 簡單生活可以帶嚟深深嘅滿足感。
+:::
+
+### 18. go about
+* **詞性**：片語動詞 (Phrasal Verb)
+* **讀音**：/ɡəʊ əˈbaʊt/
+* **廣東話解法**：以某種特定方式去處理或進行某件事。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: How do you go about solving this problem?
+* **廣東話口語**: 你係點樣著手解決呢個問題㗎？
+:::
+
+### 19. flipping on
+* **詞性**：片語 (Phrase)
+* **讀音**：/ˈflɪp.ɪŋ ɒn/
+* **廣東話解法**：隨手打開開關、燈或電器，通常係習慣性動作。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: He kept flipping on the TV out of habit.
+* **廣東話口語**: 佢習慣性咁不停打開電視。
+:::
+
+### 20. stumbling
+* **詞性**：動詞（現在分詞）(Verb, present participle)
+* **讀音**：/ˈstʌm.blɪŋ/
+* **廣東話解法**：字面係絆倒；比喻係做事跌跌撞撞、表現唔穩。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: She kept stumbling over her words during the speech.
+* **廣東話口語**: 佢演講嗰陣一直講到跌跌撞撞。
+:::
+
+### 21. doomed
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/duːmd/
+* **廣東話解法**：注定失敗或走向壞結局，難逃厄運。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The project felt doomed from the start.
+* **廣東話口語**: 個項目一開始就感覺注定失敗。
+:::
+
+### 22. wither away
+* **詞性**：片語動詞 (Phrasal Verb)
+* **讀音**：/ˈwɪð.ər əˈweɪ/
+* **廣東話解法**：慢慢枯萎或消失，形容事物逐漸凋零。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Dreams wither away if you never act on them.
+* **廣東話口語**: 夢想如果從不行動，只會慢慢凋謝。
+:::
+
+### 23. paramedic
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˌpær.əˈmed.ɪk/
+* **廣東話解法**：緊急醫療救護員，喺醫院以外提供即場急救。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The paramedic arrived within minutes.
+* **廣東話口語**: 救護員幾分鐘之內就到達。
+:::
+
+### 24. impending
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/ɪmˈpend.ɪŋ/
+* **廣東話解法**：即將來臨，通常用於描述壞事或危機快到。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: She felt a sense of impending doom.
+* **廣東話口語**: 佢有種大禍臨頭嘅感覺。
+:::
+
+### 25. blip
+* **詞性**：名詞 (Noun)
+* **讀音**：/blɪp/
+* **廣東話解法**：短暫嘅小波折或小插曲，唔係大問題。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: This setback is just a blip, not the end.
+* **廣東話口語**: 呢次挫折只係小插曲，唔係終點。
+:::
+
+### 26. fleet
+* **詞性**：名詞 / 形容詞 (Noun / Adjective)
+* **讀音**：/fliːt/
+* **廣東話解法**：名詞指一批交通工具（船隊、車隊）；形容詞指快速。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The company manages a fleet of delivery vans.
+* **廣東話口語**: 間公司管理一整批送貨貨車。
+:::
+
+### 27. Museum curators
+* **詞性**：名詞片語 (Noun Phrase)
+* **讀音**：/mjuːˈziː.əm kjʊˈreɪ.tərz/
+* **廣東話解法**：博物館策展人，負責揀選、整理同展示展品。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Museum curators carefully select each exhibit.
+* **廣東話口語**: 博物館策展人會仔細揀選每件展品。
+:::
+
+### 28. discern
+* **詞性**：動詞 (Verb)
+* **讀音**：/dɪˈsɜːn/
+* **廣東話解法**：辨別、察覺到細微差異或隱藏嘅真相。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: It's hard to discern his true intentions.
+* **廣東話口語**: 好難察覺到佢真正嘅意圖。
+:::
+
+### 29. tip off
+* **詞性**：片語動詞 (Phrasal Verb)
+* **讀音**：/tɪp ɒf/
+* **廣東話解法**：秘密通報、向人提供消息或線索，通常係向警方或媒體。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Someone tipped off the police about the robbery.
+* **廣東話口語**: 有人就搶劫案向警方通風報信。
+:::
