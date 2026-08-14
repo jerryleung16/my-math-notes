@@ -1,0 +1,206 @@
+---
+title: "English Word Dictionary Day 9"
+date: "2026-08-14"
+description: "A Cantonese-friendly English vocabulary list for Day 9 with IPA, meanings, and usage notes."
+categories: [English]
+---
+
+::: {.callout-note}
+💡 **使用說明**：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。
+:::
+
+## 🔍 生字快速索引
+
+| 英文生字 | 音標 (IPA) | 詞性 | 廣東話地道意思 | 難度/常用度 |
+|:---|:---|:---|:---|:---:|
+| **binge-eat** | /ˈbɪndʒ iːt/ | *v.* | 暴食、狂食 | ⭐⭐ |
+| **partake** | /pɑːrˈteɪk/ | *v.* | 參與；享用（食物/活動） | ⭐⭐⭐ |
+| **ambulance sirens** | /ˈæm.bjə.ləns ˈsaɪ.rənz/ | *n. phr.* | 救護車警號聲 | ⭐⭐ |
+| **turnout** | /ˈtɜːn.aʊt/ | *n.* | 出席人數；反應情況 | ⭐⭐⭐ |
+| **salivating** | /ˈsæl.ɪ.veɪ.tɪŋ/ | *v. / adj.* | 流口水；（比喻）好想要 | ⭐⭐ |
+| **antsy** | /ˈænt.si/ | *adj.* | 心急唔安樂、坐唔定 | ⭐⭐ |
+| **overhaul** | /ˌəʊ.vəˈhɔːl/ | *v. / n.* | 徹底檢修；大翻新 | ⭐⭐⭐ |
+| **acquire** | /əˈkwaɪər/ | *v.* | 獲得、取得、學到 | ⭐⭐⭐ |
+| **scarlet robe** | /ˈskɑː.lət rəʊb/ | *n. phr.* | 猩紅色長袍 | ⭐⭐⭐ |
+| **out of place** | /aʊt əv pleɪs/ | *phr.* | 格格不入；唔啱位 | ⭐⭐ |
+| **rug** | /rʌɡ/ | *n.* | 地氈、小地毯 | ⭐⭐ |
+| **mantel** | /ˈmæn.təl/ | *n.* | 壁爐架（擺設層） | ⭐⭐⭐ |
+| **communal table** | /kəˈmjuː.nəl ˈteɪ.bəl/ | *n. phr.* | 公共長枱、共用餐枱 | ⭐⭐ |
+| **wary** | /ˈweə.ri/ | *adj.* | 謹慎提防、唔太放心 | ⭐⭐⭐ |
+| **end cap** | /ˈend kæp/ | *n.* | （貨架）端架陳列位 | ⭐⭐⭐ |
+| **suburb** | /ˈsʌb.ɜːb/ | *n.* | 市郊、近郊住宅區 | ⭐⭐ |
+| **crisper** | /ˈkrɪs.pər/ | *n.* | （雪櫃）保鮮蔬果格 | ⭐⭐⭐ |
+
+---
+
+## 📚 生字詳細解析
+
+### 1. binge-eat
+* **詞性**：動詞 (Verb)
+* **讀音**：/ˈbɪndʒ iːt/
+* **廣東話解法**：短時間內食好多嘢，通常因壓力或情緒影響。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: He tends to binge-eat when he is stressed.
+* **廣東話口語**: 佢一有壓力就會狂食。
+:::
+
+### 2. partake
+* **詞性**：動詞 (Verb)
+* **讀音**：/pɑːrˈteɪk/
+* **廣東話解法**：參加某活動，或者一齊享用食物飲品。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Please partake in the celebration with us.
+* **廣東話口語**: 請你同我哋一齊參與慶祝。
+:::
+
+### 3. ambulance sirens
+* **詞性**：名詞片語 (Noun Phrase)
+* **讀音**：/ˈæm.bjə.ləns ˈsaɪ.rənz/
+* **廣東話解法**：救護車出勤時發出嘅警號聲。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: We heard ambulance sirens all night.
+* **廣東話口語**: 我哋成晚都聽到救護車警號聲。
+:::
+
+### 4. turnout
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˈtɜːn.aʊt/
+* **廣東話解法**：活動實際出席人數，亦可指結果反應。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The event had a better turnout than expected.
+* **廣東話口語**: 呢個活動出席人數比預期好。
+:::
+
+### 5. salivating
+* **詞性**：動詞 / 形容詞 (Verb / Adjective)
+* **讀音**：/ˈsæl.ɪ.veɪ.tɪŋ/
+* **廣東話解法**：字面係流口水；比喻見到想要嘅嘢非常心動。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: I'm already salivating at the smell of barbecue.
+* **廣東話口語**: 我聞到燒烤味已經流晒口水。
+:::
+
+### 6. antsy
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/ˈænt.si/
+* **廣東話解法**：心情焦躁唔安，等唔切，坐都坐唔定。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The kids got antsy while waiting in line.
+* **廣東話口語**: 啲小朋友排隊嗰陣開始坐唔定。
+:::
+
+### 7. overhaul
+* **詞性**：動詞 / 名詞 (Verb / Noun)
+* **讀音**：/ˌəʊ.vəˈhɔːl/
+* **廣東話解法**：全面檢查同重整，通常係制度、機器或者流程。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The company plans to overhaul its hiring process.
+* **廣東話口語**: 公司計劃全面改革招聘流程。
+:::
+
+### 8. acquire
+* **詞性**：動詞 (Verb)
+* **讀音**：/əˈkwaɪər/
+* **廣東話解法**：透過努力或購買去取得某樣技能、資源或物品。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: She acquired strong communication skills over time.
+* **廣東話口語**: 佢慢慢培養到好強嘅溝通能力。
+:::
+
+### 9. scarlet robe
+* **詞性**：名詞片語 (Noun Phrase)
+* **讀音**：/ˈskɑː.lət rəʊb/
+* **廣東話解法**：鮮紅色長袍，常見於儀式或正式場合。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The judge wore a scarlet robe during the ceremony.
+* **廣東話口語**: 法官喺儀式上著住件猩紅色長袍。
+:::
+
+### 10. out of place
+* **詞性**：片語 (Phrase)
+* **讀音**：/aʊt əv pleɪs/
+* **廣東話解法**：同周圍環境唔夾，感覺格格不入。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: I felt out of place at the formal dinner.
+* **廣東話口語**: 我喺嗰個正式晚宴覺得好格格不入。
+:::
+
+### 11. rug
+* **詞性**：名詞 (Noun)
+* **讀音**：/rʌɡ/
+* **廣東話解法**：鋪喺地上嘅細地毯，用嚟裝飾或保暖。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: She bought a new rug for the living room.
+* **廣東話口語**: 佢買咗塊新地氈放喺客廳。
+:::
+
+### 12. mantel
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˈmæn.təl/
+* **廣東話解法**：壁爐上方或周圍嘅平台位，通常用嚟擺飾物。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Family photos were lined up on the mantel.
+* **廣東話口語**: 壁爐架上排滿咗家庭相。
+:::
+
+### 13. communal table
+* **詞性**：名詞片語 (Noun Phrase)
+* **讀音**：/kəˈmjuː.nəl ˈteɪ.bəl/
+* **廣東話解法**：多人共用嘅大枱，餐廳或共用空間常見。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: We shared a communal table at the cafe.
+* **廣東話口語**: 我哋喺咖啡店同人共用一張大枱。
+:::
+
+### 14. wary
+* **詞性**：形容詞 (Adjective)
+* **讀音**：/ˈweə.ri/
+* **廣東話解法**：提高警覺，小心提防唔可信嘅情況。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Be wary of deals that seem too good to be true.
+* **廣東話口語**: 嗰啲好到唔似真嘅優惠要小心提防。
+:::
+
+### 15. end cap
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˈend kæp/
+* **廣東話解法**：超市貨架最尾位置嘅展示區，通常擺促銷貨。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: The snacks were displayed on the end cap.
+* **廣東話口語**: 啲零食擺咗喺貨架端架位。
+:::
+
+### 16. suburb
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˈsʌb.ɜːb/
+* **廣東話解法**：城市外圍住宅區，通常較寧靜。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: They moved to a quiet suburb last year.
+* **廣東話口語**: 佢哋上年搬咗去一個寧靜市郊。
+:::
+
+### 17. crisper
+* **詞性**：名詞 (Noun)
+* **讀音**：/ˈkrɪs.pər/
+* **廣東話解法**：雪櫃入面專門放蔬果、保持新鮮嘅抽屜格。
+
+::: {.callout-tip title="地道廣東話例句"}
+* **English**: Keep the lettuce in the crisper to stay fresh.
+* **廣東話口語**: 生菜放喺雪櫃保鮮格會新鮮啲。
+:::
