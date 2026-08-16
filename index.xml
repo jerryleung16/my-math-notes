@@ -10,7 +10,693 @@
 <atom:link href="https://jerryleung16.github.io/my-math-notes/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Fri, 14 Aug 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 16 Aug 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>JAX</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/deep learning/jax/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="tensors-in-jax" class="level2">
+<h2 class="anchored" data-anchor-id="tensors-in-jax">Tensors in JAX</h2>
+<p>JAX provides a NumPy-like array API through <code>jax.numpy</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> jax <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> jnp</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">jnp.ones(shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb1-4">jnp.zeros(shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb1-5">jnp.array([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>], dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"float32"</span>)</span></code></pre></div></div>
+<p>These return JAX arrays with familiar shapes and dtypes.</p>
+<hr>
+</section>
+<section id="stateless-programming-in-jax" class="level2">
+<h2 class="anchored" data-anchor-id="stateless-programming-in-jax">Stateless programming in JAX</h2>
+<p>In programming, an object’s <strong>state</strong> is the internal memory it stores so it can keep track of values over time.</p>
+<p>JAX is <strong>stateless</strong>: functions should depend only on their inputs and should not read or modify hidden global state.</p>
+<section id="why-this-matters" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-matters">Why this matters</h3>
+<ul>
+<li>Same inputs should produce the same outputs.</li>
+<li>Randomness must be made explicit.</li>
+<li>Functions are easier to transform, compile, and differentiate.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="random-numbers-and-prng-keys" class="level2">
+<h2 class="anchored" data-anchor-id="random-numbers-and-prng-keys">Random numbers and PRNG keys</h2>
+<p>NumPy’s random API uses hidden global state:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb2-2"></span>
+<span id="cb2-3">np.random.seed(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">42</span>)</span>
+<span id="cb2-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(np.random.normal())</span>
+<span id="cb2-5"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(np.random.normal())</span></code></pre></div></div>
+<p>JAX instead uses explicit <strong>PRNG keys</strong>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> jax</span>
+<span id="cb3-2"></span>
+<span id="cb3-3">seed_key <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jax.random.key(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1337</span>)</span>
+<span id="cb3-4"></span>
+<span id="cb3-5">jax.random.normal(seed_key, shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>,))</span>
+<span id="cb3-6">jax.random.normal(seed_key, shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>,))</span></code></pre></div></div>
+<p>The same key always produces the same result. If you want new randomness, you must create or split a new key.</p>
+<hr>
+</section>
+<section id="tensor-assignment-and-immutability" class="level2">
+<h2 class="anchored" data-anchor-id="tensor-assignment-and-immutability">Tensor assignment and immutability</h2>
+<p>JAX arrays are immutable. You cannot update them in place like NumPy arrays.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jnp.array([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>])</span>
+<span id="cb4-2">new_x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x.at[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">set</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">99</span>)</span></code></pre></div></div>
+<p>This leaves <code>x</code> unchanged and returns a new array.</p>
+<section id="numpy-vs-jax" class="level3">
+<h3 class="anchored" data-anchor-id="numpy-vs-jax">NumPy vs JAX</h3>
+<p>In NumPy, item assignment mutates shared memory:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb5-2"></span>
+<span id="cb5-3">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>])</span>
+<span id="cb5-4">y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x</span>
+<span id="cb5-5">x[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span></span></code></pre></div></div>
+<p>Both <code>x</code> and <code>y</code> change.</p>
+<p>In JAX, you must write functional updates:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jnp.array([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>])</span>
+<span id="cb6-2">y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x</span>
+<span id="cb6-3">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x.at[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">set</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span></code></pre></div></div>
+<p>Now <code>y</code> still points to the original array.</p>
+<p>Trying <code>x[0] = 10</code> in JAX raises an error because item assignment is not allowed.</p>
+<hr>
+</section>
+</section>
+<section id="common-tensor-operations" class="level2">
+<h2 class="anchored" data-anchor-id="common-tensor-operations">Common tensor operations</h2>
+<p>JAX supports standard numerical operations:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jnp.ones((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb7-2">b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jnp.square(a)</span>
+<span id="cb7-3">c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jnp.sqrt(a)</span>
+<span id="cb7-4">d <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> c</span>
+<span id="cb7-5">f <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jnp.matmul(a, b)</span></code></pre></div></div>
+<p>A simple dense layer can be written as:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> jax</span>
+<span id="cb8-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> jax.numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> jnp</span>
+<span id="cb8-3"></span>
+<span id="cb8-4"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> dense(inputs, W, b):</span>
+<span id="cb8-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> jax.nn.relu(jnp.matmul(inputs, W) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b)</span></code></pre></div></div>
+<hr>
+</section>
+<section id="gradients-in-jax" class="level2">
+<h2 class="anchored" data-anchor-id="gradients-in-jax">Gradients in JAX</h2>
+<p>JAX uses functional transformations such as <code>jax.grad()</code> and <code>jax.value_and_grad()</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> jax</span>
+<span id="cb9-2"></span>
+<span id="cb9-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> f(x):</span>
+<span id="cb9-4">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb9-5"></span>
+<span id="cb9-6">f_prime <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jax.grad(f)</span>
+<span id="cb9-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(f_prime(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.0</span>))</span></code></pre></div></div>
+<p>Here <code>jax.grad(f)</code> returns a new function that computes the derivative of <code>f</code>.</p>
+<section id="jax.value_and_grad" class="level3">
+<h3 class="anchored" data-anchor-id="jax.value_and_grad"><code>jax.value_and_grad()</code></h3>
+<p>This transformation returns both the function value and its gradient in one pass.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">val_and_grad_fn <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jax.value_and_grad(f)</span>
+<span id="cb10-2">val, grad <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> val_and_grad_fn(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.0</span>)</span></code></pre></div></div>
+<p>This is often more efficient than computing the value and gradient separately.</p>
+<hr>
+</section>
+</section>
+<section id="gradients-with-multiple-inputs" class="level2">
+<h2 class="anchored" data-anchor-id="gradients-with-multiple-inputs">Gradients with multiple inputs</h2>
+<section id="pattern-1-bundle-variables-in-a-pytree" class="level3">
+<h3 class="anchored" data-anchor-id="pattern-1-bundle-variables-in-a-pytree">Pattern 1: Bundle variables in a PyTree</h3>
+<p>A common machine learning pattern is to store parameters in a dictionary, tuple, or list.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> jax</span>
+<span id="cb11-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> jax.numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> jnp</span>
+<span id="cb11-3"></span>
+<span id="cb11-4"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> loss_fn(params, x):</span>
+<span id="cb11-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'w'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'b'</span>]</span>
+<span id="cb11-6"></span>
+<span id="cb11-7">grad_fn <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jax.grad(loss_fn)</span>
+<span id="cb11-8">params <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'w'</span>: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'b'</span>: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.0</span>}</span>
+<span id="cb11-9">grads <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> grad_fn(params, x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.0</span>)</span></code></pre></div></div>
+<p>By default, JAX differentiates with respect to the first argument.</p>
+</section>
+<section id="pattern-2-separate-arguments-with-argnums" class="level3">
+<h3 class="anchored" data-anchor-id="pattern-2-separate-arguments-with-argnums">Pattern 2: Separate arguments with <code>argnums</code></h3>
+<p>If your variables are separate positional arguments, use <code>argnums</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> jax</span>
+<span id="cb12-2"></span>
+<span id="cb12-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> f(a, b, c):</span>
+<span id="cb12-4">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> a<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> c</span>
+<span id="cb12-5"></span>
+<span id="cb12-6">jax.grad(f)(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.0</span>)</span>
+<span id="cb12-7">jax.grad(f, argnums<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.0</span>)</span>
+<span id="cb12-8">jax.grad(f, argnums<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.0</span>)</span></code></pre></div></div>
+<p>You can combine this with <code>jax.value_and_grad()</code> as well.</p>
+<hr>
+</section>
+</section>
+<section id="auxiliary-output" class="level2">
+<h2 class="anchored" data-anchor-id="auxiliary-output">Auxiliary output</h2>
+<p>Sometimes a function should return extra information, such as accuracy or MAE, along with the loss.</p>
+<p>Use <code>has_aux=True</code> when the function returns <code>(primary_output, auxiliary_output)</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> jax</span>
+<span id="cb13-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> jax.numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> jnp</span>
+<span id="cb13-3"></span>
+<span id="cb13-4"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> compute_loss(params, x, y):</span>
+<span id="cb13-5">    predictions <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'w'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'b'</span>]</span>
+<span id="cb13-6">    loss <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jnp.mean((predictions <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> y) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb13-7">    mae <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jnp.mean(jnp.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">abs</span>(predictions <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> y))</span>
+<span id="cb13-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> loss, mae</span>
+<span id="cb13-9"></span>
+<span id="cb13-10">grad_fn <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jax.value_and_grad(compute_loss, has_aux<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb13-11">(loss_val, mae_val), grads <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> grad_fn(params, x, y)</span></code></pre></div></div>
+<p>JAX differentiates only through the primary loss and returns the auxiliary data untouched.</p>
+<hr>
+</section>
+<section id="jax.jit" class="level2">
+<h2 class="anchored" data-anchor-id="jax.jit"><code>@jax.jit</code></h2>
+<p>The <code>@jax.jit</code> decorator compiles stateless functions with XLA for faster execution.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@jax.jit</span></span>
+<span id="cb14-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> dense(inputs, W, b):</span>
+<span id="cb14-3">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> jax.nn.relu(jnp.matmul(inputs, W) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b)</span></code></pre></div></div>
+<p>A function decorated with <code>@jax.jit</code> should:</p>
+<ul>
+<li>not read hidden global variables</li>
+<li>not mutate external state</li>
+<li>return new values instead of modifying inputs in place</li>
+</ul>
+<hr>
+</section>
+<section id="stateful-or-stateless" class="level2">
+<h2 class="anchored" data-anchor-id="stateful-or-stateless">Stateful or stateless?</h2>
+<ol type="1">
+<li><strong>Stateful</strong> — modifies the global <code>history</code> list.</li>
+<li><strong>Stateless</strong> — depends only on <code>params</code>, <code>x</code>, and <code>y</code>.</li>
+<li><strong>Stateful</strong> — NumPy random uses hidden global state.</li>
+<li><strong>Stateless</strong> — JAX randomness is explicit through the key.</li>
+<li><strong>Stateful</strong> — mutates <code>self.count</code> inside the object.</li>
+</ol>
+<hr>
+</section>
+<section id="linear-classifier-in-jax" class="level2">
+<h2 class="anchored" data-anchor-id="linear-classifier-in-jax">Linear classifier in JAX</h2>
+<p>A simple JAX training loop treats model state as explicit function arguments.</p>
+<section id="model-and-loss" class="level3">
+<h3 class="anchored" data-anchor-id="model-and-loss">Model and loss</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> jax</span>
+<span id="cb15-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> jax.numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> jnp</span>
+<span id="cb15-3"></span>
+<span id="cb15-4"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> model(inputs, W, b):</span>
+<span id="cb15-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> jnp.matmul(inputs, W) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b</span>
+<span id="cb15-6"></span>
+<span id="cb15-7"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> mean_squared_error(targets, predictions):</span>
+<span id="cb15-8">    per_sample_losses <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jnp.square(targets <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> predictions)</span>
+<span id="cb15-9">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> jnp.mean(per_sample_losses)</span>
+<span id="cb15-10"></span>
+<span id="cb15-11"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> compute_loss(state, inputs, targets):</span>
+<span id="cb15-12">    W, b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> state</span>
+<span id="cb15-13">    predictions <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model(inputs, W, b)</span>
+<span id="cb15-14">    loss <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> mean_squared_error(targets, predictions)</span>
+<span id="cb15-15">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> loss</span></code></pre></div></div>
+</section>
+<section id="gradient-function" class="level3">
+<h3 class="anchored" data-anchor-id="gradient-function">Gradient function</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1">grad_fn <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jax.value_and_grad(compute_loss)</span></code></pre></div></div>
+</section>
+<section id="training-step" class="level3">
+<h3 class="anchored" data-anchor-id="training-step">Training step</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1">learning_rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span></span>
+<span id="cb17-2"></span>
+<span id="cb17-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">@jax.jit</span></span>
+<span id="cb17-4"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> training_step(inputs, targets, W, b):</span>
+<span id="cb17-5">    loss, grads <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> grad_fn((W, b), inputs, targets)</span>
+<span id="cb17-6">    grad_wrt_W, grad_wrt_b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> grads</span>
+<span id="cb17-7">    W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> grad_wrt_W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> learning_rate</span>
+<span id="cb17-8">    b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> grad_wrt_b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> learning_rate</span>
+<span id="cb17-9">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> loss, W, b</span></code></pre></div></div>
+</section>
+<section id="training-loop" class="level3">
+<h3 class="anchored" data-anchor-id="training-loop">Training loop</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1">input_dim <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb18-2">output_dim <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb18-3"></span>
+<span id="cb18-4">W <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jax.numpy.array(np.random.uniform(size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(input_dim, output_dim)))</span>
+<span id="cb18-5">b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jax.numpy.array(np.zeros(shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(output_dim,)))</span>
+<span id="cb18-6"></span>
+<span id="cb18-7"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> step <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>):</span>
+<span id="cb18-8">    loss, W, b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> training_step(inputs, targets, W, b)</span>
+<span id="cb18-9">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Loss at step </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>step<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>loss<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.4f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<hr>
+</section>
+</section>
+<section id="pros-and-cons-of-jax" class="level2">
+<h2 class="anchored" data-anchor-id="pros-and-cons-of-jax">Pros and cons of JAX</h2>
+<section id="advantages" class="level3">
+<h3 class="anchored" data-anchor-id="advantages">Advantages</h3>
+<ul>
+<li>Very fast for many models</li>
+<li>NumPy-like API that is easy to learn</li>
+<li>Excellent fit for TPUs and XLA compilation</li>
+<li>Functional style works well for transformations like <code>grad</code> and <code>jit</code></li>
+</ul>
+</section>
+<section id="disadvantages" class="level3">
+<h3 class="anchored" data-anchor-id="disadvantages">Disadvantages</h3>
+<ul>
+<li>Harder to debug than eager-execution frameworks</li>
+<li>Training loops can be more verbose</li>
+<li>Requires more discipline around state and randomness</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>JAX is built around three big ideas:</p>
+<ol type="1">
+<li><strong>Stateless functions</strong></li>
+<li><strong>Explicit randomness with PRNG keys</strong></li>
+<li><strong>Functional transformations for gradients and compilation</strong></li>
+</ol>
+<p>These design choices make JAX fast and deterministic, but also more restrictive than NumPy, PyTorch, or TensorFlow in day-to-day use.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Deep Learning</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/deep learning/jax/</guid>
+  <pubDate>Sun, 16 Aug 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>English Word Dictionary Day 9</title>
   <link>https://jerryleung16.github.io/my-math-notes/posts/english/english_9/</link>
@@ -9007,763 +9693,6 @@ Total Work:                                                      = 32c</code></p
   <category>Algorithms</category>
   <guid>https://jerryleung16.github.io/my-math-notes/posts/algorithms/merge-sort-running-time/</guid>
   <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>English Word Dictionary Day 2</title>
-  <link>https://jerryleung16.github.io/my-math-notes/posts/english/english_2/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>💡 <strong>使用說明</strong>：此字典專為廣東話使用者而設，提供地道廣東話解釋、例句同埋口語翻譯。</p>
-</div>
-</div>
-<section id="生字快速索引" class="level2">
-<h2 class="anchored" data-anchor-id="生字快速索引">🔍 生字快速索引</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 19%">
-<col style="width: 19%">
-<col style="width: 19%">
-<col style="width: 19%">
-<col style="width: 23%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">英文生字</th>
-<th style="text-align: left;">音標 (IPA)</th>
-<th style="text-align: left;">詞性</th>
-<th style="text-align: left;">廣東話地道意思</th>
-<th style="text-align: center;">難度/常用度</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><strong>encompass</strong></td>
-<td style="text-align: left;">/ɪnˈkʌm.pəs/</td>
-<td style="text-align: left;"><em>v.</em></td>
-<td style="text-align: left;">涵蓋、包含埋、包羅</td>
-<td style="text-align: center;">⭐⭐⭐</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>paradigm</strong></td>
-<td style="text-align: left;">/ˈpær.ə.daɪm/</td>
-<td style="text-align: left;"><em>n.</em></td>
-<td style="text-align: left;">典範、模式、思考框架</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>pretensions</strong></td>
-<td style="text-align: left;">/prɪˈten.ʃənz/</td>
-<td style="text-align: left;"><em>n.</em></td>
-<td style="text-align: left;">野心、架子、妄想 / 自命不凡</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>province</strong></td>
-<td style="text-align: left;">/ˈprɒv.ɪns/</td>
-<td style="text-align: left;"><em>n.</em></td>
-<td style="text-align: left;">職責範圍、專屬領域</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>acquainted with</strong></td>
-<td style="text-align: left;">/əˈkweɪn.tɪd wɪð/</td>
-<td style="text-align: left;"><em>phr.</em></td>
-<td style="text-align: left;">熟悉、認識、搞清楚</td>
-<td style="text-align: center;">⭐⭐⭐</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>arresting</strong></td>
-<td style="text-align: left;">/əˈres.tɪŋ/</td>
-<td style="text-align: left;"><em>adj.</em></td>
-<td style="text-align: left;">震撼、好吸睛、引人注目</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>provocative</strong></td>
-<td style="text-align: left;">/prəˈvɒk.ə.tɪv/</td>
-<td style="text-align: left;"><em>adj.</em></td>
-<td style="text-align: left;">具挑釁性、引人爭議/思考</td>
-<td style="text-align: center;">⭐⭐⭐</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>shroud of</strong></td>
-<td style="text-align: left;">/ʃraʊd əv/</td>
-<td style="text-align: left;"><em>phr. n.</em></td>
-<td style="text-align: left;">一層籠罩住嘅（神秘/面紗）</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>mystique</strong></td>
-<td style="text-align: left;">/mɪˈstiːk/</td>
-<td style="text-align: left;"><em>n.</em></td>
-<td style="text-align: left;">神秘感、光環</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>amenable</strong></td>
-<td style="text-align: left;">/əˈmiː.nə.bəl/</td>
-<td style="text-align: left;"><em>adj.</em></td>
-<td style="text-align: left;">易於處理/配合、順從</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>culminating with</strong></td>
-<td style="text-align: left;">/ˈkʌl.mɪ.neɪ.tɪŋ wɪð/</td>
-<td style="text-align: left;"><em>phr. v.</em></td>
-<td style="text-align: left;">以…告終、最終達致</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>eluded</strong></td>
-<td style="text-align: left;">/ɪˈluː.dɪd/</td>
-<td style="text-align: left;"><em>v.</em></td>
-<td style="text-align: left;">逃過、困擾/令人摸唔透</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>grounded</strong></td>
-<td style="text-align: left;">/ˈɡraʊn.dɪd/</td>
-<td style="text-align: left;"><em>adj.</em></td>
-<td style="text-align: left;">踏實、有根有據、接地氣</td>
-<td style="text-align: center;">⭐⭐⭐</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>pundits</strong></td>
-<td style="text-align: left;">/ˈpʌn.dɪts/</td>
-<td style="text-align: left;"><em>n.</em></td>
-<td style="text-align: left;">專家、評論員、名嘴</td>
-<td style="text-align: center;">⭐⭐⭐</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>dent</strong></td>
-<td style="text-align: left;">/dent/</td>
-<td style="text-align: left;"><em>n.&nbsp;/ v.</em></td>
-<td style="text-align: left;">削弱、打擊、凹痕</td>
-<td style="text-align: center;">⭐⭐⭐</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>pales</strong></td>
-<td style="text-align: left;">/peɪlz/</td>
-<td style="text-align: left;"><em>v.</em></td>
-<td style="text-align: left;">相形見絀、比落去差得遠</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>ample</strong></td>
-<td style="text-align: left;">/ˈæm.pəl/</td>
-<td style="text-align: left;"><em>adj.</em></td>
-<td style="text-align: left;">充足、大量、大把</td>
-<td style="text-align: center;">⭐⭐⭐</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>robust</strong></td>
-<td style="text-align: left;">/rəʊˈbʌst/</td>
-<td style="text-align: left;"><em>adj.</em></td>
-<td style="text-align: left;">穩健、完善、強健/襟用</td>
-<td style="text-align: center;">⭐⭐⭐⭐</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>sentient</strong></td>
-<td style="text-align: left;">/ˈsen.ʃənt/</td>
-<td style="text-align: left;"><em>adj.</em></td>
-<td style="text-align: left;">有意識嘅、有知覺嘅</td>
-<td style="text-align: center;">⭐⭐⭐⭐⭐</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>on the verge of</strong></td>
-<td style="text-align: left;">/ɒn ðə vɜːdʒ əv/</td>
-<td style="text-align: left;"><em>phr.</em></td>
-<td style="text-align: left;">喺…嘅邊緣、就快、爭啲</td>
-<td style="text-align: center;">⭐⭐⭐</td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
-<section id="生字詳細解析" class="level2">
-<h2 class="anchored" data-anchor-id="生字詳細解析">📚 生字詳細解析</h2>
-<section id="encompass" class="level3">
-<h3 class="anchored" data-anchor-id="encompass">1. encompass</h3>
-<ul>
-<li><strong>詞性</strong>：動詞 (Verb)</li>
-<li><strong>讀音</strong>：/ɪnˈkʌm.pəs/</li>
-<li><strong>廣東話解法</strong>：指包涵、涵蓋或者包含咗唔同嘅領域或內容。廣東話通常會講「涵蓋」、「包羅」或者「包含埋」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: AI is a general field that encompasses machine learning and deep learning.</p></li>
-<li><p><strong>廣東話口語</strong>: 人工智能係一個大範疇，涵蓋咗（包含埋）機器學習同深度學習。</p></li>
-<li><p><strong>English</strong>: The course encompasses a wide range of topics.</p></li>
-<li><p><strong>廣東話口語</strong>: 呢個課程包含咗好廣泛嘅課題。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>encompass a wide range of...</code>：涵蓋好廣泛嘅… * <code>encompass everything</code>：包含埋所有嘢</p>
-<hr>
-</section>
-<section id="paradigm" class="level3">
-<h3 class="anchored" data-anchor-id="paradigm">2. paradigm</h3>
-<ul>
-<li><strong>詞性</strong>：名詞 (Noun)</li>
-<li><strong>讀音</strong>：/ˈpær.ə.daɪm/</li>
-<li><strong>廣東話解法</strong>：指一種主導嘅模式、思考框架或者典型範例。廣東話會講「主流模式」、「典範」或者「一套玩法」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: Symbolic AI was the dominant paradigm from the 1950s to the 1980s.</p></li>
-<li><p><strong>廣東話口語</strong>: 喺 1950 至 1980 年代，符號化 AI（Symbolic AI）係當時嘅主流模式（ dominant paradigm）。</p></li>
-<li><p><strong>English</strong>: The internet caused a paradigm shift in how we work.</p></li>
-<li><p><strong>廣東話口語</strong>: 互聯網帶來咗工作模式上嘅重大轉變（Paradigm shift）。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>paradigm shift</code>：模式轉變 / 典範轉移 * <code>dominant paradigm</code>：主流模式 / 主導框架</p>
-<hr>
-</section>
-<section id="pretensions-pretension-嘅眾數" class="level3">
-<h3 class="anchored" data-anchor-id="pretensions-pretension-嘅眾數">3. pretensions (pretension 嘅眾數)</h3>
-<ul>
-<li><strong>詞性</strong>：名詞 (Noun)</li>
-<li><strong>讀音</strong>：/prɪˈten.ʃənz/</li>
-<li><strong>廣東話解法</strong>：指自命不凡、吹噓、裝模作樣，或者指某種高遠（甚至不切實際）嘅意圖同野心。廣東話會講「擺架子」、「吹噓」、「妄想」或者「意圖」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: The engine has no pretensions whatever to originate anything.</p></li>
-<li><p><strong>廣東話口語</strong>: 呢部引擎完全冇妄想 / 意圖去原創任何新嘢。</p></li>
-<li><p><strong>English</strong>: He has pretensions of being a great writer.</p></li>
-<li><p><strong>廣東話口語</strong>: 佢自命（妄想）自己係個偉大嘅作家。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>have pretensions to / of being...</code>：自命係… / 妄想成為… * <code>without any pretensions</code>：完全冇架子 / 唔吹噓</p>
-<hr>
-</section>
-<section id="province" class="level3">
-<h3 class="anchored" data-anchor-id="province">4. province</h3>
-<ul>
-<li><strong>詞性</strong>：名詞 (Noun)</li>
-<li><strong>讀音</strong>：/ˈprɒv.ɪns/</li>
-<li><strong>廣東話解法</strong>：除咗解作「省份」之外，引申意思係指某人或某領域嘅「職責範圍」、「專屬領域」或者「管轄範圍」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: Its province is to assist us in making available what we’re already acquainted with.</p></li>
-<li><p><strong>廣東話口語</strong>: 佢嘅職責範圍（角色），只係幫我哋活用已經掌握咗嘅嘢。</p></li>
-<li><p><strong>English</strong>: Marketing is not really my province; you should ask Sarah.</p></li>
-<li><p><strong>廣東話口語</strong>: 市場推廣唔太算係我嘅專長 / 範疇，你問 Sarah 啦。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>outside one's province</code>：超出某人嘅職責/專業範圍 * <code>the province of (experts)</code>：…嘅專屬領域</p>
-<hr>
-</section>
-<section id="acquainted-with" class="level3">
-<h3 class="anchored" data-anchor-id="acquainted-with">5. acquainted with</h3>
-<ul>
-<li><strong>詞性</strong>：片語 (Phrase)</li>
-<li><strong>讀音</strong>：/əˈkweɪn.tɪd wɪð/</li>
-<li><strong>廣東話解法</strong>：指對某樣嘢有所認識、了解或者熟悉；亦可指認識某個人。廣東話通常講「熟悉」、「搞清楚」或者「認識」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: Are you acquainted with the basic principles of machine learning?</p></li>
-<li><p><strong>廣東話口語</strong>: 你熟唔熟悉機器學習嘅基本原理？</p></li>
-<li><p><strong>English</strong>: I need to get acquainted with the new office rules.</p></li>
-<li><p><strong>廣東話口語</strong>: 我要盡快搞清楚（熟悉）公司新嘅規矩。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>be acquainted with (something)</code>：熟悉某事 * <code>get acquainted with</code>：去了解 / 搞熟</p>
-<hr>
-</section>
-<section id="arresting" class="level3">
-<h3 class="anchored" data-anchor-id="arresting">6. arresting</h3>
-<ul>
-<li><strong>詞性</strong>：形容詞 (Adjective)</li>
-<li><strong>讀音</strong>：/əˈres.tɪŋ/</li>
-<li><strong>廣東話解法</strong>：字面係逮捕，但作形容詞時指非常吸引人注意、令人印象深刻或者極具震撼力。廣東話會講「好吸睛」、「好震撼」或者「極引人注目」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: Lady Lovelace’s observation remains arresting even today.</p></li>
-<li><p><strong>廣東話口語</strong>: 愛達·勒芙蕾絲嘅觀察，就算到咗今日依然係好震撼 / 咁引人注目。</p></li>
-<li><p><strong>English</strong>: She has an arresting smile that captures everyone’s attention.</p></li>
-<li><p><strong>廣東話口語</strong>: 佢有個好吸睛嘅笑容，吸引咗所有人嘅注意。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>arresting image / performance</code>：好吸睛嘅畫面 / 演出 * <code>arresting observation</code>：令人印象深刻嘅觀察</p>
-<hr>
-</section>
-<section id="provocative" class="level3">
-<h3 class="anchored" data-anchor-id="provocative">7. provocative</h3>
-<ul>
-<li><strong>詞性</strong>：形容詞 (Adjective)</li>
-<li><strong>讀音</strong>：/prəˈvɒk.ə.tɪv/</li>
-<li><strong>廣東話解法</strong>：指能夠引發爭議、激起思考，或者帶有挑釁意味嘅。廣東話通常講「具挑釁性」、「引人爭議」或者「好衝擊/引人深思」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: Turing’s opinion was highly provocative at the time.</p></li>
-<li><p><strong>廣東話口語</strong>: 圖靈嘅觀點喺當時嚟講係極具爭議（震撼/衝擊）嘅。</p></li>
-<li><p><strong>English</strong>: He made a provocative speech to spark a debate.</p></li>
-<li><p><strong>廣東話口語</strong>: 佢發表咗一段極具挑釁性 / 激發思考嘅演講嚟引起討論。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>provocative statement / question</code>：引人爭議/深思嘅言論 / 問題 * <code>provocative behavior</code>：挑釁行為</p>
-<hr>
-</section>
-<section id="shroud-of" class="level3">
-<h3 class="anchored" data-anchor-id="shroud-of">8. shroud of</h3>
-<ul>
-<li><strong>詞性</strong>：名詞片語 (Noun Phrase)</li>
-<li><strong>讀音</strong>：/ʃraʊd əv/</li>
-<li><strong>廣東話解法</strong>：shroud 原意係裹屍布或遮蓋物。<code>shroud of</code> 指籠罩住某樣嘢嘅「一層面紗」或者「一層陰影/迷霧」。廣東話會講「一層…嘅面紗」或者「籠罩住」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: You don’t need that shroud of mystique and mystery around AI.</p></li>
-<li><p><strong>廣東話口語</strong>: 你唔需要喺 AI 圍繞住嗰層「神秘嘅面紗」。</p></li>
-<li><p><strong>English</strong>: The event was hidden under a shroud of secrecy.</p></li>
-<li><p><strong>廣東話口語</strong>: 呢件事被籠罩喺一層嚴密嘅保密面紗之下。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>a shroud of secrecy / mystery</code>：一層保密 / 神秘嘅面紗 * <code>shrouded in darkness</code>：籠罩喺黑暗之中</p>
-<hr>
-</section>
-<section id="mystique" class="level3">
-<h3 class="anchored" data-anchor-id="mystique">9. mystique</h3>
-<ul>
-<li><strong>詞性</strong>：名詞 (Noun)</li>
-<li><strong>讀音</strong>：/mɪˈstiːk/</li>
-<li><strong>廣東話解法</strong>：指某樣嘢因為神秘、特殊或不可思議而產生嘅「神秘感」、「神秘色彩」或者「光環」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: Deep learning is just mathematics; forget the pop-science mystique.</p></li>
-<li><p><strong>廣東話口語</strong>: 深度學習只係數學，唔好理大眾科學包裝出嚟嘅神秘光環。</p></li>
-<li><p><strong>English</strong>: The brand lost its mystique over time.</p></li>
-<li><p><strong>廣東話口語</strong>: 呢個品牌隨住時間流逝失去咗以前嗰種神秘吸引力（光環）。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>air of mystique</code>：神秘嘅氛圍 * <code>remove / debunk the mystique</code>：揭開神秘面紗 / 打破光環</p>
-<hr>
-</section>
-<section id="amenable" class="level3">
-<h3 class="anchored" data-anchor-id="amenable">10. amenable</h3>
-<ul>
-<li><strong>詞性</strong>：形容詞 (Adjective)</li>
-<li><strong>讀音</strong>：/əˈmiː.nə.bəl/</li>
-<li><strong>廣東話解法</strong>：形容人時指「聽話、順從」；形容事物時指「易於處理、適合…嘅、好配合嘅」。廣東話會講「好配合」、「方便處理/適應」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: Transform data into representations that are more amenable to the task.</p></li>
-<li><p><strong>廣東話口語</strong>: 將數據轉化成更加方便（易於）處理嗰項任務嘅形式。</p></li>
-<li><p><strong>English</strong>: He was amenable to the proposed changes.</p></li>
-<li><p><strong>廣東話口語</strong>: 佢好配合（接受）所提議嘅改動。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>amenable to change / advice</code>：接受改變 / 聽勸 * <code>amenable to processing</code>：易於 / 方便處理</p>
-<hr>
-</section>
-<section id="culminating-with-或-culminating-in" class="level3">
-<h3 class="anchored" data-anchor-id="culminating-with-或-culminating-in">11. culminating with (或 culminating in)</h3>
-<ul>
-<li><strong>詞性</strong>：片語動詞 (Phrasal Verb)</li>
-<li><strong>讀音</strong>：/ˈkʌl.mɪ.neɪ.tɪŋ wɪð/</li>
-<li><strong>廣東話解法</strong>：指經過一段時間嘅發展，最後以某個成果、高潮或結局作結。廣東話通常講「以…告終」、「最終達致」或者「最後以…作結」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: A months-long investigation culminated with several arrests.</p></li>
-<li><p><strong>廣東話口語</strong>: 經過幾個月嘅調查，最終以逮捕幾個人告終。</p></li>
-<li><p><strong>English</strong>: Years of research culminated in a major discovery.</p></li>
-<li><p><strong>廣東話口語</strong>: 多年嘅研究，最後以一個重大發現作為完美結尾。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>culminate in success</code>：最終以成功告終 * <code>culminate with a presentation</code>：最後以簡報畫上句號</p>
-<hr>
-</section>
-<section id="eluded-elude-嘅過去式" class="level3">
-<h3 class="anchored" data-anchor-id="eluded-elude-嘅過去式">12. eluded (elude 嘅過去式)</h3>
-<ul>
-<li><strong>詞性</strong>：動詞 (Verb)</li>
-<li><strong>讀音</strong>：/ɪˈluː.dɪd/</li>
-<li><strong>廣東話解法</strong>：可以指「避開/逃過」；如果指目標、理解或記憶，指「得唔到」、「令人摸唔透」或者「諗唔起」。廣東話會講「逃過」、「摸唔透」或者「得唔到手」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: A satisfactory answer to this question has eluded scientists for decades.</p></li>
-<li><p><strong>廣東話口語</strong>: 幾十年嚟，科學家一直都摸唔透（搵唔到）呢個問題嘅滿意答案。</p></li>
-<li><p><strong>English</strong>: The thief eluded the police by hiding in the crowd.</p></li>
-<li><p><strong>廣東話口語</strong>: 個賊匿喺人群入面逃過咗警察嘅追捕。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>elude capture</code>：逃過捕獵 / 抓捕 * <code>elude one's understanding</code>：令人理解唔到 / 摸唔透</p>
-<hr>
-</section>
-<section id="grounded" class="level3">
-<h3 class="anchored" data-anchor-id="grounded">13. grounded</h3>
-<ul>
-<li><strong>詞性</strong>：形容詞 (Adjective)</li>
-<li><strong>讀音</strong>：/ˈɡraʊn.dɪd/</li>
-<li><strong>廣東話解法</strong>：指一個人好踏實、理性；或者指某種理論/想法「有根有據」、「扎根於現實」。廣東話會講「踏實」、「有根有據」或者「接地氣」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: Good AI research should be grounded in empirical evidence.</p></li>
-<li><p><strong>廣東話口語</strong>: 好嘅 AI 研究應該要有根有據（扎根於實驗數據）。</p></li>
-<li><p><strong>English</strong>: Despite his fame, he remains very grounded.</p></li>
-<li><p><strong>廣東話口語</strong>: 雖然佢好出名，但佢個人依然好踏實（無飄）。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>grounded in reality / fact</code>：基於現實 / 事實 * <code>keep someone grounded</code>：令某人保持踏實</p>
-<hr>
-</section>
-<section id="pundits-pundit-嘅眾數" class="level3">
-<h3 class="anchored" data-anchor-id="pundits-pundit-嘅眾數">14. pundits (pundit 嘅眾數)</h3>
-<ul>
-<li><strong>詞性</strong>：名詞 (Noun)</li>
-<li><strong>讀音</strong>：/ˈpʌn.dɪts/</li>
-<li><strong>廣東話解法</strong>：指經常喺媒體上發表意見嘅專家、評論員或者「名嘴」。廣東話通常講「專家」、「時事評論員」或者「名嘴」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: Tech pundits are constantly debating the future of generative AI.</p></li>
-<li><p><strong>廣東話口語</strong>: 科技名嘴（評論員）成日喺度爭論生成式 AI 嘅未來。</p></li>
-<li><p><strong>English</strong>: Political pundits predicted a different outcome.</p></li>
-<li><p><strong>廣東話口語</strong>: 政治評論員預測咗個完全唔同嘅結果。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>industry / tech pundits</code>：行業 / 科技專家評論員 * <code>political pundits</code>：政治名嘴</p>
-<hr>
-</section>
-<section id="dent" class="level3">
-<h3 class="anchored" data-anchor-id="dent">15. dent</h3>
-<ul>
-<li><strong>詞性</strong>：名詞 (Noun) / 動詞 (Verb)</li>
-<li><strong>讀音</strong>：/dent/</li>
-<li><strong>廣東話解法</strong>：字面係「凹痕」。比喻上指對某樣嘢（如信心、數量、進度）造成「打擊」、「削弱」或者「減少」。廣東話會講「削弱」、「打擊」或者「凹咗一塊」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: The high cost barely made a dent in his massive fortune.</p></li>
-<li><p><strong>廣東話口語</strong>: 咁昂貴嘅開支，對佢龐大嘅財產嚟講根本微不足道（傷唔到佢筋骨 / 凹都冇凹過）。</p></li>
-<li><p><strong>English</strong>: Failure didn’t dent her confidence at all.</p></li>
-<li><p><strong>廣東話口語</strong>: 失敗完全冇打擊（削弱）到佢嘅信心。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>make a dent in (something)</code>：削弱 / 減少 / 造成打擊 * <code>dent someone's confidence</code>：打擊某人嘅信心</p>
-<hr>
-</section>
-<section id="pales-pale-in-comparison" class="level3">
-<h3 class="anchored" data-anchor-id="pales-pale-in-comparison">16. pales (pale in comparison)</h3>
-<ul>
-<li><strong>詞性</strong>：動詞 (Verb)</li>
-<li><strong>讀音</strong>：/peɪlz/</li>
-<li><strong>廣東話解法</strong>：通常配搭 <code>pale in comparison to</code> 使用，指同另一樣嘢相比之下「相形見絀」、「顯得微不足道」或者「差幾班」。廣東話會講「比起嚟差得遠」、「顯得好微不足道」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: Early AI achievements pale in comparison to what modern deep learning can do.</p></li>
-<li><p><strong>廣東話口語</strong>: 早期 AI 嘅成就，同現代深度學習做得到嘅嘢比起嚟，簡直係相形見絀（差得遠）。</p></li>
-<li><p><strong>English</strong>: My problem pales in comparison to yours.</p></li>
-<li><p><strong>廣東話口語</strong>: 同你嗰個問題比起嚟，我嗰個根本微不足道。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>pale in comparison to / with</code>：同…相比顯得微不足道 / 相形見絀</p>
-<hr>
-</section>
-<section id="ample" class="level3">
-<h3 class="anchored" data-anchor-id="ample">17. ample</h3>
-<ul>
-<li><strong>詞性</strong>：形容詞 (Adjective)</li>
-<li><strong>讀音</strong>：/ˈæm.pəl/</li>
-<li><strong>廣東話解法</strong>：指數量上非常足夠，甚至多過你需要嘅。廣東話通常會講「充足」、「大量」或者「大把」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: AI excels at solving problems where ample precise examples are available.</p></li>
-<li><p><strong>廣東話口語</strong>: AI 最擅長解決嗰啲有<strong>大量（大把）</strong>精確例子可以參考嘅問題。</p></li>
-<li><p><strong>English</strong>: There is ample evidence to support his theory.</p></li>
-<li><p><strong>廣東話口語</strong>: 有<strong>充足嘅</strong>證據去支持佢嘅理論。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>ample evidence / time / space</code>：充足嘅證據 / 時間 / 空間 * <code>ample opportunity</code>：大把機會</p>
-<hr>
-</section>
-<section id="robust" class="level3">
-<h3 class="anchored" data-anchor-id="robust">18. robust</h3>
-<ul>
-<li><strong>詞性</strong>：形容詞 (Adjective)</li>
-<li><strong>讀音</strong>：/rəʊˈbʌst/</li>
-<li><strong>廣東話解法</strong>：形容人時指「強健」；形容系統、機制或數據時指「穩健」、「完善」、「經得起考驗」或者「好襟用 / 唔易壞」。廣東話通常會講「穩健」、「紮實」或者「完善」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: We need a robust security system to protect our data.</p></li>
-<li><p><strong>廣東話口語</strong>: 我哋需要一個<strong>穩健（完善）嘅</strong>保安系統嚟保護啲數據。</p></li>
-<li><p><strong>English</strong>: The company showed robust growth this quarter.</p></li>
-<li><p><strong>廣東話口語</strong>: 間公司今季展現咗<strong>強勁（紮實）嘅</strong>增長。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>robust system / framework</code>：穩健嘅系統 / 框架 * <code>robust economic growth</code>：強勁嘅經濟增長</p>
-<hr>
-</section>
-<section id="sentient" class="level3">
-<h3 class="anchored" data-anchor-id="sentient">19. sentient</h3>
-<ul>
-<li><strong>詞性</strong>：形容詞 (Adjective)</li>
-<li><strong>讀音</strong>：/ˈsen.ʃənt/</li>
-<li><strong>廣東話解法</strong>：指有知覺、能夠感受事物同埋有自我意識嘅。喺討論 AI 嘅時候經常出現。廣東話通常會講「有意識嘅」、「有知覺嘅」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: Some people fear that AI will eventually become sentient.</p></li>
-<li><p><strong>廣東話口語</strong>: 有啲人擔心 AI 遲早會變成<strong>有自我意識</strong>。</p></li>
-<li><p><strong>English</strong>: Humans and animals are sentient beings.</p></li>
-<li><p><strong>廣東話口語</strong>: 人類同動物都係<strong>有知覺嘅（有情）</strong>眾生。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>sentient being</code>：有感知能力嘅生物 / 有情眾生 * <code>become sentient</code>：變得有自我意識</p>
-<hr>
-</section>
-<section id="on-the-verge-of" class="level3">
-<h3 class="anchored" data-anchor-id="on-the-verge-of">20. on the verge of</h3>
-<ul>
-<li><strong>詞性</strong>：片語 (Phrase)</li>
-<li><strong>讀音</strong>：/ɒn ðə vɜːdʒ əv/</li>
-<li><strong>廣東話解法</strong>：指非常接近某個狀態或者即將發生某件事。廣東話通常會講「喺…嘅邊緣」、「就快…」或者「爭啲就…」。</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="地道廣東話例句">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>地道廣東話例句
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p><strong>English</strong>: Scientists are on the verge of a major breakthrough in cancer research.</p></li>
-<li><p><strong>廣東話口語</strong>: 科學家喺癌症研究上<strong>就快（去到邊緣）</strong>有重大突破。</p></li>
-<li><p><strong>English</strong>: She was on the verge of tears.</p></li>
-<li><p><strong>廣東話口語</strong>: 佢<strong>爭啲就（就快）</strong>喊出嚟。</p></li>
-</ul>
-</div>
-</div>
-<p><strong>常見搭配 (Collocations)</strong>： * <code>on the verge of collapse / bankruptcy</code>：瀕臨崩潰 / 破產邊緣 * <code>on the verge of tears</code>：眼淚都快啲跌落嚟 / 瀕臨崩潰邊緣</p>
-<hr>
-
-
-</section>
-</section>
-
- ]]></description>
-  <category>English</category>
-  <guid>https://jerryleung16.github.io/my-math-notes/posts/english/english_2/</guid>
-  <pubDate>Sat, 01 Aug 2026 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
