@@ -1,5 +1,5 @@
 ---
-title: "JAX"
+title: "Introduction to JAX"
 date: "2026-08-16"
 description: "Notes on JAX tensors, stateless programming, randomness, immutable array updates, gradients, and training loops."
 categories: [Deep Learning]
