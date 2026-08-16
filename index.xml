@@ -488,143 +488,303 @@ font-style: inherit;">+</span> b)</span></code></pre></div></div>
 </section>
 <section id="stateful-or-stateless" class="level2">
 <h2 class="anchored" data-anchor-id="stateful-or-stateless">Stateful or stateless?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Quiz (stateful or stateless?)</span></span>
+<span id="cb15-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#</span></span>
+<span id="cb15-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Q.1</span></span>
+<span id="cb15-4">history <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb15-5"></span>
+<span id="cb15-6"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> add_and_log(a, b):</span>
+<span id="cb15-7">    result <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b</span>
+<span id="cb15-8">    history.append(result)</span>
+<span id="cb15-9">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> result</span>
+<span id="cb15-10"></span>
+<span id="cb15-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Q.2</span></span>
+<span id="cb15-12"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> compute_loss(params, x, y):</span>
+<span id="cb15-13">    prediction <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'w'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> params[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'b'</span>]</span>
+<span id="cb15-14">    loss <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (prediction <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> y) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb15-15">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> loss</span>
+<span id="cb15-16"></span>
+<span id="cb15-17"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Q.3</span></span>
+<span id="cb15-18"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb15-19"></span>
+<span id="cb15-20"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> add_noise(image):</span>
+<span id="cb15-21">    noise <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.random.normal(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>image.shape)</span>
+<span id="cb15-22">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> image <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> noise</span>
+<span id="cb15-23"></span>
+<span id="cb15-24"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Q.4</span></span>
+<span id="cb15-25"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> jax</span>
+<span id="cb15-26"></span>
+<span id="cb15-27"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> add_noise_jax(image, key):</span>
+<span id="cb15-28">    noise <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> jax.random.normal(key, shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>image.shape)</span>
+<span id="cb15-29">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> image <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> noise</span>
+<span id="cb15-30"></span>
+<span id="cb15-31"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Q.5</span></span>
+<span id="cb15-32"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> Counter:</span>
+<span id="cb15-33">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>):</span>
+<span id="cb15-34">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.count <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb15-35"></span>
+<span id="cb15-36">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> step(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, value):</span>
+<span id="cb15-37">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.count <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> value</span>
+<span id="cb15-38">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.count</span></code></pre></div></div>
+<section id="answer-key" class="level3">
+<h3 class="anchored" data-anchor-id="answer-key">Answer Key</h3>
 <ol type="1">
-<li><strong>Stateful</strong> — modifies the global <code>history</code> list.</li>
-<li><strong>Stateless</strong> — depends only on <code>params</code>, <code>x</code>, and <code>y</code>.</li>
-<li><strong>Stateful</strong> — NumPy random uses hidden global state.</li>
-<li><strong>Stateless</strong> — JAX randomness is explicit through the key.</li>
-<li><strong>Stateful</strong> — mutates <code>self.count</code> inside the object.</li>
+<li><strong>Question 1: STATEFUL</strong><br>
+Why: It reaches outside itself to modify the global <code>history</code> list (<code>history.append</code>). That is a hidden write (side effect).</li>
+<li><strong>Question 2: STATELESS</strong><br>
+Why: It reads only from its inputs (<code>params</code>, <code>x</code>, <code>y</code>) and returns a new value without touching any external variables. Perfect for JAX!</li>
+<li><strong>Question 3: STATEFUL</strong><br>
+Why: <code>np.random</code> implicitly reads and updates NumPy’s internal global random seed in the background. Because it relies on hidden global state, calling <code>add_noise(image)</code> twice with the same input yields different results.</li>
+<li><strong>Question 4: STATELESS</strong><br>
+Why: Unlike NumPy, JAX requires the random key to be passed in explicitly. It doesn’t touch any hidden global random seed, so given the same image and key, it returns the exact same result every single time.</li>
+<li><strong>Question 5: STATEFUL</strong><br>
+Why: The <code>step</code> method mutates memory inside the object (<code>self.count += value</code>). It holds onto internal state between calls.</li>
 </ol>
 <hr>
+</section>
 </section>
 <section id="linear-classifier-in-jax" class="level2">
 <h2 class="anchored" data-anchor-id="linear-classifier-in-jax">Linear classifier in JAX</h2>
 <p>A simple JAX training loop treats model state as explicit function arguments.</p>
 <section id="model-and-loss" class="level3">
 <h3 class="anchored" data-anchor-id="model-and-loss">Model and loss</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="im" style="color: #00769E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> jax</span>
-<span id="cb15-2"><span class="im" style="color: #00769E;
+<span id="cb16-2"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> jax.numpy <span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">as</span> jnp</span>
-<span id="cb15-3"></span>
-<span id="cb15-4"><span class="kw" style="color: #003B4F;
+<span id="cb16-3"></span>
+<span id="cb16-4"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> model(inputs, W, b):</span>
-<span id="cb15-5">    <span class="cf" style="color: #003B4F;
+<span id="cb16-5">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> jnp.matmul(inputs, W) <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">+</span> b</span>
-<span id="cb15-6"></span>
-<span id="cb15-7"><span class="kw" style="color: #003B4F;
+<span id="cb16-6"></span>
+<span id="cb16-7"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> mean_squared_error(targets, predictions):</span>
-<span id="cb15-8">    per_sample_losses <span class="op" style="color: #5E5E5E;
+<span id="cb16-8">    per_sample_losses <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> jnp.square(targets <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span> predictions)</span>
-<span id="cb15-9">    <span class="cf" style="color: #003B4F;
+<span id="cb16-9">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> jnp.mean(per_sample_losses)</span>
-<span id="cb15-10"></span>
-<span id="cb15-11"><span class="kw" style="color: #003B4F;
+<span id="cb16-10"></span>
+<span id="cb16-11"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> compute_loss(state, inputs, targets):</span>
-<span id="cb15-12">    W, b <span class="op" style="color: #5E5E5E;
+<span id="cb16-12">    W, b <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> state</span>
-<span id="cb15-13">    predictions <span class="op" style="color: #5E5E5E;
+<span id="cb16-13">    predictions <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> model(inputs, W, b)</span>
-<span id="cb15-14">    loss <span class="op" style="color: #5E5E5E;
+<span id="cb16-14">    loss <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> mean_squared_error(targets, predictions)</span>
-<span id="cb15-15">    <span class="cf" style="color: #003B4F;
+<span id="cb16-15">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> loss</span></code></pre></div></div>
 </section>
 <section id="gradient-function" class="level3">
 <h3 class="anchored" data-anchor-id="gradient-function">Gradient function</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1">grad_fn <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1">grad_fn <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> jax.value_and_grad(compute_loss)</span></code></pre></div></div>
 </section>
 <section id="training-step" class="level3">
 <h3 class="anchored" data-anchor-id="training-step">Training step</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1">learning_rate <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1">learning_rate <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.1</span></span>
-<span id="cb17-2"></span>
-<span id="cb17-3"><span class="at" style="color: #657422;
+<span id="cb18-2"></span>
+<span id="cb18-3"><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">@jax.jit</span></span>
-<span id="cb17-4"><span class="kw" style="color: #003B4F;
+<span id="cb18-4"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">def</span> training_step(inputs, targets, W, b):</span>
-<span id="cb17-5">    loss, grads <span class="op" style="color: #5E5E5E;
+<span id="cb18-5">    loss, grads <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> grad_fn((W, b), inputs, targets)</span>
-<span id="cb17-6">    grad_wrt_W, grad_wrt_b <span class="op" style="color: #5E5E5E;
+<span id="cb18-6">    grad_wrt_W, grad_wrt_b <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> grads</span>
-<span id="cb17-7">    W <span class="op" style="color: #5E5E5E;
+<span id="cb18-7">    W <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> W <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span> grad_wrt_W <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">*</span> learning_rate</span>
-<span id="cb17-8">    b <span class="op" style="color: #5E5E5E;
+<span id="cb18-8">    b <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> b <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span> grad_wrt_b <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">*</span> learning_rate</span>
-<span id="cb17-9">    <span class="cf" style="color: #003B4F;
+<span id="cb18-9">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">return</span> loss, W, b</span></code></pre></div></div>
 </section>
 <section id="training-loop" class="level3">
 <h3 class="anchored" data-anchor-id="training-loop">Training loop</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1">input_dim <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1">input_dim <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span></span>
-<span id="cb18-2">output_dim <span class="op" style="color: #5E5E5E;
+<span id="cb19-2">output_dim <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span></span>
-<span id="cb18-3"></span>
-<span id="cb18-4">W <span class="op" style="color: #5E5E5E;
+<span id="cb19-3"></span>
+<span id="cb19-4">W <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> jax.numpy.array(np.random.uniform(size<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>(input_dim, output_dim)))</span>
-<span id="cb18-5">b <span class="op" style="color: #5E5E5E;
+<span id="cb19-5">b <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> jax.numpy.array(np.zeros(shape<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>(output_dim,)))</span>
-<span id="cb18-6"></span>
-<span id="cb18-7"><span class="cf" style="color: #003B4F;
+<span id="cb19-6"></span>
+<span id="cb19-7"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">for</span> step <span class="kw" style="color: #003B4F;
@@ -635,10 +795,10 @@ background-color: null;
 font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">40</span>):</span>
-<span id="cb18-8">    loss, W, b <span class="op" style="color: #5E5E5E;
+<span id="cb19-8">    loss, W, b <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> training_step(inputs, targets, W, b)</span>
-<span id="cb18-9">    <span class="bu" style="color: null;
+<span id="cb19-9">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
