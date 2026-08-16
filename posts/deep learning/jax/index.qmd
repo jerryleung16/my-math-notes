@@ -237,11 +237,59 @@ A function decorated with `@jax.jit` should:
 
 ## Stateful or stateless?
 
-1. **Stateful** — modifies the global `history` list.
-2. **Stateless** — depends only on `params`, `x`, and `y`.
-3. **Stateful** — NumPy random uses hidden global state.
-4. **Stateless** — JAX randomness is explicit through the key.
-5. **Stateful** — mutates `self.count` inside the object.
+```python
+# Quiz (stateful or stateless?)
+#
+# Q.1
+history = []
+
+def add_and_log(a, b):
+    result = a + b
+    history.append(result)
+    return result
+
+# Q.2
+def compute_loss(params, x, y):
+    prediction = x * params['w'] + params['b']
+    loss = (prediction - y) ** 2
+    return loss
+
+# Q.3
+import numpy as np
+
+def add_noise(image):
+    noise = np.random.normal(0, 1, size=image.shape)
+    return image + noise
+
+# Q.4
+import jax
+
+def add_noise_jax(image, key):
+    noise = jax.random.normal(key, shape=image.shape)
+    return image + noise
+
+# Q.5
+class Counter:
+    def __init__(self):
+        self.count = 0
+
+    def step(self, value):
+        self.count += value
+        return self.count
+```
+
+### Answer Key
+
+1. **Question 1: STATEFUL**  
+   Why: It reaches outside itself to modify the global `history` list (`history.append`). That is a hidden write (side effect).
+2. **Question 2: STATELESS**  
+   Why: It reads only from its inputs (`params`, `x`, `y`) and returns a new value without touching any external variables. Perfect for JAX!
+3. **Question 3: STATEFUL**  
+   Why: `np.random` implicitly reads and updates NumPy's internal global random seed in the background. Because it relies on hidden global state, calling `add_noise(image)` twice with the same input yields different results.
+4. **Question 4: STATELESS**  
+   Why: Unlike NumPy, JAX requires the random key to be passed in explicitly. It doesn't touch any hidden global random seed, so given the same image and key, it returns the exact same result every single time.
+5. **Question 5: STATEFUL**  
+   Why: The `step` method mutates memory inside the object (`self.count += value`). It holds onto internal state between calls.
 
 ---
 
