@@ -1,0 +1,333 @@
+---
+title: "JAX"
+date: "2026-08-16"
+description: "Notes on JAX tensors, stateless programming, randomness, immutable array updates, gradients, and training loops."
+categories: [Deep Learning]
+---
+
+## Tensors in JAX
+
+JAX provides a NumPy-like array API through `jax.numpy`.
+
+```python
+from jax import numpy as jnp
+
+jnp.ones(shape=(2, 1))
+jnp.zeros(shape=(2, 1))
+jnp.array([1, 2, 3], dtype="float32")
+```
+
+These return JAX arrays with familiar shapes and dtypes.
+
+---
+
+## Stateless programming in JAX
+
+In programming, an object's **state** is the internal memory it stores so it can keep track of values over time.
+
+JAX is **stateless**: functions should depend only on their inputs and should not read or modify hidden global state.
+
+### Why this matters
+
+- Same inputs should produce the same outputs.
+- Randomness must be made explicit.
+- Functions are easier to transform, compile, and differentiate.
+
+---
+
+## Random numbers and PRNG keys
+
+NumPy’s random API uses hidden global state:
+
+```python
+import numpy as np
+
+np.random.seed(42)
+print(np.random.normal())
+print(np.random.normal())
+```
+
+JAX instead uses explicit **PRNG keys**.
+
+```python
+import jax
+
+seed_key = jax.random.key(1337)
+
+jax.random.normal(seed_key, shape=(3,))
+jax.random.normal(seed_key, shape=(3,))
+```
+
+The same key always produces the same result. If you want new randomness, you must create or split a new key.
+
+---
+
+## Tensor assignment and immutability
+
+JAX arrays are immutable. You cannot update them in place like NumPy arrays.
+
+```python
+x = jnp.array([1, 2, 3])
+new_x = x.at[0].set(99)
+```
+
+This leaves `x` unchanged and returns a new array.
+
+### NumPy vs JAX
+
+In NumPy, item assignment mutates shared memory:
+
+```python
+import numpy as np
+
+x = np.array([1, 2, 3])
+y = x
+x[0] = 10
+```
+
+Both `x` and `y` change.
+
+In JAX, you must write functional updates:
+
+```python
+x = jnp.array([1, 2, 3])
+y = x
+x = x.at[0].set(10)
+```
+
+Now `y` still points to the original array.
+
+Trying `x[0] = 10` in JAX raises an error because item assignment is not allowed.
+
+---
+
+## Common tensor operations
+
+JAX supports standard numerical operations:
+
+```python
+a = jnp.ones((2, 2))
+b = jnp.square(a)
+c = jnp.sqrt(a)
+d = b + c
+f = jnp.matmul(a, b)
+```
+
+A simple dense layer can be written as:
+
+```python
+import jax
+import jax.numpy as jnp
+
+def dense(inputs, W, b):
+    return jax.nn.relu(jnp.matmul(inputs, W) + b)
+```
+
+---
+
+## Gradients in JAX
+
+JAX uses functional transformations such as `jax.grad()` and `jax.value_and_grad()`.
+
+```python
+import jax
+
+def f(x):
+    return x ** 2
+
+f_prime = jax.grad(f)
+print(f_prime(3.0))
+```
+
+Here `jax.grad(f)` returns a new function that computes the derivative of `f`.
+
+### `jax.value_and_grad()`
+
+This transformation returns both the function value and its gradient in one pass.
+
+```python
+val_and_grad_fn = jax.value_and_grad(f)
+val, grad = val_and_grad_fn(3.0)
+```
+
+This is often more efficient than computing the value and gradient separately.
+
+---
+
+## Gradients with multiple inputs
+
+### Pattern 1: Bundle variables in a PyTree
+
+A common machine learning pattern is to store parameters in a dictionary, tuple, or list.
+
+```python
+import jax
+import jax.numpy as jnp
+
+def loss_fn(params, x):
+    return params['w'] * x + params['b']
+
+grad_fn = jax.grad(loss_fn)
+params = {'w': 2.0, 'b': 3.0}
+grads = grad_fn(params, x=5.0)
+```
+
+By default, JAX differentiates with respect to the first argument.
+
+### Pattern 2: Separate arguments with `argnums`
+
+If your variables are separate positional arguments, use `argnums`.
+
+```python
+import jax
+
+def f(a, b, c):
+    return a**2 + b * c
+
+jax.grad(f)(3.0, 4.0, 5.0)
+jax.grad(f, argnums=(0, 1))(3.0, 4.0, 5.0)
+jax.grad(f, argnums=(0, 1, 2))(3.0, 4.0, 5.0)
+```
+
+You can combine this with `jax.value_and_grad()` as well.
+
+---
+
+## Auxiliary output
+
+Sometimes a function should return extra information, such as accuracy or MAE, along with the loss.
+
+Use `has_aux=True` when the function returns `(primary_output, auxiliary_output)`.
+
+```python
+import jax
+import jax.numpy as jnp
+
+def compute_loss(params, x, y):
+    predictions = x * params['w'] + params['b']
+    loss = jnp.mean((predictions - y) ** 2)
+    mae = jnp.mean(jnp.abs(predictions - y))
+    return loss, mae
+
+grad_fn = jax.value_and_grad(compute_loss, has_aux=True)
+(loss_val, mae_val), grads = grad_fn(params, x, y)
+```
+
+JAX differentiates only through the primary loss and returns the auxiliary data untouched.
+
+---
+
+## `@jax.jit`
+
+The `@jax.jit` decorator compiles stateless functions with XLA for faster execution.
+
+```python
+@jax.jit
+def dense(inputs, W, b):
+    return jax.nn.relu(jnp.matmul(inputs, W) + b)
+```
+
+A function decorated with `@jax.jit` should:
+
+- not read hidden global variables
+- not mutate external state
+- return new values instead of modifying inputs in place
+
+---
+
+## Stateful or stateless?
+
+1. **Stateful** — modifies the global `history` list.
+2. **Stateless** — depends only on `params`, `x`, and `y`.
+3. **Stateful** — NumPy random uses hidden global state.
+4. **Stateless** — JAX randomness is explicit through the key.
+5. **Stateful** — mutates `self.count` inside the object.
+
+---
+
+## Linear classifier in JAX
+
+A simple JAX training loop treats model state as explicit function arguments.
+
+### Model and loss
+
+```python
+import jax
+import jax.numpy as jnp
+
+def model(inputs, W, b):
+    return jnp.matmul(inputs, W) + b
+
+def mean_squared_error(targets, predictions):
+    per_sample_losses = jnp.square(targets - predictions)
+    return jnp.mean(per_sample_losses)
+
+def compute_loss(state, inputs, targets):
+    W, b = state
+    predictions = model(inputs, W, b)
+    loss = mean_squared_error(targets, predictions)
+    return loss
+```
+
+### Gradient function
+
+```python
+grad_fn = jax.value_and_grad(compute_loss)
+```
+
+### Training step
+
+```python
+learning_rate = 0.1
+
+@jax.jit
+def training_step(inputs, targets, W, b):
+    loss, grads = grad_fn((W, b), inputs, targets)
+    grad_wrt_W, grad_wrt_b = grads
+    W = W - grad_wrt_W * learning_rate
+    b = b - grad_wrt_b * learning_rate
+    return loss, W, b
+```
+
+### Training loop
+
+```python
+input_dim = 2
+output_dim = 1
+
+W = jax.numpy.array(np.random.uniform(size=(input_dim, output_dim)))
+b = jax.numpy.array(np.zeros(shape=(output_dim,)))
+
+for step in range(40):
+    loss, W, b = training_step(inputs, targets, W, b)
+    print(f"Loss at step {step}: {loss:.4f}")
+```
+
+---
+
+## Pros and cons of JAX
+
+### Advantages
+
+- Very fast for many models
+- NumPy-like API that is easy to learn
+- Excellent fit for TPUs and XLA compilation
+- Functional style works well for transformations like `grad` and `jit`
+
+### Disadvantages
+
+- Harder to debug than eager-execution frameworks
+- Training loops can be more verbose
+- Requires more discipline around state and randomness
+
+---
+
+## Summary
+
+JAX is built around three big ideas:
+
+1. **Stateless functions**
+2. **Explicit randomness with PRNG keys**
+3. **Functional transformations for gradients and compilation**
+
+These design choices make JAX fast and deterministic, but also more restrictive than NumPy, PyTorch, or TensorFlow in day-to-day use.
