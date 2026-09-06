@@ -1009,6 +1009,13 @@ font-style: inherit;">10</span>])</span></code></pre></div></div>
  [0.025846  ]
  [0.16594526]
  [0.72068727]]</code></pre>
+<p>Each row in the output corresponds to one input sample, and the single value in that row is the model’s output for the positive class. For a binary classifier whose final layer uses a sigmoid activation, this value is a probability between 0 and 1. A threshold of <code>0.5</code> can be used to convert it into a class prediction:</p>
+<ul>
+<li><code>0.3590725</code> is below <code>0.5</code>, so the sample is classified as the negative class.</li>
+<li><code>0.82706255</code> is above <code>0.5</code>, so the sample is classified as the positive class.</li>
+<li><code>0.025846</code> indicates a particularly low likelihood of the positive class, while <code>0.78046083</code> indicates a high likelihood.</li>
+</ul>
+<p>The ten rows shown are the predictions for the first ten samples in <code>val_inputs</code>; they are not the true labels. If the final layer does not use a sigmoid activation, these values should instead be interpreted as raw model scores rather than probabilities.</p>
 
 
 </section>
