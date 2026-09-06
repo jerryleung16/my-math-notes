@@ -20,6 +20,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install Jupyter
+        run: python3 -m pip install jupyter
+
       - name: Install Inkscape (For TikZ)
         run: sudo apt-get update && sudo apt-get install -y inkscape
 
