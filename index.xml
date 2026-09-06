@@ -315,40 +315,28 @@ font-style: inherit;">"sigmoid"</span>),</span>
 <p><img src="https://latex.codecogs.com/png.latex?%0A%5Coperatorname%7Brelu%7D(%5Coperatorname%7Bdot%7D(%5Ctext%7Binput%7D,%20W)%20+%20b)%0A"></p>
 <p>With 16 units, <img src="https://latex.codecogs.com/png.latex?W"> has shape <code>(input_dimension, 16)</code>, projecting the input into a 16-dimensional representation.</p>
 <p>The hidden layers use ReLU, which sets negative values to zero. The final sigmoid layer maps arbitrary values into <img src="https://latex.codecogs.com/png.latex?%5B0,%201%5D">, so its output can be interpreted as the probability that the review is positive.</p>
-<pre class="{tikz}"><code>\begin{tikzpicture}[scale=0.8]
-  \draw[-&gt;] (-3,0) -- (3,0) node[right] {$x$};
-  \draw[-&gt;] (0,-0.5) -- (0,3) node[above] {$\operatorname{ReLU}(x)$};
-  \draw[thick, blue, domain=-2.5:0] plot (\x,0);
-  \draw[thick, blue, domain=0:2.5] plot (\x,\x);
-\end{tikzpicture}</code></pre>
-<pre class="{tikz}"><code>\begin{tikzpicture}[scale=0.8]
-  \draw[-&gt;] (-4,0) -- (4,0) node[right] {$x$};
-  \draw[-&gt;] (0,-0.2) -- (0,1.3) node[above] {$\sigma(x)$};
-  \draw[dashed] (-3,1) -- (3,1);
-  \draw[thick, blue, domain=-3:3, samples=100] plot (\x,{1/(1+exp(-\x))});
-\end{tikzpicture}</code></pre>
 </section>
 <section id="optimizer-loss-and-metric" class="level2">
 <h2 class="anchored" data-anchor-id="optimizer-loss-and-metric">Optimizer, Loss, and Metric</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">model.<span class="bu" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">model.<span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">compile</span>(</span>
-<span id="cb11-2">    optimizer<span class="op" style="color: #5E5E5E;
+<span id="cb9-2">    optimizer<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"adam"</span>,</span>
-<span id="cb11-3">    loss<span class="op" style="color: #5E5E5E;
+<span id="cb9-3">    loss<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"binary_crossentropy"</span>,</span>
-<span id="cb11-4">    metrics<span class="op" style="color: #5E5E5E;
+<span id="cb9-4">    metrics<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"accuracy"</span>],</span>
-<span id="cb11-5">)</span></code></pre></div></div>
+<span id="cb9-5">)</span></code></pre></div></div>
 <ul>
 <li><strong>Adam</strong> updates the model weights.</li>
 <li><strong>Binary cross-entropy</strong> measures error for two-class probability predictions.</li>
@@ -358,73 +346,73 @@ font-style: inherit;">"accuracy"</span>],</span>
 <section id="validating-the-approach" class="level2">
 <h2 class="anchored" data-anchor-id="validating-the-approach">Validating the Approach</h2>
 <p>Reserve 10,000 training examples for validation and train on the remaining 15,000:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">x_val <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">x_val <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> x_train[:<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">10000</span>]</span>
-<span id="cb12-2">partial_x_train <span class="op" style="color: #5E5E5E;
+<span id="cb10-2">partial_x_train <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> x_train[<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">10000</span>:]</span>
-<span id="cb12-3">y_val <span class="op" style="color: #5E5E5E;
+<span id="cb10-3">y_val <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> y_train[:<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">10000</span>]</span>
-<span id="cb12-4">partial_y_train <span class="op" style="color: #5E5E5E;
+<span id="cb10-4">partial_y_train <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> y_train[<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">10000</span>:]</span>
-<span id="cb12-5"></span>
-<span id="cb12-6">history <span class="op" style="color: #5E5E5E;
+<span id="cb10-5"></span>
+<span id="cb10-6">history <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> model.fit(</span>
-<span id="cb12-7">    partial_x_train,</span>
-<span id="cb12-8">    partial_y_train,</span>
-<span id="cb12-9">    epochs<span class="op" style="color: #5E5E5E;
+<span id="cb10-7">    partial_x_train,</span>
+<span id="cb10-8">    partial_y_train,</span>
+<span id="cb10-9">    epochs<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">20</span>,</span>
-<span id="cb12-10">    batch_size<span class="op" style="color: #5E5E5E;
+<span id="cb10-10">    batch_size<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">512</span>,</span>
-<span id="cb12-11">    validation_data<span class="op" style="color: #5E5E5E;
+<span id="cb10-11">    validation_data<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>(x_val, y_val),</span>
-<span id="cb12-12">)</span></code></pre></div></div>
+<span id="cb10-12">)</span></code></pre></div></div>
 <p>Alternatively, let Keras reserve 20% of the training data:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">history <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">history <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> model.fit(</span>
-<span id="cb13-2">    x_train,</span>
-<span id="cb13-3">    y_train,</span>
-<span id="cb13-4">    epochs<span class="op" style="color: #5E5E5E;
+<span id="cb11-2">    x_train,</span>
+<span id="cb11-3">    y_train,</span>
+<span id="cb11-4">    epochs<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">20</span>,</span>
-<span id="cb13-5">    batch_size<span class="op" style="color: #5E5E5E;
+<span id="cb11-5">    batch_size<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">512</span>,</span>
-<span id="cb13-6">    validation_split<span class="op" style="color: #5E5E5E;
+<span id="cb11-6">    validation_split<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.2</span>,</span>
-<span id="cb13-7">)</span></code></pre></div></div>
+<span id="cb11-7">)</span></code></pre></div></div>
 <p>The training history contains the loss and accuracy for both training and validation:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;&gt;&gt;</span> history.history.keys()</span>
-<span id="cb14-2">dict_keys([<span class="st" style="color: #20794D;
+<span id="cb12-2">dict_keys([<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"accuracy"</span>, <span class="st" style="color: #20794D;
 background-color: null;
@@ -437,54 +425,54 @@ font-style: inherit;">"val_loss"</span>])</span></code></pre></div></div>
 </section>
 <section id="train-the-final-model-and-evaluate-it" class="level2">
 <h2 class="anchored" data-anchor-id="train-the-final-model-and-evaluate-it">Train the Final Model and Evaluate It</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1">model <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">model <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> keras.Sequential(</span>
-<span id="cb15-2">    [</span>
-<span id="cb15-3">        layers.Dense(<span class="dv" style="color: #AD0000;
+<span id="cb13-2">    [</span>
+<span id="cb13-3">        layers.Dense(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">16</span>, activation<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"relu"</span>),</span>
-<span id="cb15-4">        layers.Dense(<span class="dv" style="color: #AD0000;
+<span id="cb13-4">        layers.Dense(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">16</span>, activation<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"relu"</span>),</span>
-<span id="cb15-5">        layers.Dense(<span class="dv" style="color: #AD0000;
+<span id="cb13-5">        layers.Dense(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>, activation<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"sigmoid"</span>),</span>
-<span id="cb15-6">    ]</span>
-<span id="cb15-7">)</span>
-<span id="cb15-8">model.<span class="bu" style="color: null;
+<span id="cb13-6">    ]</span>
+<span id="cb13-7">)</span>
+<span id="cb13-8">model.<span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">compile</span>(</span>
-<span id="cb15-9">    optimizer<span class="op" style="color: #5E5E5E;
+<span id="cb13-9">    optimizer<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"adam"</span>,</span>
-<span id="cb15-10">    loss<span class="op" style="color: #5E5E5E;
+<span id="cb13-10">    loss<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"binary_crossentropy"</span>,</span>
-<span id="cb15-11">    metrics<span class="op" style="color: #5E5E5E;
+<span id="cb13-11">    metrics<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"accuracy"</span>],</span>
-<span id="cb15-12">)</span>
-<span id="cb15-13"></span>
-<span id="cb15-14">model.fit(x_train, y_train, epochs<span class="op" style="color: #5E5E5E;
+<span id="cb13-12">)</span>
+<span id="cb13-13"></span>
+<span id="cb13-14">model.fit(x_train, y_train, epochs<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
 background-color: null;
@@ -493,14 +481,14 @@ background-color: null;
 font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">512</span>)</span>
-<span id="cb15-15">results <span class="op" style="color: #5E5E5E;
+<span id="cb13-15">results <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> model.evaluate(x_test, y_test)</span>
-<span id="cb15-16"></span>
-<span id="cb15-17"><span class="op" style="color: #5E5E5E;
+<span id="cb13-16"></span>
+<span id="cb13-17"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;&gt;&gt;</span> results</span>
-<span id="cb15-18">[<span class="fl" style="color: #AD0000;
+<span id="cb13-18">[<span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.2929924130630493</span>, <span class="fl" style="color: #AD0000;
 background-color: null;
@@ -509,26 +497,26 @@ font-style: inherit;">0.88327999999999995</span>]</span></code></pre></div></div
 </section>
 <section id="generate-predictions" class="level2">
 <h2 class="anchored" data-anchor-id="generate-predictions">Generate Predictions</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&gt;&gt;&gt;</span> model.predict(x_test)</span>
-<span id="cb16-2">array([[<span class="fl" style="color: #AD0000;
+<span id="cb14-2">array([[<span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.98006207</span>],</span>
-<span id="cb16-3">       [<span class="fl" style="color: #AD0000;
+<span id="cb14-3">       [<span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.99758697</span>],</span>
-<span id="cb16-4">       [<span class="fl" style="color: #AD0000;
+<span id="cb14-4">       [<span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.99975556</span>],</span>
-<span id="cb16-5">       ...,</span>
-<span id="cb16-6">       [<span class="fl" style="color: #AD0000;
+<span id="cb14-5">       ...,</span>
+<span id="cb14-6">       [<span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.82167041</span>],</span>
-<span id="cb16-7">       [<span class="fl" style="color: #AD0000;
+<span id="cb14-7">       [<span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.02885115</span>],</span>
-<span id="cb16-8">       [<span class="fl" style="color: #AD0000;
+<span id="cb14-8">       [<span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.65371346</span>]], dtype<span class="op" style="color: #5E5E5E;
 background-color: null;
