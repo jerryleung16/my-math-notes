@@ -1,0 +1,250 @@
+---
+title: "Classifying Movie Reviews: A Binary Classification Example"
+date: "2026-09-06"
+description: "IMDb sentiment classification with Keras: preprocessing reviews, training a dense neural network, validation, and prediction."
+categories: [Deep Learning]
+---
+
+## The IMDb Dataset
+
+The IMDb dataset contains 50,000 highly polarized Internet Movie Database reviews: 25,000 training reviews and 25,000 test reviews. Each split is balanced, with 50% negative and 50% positive reviews.
+
+Keras provides this dataset already preprocessed. A review is represented as a sequence of integers, where each integer identifies a word in a dictionary.
+
+## Load the Dataset
+
+```python
+from keras.datasets import imdb
+
+(train_data, train_labels), (test_data, test_labels) = imdb.load_data(
+    num_words=10000
+)
+```
+
+`num_words=10000` retains only the 10,000 words occurring most often in the training data. Rarer words are discarded.
+
+- `train_data` and `test_data` contain reviews as lists of word indices.
+- `train_labels` and `test_labels` contain `0` for negative reviews and `1` for positive reviews.
+
+```python
+>>> train_data[0]
+[1, 14, 22, 16, ..., 178, 32]
+>>> train_labels[0]
+1
+```
+
+## Decode a Review Back to English
+
+```python
+# Maps words to integer indices.
+word_index = imdb.get_word_index()
+
+# Reverses the mapping so integer indices map to words.
+reverse_word_index = dict(
+    [(value, key) for (key, value) in word_index.items()]
+)
+
+# The dataset indices are offset by 3; see the explanation below.
+decoded_review = " ".join(
+    [reverse_word_index.get(i - 3, "?") for i in train_data[0]]
+)
+```
+
+### Why Reverse the Dictionary?
+
+`imdb.get_word_index()` returns a word-to-index mapping ordered by frequency, such as:
+
+```python
+{"the": 1, "and": 2, "a": 3, "cherimoya": 8504}
+```
+
+The data contains indices, not words, so reversing the mapping lets us efficiently convert each index back into its word.
+
+### Why Subtract 3?
+
+Keras reserves the first three indices for special tokens:
+
+| Index | Meaning |
+|---:|---|
+| `0` | Padding |
+| `1` | Start of sequence |
+| `2` | Unknown / out-of-vocabulary word |
+
+Actual word indices in `train_data` are therefore shifted by three. For example, `"the"` has index `1` in `reverse_word_index` but appears as `4` in a review. Subtracting three restores the original dictionary index. `.get(i - 3, "?")` uses `?` when an index is a special token or is unavailable.
+
+`" ".join(...)` then combines the decoded words into one review string:
+
+```python
+>>> decoded_review[:100]
+'? this film was just brilliant casting location scenery story direction everyone'
+```
+
+## Preparing the Data
+
+Reviews have different lengths, but a neural network needs contiguous batches of tensors. Multi-hot encoding converts each review into a 10,000-dimensional vector: each position is `1` if its word occurs in the review and `0` otherwise. For example, `[8, 5]` becomes a vector with ones at indices `5` and `8`.
+
+```python
+import numpy as np
+
+def multi_hot_encode(sequences, num_classes):
+    # Creates an all-zero matrix of shape (len(sequences), num_classes).
+    results = np.zeros((len(sequences), num_classes))
+    for i, sequence in enumerate(sequences):
+        # Marks every word occurring in this review.
+        results[i][sequence] = 1.0
+    return results
+
+x_train = multi_hot_encode(train_data, num_classes=10000)
+x_test = multi_hot_encode(test_data, num_classes=10000)
+
+>>> x_train[0]
+array([0., 1., 1., ..., 0., 0., 0.])
+```
+
+The integer labels only need conversion to floating point:
+
+```python
+y_train = train_labels.astype("float32")
+y_test = test_labels.astype("float32")
+```
+
+## Building the Model
+
+This is a simple setup: vector inputs and scalar binary labels. A stack of densely connected layers works well. The two design choices are the number of layers and the number of units in each layer.
+
+This model has two intermediate layers with 16 units and a final scalar prediction layer:
+
+```python
+import keras
+from keras import layers
+
+model = keras.Sequential(
+    [
+        layers.Dense(16, activation="relu"),
+        layers.Dense(16, activation="relu"),
+        layers.Dense(1, activation="sigmoid"),
+    ]
+)
+```
+
+Each hidden `Dense` layer computes:
+
+$$
+\operatorname{relu}(\operatorname{dot}(\text{input}, W) + b)
+$$
+
+With 16 units, $W$ has shape `(input_dimension, 16)`, projecting the input into a 16-dimensional representation.
+
+The hidden layers use ReLU, which sets negative values to zero. The final sigmoid layer maps arbitrary values into $[0, 1]$, so its output can be interpreted as the probability that the review is positive.
+
+```{tikz}
+\begin{tikzpicture}[scale=0.8]
+  \draw[->] (-3,0) -- (3,0) node[right] {$x$};
+  \draw[->] (0,-0.5) -- (0,3) node[above] {$\operatorname{ReLU}(x)$};
+  \draw[thick, blue, domain=-2.5:0] plot (\x,0);
+  \draw[thick, blue, domain=0:2.5] plot (\x,\x);
+\end{tikzpicture}
+```
+
+```{tikz}
+\begin{tikzpicture}[scale=0.8]
+  \draw[->] (-4,0) -- (4,0) node[right] {$x$};
+  \draw[->] (0,-0.2) -- (0,1.3) node[above] {$\sigma(x)$};
+  \draw[dashed] (-3,1) -- (3,1);
+  \draw[thick, blue, domain=-3:3, samples=100] plot (\x,{1/(1+exp(-\x))});
+\end{tikzpicture}
+```
+
+## Optimizer, Loss, and Metric
+
+```python
+model.compile(
+    optimizer="adam",
+    loss="binary_crossentropy",
+    metrics=["accuracy"],
+)
+```
+
+- **Adam** updates the model weights.
+- **Binary cross-entropy** measures error for two-class probability predictions.
+- **Accuracy** reports the fraction of correctly classified reviews.
+
+## Validating the Approach
+
+Reserve 10,000 training examples for validation and train on the remaining 15,000:
+
+```python
+x_val = x_train[:10000]
+partial_x_train = x_train[10000:]
+y_val = y_train[:10000]
+partial_y_train = y_train[10000:]
+
+history = model.fit(
+    partial_x_train,
+    partial_y_train,
+    epochs=20,
+    batch_size=512,
+    validation_data=(x_val, y_val),
+)
+```
+
+Alternatively, let Keras reserve 20% of the training data:
+
+```python
+history = model.fit(
+    x_train,
+    y_train,
+    epochs=20,
+    batch_size=512,
+    validation_split=0.2,
+)
+```
+
+The training history contains the loss and accuracy for both training and validation:
+
+```python
+>>> history.history.keys()
+dict_keys(["accuracy", "loss", "val_accuracy", "val_loss"])
+```
+
+Training loss should decrease and training accuracy should increase. Here, validation loss and accuracy typically peak around the fourth epoch; continuing further overfits the training data. Stop after four epochs.
+
+## Train the Final Model and Evaluate It
+
+```python
+model = keras.Sequential(
+    [
+        layers.Dense(16, activation="relu"),
+        layers.Dense(16, activation="relu"),
+        layers.Dense(1, activation="sigmoid"),
+    ]
+)
+model.compile(
+    optimizer="adam",
+    loss="binary_crossentropy",
+    metrics=["accuracy"],
+)
+
+model.fit(x_train, y_train, epochs=4, batch_size=512)
+results = model.evaluate(x_test, y_test)
+
+>>> results
+[0.2929924130630493, 0.88327999999999995]
+```
+
+The first result is test loss and the second is test accuracy: approximately 88.3%.
+
+## Generate Predictions
+
+```python
+>>> model.predict(x_test)
+array([[0.98006207],
+       [0.99758697],
+       [0.99975556],
+       ...,
+       [0.82167041],
+       [0.02885115],
+       [0.65371346]], dtype=float32)
+```
+
+Each value is the model's estimated probability that the corresponding review is positive. A value near `1` indicates positive sentiment; a value near `0` indicates negative sentiment.
