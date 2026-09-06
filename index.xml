@@ -12,6 +12,538 @@
 <generator>quarto-1.10.18</generator>
 <lastBuildDate>Sun, 06 Sep 2026 00:00:00 GMT</lastBuildDate>
 <item>
+  <title>Classifying Movie Reviews: A Binary Classification Example</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/deep learning/Deep Learning with Python Ch.4 IMDb Binary Classification/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="the-imdb-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="the-imdb-dataset">The IMDb Dataset</h2>
+<p>The IMDb dataset contains 50,000 highly polarized Internet Movie Database reviews: 25,000 training reviews and 25,000 test reviews. Each split is balanced, with 50% negative and 50% positive reviews.</p>
+<p>Keras provides this dataset already preprocessed. A review is represented as a sequence of integers, where each integer identifies a word in a dictionary.</p>
+</section>
+<section id="load-the-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="load-the-dataset">Load the Dataset</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> keras.datasets <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> imdb</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">(train_data, train_labels), (test_data, test_labels) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> imdb.load_data(</span>
+<span id="cb1-4">    num_words<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span></span>
+<span id="cb1-5">)</span></code></pre></div></div>
+<p><code>num_words=10000</code> retains only the 10,000 words occurring most often in the training data. Rarer words are discarded.</p>
+<ul>
+<li><code>train_data</code> and <code>test_data</code> contain reviews as lists of word indices.</li>
+<li><code>train_labels</code> and <code>test_labels</code> contain <code>0</code> for negative reviews and <code>1</code> for positive reviews.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> train_data[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb2-2">[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">22</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>, ..., <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">178</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">32</span>]</span>
+<span id="cb2-3"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> train_labels[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb2-4"><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span></code></pre></div></div>
+</section>
+<section id="decode-a-review-back-to-english" class="level2">
+<h2 class="anchored" data-anchor-id="decode-a-review-back-to-english">Decode a Review Back to English</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Maps words to integer indices.</span></span>
+<span id="cb3-2">word_index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> imdb.get_word_index()</span>
+<span id="cb3-3"></span>
+<span id="cb3-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Reverses the mapping so integer indices map to words.</span></span>
+<span id="cb3-5">reverse_word_index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(</span>
+<span id="cb3-6">    [(value, key) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> (key, value) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> word_index.items()]</span>
+<span id="cb3-7">)</span>
+<span id="cb3-8"></span>
+<span id="cb3-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># The dataset indices are offset by 3; see the explanation below.</span></span>
+<span id="cb3-10">decoded_review <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" "</span>.join(</span>
+<span id="cb3-11">    [reverse_word_index.get(i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"?"</span>) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> train_data[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]]</span>
+<span id="cb3-12">)</span></code></pre></div></div>
+<section id="why-reverse-the-dictionary" class="level3">
+<h3 class="anchored" data-anchor-id="why-reverse-the-dictionary">Why Reverse the Dictionary?</h3>
+<p><code>imdb.get_word_index()</code> returns a word-to-index mapping ordered by frequency, such as:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">{<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"the"</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"and"</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"a"</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cherimoya"</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8504</span>}</span></code></pre></div></div>
+<p>The data contains indices, not words, so reversing the mapping lets us efficiently convert each index back into its word.</p>
+</section>
+<section id="why-subtract-3" class="level3">
+<h3 class="anchored" data-anchor-id="why-subtract-3">Why Subtract 3?</h3>
+<p>Keras reserves the first three indices for special tokens:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Index</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><code>0</code></td>
+<td>Padding</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><code>1</code></td>
+<td>Start of sequence</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><code>2</code></td>
+<td>Unknown / out-of-vocabulary word</td>
+</tr>
+</tbody>
+</table>
+<p>Actual word indices in <code>train_data</code> are therefore shifted by three. For example, <code>"the"</code> has index <code>1</code> in <code>reverse_word_index</code> but appears as <code>4</code> in a review. Subtracting three restores the original dictionary index. <code>.get(i - 3, "?")</code> uses <code>?</code> when an index is a special token or is unavailable.</p>
+<p><code>" ".join(...)</code> then combines the decoded words into one review string:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> decoded_review[:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>]</span>
+<span id="cb5-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">'? this film was just brilliant casting location scenery story direction everyone'</span></span></code></pre></div></div>
+</section>
+</section>
+<section id="preparing-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="preparing-the-data">Preparing the Data</h2>
+<p>Reviews have different lengths, but a neural network needs contiguous batches of tensors. Multi-hot encoding converts each review into a 10,000-dimensional vector: each position is <code>1</code> if its word occurs in the review and <code>0</code> otherwise. For example, <code>[8, 5]</code> becomes a vector with ones at indices <code>5</code> and <code>8</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb6-2"></span>
+<span id="cb6-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> multi_hot_encode(sequences, num_classes):</span>
+<span id="cb6-4">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Creates an all-zero matrix of shape (len(sequences), num_classes).</span></span>
+<span id="cb6-5">    results <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.zeros((<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(sequences), num_classes))</span>
+<span id="cb6-6">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i, sequence <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(sequences):</span>
+<span id="cb6-7">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Marks every word occurring in this review.</span></span>
+<span id="cb6-8">        results[i][sequence] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span></span>
+<span id="cb6-9">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> results</span>
+<span id="cb6-10"></span>
+<span id="cb6-11">x_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> multi_hot_encode(train_data, num_classes<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>)</span>
+<span id="cb6-12">x_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> multi_hot_encode(test_data, num_classes<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>)</span>
+<span id="cb6-13"></span>
+<span id="cb6-14"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> x_train[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb6-15">array([<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.</span>, ..., <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.</span>])</span></code></pre></div></div>
+<p>The integer labels only need conversion to floating point:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">y_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train_labels.astype(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"float32"</span>)</span>
+<span id="cb7-2">y_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> test_labels.astype(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"float32"</span>)</span></code></pre></div></div>
+</section>
+<section id="building-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-model">Building the Model</h2>
+<p>This is a simple setup: vector inputs and scalar binary labels. A stack of densely connected layers works well. The two design choices are the number of layers and the number of units in each layer.</p>
+<p>This model has two intermediate layers with 16 units and a final scalar prediction layer:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> keras</span>
+<span id="cb8-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> keras <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> layers</span>
+<span id="cb8-3"></span>
+<span id="cb8-4">model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> keras.Sequential(</span>
+<span id="cb8-5">    [</span>
+<span id="cb8-6">        layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"relu"</span>),</span>
+<span id="cb8-7">        layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"relu"</span>),</span>
+<span id="cb8-8">        layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sigmoid"</span>),</span>
+<span id="cb8-9">    ]</span>
+<span id="cb8-10">)</span></code></pre></div></div>
+<p>Each hidden <code>Dense</code> layer computes:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Coperatorname%7Brelu%7D(%5Coperatorname%7Bdot%7D(%5Ctext%7Binput%7D,%20W)%20+%20b)%0A"></p>
+<p>With 16 units, <img src="https://latex.codecogs.com/png.latex?W"> has shape <code>(input_dimension, 16)</code>, projecting the input into a 16-dimensional representation.</p>
+<p>The hidden layers use ReLU, which sets negative values to zero. The final sigmoid layer maps arbitrary values into <img src="https://latex.codecogs.com/png.latex?%5B0,%201%5D">, so its output can be interpreted as the probability that the review is positive.</p>
+<pre class="{tikz}"><code>\begin{tikzpicture}[scale=0.8]
+  \draw[-&gt;] (-3,0) -- (3,0) node[right] {$x$};
+  \draw[-&gt;] (0,-0.5) -- (0,3) node[above] {$\operatorname{ReLU}(x)$};
+  \draw[thick, blue, domain=-2.5:0] plot (\x,0);
+  \draw[thick, blue, domain=0:2.5] plot (\x,\x);
+\end{tikzpicture}</code></pre>
+<pre class="{tikz}"><code>\begin{tikzpicture}[scale=0.8]
+  \draw[-&gt;] (-4,0) -- (4,0) node[right] {$x$};
+  \draw[-&gt;] (0,-0.2) -- (0,1.3) node[above] {$\sigma(x)$};
+  \draw[dashed] (-3,1) -- (3,1);
+  \draw[thick, blue, domain=-3:3, samples=100] plot (\x,{1/(1+exp(-\x))});
+\end{tikzpicture}</code></pre>
+</section>
+<section id="optimizer-loss-and-metric" class="level2">
+<h2 class="anchored" data-anchor-id="optimizer-loss-and-metric">Optimizer, Loss, and Metric</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">model.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">compile</span>(</span>
+<span id="cb11-2">    optimizer<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"adam"</span>,</span>
+<span id="cb11-3">    loss<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"binary_crossentropy"</span>,</span>
+<span id="cb11-4">    metrics<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accuracy"</span>],</span>
+<span id="cb11-5">)</span></code></pre></div></div>
+<ul>
+<li><strong>Adam</strong> updates the model weights.</li>
+<li><strong>Binary cross-entropy</strong> measures error for two-class probability predictions.</li>
+<li><strong>Accuracy</strong> reports the fraction of correctly classified reviews.</li>
+</ul>
+</section>
+<section id="validating-the-approach" class="level2">
+<h2 class="anchored" data-anchor-id="validating-the-approach">Validating the Approach</h2>
+<p>Reserve 10,000 training examples for validation and train on the remaining 15,000:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">x_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x_train[:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>]</span>
+<span id="cb12-2">partial_x_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x_train[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>:]</span>
+<span id="cb12-3">y_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> y_train[:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>]</span>
+<span id="cb12-4">partial_y_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> y_train[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>:]</span>
+<span id="cb12-5"></span>
+<span id="cb12-6">history <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model.fit(</span>
+<span id="cb12-7">    partial_x_train,</span>
+<span id="cb12-8">    partial_y_train,</span>
+<span id="cb12-9">    epochs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>,</span>
+<span id="cb12-10">    batch_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">512</span>,</span>
+<span id="cb12-11">    validation_data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(x_val, y_val),</span>
+<span id="cb12-12">)</span></code></pre></div></div>
+<p>Alternatively, let Keras reserve 20% of the training data:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">history <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model.fit(</span>
+<span id="cb13-2">    x_train,</span>
+<span id="cb13-3">    y_train,</span>
+<span id="cb13-4">    epochs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>,</span>
+<span id="cb13-5">    batch_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">512</span>,</span>
+<span id="cb13-6">    validation_split<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>,</span>
+<span id="cb13-7">)</span></code></pre></div></div>
+<p>The training history contains the loss and accuracy for both training and validation:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> history.history.keys()</span>
+<span id="cb14-2">dict_keys([<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accuracy"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"loss"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"val_accuracy"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"val_loss"</span>])</span></code></pre></div></div>
+<p>Training loss should decrease and training accuracy should increase. Here, validation loss and accuracy typically peak around the fourth epoch; continuing further overfits the training data. Stop after four epochs.</p>
+</section>
+<section id="train-the-final-model-and-evaluate-it" class="level2">
+<h2 class="anchored" data-anchor-id="train-the-final-model-and-evaluate-it">Train the Final Model and Evaluate It</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1">model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> keras.Sequential(</span>
+<span id="cb15-2">    [</span>
+<span id="cb15-3">        layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"relu"</span>),</span>
+<span id="cb15-4">        layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"relu"</span>),</span>
+<span id="cb15-5">        layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sigmoid"</span>),</span>
+<span id="cb15-6">    ]</span>
+<span id="cb15-7">)</span>
+<span id="cb15-8">model.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">compile</span>(</span>
+<span id="cb15-9">    optimizer<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"adam"</span>,</span>
+<span id="cb15-10">    loss<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"binary_crossentropy"</span>,</span>
+<span id="cb15-11">    metrics<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accuracy"</span>],</span>
+<span id="cb15-12">)</span>
+<span id="cb15-13"></span>
+<span id="cb15-14">model.fit(x_train, y_train, epochs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, batch_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">512</span>)</span>
+<span id="cb15-15">results <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model.evaluate(x_test, y_test)</span>
+<span id="cb15-16"></span>
+<span id="cb15-17"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> results</span>
+<span id="cb15-18">[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2929924130630493</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.88327999999999995</span>]</span></code></pre></div></div>
+<p>The first result is test loss and the second is test accuracy: approximately 88.3%.</p>
+</section>
+<section id="generate-predictions" class="level2">
+<h2 class="anchored" data-anchor-id="generate-predictions">Generate Predictions</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> model.predict(x_test)</span>
+<span id="cb16-2">array([[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.98006207</span>],</span>
+<span id="cb16-3">       [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.99758697</span>],</span>
+<span id="cb16-4">       [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.99975556</span>],</span>
+<span id="cb16-5">       ...,</span>
+<span id="cb16-6">       [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.82167041</span>],</span>
+<span id="cb16-7">       [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.02885115</span>],</span>
+<span id="cb16-8">       [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65371346</span>]], dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>float32)</span></code></pre></div></div>
+<p>Each value is the model’s estimated probability that the corresponding review is positive. A value near <code>1</code> indicates positive sentiment; a value near <code>0</code> indicates negative sentiment.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Deep Learning</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/deep learning/Deep Learning with Python Ch.4 IMDb Binary Classification/</guid>
+  <pubDate>Sun, 06 Sep 2026 00:00:00 GMT</pubDate>
+</item>
+<item>
   <title>Introduction to Keras</title>
   <link>https://jerryleung16.github.io/my-math-notes/posts/deep learning/keras/</link>
   <description><![CDATA[ 
@@ -10004,327 +10536,6 @@ Phone: No number provided.</code></pre>
   <category>Python</category>
   <guid>https://jerryleung16.github.io/my-math-notes/posts/python/optional-attributes/</guid>
   <pubDate>Thu, 06 Aug 2026 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>1. Classes in Python: A Beginner’s Guide to Object-Oriented Programming</title>
-  <link>https://jerryleung16.github.io/my-math-notes/posts/python/intro-to-class/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="introduction-to-object-oriented-programming-with-python" class="level1">
-<h1>Introduction to Object-Oriented Programming with Python</h1>
-<p>Welcome to the world of <strong>Object-Oriented Programming (OOP)</strong>!</p>
-<p>The name may sound complicated, but the basic idea is quite simple: <strong>OOP is a way of organizing programs by modeling things as objects</strong>, similar to the way we think about objects in the real world.</p>
-<p>A helpful way to understand OOP is to imagine a <strong>cookie cutter</strong>.</p>
-<ul>
-<li><strong>A Class</strong> is the <em>cookie cutter</em>. It is a blueprint or template that describes what something should look like and what it can do. You cannot eat the cookie cutter, but it determines the shape of every cookie you make.</li>
-<li><strong>An Object</strong> is the <em>cookie</em>. It is an actual thing created from the class. One cookie cutter can be used to make many different cookies.</li>
-</ul>
-<p>For example, one <code>Dog</code> class can be used to create many different dog objects:</p>
-<pre class="text"><code>Dog class
-   ↓
- ┌─────────┬─────────┬─────────┐
- ↓         ↓         ↓
-Buddy     Daisy     Max</code></pre>
-<p>Each object follows the same blueprint but can have its own data.</p>
-<hr>
-<section id="the-4-key-oop-vocabulary-words" class="level2">
-<h2 class="anchored" data-anchor-id="the-4-key-oop-vocabulary-words">The 4 Key OOP Vocabulary Words</h2>
-<p>Before writing code, let’s learn four terms that you will encounter constantly when working with classes.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 21%">
-<col style="width: 51%">
-<col style="width: 27%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Term</th>
-<th style="text-align: left;">Simple Meaning</th>
-<th style="text-align: left;">Real-World Example</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><strong>Class</strong></td>
-<td style="text-align: left;">A blueprint or template for creating objects.</td>
-<td style="text-align: left;">The general idea of a “Dog”</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>Object</strong> (Instance)</td>
-<td style="text-align: left;">A specific item created from a class.</td>
-<td style="text-align: left;">Your pet dog, Fido</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>Attribute</strong></td>
-<td style="text-align: left;">Data stored inside an object that describes it.</td>
-<td style="text-align: left;">Name, breed, age, fur color</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>Method</strong></td>
-<td style="text-align: left;">A function inside a class that describes an action.</td>
-<td style="text-align: left;">Barking, sitting, fetching</td>
-</tr>
-</tbody>
-</table>
-<p>A useful way to remember the difference is:</p>
-<blockquote class="blockquote">
-<p><strong>Attributes describe what an object has. Methods describe what an object can do.</strong></p>
-</blockquote>
-<hr>
-</section>
-</section>
-<section id="building-our-first-class" class="level1">
-<h1>Building Our First Class</h1>
-<p>Let’s turn the general idea of a <strong>Dog</strong> into Python code.</p>
-<p>We want our <code>Dog</code> class to have:</p>
-<ul>
-<li><strong>Attributes</strong>: a name and an age</li>
-<li><strong>Method</strong>: the ability to bark</li>
-</ul>
-<pre class="text"><code>class Dog:
-
-    # The constructor: used to initialize a new object
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    # A method: an action the dog can perform
-    def bark(self):
-        print(f"{self.name} says Woof!")</code></pre>
-<section id="breaking-down-the-code" class="level2">
-<h2 class="anchored" data-anchor-id="breaking-down-the-code">Breaking Down the Code</h2>
-<p>Let’s examine the code one piece at a time.</p>
-<section id="class-dog" class="level3">
-<h3 class="anchored" data-anchor-id="class-dog">1. <code>class Dog:</code></h3>
-<pre class="text"><code>class Dog:</code></pre>
-<p>This tells Python:</p>
-<blockquote class="blockquote">
-<p>“I want to create a new blueprint called <code>Dog</code>.”</p>
-</blockquote>
-<p>By convention, Python class names usually begin with a <strong>capital letter</strong>.</p>
-<hr>
-</section>
-<section id="def-__init__self-name-age" class="level3">
-<h3 class="anchored" data-anchor-id="def-__init__self-name-age">2. <code>def __init__(self, name, age):</code></h3>
-<pre class="text"><code>def __init__(self, name, age):</code></pre>
-<p><code>__init__</code> is a special method called the <strong>constructor</strong>.</p>
-<p>It runs automatically whenever we create a new object from the class.</p>
-<p>The constructor allows us to provide the initial information needed to set up our object.</p>
-<p>For example:</p>
-<pre class="text"><code>Dog("Buddy", 3)</code></pre>
-<p>Python uses <code>"Buddy"</code> as the name and <code>3</code> as the age when setting up the new dog.</p>
-<hr>
-</section>
-<section id="self.name-name" class="level3">
-<h3 class="anchored" data-anchor-id="self.name-name">3. <code>self.name = name</code></h3>
-<pre class="text"><code>self.name = name
-self.age = age</code></pre>
-<p>The keyword <code>self</code> refers to <strong>the particular object currently being created or used</strong>.</p>
-<p>So:</p>
-<pre class="text"><code>self.name = name</code></pre>
-<p>can be understood as:</p>
-<blockquote class="blockquote">
-<p>“Take the name provided by the user and store it as the name of <strong>this specific dog</strong>.”</p>
-</blockquote>
-<p>Similarly:</p>
-<pre class="text"><code>self.age = age</code></pre>
-<p>means:</p>
-<blockquote class="blockquote">
-<p>“Store this age as the age of <strong>this specific dog</strong>.”</p>
-</blockquote>
-<hr>
-</section>
-<section id="def-barkself" class="level3">
-<h3 class="anchored" data-anchor-id="def-barkself">4. <code>def bark(self):</code></h3>
-<pre class="text"><code>def bark(self):
-    print(f"{self.name} says Woof!")</code></pre>
-<p>This is a function defined inside a class, so we call it a <strong>method</strong>.</p>
-<p>The method also receives <code>self</code> because the dog needs to know <strong>which dog</strong> is performing the action.</p>
-<hr>
-</section>
-</section>
-</section>
-<section id="bringing-the-class-to-life" class="level1">
-<h1>Bringing the Class to Life</h1>
-<p>Our class is only a blueprint so far.</p>
-<p>Now let’s use it to create actual objects.</p>
-<pre class="text"><code># Create the first dog
-dog_1 = Dog("Buddy", 3)
-
-# Create a second dog
-dog_2 = Dog("Daisy", 5)</code></pre>
-<p>We have now created two separate objects:</p>
-<ul>
-<li><code>dog_1</code> represents Buddy, who is 3 years old.</li>
-<li><code>dog_2</code> represents Daisy, who is 5 years old.</li>
-</ul>
-<p>Both objects were created from the same <code>Dog</code> class, but each object has its <strong>own data</strong>.</p>
-<hr>
-<section id="accessing-attributes-and-methods" class="level2">
-<h2 class="anchored" data-anchor-id="accessing-attributes-and-methods">Accessing Attributes and Methods</h2>
-<p>We can interact with an object using the <strong>dot operator (<code>.</code>)</strong>.</p>
-<section id="accessing-attributes" class="level3">
-<h3 class="anchored" data-anchor-id="accessing-attributes">Accessing Attributes</h3>
-<pre class="text"><code>print(dog_1.name)
-# Buddy
-
-print(dog_2.age)
-# 5</code></pre>
-<p>The dot tells Python which attribute belonging to the object we want to access.</p>
-</section>
-<section id="calling-methods" class="level3">
-<h3 class="anchored" data-anchor-id="calling-methods">Calling Methods</h3>
-<pre class="text"><code>dog_1.bark()
-# Buddy says Woof!
-
-dog_2.bark()
-# Daisy says Woof!</code></pre>
-<p>Notice how the same method can produce different results depending on the object that calls it.</p>
-<p>This is one of the key ideas behind OOP.</p>
-<hr>
-</section>
-</section>
-</section>
-<section id="why-do-we-use-classes" class="level1">
-<h1>Why Do We Use Classes?</h1>
-<p>For a very small program, you may not need classes.</p>
-<p>For example, if you are writing a quick program to calculate your taxes, a class might be unnecessary.</p>
-<p>However, as programs become larger—such as:</p>
-<ul>
-<li>video games,</li>
-<li>web applications,</li>
-<li>data dashboards,</li>
-<li>simulations, or</li>
-<li>business software,</li>
-</ul>
-<p>classes can make your code much easier to organize.</p>
-<p>Imagine a video game with two players.</p>
-<p>Without classes, you might have variables such as:</p>
-<pre class="text"><code>player_1_health
-player_1_score
-player_2_health
-player_2_score</code></pre>
-<p>As the game becomes more complicated, you could end up with dozens or even hundreds of related variables.</p>
-<p>Instead, we can create a <code>Player</code> class and then create multiple player objects from it.</p>
-<pre class="text"><code>Player class
-      ↓
- ┌────┴────┐
- ↓         ↓
-Player 1  Player 2</code></pre>
-<p>Each player object can keep track of its own health, score, name, and other information.</p>
-<blockquote class="blockquote">
-<p><strong>A class lets us organize related data and actions into one reusable structure.</strong></p>
-</blockquote>
-<hr>
-</section>
-<section id="understanding-self" class="level1">
-<h1>Understanding <code>self</code></h1>
-<p>The keyword <code>self</code> is one of the most important concepts for beginners learning Python classes.</p>
-<p>Think of a class as a blueprint for building robots.</p>
-<p>Suppose we use the blueprint to build two robots:</p>
-<pre class="text"><code>Robot class
-     ↓
- ┌───┴────┐
- ↓        ↓
-Wall-E   R2-D2</code></pre>
-<p>Both robots are built from exactly the same blueprint.</p>
-<p>However, if we ask Wall-E to introduce itself, we want <strong>Wall-E</strong> to give its name—not R2-D2.</p>
-<p>In Python, <code>self</code> means:</p>
-<blockquote class="blockquote">
-<p><strong>“this particular object”</strong></p>
-</blockquote>
-<p>or, more casually:</p>
-<blockquote class="blockquote">
-<p><strong>“me” / “my”</strong></p>
-</blockquote>
-<p>Let’s see this in action.</p>
-<pre class="text"><code>class Robot:
-
-    # self.name means "MY name"
-    def __init__(self, name):
-        self.name = name
-
-    # self.name means "MY name"
-    def introduce(self):
-        print(f"Hello, my name is {self.name}.")
-
-
-# Create two different robot objects
-robot_1 = Robot("Wall-E")
-robot_2 = Robot("R2-D2")
-
-
-robot_1.introduce()
-# Hello, my name is Wall-E.
-
-robot_2.introduce()
-# Hello, my name is R2-D2.</code></pre>
-<p>Even though both robots use exactly the same class definition, each object stores its own name.</p>
-<pre class="text"><code>robot_1.name → "Wall-E"
-robot_2.name → "R2-D2"</code></pre>
-<p>That’s the power of <code>self</code>.</p>
-<hr>
-</section>
-<section id="what-happens-if-you-forget-self" class="level1">
-<h1>What Happens If You Forget <code>self</code>?</h1>
-<p>One of the most common mistakes beginners make is forgetting <code>self</code> when defining a method.</p>
-<p>Consider this example:</p>
-<pre class="text"><code>class Robot:
-
-    # Oops! We forgot self.
-    def beep():
-        print("Beep boop!")
-
-
-my_robot = Robot()
-my_robot.beep()</code></pre>
-<p>Python will produce an error similar to:</p>
-<pre class="text"><code>TypeError: Robot.beep() takes 0 positional arguments but 1 was given</code></pre>
-<p>At first, this error can seem strange.</p>
-<p>You might think:</p>
-<blockquote class="blockquote">
-<p>“I didn’t give <code>beep()</code> any arguments! The parentheses are empty!”</p>
-</blockquote>
-<p>So where did the mysterious <strong>1 argument</strong> come from?</p>
-<hr>
-<section id="python-is-doing-something-behind-the-scenes" class="level2">
-<h2 class="anchored" data-anchor-id="python-is-doing-something-behind-the-scenes">Python Is Doing Something Behind the Scenes</h2>
-<p>When you write:</p>
-<pre class="text"><code>my_robot.beep()</code></pre>
-<p>Python effectively treats this as:</p>
-<pre class="text"><code>Robot.beep(my_robot)</code></pre>
-<p>In other words, Python automatically passes the object that called the method as the first argument.</p>
-<p>That object needs somewhere to go.</p>
-<p>That is why we write:</p>
-<pre class="text"><code>def beep(self):</code></pre>
-<p>The <code>self</code> parameter is the place where Python passes the current object.</p>
-<p>You can think of it like this:</p>
-<pre class="text"><code>my_robot.beep()
-      ↓
-Python automatically passes my_robot
-      ↓
-Robot.beep(my_robot)
-      ↓
-             self
-              ↓
-        "this robot"</code></pre>
-<p>So when you forget <code>self</code>, Python is essentially saying:</p>
-<blockquote class="blockquote">
-<p>“I tried to give you the robot object, but your method doesn’t have a parameter to receive it!”</p>
-</blockquote>
-
-
-</section>
-</section>
-
- ]]></description>
-  <category>Python</category>
-  <guid>https://jerryleung16.github.io/my-math-notes/posts/python/intro-to-class/</guid>
-  <pubDate>Wed, 05 Aug 2026 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
