@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-09-06">
+<meta name="description" content="Notes on Keras multi-backend support, custom layers, automatic shape inference and the build/call lifecycle, model compilation, training loops with fit, validation workflows, and inference.">
+
+<title>Introduction to Keras – My Math Notes</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-3e9b1289f5f353c49b617ce48ad2bc38.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">My Math Notes</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">Jerry’s Notes</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../admin/"> 
+<span class="menu-text">New Post</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../admin/"> 
+<span class="menu-text">Edit Posts</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Introduction to Keras</h1>
+                  <div>
+        <div class="description">
+          Notes on Keras multi-backend support, custom layers, automatic shape inference and the build/call lifecycle, model compilation, training loops with fit, validation workflows, and inference.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Deep Learning</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 6, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction-to-keras" id="toc-introduction-to-keras" class="nav-link active" data-scroll-target="#introduction-to-keras">1. Introduction to Keras</a>
+  <ul class="collapse">
+  <li><a href="#pluggable-backends" id="toc-pluggable-backends" class="nav-link" data-scroll-target="#pluggable-backends">Pluggable Backends</a></li>
+  </ul></li>
+  <li><a href="#configuring-keras-backends" id="toc-configuring-keras-backends" class="nav-link" data-scroll-target="#configuring-keras-backends">2. Configuring Keras Backends</a>
+  <ul class="collapse">
+  <li><a href="#default-backend" id="toc-default-backend" class="nav-link" data-scroll-target="#default-backend">Default Backend</a></li>
+  <li><a href="#setting-other-backends-programmatically" id="toc-setting-other-backends-programmatically" class="nav-link" data-scroll-target="#setting-other-backends-programmatically">Setting Other Backends Programmatically</a></li>
+  <li><a href="#setting-the-backend-via-configuration-file" id="toc-setting-the-backend-via-configuration-file" class="nav-link" data-scroll-target="#setting-the-backend-via-configuration-file">Setting the Backend via Configuration File</a></li>
+  </ul></li>
+  <li><a href="#layers-in-keras" id="toc-layers-in-keras" class="nav-link" data-scroll-target="#layers-in-keras">3. Layers in Keras</a>
+  <ul class="collapse">
+  <li><a href="#implementing-a-custom-layer" id="toc-implementing-a-custom-layer" class="nav-link" data-scroll-target="#implementing-a-custom-layer">Implementing a Custom Layer</a></li>
+  <li><a href="#using-layers-like-functions" id="toc-using-layers-like-functions" class="nav-link" data-scroll-target="#using-layers-like-functions">Using Layers Like Functions</a></li>
+  </ul></li>
+  <li><a href="#automatic-shape-inference" id="toc-automatic-shape-inference" class="nav-link" data-scroll-target="#automatic-shape-inference">4. Automatic Shape Inference</a>
+  <ul class="collapse">
+  <li><a href="#motivation-compatibility-of-shapes" id="toc-motivation-compatibility-of-shapes" class="nav-link" data-scroll-target="#motivation-compatibility-of-shapes">Motivation: Compatibility of Shapes</a></li>
+  </ul></li>
+  <li><a href="#behind-the-scenes-build-and-call-lifecycle" id="toc-behind-the-scenes-build-and-call-lifecycle" class="nav-link" data-scroll-target="#behind-the-scenes-build-and-call-lifecycle">5. Behind the Scenes: <code>build()</code> and <code>call()</code> Lifecycle</a>
+  <ul class="collapse">
+  <li><a href="#the-invisible-__call__-manager" id="toc-the-invisible-__call__-manager" class="nav-link" data-scroll-target="#the-invisible-__call__-manager">The Invisible <code>__call__</code> Manager</a></li>
+  <li><a href="#step-by-step-execution-lifecycle" id="toc-step-by-step-execution-lifecycle" class="nav-link" data-scroll-target="#step-by-step-execution-lifecycle">Step-by-Step Execution Lifecycle</a></li>
+  <li><a href="#the-complete-one-shot-timeline" id="toc-the-complete-one-shot-timeline" class="nav-link" data-scroll-target="#the-complete-one-shot-timeline">The Complete “One-Shot” Timeline</a></li>
+  <li><a href="#summary-script" id="toc-summary-script" class="nav-link" data-scroll-target="#summary-script">Summary Script</a></li>
+  </ul></li>
+  <li><a href="#the-compile-step-configuring-the-learning-process" id="toc-the-compile-step-configuring-the-learning-process" class="nav-link" data-scroll-target="#the-compile-step-configuring-the-learning-process">6. The <code>compile</code> Step: Configuring the Learning Process</a>
+  <ul class="collapse">
+  <li><a href="#compiling-with-string-identifiers" id="toc-compiling-with-string-identifiers" class="nav-link" data-scroll-target="#compiling-with-string-identifiers">Compiling with String Identifiers</a></li>
+  <li><a href="#compiling-with-object-instances" id="toc-compiling-with-object-instances" class="nav-link" data-scroll-target="#compiling-with-object-instances">Compiling with Object Instances</a></li>
+  <li><a href="#common-optimizers-losses-and-metrics" id="toc-common-optimizers-losses-and-metrics" class="nav-link" data-scroll-target="#common-optimizers-losses-and-metrics">Common Optimizers, Losses, and Metrics</a></li>
+  </ul></li>
+  <li><a href="#understanding-the-fit-method" id="toc-understanding-the-fit-method" class="nav-link" data-scroll-target="#understanding-the-fit-method">7. Understanding the <code>fit()</code> Method</a>
+  <ul class="collapse">
+  <li><a href="#key-arguments" id="toc-key-arguments" class="nav-link" data-scroll-target="#key-arguments">Key Arguments</a></li>
+  <li><a href="#the-flashcard-analogy" id="toc-the-flashcard-analogy" class="nav-link" data-scroll-target="#the-flashcard-analogy">The Flashcard Analogy</a></li>
+  <li><a href="#diagnosing-training-with-the-history-object" id="toc-diagnosing-training-with-the-history-object" class="nav-link" data-scroll-target="#diagnosing-training-with-the-history-object">Diagnosing Training with the <code>History</code> Object</a></li>
+  </ul></li>
+  <li><a href="#monitoring-loss-and-metrics-on-validation-data" id="toc-monitoring-loss-and-metrics-on-validation-data" class="nav-link" data-scroll-target="#monitoring-loss-and-metrics-on-validation-data">8. Monitoring Loss and Metrics on Validation Data</a>
+  <ul class="collapse">
+  <li><a href="#shuffling-and-splitting-data" id="toc-shuffling-and-splitting-data" class="nav-link" data-scroll-target="#shuffling-and-splitting-data">Shuffling and Splitting Data</a></li>
+  <li><a href="#validation-workflow" id="toc-validation-workflow" class="nav-link" data-scroll-target="#validation-workflow">Validation Workflow</a></li>
+  <li><a href="#the-full-experimentation-pipeline" id="toc-the-full-experimentation-pipeline" class="nav-link" data-scroll-target="#the-full-experimentation-pipeline">The Full Experimentation Pipeline</a></li>
+  <li><a href="#evaluating-after-training" id="toc-evaluating-after-training" class="nav-link" data-scroll-target="#evaluating-after-training">Evaluating After Training</a></li>
+  </ul></li>
+  <li><a href="#inference-using-a-model-after-training" id="toc-inference-using-a-model-after-training" class="nav-link" data-scroll-target="#inference-using-a-model-after-training">9. Inference: Using a Model After Training</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/deep learning/keras/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jerryleung16/my-math-notes/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="introduction-to-keras" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-keras">1. Introduction to Keras</h2>
+<p>Keras is a high-level deep learning API designed for human beings, emphasizing developer experience, modularity, and ease of use.</p>
+<section id="pluggable-backends" class="level3">
+<h3 class="anchored" data-anchor-id="pluggable-backends">Pluggable Backends</h3>
+<p>Modern Keras (Keras 3) is <strong>pluggable</strong>: you can switch to a different backend framework seamlessly after writing your Keras code. You can move models between <strong>JAX</strong>, <strong>TensorFlow</strong>, and <strong>PyTorch</strong> depending on your current needs:</p>
+<ul>
+<li><strong>PyTorch:</strong> Debug and iterate with eager execution and intuitive workflows.</li>
+<li><strong>JAX:</strong> Train at scale on TPUs with XLA compilation for maximum efficiency.</li>
+<li><strong>TensorFlow:</strong> Deploy into production with mature serving and mobile ecosystem tooling (e.g., TFLite, TF Serving).</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="configuring-keras-backends" class="level2">
+<h2 class="anchored" data-anchor-id="configuring-keras-backends">2. Configuring Keras Backends</h2>
+<section id="default-backend" class="level3">
+<h3 class="anchored" data-anchor-id="default-backend">Default Backend</h3>
+<p>If you run <code>import keras</code> in a fresh environment without any configuration, the default backend is <strong>TensorFlow</strong>.</p>
+</section>
+<section id="setting-other-backends-programmatically" class="level3">
+<h3 class="anchored" data-anchor-id="setting-other-backends-programmatically">Setting Other Backends Programmatically</h3>
+<p>You can switch backends dynamically in Python by setting the <code>KERAS_BACKEND</code> environment variable <em>before</em> importing Keras:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Sets the environment variable from within the Python runtime</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">"KERAS_BACKEND"</span>] <span class="op">=</span> <span class="st">"jax"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Only then should you import Keras</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> keras</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="setting-the-backend-via-configuration-file" class="level3">
+<h3 class="anchored" data-anchor-id="setting-the-backend-via-configuration-file">Setting the Backend via Configuration File</h3>
+<p>You can also configure the backend permanently by editing your local configuration file at <code>~/.keras/keras.json</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"floatx"</span><span class="fu">:</span> <span class="st">"float32"</span><span class="fu">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"epsilon"</span><span class="fu">:</span> <span class="dv">1e-07</span><span class="fu">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"backend"</span><span class="fu">:</span> <span class="st">"tensorflow"</span><span class="fu">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"image_data_format"</span><span class="fu">:</span> <span class="st">"channels_last"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>"floatx"</code>: Default floating-point precision (typically <code>"float32"</code>).</li>
+<li><code>"epsilon"</code>: Default numerical fuzzing factor to prevent division-by-zero errors.</li>
+<li><code>"backend"</code>: Set to <code>"tensorflow"</code>, <code>"jax"</code>, or <code>"torch"</code>.</li>
+<li><code>"image_data_format"</code>: Memory layout for images (<code>"channels_last"</code> or <code>"channels_first"</code>).</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="layers-in-keras" class="level2">
+<h2 class="anchored" data-anchor-id="layers-in-keras">3. Layers in Keras</h2>
+<p>The fundamental building block in Keras is the <code>Layer</code>. All Keras layers inherit from the base <code>keras.Layer</code> class.</p>
+<section id="implementing-a-custom-layer" class="level3">
+<h3 class="anchored" data-anchor-id="implementing-a-custom-layer">Implementing a Custom Layer</h3>
+<p>A standard Keras layer defines three core methods:</p>
+<ol type="1">
+<li><code>__init__()</code>: Saves configuration options (hyperparameters such as units or activation).</li>
+<li><code>build()</code>: Creates and allocates the weight variables once the input shape is known.</li>
+<li><code>call()</code>: Implements the forward pass math computation.</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> keras</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># All Keras layers inherit from the base Layer class.</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SimpleDense(keras.Layer):</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, units, activation<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># units = number of neurons</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.units <span class="op">=</span> units</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.activation <span class="op">=</span> activation</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Weight creation takes place in the build() method.</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> build(<span class="va">self</span>, input_shape):</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        batch_dim, input_dim <span class="op">=</span> input_shape</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># add_weight is a shortcut method for creating weights. It's</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># also possible to create standalone variables and assign them</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># as layer attributes, like self.W = keras.Variable(shape=...,</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># initializer=...).</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.W <span class="op">=</span> <span class="va">self</span>.add_weight(</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>            shape<span class="op">=</span>(input_dim, <span class="va">self</span>.units), initializer<span class="op">=</span><span class="st">"random_normal"</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.b <span class="op">=</span> <span class="va">self</span>.add_weight(shape<span class="op">=</span>(<span class="va">self</span>.units,), initializer<span class="op">=</span><span class="st">"zeros"</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># We define the forward pass computation in the call() method.</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> call(<span class="va">self</span>, inputs):</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> keras.ops.matmul(inputs, <span class="va">self</span>.W) <span class="op">+</span> <span class="va">self</span>.b</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.activation <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>            y <span class="op">=</span> <span class="va">self</span>.activation(y)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="using-layers-like-functions" class="level3">
+<h3 class="anchored" data-anchor-id="using-layers-like-functions">Using Layers Like Functions</h3>
+<p>Once instantiated, a layer can be called directly on an input tensor just like a function:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instantiates our layer, defined previously</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>my_dense <span class="op">=</span> SimpleDense(units<span class="op">=</span><span class="dv">32</span>, activation<span class="op">=</span>keras.ops.relu)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creates some test inputs</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>input_tensor <span class="op">=</span> keras.ops.ones(shape<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">784</span>))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calls the layer on the inputs, just like a function</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>output_tensor <span class="op">=</span> my_dense(input_tensor)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(output_tensor.shape)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># (2, 32)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="automatic-shape-inference" class="level2">
+<h2 class="anchored" data-anchor-id="automatic-shape-inference">4. Automatic Shape Inference</h2>
+<section id="motivation-compatibility-of-shapes" class="level3">
+<h3 class="anchored" data-anchor-id="motivation-compatibility-of-shapes">Motivation: Compatibility of Shapes</h3>
+<p>In toy implementations of layers, you often have to pass the layer’s input size explicitly to the constructor so it can initialize its weight matrices. This leads to brittle, tightly-coupled models:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> NaiveSequential(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        NaiveDense(input_size<span class="op">=</span><span class="dv">784</span>, output_size<span class="op">=</span><span class="dv">32</span>, activation<span class="op">=</span><span class="st">"relu"</span>),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        NaiveDense(input_size<span class="op">=</span><span class="dv">32</span>, output_size<span class="op">=</span><span class="dv">64</span>, activation<span class="op">=</span><span class="st">"relu"</span>),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        NaiveDense(input_size<span class="op">=</span><span class="dv">64</span>, output_size<span class="op">=</span><span class="dv">32</span>, activation<span class="op">=</span><span class="st">"relu"</span>),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        NaiveDense(input_size<span class="op">=</span><span class="dv">32</span>, output_size<span class="op">=</span><span class="dv">10</span>, activation<span class="op">=</span><span class="st">"softmax"</span>),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If a layer’s output shape calculation is complex (for example, dynamic sizing based on dimensions), manually computing and matching shapes across layers becomes extremely tedious and error-prone.</p>
+<p>With <strong>automatic shape inference</strong>, layer definitions become clean and concise:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> keras.Sequential(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        SimpleDense(<span class="dv">32</span>, activation<span class="op">=</span><span class="st">"relu"</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        SimpleDense(<span class="dv">64</span>, activation<span class="op">=</span><span class="st">"relu"</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        SimpleDense(<span class="dv">32</span>, activation<span class="op">=</span><span class="st">"relu"</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        SimpleDense(<span class="dv">10</span>, activation<span class="op">=</span><span class="st">"softmax"</span>),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="behind-the-scenes-build-and-call-lifecycle" class="level2">
+<h2 class="anchored" data-anchor-id="behind-the-scenes-build-and-call-lifecycle">5. Behind the Scenes: <code>build()</code> and <code>call()</code> Lifecycle</h2>
+<p>By separating layer setup into <code>build()</code> and <code>call()</code>, Keras solves the problem of needing to know input shapes ahead of time while keeping forward passes clean and efficient.</p>
+<section id="the-invisible-__call__-manager" class="level3">
+<h3 class="anchored" data-anchor-id="the-invisible-__call__-manager">The Invisible <code>__call__</code> Manager</h3>
+<p>Under the hood, Keras wraps layer execution in a manager method <code>__call__()</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simplified look at what Keras does under the hood:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, inputs):</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="va">self</span>.built:</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 1. Keras inspects the incoming tensor's shape attribute</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        input_shape <span class="op">=</span> inputs.shape  <span class="co"># e.g., (32, 784)</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 2. It hands that extracted shape straight to your build() method</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.build(input_shape)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.built <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3. It hands the actual tensor data to your call() method</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.call(inputs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="step-by-step-execution-lifecycle" class="level3">
+<h3 class="anchored" data-anchor-id="step-by-step-execution-lifecycle">Step-by-Step Execution Lifecycle</h3>
+<ol type="1">
+<li><strong>First Forward Pass (<code>layer(x)</code>):</strong>
+<ul>
+<li><code>__call__()</code> checks <code>self.built</code>, which defaults to <code>False</code>.</li>
+<li>It inspects <code>inputs.shape</code> and calls <code>self.build(inputs.shape)</code>.</li>
+<li><code>build()</code> creates weight tensors <span class="math inline">\(W\)</span> and <span class="math inline">\(b\)</span> matched exactly to the incoming tensor’s dimensions.</li>
+<li><code>self.built</code> is set to <code>True</code>.</li>
+<li><code>__call__()</code> hands <code>inputs</code> to <code>self.call(inputs)</code> to calculate and return the output.</li>
+</ul></li>
+<li><strong>Every Subsequent Forward Pass (<code>layer(x_next)</code>):</strong>
+<ul>
+<li><code>__call__()</code> checks <code>self.built</code>, which is now <code>True</code>.</li>
+<li>It skips <code>self.build()</code> completely, avoiding redundant weight reallocation.</li>
+<li>It directly executes <code>self.call(inputs)</code> using the existing weights.</li>
+</ul></li>
+</ol>
+</section>
+<section id="the-complete-one-shot-timeline" class="level3">
+<h3 class="anchored" data-anchor-id="the-complete-one-shot-timeline">The Complete “One-Shot” Timeline</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Step</th>
+<th style="text-align: left;">Action</th>
+<th style="text-align: left;">What Runs</th>
+<th style="text-align: left;">Behind the Scenes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: left;">Create the layer (<code>my_layer = SimpleDense(units=128)</code>)</td>
+<td style="text-align: left;"><code>__init__()</code></td>
+<td style="text-align: left;">Saves configuration (<code>units=128</code>, <code>activation</code>). Has <strong>zero</strong> weights initially.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: left;">Pass data into the layer (<code>output = my_layer(images)</code>)</td>
+<td style="text-align: left;"><code>__call__()</code></td>
+<td style="text-align: left;">Invisible manager intercepts inputs.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: left;">Check if layer is built</td>
+<td style="text-align: left;"><code>if not self.built:</code></td>
+<td style="text-align: left;"><code>self.built</code> is <code>False</code>. Manager extracts shape <code>(32, 784)</code>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: left;">Just-in-time weight creation</td>
+<td style="text-align: left;"><code>build(input_shape)</code></td>
+<td style="text-align: left;">Allocates <span class="math inline">\(W\)</span> <span class="math inline">\((784 \times 128)\)</span> and <span class="math inline">\(b\)</span> <span class="math inline">\((128,)\)</span>. Sets <code>self.built = True</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: left;">Execute the math</td>
+<td style="text-align: left;"><code>call(inputs)</code></td>
+<td style="text-align: left;">Performs matrix multiplication (<span class="math inline">\(\text{inputs} \cdot W + b\)</span>), applies activation, returns result.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: left;">Pass subsequent batches (<code>output2 = my_layer(more_images)</code>)</td>
+<td style="text-align: left;"><code>__call__()</code> <span class="math inline">\(\rightarrow\)</span> <code>call()</code></td>
+<td style="text-align: left;"><code>self.built</code> is <code>True</code>. Steps 3 and 4 are skipped; data goes directly to <code>call()</code>.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="summary-script" class="level3">
+<h3 class="anchored" data-anchor-id="summary-script">Summary Script</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. __init__ runs (Saves rules: units=128. No weights exist yet.)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>layer <span class="op">=</span> SimpleDense(units<span class="op">=</span><span class="dv">128</span>, activation<span class="op">=</span>keras.activations.relu)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. __call__ intercepts data. </span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Extracts shape (32, 784).</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. build() runs (Creates W and b).</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. call() runs (Does the math).</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>output_1 <span class="op">=</span> layer(batch_1)  </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. __call__ intercepts data. </span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># -&gt; build() is SKIPPED. </span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># -&gt; call() runs (Does the math).</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>output_2 <span class="op">=</span> layer(batch_2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="the-compile-step-configuring-the-learning-process" class="level2">
+<h2 class="anchored" data-anchor-id="the-compile-step-configuring-the-learning-process">6. The <code>compile</code> Step: Configuring the Learning Process</h2>
+<p>Before training a model, you must configure three components via <code>model.compile()</code>:</p>
+<ul>
+<li><strong>The Metric (The Objective / “The What”):</strong> The human-interpretable goal (e.g., reaching 99% accuracy on cancer detection).</li>
+<li><strong>The Loss Function (The Bridge / “The Tool”):</strong> Translates the objective into a smooth, differentiable mathematical landscape of hills and valleys so the computer can calculate gradient feedback.</li>
+<li><strong>The Optimizer (The Engine / “The Method”):</strong> Uses gradients from the loss function to physically update the model’s weights step-by-step.</li>
+</ul>
+<section id="compiling-with-string-identifiers" class="level3">
+<h3 class="anchored" data-anchor-id="compiling-with-string-identifiers">Compiling with String Identifiers</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Defines a linear classifier</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> keras.Sequential([keras.layers.Dense(<span class="dv">1</span>)])</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Specifies the optimizer by name: RMSprop (case-insensitive)</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    optimizer<span class="op">=</span><span class="st">"rmsprop"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Specifies the loss by name: mean squared error</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    loss<span class="op">=</span><span class="st">"mean_squared_error"</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Specifies a list of metrics: in this case, only accuracy</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    metrics<span class="op">=</span>[<span class="st">"accuracy"</span>],</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="compiling-with-object-instances" class="level3">
+<h3 class="anchored" data-anchor-id="compiling-with-object-instances">Compiling with Object Instances</h3>
+<p>Specifying arguments as class instances allows for custom parameters (e.g., custom learning rates):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    optimizer<span class="op">=</span>keras.optimizers.RMSprop(learning_rate<span class="op">=</span><span class="fl">1e-4</span>),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    loss<span class="op">=</span>keras.losses.MeanSquaredError(),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    metrics<span class="op">=</span>[keras.metrics.BinaryAccuracy()],</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You can also supply your own custom loss and metric functions:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    optimizer<span class="op">=</span>keras.optimizers.RMSprop(learning_rate<span class="op">=</span><span class="fl">1e-4</span>),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    loss<span class="op">=</span>my_custom_loss,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    metrics<span class="op">=</span>[my_custom_metric_1, my_custom_metric_2],</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="common-optimizers-losses-and-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="common-optimizers-losses-and-metrics">Common Optimizers, Losses, and Metrics</h3>
+<ul>
+<li><strong>Optimizers:</strong>
+<ul>
+<li><code>SGD()</code> (with or without momentum)</li>
+<li><code>RMSprop()</code></li>
+<li><code>Adam()</code></li>
+<li><code>AdamW()</code></li>
+<li><code>Adagrad()</code></li>
+</ul></li>
+<li><strong>Loss Functions:</strong>
+<ul>
+<li><code>BinaryCrossentropy()</code></li>
+<li><code>CategoricalCrossentropy()</code></li>
+<li><code>SparseCategoricalCrossentropy()</code></li>
+<li><code>MeanSquaredError()</code></li>
+<li><code>KLDivergence()</code></li>
+<li><code>CosineSimilarity()</code></li>
+</ul></li>
+<li><strong>Metrics:</strong>
+<ul>
+<li><code>BinaryAccuracy()</code></li>
+<li><code>CategoricalAccuracy()</code></li>
+<li><code>SparseCategoricalAccuracy()</code></li>
+<li><code>AUC()</code></li>
+<li><code>Precision()</code></li>
+<li><code>Recall()</code></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="understanding-the-fit-method" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-the-fit-method">7. Understanding the <code>fit()</code> Method</h2>
+<p>The <code>fit()</code> method implements the training loop.</p>
+<section id="key-arguments" class="level3">
+<h3 class="anchored" data-anchor-id="key-arguments">Key Arguments</h3>
+<ul>
+<li><strong><code>inputs</code> &amp; <code>targets</code>:</strong> The training examples and corresponding labels (as NumPy arrays or TensorFlow <code>Dataset</code> objects).</li>
+<li><strong><code>epochs</code>:</strong> How many complete passes the training loop should make over the entire dataset.</li>
+<li><strong><code>batch_size</code>:</strong> The number of samples processed per gradient update step.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> model.fit(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The input examples, as a NumPy array</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    inputs,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The corresponding training targets, as a NumPy array</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    targets,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The training loop will iterate over the data 5 times.</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    epochs<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The training loop will iterate over the data in batches of 128 examples.</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span><span class="dv">128</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="the-flashcard-analogy" class="level3">
+<h3 class="anchored" data-anchor-id="the-flashcard-analogy">The Flashcard Analogy</h3>
+<p>Imagine studying a deck of <strong>1,280 flashcards</strong>:</p>
+<ol type="1">
+<li><strong>The Data (<code>inputs</code> and <code>targets</code>):</strong>
+<ul>
+<li><code>inputs</code>: The front of the flashcards (e.g., 1,280 images of handwritten digits).</li>
+<li><code>targets</code>: The back of the flashcards (e.g., the ground-truth label 0–9).</li>
+</ul></li>
+<li><strong>The Mechanics (<code>batch_size</code> and <code>epochs</code>):</strong>
+<ul>
+<li><code>batch_size=128</code>: The model takes 128 flashcards at a time, makes predictions, calculates the loss, and updates its weights. Since <span class="math inline">\(1280 \div 128 = 10\)</span>, it takes <strong>10 batches</strong> (10 gradient updates) to finish the deck.</li>
+<li><code>epochs=5</code>: Studying the entire deck of 1,280 cards from start to finish 5 separate times (<span class="math inline">\(10 \text{ batches} \times 5 \text{ epochs} = 50\)</span> total weight updates).</li>
+</ul></li>
+<li><strong>Complete Training Timeline:</strong>
+<ul>
+<li><strong>Epoch 1:</strong> Model starts with random guesses (accuracy <span class="math inline">\(\approx\)</span> 10%).</li>
+<li><strong>Epoch 2:</strong> Cards are reshuffled; model learns basic patterns (accuracy jumps to <span class="math inline">\(\approx\)</span> 60%).</li>
+<li><strong>Epochs 3–5:</strong> Model refines boundaries, converging to high performance (accuracy <span class="math inline">\(\approx\)</span> 95%).</li>
+</ul></li>
+</ol>
+</section>
+<section id="diagnosing-training-with-the-history-object" class="level3">
+<h3 class="anchored" data-anchor-id="diagnosing-training-with-the-history-object">Diagnosing Training with the <code>History</code> Object</h3>
+<p>The <code>history.history</code> dictionary records metrics and loss values at the end of each epoch:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;</span> history.history</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"binary_accuracy"</span>: [<span class="fl">0.855</span>, <span class="fl">0.9565</span>, <span class="fl">0.9555</span>, <span class="fl">0.95</span>, <span class="fl">0.951</span>],</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"loss"</span>: [<span class="fl">0.6573270302042366</span>, <span class="fl">0.07434618508815766</span>, <span class="fl">0.07687718723714351</span>, <span class="fl">0.07412414988875389</span>, <span class="fl">0.07617757616937161</span>]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><strong><code>binary_accuracy</code> (The Objective):</strong> Measures the percentage of correct predictions. In Epoch 1 it scored 85.5%, jumped to 95.65% in Epoch 2, and plateaued around 95% for subsequent epochs.</li>
+<li><strong><code>loss</code> (The Optimizer’s Error Signal):</strong> Lower is better. Dropped sharply from 0.657 to 0.074 in Epoch 2, after which it fluctuated slightly around 0.075 as the optimizer explored the bottom of the loss valley.</li>
+<li><strong>Diagnosis:</strong> The model learned rapidly and reached its full capacity by Epoch 2. Training for Epochs 3–5 consumed extra compute without meaningful gain; setting <code>epochs=2</code> or <code>epochs=3</code> would be sufficient for this configuration.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="monitoring-loss-and-metrics-on-validation-data" class="level2">
+<h2 class="anchored" data-anchor-id="monitoring-loss-and-metrics-on-validation-data">8. Monitoring Loss and Metrics on Validation Data</h2>
+<p>To verify that a model generalizes to unseen data, we evaluate it on separate <strong>validation data</strong> during training.</p>
+<section id="shuffling-and-splitting-data" class="level3">
+<h3 class="anchored" data-anchor-id="shuffling-and-splitting-data">Shuffling and Splitting Data</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> keras.Sequential([keras.layers.Dense(<span class="dv">1</span>)])</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    optimizer<span class="op">=</span>keras.optimizers.RMSprop(learning_rate<span class="op">=</span><span class="fl">0.1</span>),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    loss<span class="op">=</span>keras.losses.MeanSquaredError(),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    metrics<span class="op">=</span>[keras.metrics.BinaryAccuracy()],</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># To avoid having samples from only one class in the validation data,</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># shuffles the inputs and targets using a random indices permutation</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>indices_permutation <span class="op">=</span> np.random.permutation(<span class="bu">len</span>(inputs))</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>shuffled_inputs <span class="op">=</span> inputs[indices_permutation]</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>shuffled_targets <span class="op">=</span> targets[indices_permutation]</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Reserves 30% of the training inputs and targets for "validation."</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co"># (We'll exclude these samples from training and reserve them to</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the "validation loss" and metrics).</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>num_validation_samples <span class="op">=</span> <span class="bu">int</span>(<span class="fl">0.3</span> <span class="op">*</span> <span class="bu">len</span>(inputs))</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>val_inputs <span class="op">=</span> shuffled_inputs[:num_validation_samples]</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>val_targets <span class="op">=</span> shuffled_targets[:num_validation_samples]</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>training_inputs <span class="op">=</span> shuffled_inputs[num_validation_samples:]</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>training_targets <span class="op">=</span> shuffled_targets[num_validation_samples:]</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>model.fit(</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Training data, used to update the weights of the model</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>    training_inputs,</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>    training_targets,</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>    epochs<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span><span class="dv">16</span>,</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Validation data, used only to monitor the "validation loss" and metrics</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>    validation_data<span class="op">=</span>(val_inputs, val_targets),</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="validation-workflow" class="level3">
+<h3 class="anchored" data-anchor-id="validation-workflow">Validation Workflow</h3>
+<pre class="text"><code>[ Epoch 1 Training ]  ---&gt; Model updates weights using Training Data
+         │
+         ▼
+[ Validation Check ]  ---&gt; Model runs a forward pass on Validation Data
+                           (Calculates loss/accuracy WITHOUT updating weights)
+         │
+         ▼
+[ Epoch 2 Training ]  ---&gt; Model resumes updating weights using Training Data...</code></pre>
+<p>The validation scores guide developer decisions:</p>
+<ul>
+<li>If validation accuracy stops improving, stop training early to prevent overfitting.</li>
+<li>If validation loss begins increasing, regularize or reduce model capacity (e.g., from 64 units to 16 units).</li>
+</ul>
+</section>
+<section id="the-full-experimentation-pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="the-full-experimentation-pipeline">The Full Experimentation Pipeline</h3>
+<pre class="text"><code>1. Split Data   ---&gt; [ Train ] | [ Validation ] | [ Test (Locked) ]
+                         │              │
+                         ▼              ▼
+2. Experiment   ---&gt;   Train  &lt;---&gt; Validate (Iterate &amp; Tune)
+                                        │
+                                        ▼ (When satisfied)
+3. Final Audit  ----------------&gt; [ Test Set ]
+                                        │
+                         ┌──────────────┴──────────────┐
+                         ▼                             ▼
+                 [ Good Result ]              [ Poor Result ]
+                        │                              │
+                 Deploy to Prod!              • Add Regularization
+                                              • Resplit/Reshuffle
+                                              • Collect New Data</code></pre>
+</section>
+<section id="evaluating-after-training" class="level3">
+<h3 class="anchored" data-anchor-id="evaluating-after-training">Evaluating After Training</h3>
+<p>To compute loss and metrics on a validation or test set after training has finished, use <code>model.evaluate()</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>loss_and_metrics <span class="op">=</span> model.evaluate(val_inputs, val_targets, batch_size<span class="op">=</span><span class="dv">128</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>evaluate()</code> iterates over the data in batches and returns a list of scalars (validation loss followed by validation metrics).</p>
+<hr>
+</section>
+</section>
+<section id="inference-using-a-model-after-training" class="level2">
+<h2 class="anchored" data-anchor-id="inference-using-a-model-after-training">9. Inference: Using a Model After Training</h2>
+<p>After training, you can generate predictions on new data.</p>
+<p>While calling the model directly via <code>model(val_inputs)</code> works, <code>model.predict()</code> is the standard and more efficient approach for inference:</p>
+<ul>
+<li>It automatically iterates over inputs in batches to avoid running out of memory.</li>
+<li>It returns a clean NumPy array of predictions.</li>
+<li>It can seamlessly consume TensorFlow <code>Dataset</code> objects as well as NumPy arrays.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Takes a NumPy array or a Dataset and returns a NumPy array</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model.predict(val_inputs, batch_size<span class="op">=</span><span class="dv">128</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(predictions[:<span class="dv">10</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="text"><code>[[0.3590725 ]
+ [0.82706255]
+ [0.74428225]
+ [0.682058  ]
+ [0.7312616 ]
+ [0.6059811 ]
+ [0.78046083]
+ [0.025846  ]
+ [0.16594526]
+ [0.72068727]]</code></pre>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/jerryleung16\.github\.io\/my-math-notes\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/jerryleung16/my-math-notes/edit/main/posts/deep learning/keras/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jerryleung16/my-math-notes/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
