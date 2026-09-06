@@ -1,0 +1,475 @@
+---
+title: "Introduction to Keras"
+date: "2026-09-06"
+description: "Notes on Keras multi-backend support, custom layers, automatic shape inference and the build/call lifecycle, model compilation, training loops with fit, validation workflows, and inference."
+categories: [Deep Learning]
+---
+
+## 1. Introduction to Keras
+
+Keras is a high-level deep learning API designed for human beings, emphasizing developer experience, modularity, and ease of use.
+
+### Pluggable Backends
+
+Modern Keras (Keras 3) is **pluggable**: you can switch to a different backend framework seamlessly after writing your Keras code. You can move models between **JAX**, **TensorFlow**, and **PyTorch** depending on your current needs:
+
+- **PyTorch:** Debug and iterate with eager execution and intuitive workflows.
+- **JAX:** Train at scale on TPUs with XLA compilation for maximum efficiency.
+- **TensorFlow:** Deploy into production with mature serving and mobile ecosystem tooling (e.g., TFLite, TF Serving).
+
+---
+
+## 2. Configuring Keras Backends
+
+### Default Backend
+
+If you run `import keras` in a fresh environment without any configuration, the default backend is **TensorFlow**.
+
+### Setting Other Backends Programmatically
+
+You can switch backends dynamically in Python by setting the `KERAS_BACKEND` environment variable *before* importing Keras:
+
+```python
+import os
+
+# Sets the environment variable from within the Python runtime
+os.environ["KERAS_BACKEND"] = "jax"
+
+# Only then should you import Keras
+import keras
+```
+
+### Setting the Backend via Configuration File
+
+You can also configure the backend permanently by editing your local configuration file at `~/.keras/keras.json`:
+
+```json
+{
+    "floatx": "float32",
+    "epsilon": 1e-07,
+    "backend": "tensorflow",
+    "image_data_format": "channels_last"
+}
+```
+
+- `"floatx"`: Default floating-point precision (typically `"float32"`).
+- `"epsilon"`: Default numerical fuzzing factor to prevent division-by-zero errors.
+- `"backend"`: Set to `"tensorflow"`, `"jax"`, or `"torch"`.
+- `"image_data_format"`: Memory layout for images (`"channels_last"` or `"channels_first"`).
+
+---
+
+## 3. Layers in Keras
+
+The fundamental building block in Keras is the `Layer`. All Keras layers inherit from the base `keras.Layer` class.
+
+### Implementing a Custom Layer
+
+A standard Keras layer defines three core methods:
+
+1. `__init__()`: Saves configuration options (hyperparameters such as units or activation).
+2. `build()`: Creates and allocates the weight variables once the input shape is known.
+3. `call()`: Implements the forward pass math computation.
+
+```python
+import keras
+
+# All Keras layers inherit from the base Layer class.
+class SimpleDense(keras.Layer):
+    def __init__(self, units, activation=None):
+        super().__init__()
+        # units = number of neurons
+        self.units = units
+        self.activation = activation
+
+    # Weight creation takes place in the build() method.
+    def build(self, input_shape):
+        batch_dim, input_dim = input_shape
+        # add_weight is a shortcut method for creating weights. It's
+        # also possible to create standalone variables and assign them
+        # as layer attributes, like self.W = keras.Variable(shape=...,
+        # initializer=...).
+        self.W = self.add_weight(
+            shape=(input_dim, self.units), initializer="random_normal"
+        )
+        self.b = self.add_weight(shape=(self.units,), initializer="zeros")
+
+    # We define the forward pass computation in the call() method.
+    def call(self, inputs):
+        y = keras.ops.matmul(inputs, self.W) + self.b
+        if self.activation is not None:
+            y = self.activation(y)
+        return y
+```
+
+### Using Layers Like Functions
+
+Once instantiated, a layer can be called directly on an input tensor just like a function:
+
+```python
+# Instantiates our layer, defined previously
+my_dense = SimpleDense(units=32, activation=keras.ops.relu)
+
+# Creates some test inputs
+input_tensor = keras.ops.ones(shape=(2, 784))
+
+# Calls the layer on the inputs, just like a function
+output_tensor = my_dense(input_tensor)
+print(output_tensor.shape)
+# (2, 32)
+```
+
+---
+
+## 4. Automatic Shape Inference
+
+### Motivation: Compatibility of Shapes
+
+In toy implementations of layers, you often have to pass the layer's input size explicitly to the constructor so it can initialize its weight matrices. This leads to brittle, tightly-coupled models:
+
+```python
+model = NaiveSequential(
+    [
+        NaiveDense(input_size=784, output_size=32, activation="relu"),
+        NaiveDense(input_size=32, output_size=64, activation="relu"),
+        NaiveDense(input_size=64, output_size=32, activation="relu"),
+        NaiveDense(input_size=32, output_size=10, activation="softmax"),
+    ]
+)
+```
+
+If a layer's output shape calculation is complex (for example, dynamic sizing based on dimensions), manually computing and matching shapes across layers becomes extremely tedious and error-prone.
+
+With **automatic shape inference**, layer definitions become clean and concise:
+
+```python
+model = keras.Sequential(
+    [
+        SimpleDense(32, activation="relu"),
+        SimpleDense(64, activation="relu"),
+        SimpleDense(32, activation="relu"),
+        SimpleDense(10, activation="softmax"),
+    ]
+)
+```
+
+---
+
+## 5. Behind the Scenes: `build()` and `call()` Lifecycle
+
+By separating layer setup into `build()` and `call()`, Keras solves the problem of needing to know input shapes ahead of time while keeping forward passes clean and efficient.
+
+### The Invisible `__call__` Manager
+
+Under the hood, Keras wraps layer execution in a manager method `__call__()`:
+
+```python
+# Simplified look at what Keras does under the hood:
+def __call__(self, inputs):
+    if not self.built:
+        # 1. Keras inspects the incoming tensor's shape attribute
+        input_shape = inputs.shape  # e.g., (32, 784)
+        
+        # 2. It hands that extracted shape straight to your build() method
+        self.build(input_shape)
+        self.built = True
+        
+    # 3. It hands the actual tensor data to your call() method
+    return self.call(inputs)
+```
+
+### Step-by-Step Execution Lifecycle
+
+1. **First Forward Pass (`layer(x)`):**
+   - `__call__()` checks `self.built`, which defaults to `False`.
+   - It inspects `inputs.shape` and calls `self.build(inputs.shape)`.
+   - `build()` creates weight tensors $W$ and $b$ matched exactly to the incoming tensor's dimensions.
+   - `self.built` is set to `True`.
+   - `__call__()` hands `inputs` to `self.call(inputs)` to calculate and return the output.
+
+2. **Every Subsequent Forward Pass (`layer(x_next)`):**
+   - `__call__()` checks `self.built`, which is now `True`.
+   - It skips `self.build()` completely, avoiding redundant weight reallocation.
+   - It directly executes `self.call(inputs)` using the existing weights.
+
+### The Complete "One-Shot" Timeline
+
+| Step | Action | What Runs | Behind the Scenes |
+|:---:|:---|:---|:---|
+| **1** | Create the layer (`my_layer = SimpleDense(units=128)`) | `__init__()` | Saves configuration (`units=128`, `activation`). Has **zero** weights initially. |
+| **2** | Pass data into the layer (`output = my_layer(images)`) | `__call__()` | Invisible manager intercepts inputs. |
+| **3** | Check if layer is built | `if not self.built:` | `self.built` is `False`. Manager extracts shape `(32, 784)`. |
+| **4** | Just-in-time weight creation | `build(input_shape)` | Allocates $W$ $(784 \times 128)$ and $b$ $(128,)$. Sets `self.built = True`. |
+| **5** | Execute the math | `call(inputs)` | Performs matrix multiplication ($\text{inputs} \cdot W + b$), applies activation, returns result. |
+| **6** | Pass subsequent batches (`output2 = my_layer(more_images)`) | `__call__()` $\rightarrow$ `call()` | `self.built` is `True`. Steps 3 and 4 are skipped; data goes directly to `call()`. |
+
+### Summary Script
+
+```python
+# 1. __init__ runs (Saves rules: units=128. No weights exist yet.)
+layer = SimpleDense(units=128, activation=keras.activations.relu)
+
+# 2. __call__ intercepts data. 
+# 3. Extracts shape (32, 784).
+# 4. build() runs (Creates W and b).
+# 5. call() runs (Does the math).
+output_1 = layer(batch_1)  
+
+# 6. __call__ intercepts data. 
+# -> build() is SKIPPED. 
+# -> call() runs (Does the math).
+output_2 = layer(batch_2)
+```
+
+---
+
+## 6. The `compile` Step: Configuring the Learning Process
+
+Before training a model, you must configure three components via `model.compile()`:
+
+- **The Metric (The Objective / "The What"):** The human-interpretable goal (e.g., reaching 99% accuracy on cancer detection).
+- **The Loss Function (The Bridge / "The Tool"):** Translates the objective into a smooth, differentiable mathematical landscape of hills and valleys so the computer can calculate gradient feedback.
+- **The Optimizer (The Engine / "The Method"):** Uses gradients from the loss function to physically update the model's weights step-by-step.
+
+### Compiling with String Identifiers
+
+```python
+# Defines a linear classifier
+model = keras.Sequential([keras.layers.Dense(1)])
+model.compile(
+    # Specifies the optimizer by name: RMSprop (case-insensitive)
+    optimizer="rmsprop",
+    # Specifies the loss by name: mean squared error
+    loss="mean_squared_error",
+    # Specifies a list of metrics: in this case, only accuracy
+    metrics=["accuracy"],
+)
+```
+
+### Compiling with Object Instances
+
+Specifying arguments as class instances allows for custom parameters (e.g., custom learning rates):
+
+```python
+model.compile(
+    optimizer=keras.optimizers.RMSprop(learning_rate=1e-4),
+    loss=keras.losses.MeanSquaredError(),
+    metrics=[keras.metrics.BinaryAccuracy()],
+)
+```
+
+You can also supply your own custom loss and metric functions:
+
+```python
+model.compile(
+    optimizer=keras.optimizers.RMSprop(learning_rate=1e-4),
+    loss=my_custom_loss,
+    metrics=[my_custom_metric_1, my_custom_metric_2],
+)
+```
+
+### Common Optimizers, Losses, and Metrics
+
+* **Optimizers:**
+  - `SGD()` (with or without momentum)
+  - `RMSprop()`
+  - `Adam()`
+  - `AdamW()`
+  - `Adagrad()`
+
+* **Loss Functions:**
+  - `BinaryCrossentropy()`
+  - `CategoricalCrossentropy()`
+  - `SparseCategoricalCrossentropy()`
+  - `MeanSquaredError()`
+  - `KLDivergence()`
+  - `CosineSimilarity()`
+
+* **Metrics:**
+  - `BinaryAccuracy()`
+  - `CategoricalAccuracy()`
+  - `SparseCategoricalAccuracy()`
+  - `AUC()`
+  - `Precision()`
+  - `Recall()`
+
+---
+
+## 7. Understanding the `fit()` Method
+
+The `fit()` method implements the training loop.
+
+### Key Arguments
+
+- **`inputs` & `targets`:** The training examples and corresponding labels (as NumPy arrays or TensorFlow `Dataset` objects).
+- **`epochs`:** How many complete passes the training loop should make over the entire dataset.
+- **`batch_size`:** The number of samples processed per gradient update step.
+
+```python
+history = model.fit(
+    # The input examples, as a NumPy array
+    inputs,
+    # The corresponding training targets, as a NumPy array
+    targets,
+    # The training loop will iterate over the data 5 times.
+    epochs=5,
+    # The training loop will iterate over the data in batches of 128 examples.
+    batch_size=128,
+)
+```
+
+### The Flashcard Analogy
+
+Imagine studying a deck of **1,280 flashcards**:
+
+1. **The Data (`inputs` and `targets`):**
+   - `inputs`: The front of the flashcards (e.g., 1,280 images of handwritten digits).
+   - `targets`: The back of the flashcards (e.g., the ground-truth label 0–9).
+
+2. **The Mechanics (`batch_size` and `epochs`):**
+   - `batch_size=128`: The model takes 128 flashcards at a time, makes predictions, calculates the loss, and updates its weights. Since $1280 \div 128 = 10$, it takes **10 batches** (10 gradient updates) to finish the deck.
+   - `epochs=5`: Studying the entire deck of 1,280 cards from start to finish 5 separate times ($10 \text{ batches} \times 5 \text{ epochs} = 50$ total weight updates).
+
+3. **Complete Training Timeline:**
+   - **Epoch 1:** Model starts with random guesses (accuracy $\approx$ 10%).
+   - **Epoch 2:** Cards are reshuffled; model learns basic patterns (accuracy jumps to $\approx$ 60%).
+   - **Epochs 3–5:** Model refines boundaries, converging to high performance (accuracy $\approx$ 95%).
+
+### Diagnosing Training with the `History` Object
+
+The `history.history` dictionary records metrics and loss values at the end of each epoch:
+
+```python
+>> history.history
+{
+  "binary_accuracy": [0.855, 0.9565, 0.9555, 0.95, 0.951],
+  "loss": [0.6573270302042366, 0.07434618508815766, 0.07687718723714351, 0.07412414988875389, 0.07617757616937161]
+}
+```
+
+- **`binary_accuracy` (The Objective):** Measures the percentage of correct predictions. In Epoch 1 it scored 85.5%, jumped to 95.65% in Epoch 2, and plateaued around 95% for subsequent epochs.
+- **`loss` (The Optimizer's Error Signal):** Lower is better. Dropped sharply from 0.657 to 0.074 in Epoch 2, after which it fluctuated slightly around 0.075 as the optimizer explored the bottom of the loss valley.
+- **Diagnosis:** The model learned rapidly and reached its full capacity by Epoch 2. Training for Epochs 3–5 consumed extra compute without meaningful gain; setting `epochs=2` or `epochs=3` would be sufficient for this configuration.
+
+---
+
+## 8. Monitoring Loss and Metrics on Validation Data
+
+To verify that a model generalizes to unseen data, we evaluate it on separate **validation data** during training.
+
+### Shuffling and Splitting Data
+
+```python
+import numpy as np
+
+model = keras.Sequential([keras.layers.Dense(1)])
+model.compile(
+    optimizer=keras.optimizers.RMSprop(learning_rate=0.1),
+    loss=keras.losses.MeanSquaredError(),
+    metrics=[keras.metrics.BinaryAccuracy()],
+)
+
+# To avoid having samples from only one class in the validation data,
+# shuffles the inputs and targets using a random indices permutation
+indices_permutation = np.random.permutation(len(inputs))
+shuffled_inputs = inputs[indices_permutation]
+shuffled_targets = targets[indices_permutation]
+
+# Reserves 30% of the training inputs and targets for "validation."
+# (We'll exclude these samples from training and reserve them to
+# compute the "validation loss" and metrics).
+num_validation_samples = int(0.3 * len(inputs))
+val_inputs = shuffled_inputs[:num_validation_samples]
+val_targets = shuffled_targets[:num_validation_samples]
+training_inputs = shuffled_inputs[num_validation_samples:]
+training_targets = shuffled_targets[num_validation_samples:]
+
+model.fit(
+    # Training data, used to update the weights of the model
+    training_inputs,
+    training_targets,
+    epochs=5,
+    batch_size=16,
+    # Validation data, used only to monitor the "validation loss" and metrics
+    validation_data=(val_inputs, val_targets),
+)
+```
+
+### Validation Workflow
+
+```text
+[ Epoch 1 Training ]  ---> Model updates weights using Training Data
+         │
+         ▼
+[ Validation Check ]  ---> Model runs a forward pass on Validation Data
+                           (Calculates loss/accuracy WITHOUT updating weights)
+         │
+         ▼
+[ Epoch 2 Training ]  ---> Model resumes updating weights using Training Data...
+```
+
+The validation scores guide developer decisions:
+
+- If validation accuracy stops improving, stop training early to prevent overfitting.
+- If validation loss begins increasing, regularize or reduce model capacity (e.g., from 64 units to 16 units).
+
+### The Full Experimentation Pipeline
+
+```text
+1. Split Data   ---> [ Train ] | [ Validation ] | [ Test (Locked) ]
+                         │              │
+                         ▼              ▼
+2. Experiment   --->   Train  <---> Validate (Iterate & Tune)
+                                        │
+                                        ▼ (When satisfied)
+3. Final Audit  ----------------> [ Test Set ]
+                                        │
+                         ┌──────────────┴──────────────┐
+                         ▼                             ▼
+                 [ Good Result ]              [ Poor Result ]
+                        │                              │
+                 Deploy to Prod!              • Add Regularization
+                                              • Resplit/Reshuffle
+                                              • Collect New Data
+```
+
+### Evaluating After Training
+
+To compute loss and metrics on a validation or test set after training has finished, use `model.evaluate()`:
+
+```python
+loss_and_metrics = model.evaluate(val_inputs, val_targets, batch_size=128)
+```
+
+`evaluate()` iterates over the data in batches and returns a list of scalars (validation loss followed by validation metrics).
+
+---
+
+## 9. Inference: Using a Model After Training
+
+After training, you can generate predictions on new data.
+
+While calling the model directly via `model(val_inputs)` works, `model.predict()` is the standard and more efficient approach for inference:
+
+- It automatically iterates over inputs in batches to avoid running out of memory.
+- It returns a clean NumPy array of predictions.
+- It can seamlessly consume TensorFlow `Dataset` objects as well as NumPy arrays.
+
+```python
+# Takes a NumPy array or a Dataset and returns a NumPy array
+predictions = model.predict(val_inputs, batch_size=128)
+print(predictions[:10])
+```
+
+```text
+[[0.3590725 ]
+ [0.82706255]
+ [0.74428225]
+ [0.682058  ]
+ [0.7312616 ]
+ [0.6059811 ]
+ [0.78046083]
+ [0.025846  ]
+ [0.16594526]
+ [0.72068727]]
+```
