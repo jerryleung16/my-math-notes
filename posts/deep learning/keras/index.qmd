@@ -29,6 +29,14 @@ If you run `import keras` in a fresh environment without any configuration, the 
 
 You can switch backends dynamically in Python by setting the `KERAS_BACKEND` environment variable *before* importing Keras:
 
+```python
+import os
+
+# Sets the environment variable from within the Python runtime
+os.environ["KERAS_BACKEND"] = "jax"
+
+# Only then should you import Keras
+import keras
 ```
 
 Each row in the output corresponds to one input sample, and the single value in
@@ -45,15 +53,7 @@ prediction:
 The ten rows shown are the predictions for the first ten samples in
 `val_inputs`; they are not the true labels. If the final layer does not use a
 sigmoid activation, these values should instead be interpreted as raw model
-scores rather than probabilities.python
-import os
-
-# Sets the environment variable from within the Python runtime
-os.environ["KERAS_BACKEND"] = "jax"
-
-# Only then should you import Keras
-import keras
-```
+scores rather than probabilities.
 
 ### Setting the Backend via Configuration File
 
