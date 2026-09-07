@@ -987,6 +987,13 @@
     "text": "Generate Predictions\n&gt;&gt;&gt; model.predict(x_test)\narray([[0.98006207],\n       [0.99758697],\n       [0.99975556],\n       ...,\n       [0.82167041],\n       [0.02885115],\n       [0.65371346]], dtype=float32)\nEach value is the model’s estimated probability that the corresponding review is positive. A value near 1 indicates positive sentiment; a value near 0 indicates negative sentiment."
   },
   {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.4 IMDb Binary Classification/index.html#wrapping-up",
+    "href": "posts/deep learning/Deep Learning with Python Ch.4 IMDb Binary Classification/index.html#wrapping-up",
+    "title": "Classifying Movie Reviews: A Binary Classification Example",
+    "section": "Wrapping Up",
+    "text": "Wrapping Up\nHere’s what you should take away from this example:\n\nYou usually need to do quite a bit of preprocessing on your raw data to be able to feed it — as tensors — into a neural network. Sequences of words can be encoded as binary vectors, but there are other encoding options, too.\nStacks of Dense layers with ReLU activations can solve a wide range of problems (including sentiment classification), and you’ll use them frequently.\nIn a binary classification problem (two output classes), your model should end with a Dense layer with one unit and a sigmoid activation: the output of your model should be a scalar between 0 and 1, encoding a probability.\nWith such a scalar sigmoid output on a binary classification problem, the loss function you should use is binary_crossentropy.\nThe Adam optimizer is generally a good enough choice, whatever your problem. That’s one less thing for you to worry about.\nAs they get better on their training data, neural networks eventually start overfitting and end up obtaining increasingly worse results on data they’ve never seen before. Be sure to always monitor performance on data that is outside of the training set!"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "my-math-notes",

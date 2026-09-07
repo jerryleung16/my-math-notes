@@ -522,6 +522,18 @@ font-style: inherit;">0.65371346</span>]], dtype<span class="op" style="color: #
 background-color: null;
 font-style: inherit;">=</span>float32)</span></code></pre></div></div>
 <p>Each value is the model’s estimated probability that the corresponding review is positive. A value near <code>1</code> indicates positive sentiment; a value near <code>0</code> indicates negative sentiment.</p>
+</section>
+<section id="wrapping-up" class="level2">
+<h2 class="anchored" data-anchor-id="wrapping-up">Wrapping Up</h2>
+<p>Here’s what you should take away from this example:</p>
+<ul>
+<li>You usually need to do quite a bit of preprocessing on your raw data to be able to feed it — as tensors — into a neural network. Sequences of words can be encoded as binary vectors, but there are other encoding options, too.</li>
+<li>Stacks of <code>Dense</code> layers with ReLU activations can solve a wide range of problems (including sentiment classification), and you’ll use them frequently.</li>
+<li>In a binary classification problem (two output classes), your model should end with a <code>Dense</code> layer with one unit and a sigmoid activation: the output of your model should be a scalar between 0 and 1, encoding a probability.</li>
+<li>With such a scalar sigmoid output on a binary classification problem, the loss function you should use is <code>binary_crossentropy</code>.</li>
+<li>The Adam optimizer is generally a good enough choice, whatever your problem. That’s one less thing for you to worry about.</li>
+<li>As they get better on their training data, neural networks eventually start overfitting and end up obtaining increasingly worse results on data they’ve never seen before. Be sure to always monitor performance on data that is outside of the training set!</li>
+</ul>
 
 
 </section>
