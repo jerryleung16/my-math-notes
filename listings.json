@@ -2,6 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/deep learning/Predicting House Prices A Regression Example/index.html",
+      "/posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html",
       "/posts/deep learning/Deep Learning with Python Ch.4 IMDb Binary Classification/index.html",
       "/posts/deep learning/keras/index.html",
       "/posts/japanese/lyrics_5/index.html",

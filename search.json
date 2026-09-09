@@ -847,6 +847,118 @@
     "text": "13. Additional Context: The Ada Lovelace Objection\nThe chapter notes a historical perspective from Ada Lovelace in 1843, who remarked that mechanical computers have “no pretensions whatever to originate anything” and can only do what we order them to perform. This prompted early pioneers like Alan Turing to question if computers could learn from experience or show creativity—questions that machine learning is finally answering today. As the authors conclude: “Don’t believe the short-term hype, but do believe in the long-term vision.”"
   },
   {
+    "objectID": "posts/deep learning/Predicting House Prices A Regression Example/index.html",
+    "href": "posts/deep learning/Predicting House Prices A Regression Example/index.html",
+    "title": "Predicting House Prices: A Regression Example",
+    "section": "",
+    "text": "Regression predicts a continuous value rather than a discrete label. Typical examples include forecasting tomorrow’s temperature, estimating how long a project will take, or predicting the price of a house.\nIn this example, the goal is to predict the median house value of a California district from census data."
+  },
+  {
+    "objectID": "posts/deep learning/Predicting House Prices A Regression Example/index.html#regression-vs.-classification",
+    "href": "posts/deep learning/Predicting House Prices A Regression Example/index.html#regression-vs.-classification",
+    "title": "Predicting House Prices: A Regression Example",
+    "section": "",
+    "text": "Regression predicts a continuous value rather than a discrete label. Typical examples include forecasting tomorrow’s temperature, estimating how long a project will take, or predicting the price of a house.\nIn this example, the goal is to predict the median house value of a California district from census data."
+  },
+  {
+    "objectID": "posts/deep learning/Predicting House Prices A Regression Example/index.html#the-california-housing-price-dataset",
+    "href": "posts/deep learning/Predicting House Prices A Regression Example/index.html#the-california-housing-price-dataset",
+    "title": "Predicting House Prices: A Regression Example",
+    "section": "The California Housing Price Dataset",
+    "text": "The California Housing Price Dataset\nKeras provides the California housing dataset in two versions:\n\nSmall: 600 districts\nLarge: 20,640 districts\n\nHere we use the small version, which is useful because real-world datasets are often limited in size.\nEach sample describes one California district using 8 numerical features:\n\nLongitude\nLatitude\nMedian house age\nTotal rooms\nTotal bedrooms\nPopulation\nHouseholds\nMedian income\n\nThe target is the district’s median house value in dollars."
+  },
+  {
+    "objectID": "posts/deep learning/Predicting House Prices A Regression Example/index.html#load-the-dataset",
+    "href": "posts/deep learning/Predicting House Prices A Regression Example/index.html#load-the-dataset",
+    "title": "Predicting House Prices: A Regression Example",
+    "section": "Load the Dataset",
+    "text": "Load the Dataset\nfrom keras.datasets import california_housing\n\n# Make sure to request the small version.\n(train_data, train_targets), (test_data, test_targets) = (\n    california_housing.load_data(version=\"small\")\n)\n&gt;&gt;&gt; train_data.shape\n(480, 8)\n&gt;&gt;&gt; test_data.shape\n(120, 8)\nThere are 480 training samples and 120 test samples, each with 8 features.\nThe targets are raw home prices:\n&gt;&gt;&gt; train_targets\narray([252300., 146900., 290900., ..., 140500., 217100.],\n      dtype=float32)"
+  },
+  {
+    "objectID": "posts/deep learning/Predicting House Prices A Regression Example/index.html#preparing-the-data",
+    "href": "posts/deep learning/Predicting House Prices A Regression Example/index.html#preparing-the-data",
+    "title": "Predicting House Prices: A Regression Example",
+    "section": "Preparing the Data",
+    "text": "Preparing the Data\n\nStandardize Each Feature Independently\nThe 8 input features live on very different scales. For example, latitude is small, while the number of rooms may be in the thousands. A neural network trains much more reliably when each feature is centered and scaled.\nmean = train_data.mean(axis=0)\nstd = train_data.std(axis=0)\n\nx_train = (train_data - mean) / std\nx_test = (test_data - mean) / std\nIt is important to use the training-set mean and standard deviation for both x_train and x_test.\n\n\nScale the Targets\nThe targets are also rescaled:\ny_train = train_targets / 100000\ny_test = test_targets / 100000\nThis makes the target values numerically smaller and easier to work with.\nFor example, an MAE of 0.5 now means the predictions are off by about $50,000 on average."
+  },
+  {
+    "objectID": "posts/deep learning/Predicting House Prices A Regression Example/index.html#building-the-model",
+    "href": "posts/deep learning/Predicting House Prices A Regression Example/index.html#building-the-model",
+    "title": "Predicting House Prices: A Regression Example",
+    "section": "Building the Model",
+    "text": "Building the Model\nThis is a scalar regression problem, so the network should output a single number.\nimport keras\nfrom keras import layers\n\ndef get_model():\n    model = keras.Sequential(\n        [\n            layers.Dense(64, activation=\"relu\"),\n            layers.Dense(64, activation=\"relu\"),\n            layers.Dense(1),\n        ]\n    )\n    model.compile(\n        optimizer=\"adam\",\n        loss=\"mean_squared_error\",\n        metrics=[\"mean_absolute_error\"],\n    )\n    return model\n\nWhy Does the Last Layer Have One Unit and No Activation?\nlayers.Dense(1)\nThis final layer is linear: it can output any real value. That is the standard choice for predicting a single continuous quantity.\nFor scalar regression:\n\nLoss: mean_squared_error\nMetric: mean_absolute_error\n\nAccuracy does not make sense here because there are no classes to predict."
+  },
+  {
+    "objectID": "posts/deep learning/Predicting House Prices A Regression Example/index.html#why-use-k-fold-validation",
+    "href": "posts/deep learning/Predicting House Prices A Regression Example/index.html#why-use-k-fold-validation",
+    "title": "Predicting House Prices: A Regression Example",
+    "section": "Why Use K-Fold Validation?",
+    "text": "Why Use K-Fold Validation?\nWith only 480 training samples, setting aside a normal validation split would leave very little data for both training and validation.\nThat creates two problems:\n\nthe validation set would be small\nthe validation score would depend heavily on the particular split\n\nK-fold cross-validation reduces this instability.\nIf K = 4, split the training data into 4 equal parts. Then:\n\nuse 1 fold for validation\nuse the other 3 folds for training\nrepeat until every fold has served once as validation\naverage the validation scores"
+  },
+  {
+    "objectID": "posts/deep learning/Predicting House Prices A Regression Example/index.html#k-fold-validation-with-50-epochs",
+    "href": "posts/deep learning/Predicting House Prices A Regression Example/index.html#k-fold-validation-with-50-epochs",
+    "title": "Predicting House Prices: A Regression Example",
+    "section": "K-Fold Validation with 50 Epochs",
+    "text": "K-Fold Validation with 50 Epochs\nimport numpy as np\n\nk = 4\nnum_val_samples = len(x_train) // k\nnum_epochs = 50\nall_scores = []\n\nfor i in range(k):\n    print(f\"Processing fold #{i + 1}\")\n\n    fold_x_val = x_train[i * num_val_samples : (i + 1) * num_val_samples]\n    fold_y_val = y_train[i * num_val_samples : (i + 1) * num_val_samples]\n\n    fold_x_train = np.concatenate(\n        [x_train[: i * num_val_samples], x_train[(i + 1) * num_val_samples :]],\n        axis=0,\n    )\n    fold_y_train = np.concatenate(\n        [y_train[: i * num_val_samples], y_train[(i + 1) * num_val_samples :]],\n        axis=0,\n    )\n\n    model = get_model()\n    model.fit(\n        fold_x_train,\n        fold_y_train,\n        epochs=num_epochs,\n        batch_size=16,\n        verbose=0,\n    )\n    scores = model.evaluate(fold_x_val, fold_y_val, verbose=0)\n    val_loss, val_mae = scores\n    all_scores.append(val_mae)\nValidation MAE for the 4 folds:\n&gt;&gt;&gt; [round(value, 3) for value in all_scores]\n[0.298, 0.349, 0.232, 0.305]\n&gt;&gt;&gt; round(np.mean(all_scores), 3)\n0.296\nSo the model is off by about $29,600 on average."
+  },
+  {
+    "objectID": "posts/deep learning/Predicting House Prices A Regression Example/index.html#how-folds-and-epochs-work-together",
+    "href": "posts/deep learning/Predicting House Prices A Regression Example/index.html#how-folds-and-epochs-work-together",
+    "title": "Predicting House Prices: A Regression Example",
+    "section": "How Folds and Epochs Work Together",
+    "text": "How Folds and Epochs Work Together\nWhen K = 4, each iteration of the loop trains a fresh model on 3 folds and validates it on the remaining fold.\nInside one fold:\n\nthe data split is fixed\none epoch means the model sees every sample in fold_x_train once\nepochs = 50 means it repeats that process 50 times\nafter that fold finishes, the model is discarded and rebuilt from scratch for the next fold\n\nSo:\n\nthe fold loop changes which data is used for validation\nthe epoch loop keeps improving one model on one training split"
+  },
+  {
+    "objectID": "posts/deep learning/Predicting House Prices A Regression Example/index.html#tracking-validation-mae-across-epochs",
+    "href": "posts/deep learning/Predicting House Prices A Regression Example/index.html#tracking-validation-mae-across-epochs",
+    "title": "Predicting House Prices: A Regression Example",
+    "section": "Tracking Validation MAE Across Epochs",
+    "text": "Tracking Validation MAE Across Epochs\nIf you raise the training time to num_epochs = 200, a single final score is no longer enough. You want to watch how validation MAE changes over time.\nInstead of calling model.evaluate() only at the end, pass validation_data to model.fit() and collect the epoch-by-epoch history:\nk = 4\nnum_val_samples = len(x_train) // k\nnum_epochs = 200\nall_mae_histories = []\n\nfor i in range(k):\n    print(f\"Processing fold #{i + 1}\")\n\n    fold_x_val = x_train[i * num_val_samples : (i + 1) * num_val_samples]\n    fold_y_val = y_train[i * num_val_samples : (i + 1) * num_val_samples]\n\n    fold_x_train = np.concatenate(\n        [x_train[: i * num_val_samples], x_train[(i + 1) * num_val_samples :]],\n        axis=0,\n    )\n    fold_y_train = np.concatenate(\n        [y_train[: i * num_val_samples], y_train[(i + 1) * num_val_samples :]],\n        axis=0,\n    )\n\n    model = get_model()\n    history = model.fit(\n        fold_x_train,\n        fold_y_train,\n        validation_data=(fold_x_val, fold_y_val),\n        epochs=num_epochs,\n        batch_size=16,\n        verbose=0,\n    )\n    mae_history = history.history[\"val_mean_absolute_error\"]\n    all_mae_histories.append(mae_history)\n\nmodel.evaluate() vs. history.history[\"val_mean_absolute_error\"]\nThese two approaches return different kinds of information:\n\nmodel.evaluate(...) gives one final validation score\nhistory.history[\"val_mean_absolute_error\"] gives one validation score per epoch\n\nFor example, if num_epochs = 5:\nval_loss, val_mae = model.evaluate(fold_x_val, fold_y_val)\nprint(val_mae)\n# 2.85\nThis stores a single float.\nWith validation history:\nmae_history = history.history[\"val_mean_absolute_error\"]\nprint(mae_history)\n# [4.10, 3.20, 2.10, 2.40, 2.85]\nThis stores the whole trajectory."
+  },
+  {
+    "objectID": "posts/deep learning/Predicting House Prices A Regression Example/index.html#averaging-the-mae-curves-across-folds",
+    "href": "posts/deep learning/Predicting House Prices A Regression Example/index.html#averaging-the-mae-curves-across-folds",
+    "title": "Predicting House Prices: A Regression Example",
+    "section": "Averaging the MAE Curves Across Folds",
+    "text": "Averaging the MAE Curves Across Folds\nEach fold produces a list of length num_epochs. To average the curves:\naverage_mae_history = [\n    np.mean([x[i] for x in all_mae_histories]) for i in range(num_epochs)\n]\nIf K = 4 and num_epochs = 5, all_mae_histories looks like this:\n[\n    [4.1, 3.2, 2.1, 2.4, 2.85],\n    [4.3, 3.1, 2.0, 2.5, 2.90],\n    [4.0, 3.3, 2.2, 2.3, 2.80],\n    [4.2, 3.0, 1.9, 2.6, 2.95],\n]\nFor a fixed epoch index i, the list comprehension extracts the i-th MAE from each fold and averages them.\nSo the result becomes:\n[4.15, 3.15, 2.05, 2.45, 2.875]"
+  },
+  {
+    "objectID": "posts/deep learning/Predicting House Prices A Regression Example/index.html#plot-the-validation-curve",
+    "href": "posts/deep learning/Predicting House Prices A Regression Example/index.html#plot-the-validation-curve",
+    "title": "Predicting House Prices: A Regression Example",
+    "section": "Plot the Validation Curve",
+    "text": "Plot the Validation Curve\nimport matplotlib.pyplot as plt\n\nepochs = range(1, len(average_mae_history) + 1)\nplt.plot(epochs, average_mae_history)\nplt.xlabel(\"Epochs\")\nplt.ylabel(\"Validation MAE\")\nplt.show()\nThis curve helps identify when validation performance stops improving and overfitting begins.\nIn this example, training for about 130 epochs is a reasonable choice."
+  },
+  {
+    "objectID": "posts/deep learning/Predicting House Prices A Regression Example/index.html#train-the-final-model-and-evaluate-on-the-test-set",
+    "href": "posts/deep learning/Predicting House Prices A Regression Example/index.html#train-the-final-model-and-evaluate-on-the-test-set",
+    "title": "Predicting House Prices: A Regression Example",
+    "section": "Train the Final Model and Evaluate on the Test Set",
+    "text": "Train the Final Model and Evaluate on the Test Set\nAfter choosing the number of epochs, train a fresh model on the full training set:\nmodel = get_model()\nmodel.fit(x_train, y_train, epochs=130, batch_size=16, verbose=0)\n\ntest_mean_squared_error, test_mean_absolute_error = model.evaluate(\n    x_test, y_test\n)\n&gt;&gt;&gt; round(test_mean_absolute_error, 3)\n0.31\nThat means the predictions are off by about $31,000 on average."
+  },
+  {
+    "objectID": "posts/deep learning/Predicting House Prices A Regression Example/index.html#generate-predictions-on-new-data",
+    "href": "posts/deep learning/Predicting House Prices A Regression Example/index.html#generate-predictions-on-new-data",
+    "title": "Predicting House Prices: A Regression Example",
+    "section": "Generate Predictions on New Data",
+    "text": "Generate Predictions on New Data\n&gt;&gt;&gt; predictions = model.predict(x_test)\n&gt;&gt;&gt; predictions[0]\narray([2.834494], dtype=float32)\nBecause the targets were divided by 100000, this corresponds to roughly $283,000."
+  },
+  {
+    "objectID": "posts/deep learning/Predicting House Prices A Regression Example/index.html#wrapping-up",
+    "href": "posts/deep learning/Predicting House Prices A Regression Example/index.html#wrapping-up",
+    "title": "Predicting House Prices: A Regression Example",
+    "section": "Wrapping Up",
+    "text": "Wrapping Up\nHere’s what this example shows:\n\nRegression uses different losses and metrics than classification.\nMean squared error (MSE) is a standard loss for regression.\nMean absolute error (MAE) is a useful human-readable evaluation metric.\nWhen features have different numeric ranges, standardize each feature independently.\nWhen data is scarce, K-fold validation gives a more reliable estimate of performance.\nWith little data, small models with one or two hidden layers are usually safer because they overfit less easily."
+  },
+  {
+    "objectID": "posts/deep learning/Predicting House Prices A Regression Example/index.html#summary",
+    "href": "posts/deep learning/Predicting House Prices A Regression Example/index.html#summary",
+    "title": "Predicting House Prices: A Regression Example",
+    "section": "Summary",
+    "text": "Summary\n\nThe three common supervised learning tasks on vector data are:\n\nbinary classification\nmulticlass classification\nscalar regression\n\nEach task uses a different loss:\n\nbinary_crossentropy for binary classification\ncategorical_crossentropy for multiclass classification\nmean_squared_error for scalar regression\n\nRaw data usually needs preprocessing before being fed to a neural network.\nFeatures with different ranges should be scaled independently.\nNeural networks eventually overfit as training continues.\nWhen the dataset is small, use a small model and rely on K-fold validation for a more reliable evaluation."
+  },
+  {
     "objectID": "posts/deep learning/PyTorch/index.html",
     "href": "posts/deep learning/PyTorch/index.html",
     "title": "Introduction to PyTorch",
@@ -998,7 +1110,7 @@
     "href": "index.html",
     "title": "my-math-notes",
     "section": "",
-    "text": "Classifying Movie Reviews: A Binary Classification Example\n\n\n\nDeep Learning\n\n\n\nIMDb sentiment classification with Keras: preprocessing reviews, training a dense neural network, validation, and prediction.\n\n\n\n\n\nSep 6, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to Keras\n\n\n\nDeep Learning\n\n\n\nNotes on Keras multi-backend support, custom layers, automatic shape inference and the build/call lifecycle, model compilation, training loops with fit, validation workflows, and inference.\n\n\n\n\n\nSep 6, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n森の小さなレストラン 歌詞生字（廣東話解釋）\n\n\n\nJapanese\n\n\n\n一首充滿森林、餐廳與夢境感的歌詞重點生字整理，附廣東話解釋與例句。\n\n\n\n\n\nAug 30, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to JAX\n\n\n\nDeep Learning\n\n\n\nNotes on JAX tensors, stateless programming, randomness, immutable array updates, gradients, and training loops.\n\n\n\n\n\nAug 16, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nマリーゴールド 歌詞生字（廣東話解釋)\n\n\n\nJapanese\n\n\n\nあいみょん〈マリーゴールド〉歌詞重點生字整理，附廣東話解釋與語境例句。\n\n\n\n\n\nAug 14, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 9\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 9 with IPA, meanings, and usage notes.\n\n\n\n\n\nAug 14, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n雪の華 歌詞生字（廣東話解釋)\n\n\n\nJapanese\n\n\n\n中島美嘉〈雪の華〉歌詞重點生字整理，附廣東話解釋與語境例句。\n\n\n\n\n\nAug 13, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 8\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 8 with IPA, meanings, and usage notes.\n\n\n\n\n\nAug 13, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to PyTorch\n\n\n\nDeep Learning\n\n\n\nPractical PyTorch notes covering tensor creation, reshaping, math operations, and gradients.\n\n\n\n\n\nAug 12, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to TensorFlow\n\n\n\nDeep Learning\n\n\n\nPractical TensorFlow notes on tensors, variables, reshaping, and common numerical operations.\n\n\n\n\n\nAug 11, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nさよなら 歌詞生字（廣東話解釋)\n\n\n\nJapanese\n\n\n\n西野加奈〈さよなら〉歌詞重點生字整理，附廣東話解釋與語境例句。\n\n\n\n\n\nAug 11, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n高嶺の花子さん 歌詞生字（廣東話解釋）\n\n\n\nJapanese\n\n\n\nJapanese lyric vocabulary notes for 高嶺の花子さん with Cantonese explanations and context.\n\n\n\n\n\nAug 9, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 6\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 6 with IPA, meanings, and usage notes.\n\n\n\n\n\nAug 9, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 7\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 7 with IPA, meanings, and usage notes.\n\n\n\n\n\nAug 9, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 5\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 5 with IPA, meanings, and usage notes.\n\n\n\n\n\nAug 8, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n4. Decorator (@property)\n\n\n\nPython\n\n\n\nAn explanation of Python’s @property decorator for cleaner attribute access and validation.\n\n\n\n\n\nAug 8, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 4\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 4 with IPA, meanings, and usage notes.\n\n\n\n\n\nAug 7, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nO, Theta and Omega Notations\n\n\n\nAlgorithms\n\n\n\nA concise guide to Big O, Theta, and Omega notation for analyzing algorithm growth rates.\n\n\n\n\n\nAug 7, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n3. Flexible Arguments\n\n\n\nPython\n\n\n\nHow to use *args and **kwargs to build Python classes with flexible initialization.\n\n\n\n\n\nAug 7, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n2. Optional Attributes\n\n\n\nPython\n\n\n\nHow to design Python classes with optional attributes and sensible default values.\n\n\n\n\n\nAug 6, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n1. Classes in Python: A Beginner’s Guide to Object-Oriented Programming\n\n\n\nPython\n\n\n\nA beginner-friendly introduction to Python classes, objects, attributes, and methods.\n\n\n\n\n\nAug 5, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 3\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 3 with IPA, meanings, and usage notes.\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Merge Sort\n\n\n\nAlgorithms\n\n\n\nA walkthrough of why merge sort runs in Theta(n log n) using recurrences and recursion trees.\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning with Python Ch.2 Summary\n\n\n\nDeep Learning\n\n\n\nChapter 2 notes on tensors, their key attributes, and the data structures used in deep learning.\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning with Python Ch.1 Summary\n\n\n\nDeep Learning\n\n\n\nKey ideas from Chapter 1 of Deep Learning with Python, including AI, machine learning, and deep learning.\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 2\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 2 with IPA, meanings, and usage notes.\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n日文生字字典（廣東話解釋）Day 1\n\n\n\nJapanese\n\n\n\nA Cantonese-friendly Japanese vocabulary list for Day 1 with practical meanings and usage notes.\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 1\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 1 with IPA, meanings, and usage notes.\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nMerge Sort: A Divide-and-Conquer Algorithm\n\n\n\nAlgorithms\n\n\n\nAn overview of merge sort and the divide-and-conquer strategy behind its recursive design.\n\n\n\n\n\nJul 29, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nInsertion Sort Algorithm\n\n\n\nAlgorithms\n\n\n\nA step-by-step introduction to insertion sort using card-sorting intuition and traced examples.\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Insertion Sort\n\n\n\nAlgorithms\n\n\n\nA line-by-line analysis of insertion sort to derive its best- and worst-case running time.\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\nNo matching items"
+    "text": "Predicting House Prices: A Regression Example\n\n\n\nDeep Learning\n\n\n\nCalifornia housing price regression with Keras: standardization, a small dense network, K-fold validation, and test-set prediction.\n\n\n\n\n\nSep 9, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nClassifying Newswires: A Multiclass Classification Example\n\n\n\nDeep Learning\n\n\n\nReuters topic classification with Keras: multiclass preprocessing, softmax outputs, top-k accuracy, and categorical vs sparse categorical crossentropy.\n\n\n\n\n\nSep 9, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nClassifying Movie Reviews: A Binary Classification Example\n\n\n\nDeep Learning\n\n\n\nIMDb sentiment classification with Keras: preprocessing reviews, training a dense neural network, validation, and prediction.\n\n\n\n\n\nSep 6, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to Keras\n\n\n\nDeep Learning\n\n\n\nNotes on Keras multi-backend support, custom layers, automatic shape inference and the build/call lifecycle, model compilation, training loops with fit, validation workflows, and inference.\n\n\n\n\n\nSep 6, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n森の小さなレストラン 歌詞生字（廣東話解釋）\n\n\n\nJapanese\n\n\n\n一首充滿森林、餐廳與夢境感的歌詞重點生字整理，附廣東話解釋與例句。\n\n\n\n\n\nAug 30, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to JAX\n\n\n\nDeep Learning\n\n\n\nNotes on JAX tensors, stateless programming, randomness, immutable array updates, gradients, and training loops.\n\n\n\n\n\nAug 16, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nマリーゴールド 歌詞生字（廣東話解釋)\n\n\n\nJapanese\n\n\n\nあいみょん〈マリーゴールド〉歌詞重點生字整理，附廣東話解釋與語境例句。\n\n\n\n\n\nAug 14, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 9\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 9 with IPA, meanings, and usage notes.\n\n\n\n\n\nAug 14, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n雪の華 歌詞生字（廣東話解釋)\n\n\n\nJapanese\n\n\n\n中島美嘉〈雪の華〉歌詞重點生字整理，附廣東話解釋與語境例句。\n\n\n\n\n\nAug 13, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 8\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 8 with IPA, meanings, and usage notes.\n\n\n\n\n\nAug 13, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to PyTorch\n\n\n\nDeep Learning\n\n\n\nPractical PyTorch notes covering tensor creation, reshaping, math operations, and gradients.\n\n\n\n\n\nAug 12, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to TensorFlow\n\n\n\nDeep Learning\n\n\n\nPractical TensorFlow notes on tensors, variables, reshaping, and common numerical operations.\n\n\n\n\n\nAug 11, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nさよなら 歌詞生字（廣東話解釋)\n\n\n\nJapanese\n\n\n\n西野加奈〈さよなら〉歌詞重點生字整理，附廣東話解釋與語境例句。\n\n\n\n\n\nAug 11, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n高嶺の花子さん 歌詞生字（廣東話解釋）\n\n\n\nJapanese\n\n\n\nJapanese lyric vocabulary notes for 高嶺の花子さん with Cantonese explanations and context.\n\n\n\n\n\nAug 9, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 6\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 6 with IPA, meanings, and usage notes.\n\n\n\n\n\nAug 9, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 7\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 7 with IPA, meanings, and usage notes.\n\n\n\n\n\nAug 9, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 5\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 5 with IPA, meanings, and usage notes.\n\n\n\n\n\nAug 8, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n4. Decorator (@property)\n\n\n\nPython\n\n\n\nAn explanation of Python’s @property decorator for cleaner attribute access and validation.\n\n\n\n\n\nAug 8, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 4\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 4 with IPA, meanings, and usage notes.\n\n\n\n\n\nAug 7, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nO, Theta and Omega Notations\n\n\n\nAlgorithms\n\n\n\nA concise guide to Big O, Theta, and Omega notation for analyzing algorithm growth rates.\n\n\n\n\n\nAug 7, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n3. Flexible Arguments\n\n\n\nPython\n\n\n\nHow to use *args and **kwargs to build Python classes with flexible initialization.\n\n\n\n\n\nAug 7, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n2. Optional Attributes\n\n\n\nPython\n\n\n\nHow to design Python classes with optional attributes and sensible default values.\n\n\n\n\n\nAug 6, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n1. Classes in Python: A Beginner’s Guide to Object-Oriented Programming\n\n\n\nPython\n\n\n\nA beginner-friendly introduction to Python classes, objects, attributes, and methods.\n\n\n\n\n\nAug 5, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 3\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 3 with IPA, meanings, and usage notes.\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Merge Sort\n\n\n\nAlgorithms\n\n\n\nA walkthrough of why merge sort runs in Theta(n log n) using recurrences and recursion trees.\n\n\n\n\n\nAug 4, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning with Python Ch.2 Summary\n\n\n\nDeep Learning\n\n\n\nChapter 2 notes on tensors, their key attributes, and the data structures used in deep learning.\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nDeep Learning with Python Ch.1 Summary\n\n\n\nDeep Learning\n\n\n\nKey ideas from Chapter 1 of Deep Learning with Python, including AI, machine learning, and deep learning.\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 2\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 2 with IPA, meanings, and usage notes.\n\n\n\n\n\nAug 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\n日文生字字典（廣東話解釋）Day 1\n\n\n\nJapanese\n\n\n\nA Cantonese-friendly Japanese vocabulary list for Day 1 with practical meanings and usage notes.\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nEnglish Word Dictionary Day 1\n\n\n\nEnglish\n\n\n\nA Cantonese-friendly English vocabulary list for Day 1 with IPA, meanings, and usage notes.\n\n\n\n\n\nJul 31, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nMerge Sort: A Divide-and-Conquer Algorithm\n\n\n\nAlgorithms\n\n\n\nAn overview of merge sort and the divide-and-conquer strategy behind its recursive design.\n\n\n\n\n\nJul 29, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nInsertion Sort Algorithm\n\n\n\nAlgorithms\n\n\n\nA step-by-step introduction to insertion sort using card-sorting intuition and traced examples.\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nTime Complexity Analysis of Insertion Sort\n\n\n\nAlgorithms\n\n\n\nA line-by-line analysis of insertion sort to derive its best- and worst-case running time.\n\n\n\n\n\nJul 27, 2026\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -1202,6 +1314,83 @@
     "title": "Introduction to JAX",
     "section": "Summary",
     "text": "Summary\nJAX is built around three big ideas:\n\nStateless functions\nExplicit randomness with PRNG keys\nFunctional transformations for gradients and compilation\n\nThese design choices make JAX fast and deterministic, but also more restrictive than NumPy, PyTorch, or TensorFlow in day-to-day use."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html",
+    "href": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html",
+    "title": "Classifying Newswires: A Multiclass Classification Example",
+    "section": "",
+    "text": "This is a single-label, multiclass problem: each newswire belongs to exactly one topic, and there are 46 possible topics."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#single-label-multiclass-classification",
+    "href": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#single-label-multiclass-classification",
+    "title": "Classifying Newswires: A Multiclass Classification Example",
+    "section": "",
+    "text": "This is a single-label, multiclass problem: each newswire belongs to exactly one topic, and there are 46 possible topics."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#the-reuters-dataset",
+    "href": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#the-reuters-dataset",
+    "title": "Classifying Newswires: A Multiclass Classification Example",
+    "section": "The Reuters Dataset",
+    "text": "The Reuters Dataset\nThe Reuters dataset contains short newswires and topic labels from 1986. It includes 46 topics, with at least 10 examples per topic in the training set.\nfrom keras.datasets import reuters\n\n(train_data, train_labels), (test_data, test_labels) = reuters.load_data(\n    num_words=10000\n)\nAs in the IMDb example, num_words=10000 keeps only the 10,000 most frequent words.\n\nTraining samples: 8982\nTest samples: 2246\n\nEach sample is a list of word indices:\n&gt;&gt;&gt; train_data[10]\n[1, 245, 273, 207, 156, 53, 74, 160, 26, 14, 46, 296, 26, 39, 74, 2979,\n3554, 14, 46, 4689, 4329, 86, 61, 3499, 4795, 14, 61, 451, 4329, 17, 12]\nYou can decode a newswire back to words:\nword_index = reuters.get_word_index()\nreverse_word_index = dict([(value, key) for (key, value) in word_index.items()])\ndecoded_newswire = \" \".join(\n    # 0, 1, and 2 are reserved for padding/start/unknown.\n    [reverse_word_index.get(i - 3, \"?\") for i in train_data[10]]\n)\nLabels are integer topic indices from 0 to 45:\n&gt;&gt;&gt; train_labels[10]\n3"
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#preparing-the-data",
+    "href": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#preparing-the-data",
+    "title": "Classifying Newswires: A Multiclass Classification Example",
+    "section": "Preparing the Data",
+    "text": "Preparing the Data\nAs before, multi-hot encode the input sequences:\n# Vectorized training data\nx_train = multi_hot_encode(train_data, num_classes=10000)\n# Vectorized test data\nx_test = multi_hot_encode(test_data, num_classes=10000)\nFor labels, you can either one-hot encode or keep integer labels.\n\nOption 1: One-Hot Labels\ndef one_hot_encode(labels, num_classes=46):\n    results = np.zeros((len(labels), num_classes))\n    for i, label in enumerate(labels):\n        results[i, label] = 1.0\n    return results\n\n# Vectorized training labels\ny_train = one_hot_encode(train_labels)\n# Vectorized test labels\ny_test = one_hot_encode(test_labels)\nEquivalent Keras utility:\nfrom keras.utils import to_categorical\n\ny_train = to_categorical(train_labels)\ny_test = to_categorical(test_labels)"
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#building-the-model",
+    "href": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#building-the-model",
+    "title": "Classifying Newswires: A Multiclass Classification Example",
+    "section": "Building the Model",
+    "text": "Building the Model\nA very small hidden representation can become an information bottleneck when separating 46 classes, so we use larger hidden layers:\nimport keras\nfrom keras import layers\n\nmodel = keras.Sequential(\n    [\n        layers.Dense(64, activation=\"relu\"),\n        layers.Dense(64, activation=\"relu\"),\n        layers.Dense(46, activation=\"softmax\"),\n    ]\n)\nThe final softmax layer outputs a probability distribution over 46 classes.\n\\[\n\\mathrm{softmax}(z_i) = \\frac{e^{z_i}}{\\sum_{j=1}^{46} e^{z_j}}\n\\]\nSo each output is between 0 and 1, and all 46 outputs sum to 1."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#loss-and-metrics",
+    "href": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#loss-and-metrics",
+    "title": "Classifying Newswires: A Multiclass Classification Example",
+    "section": "Loss and Metrics",
+    "text": "Loss and Metrics\nWith one-hot labels, use categorical_crossentropy:\ntop_3_accuracy = keras.metrics.TopKCategoricalAccuracy(\n    k=3, name=\"top_3_accuracy\"\n)\nmodel.compile(\n    optimizer=\"adam\",\n    loss=\"categorical_crossentropy\",\n    metrics=[\"accuracy\", top_3_accuracy],\n)\naccuracy (top-1) is strict: it only counts a prediction as correct if the top prediction matches the true class.\nTop-k accuracy is often fairer. For example, if the true class is the model’s second-highest probability, top-1 gives 0 but top-3 gives 1."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#validating-the-approach",
+    "href": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#validating-the-approach",
+    "title": "Classifying Newswires: A Multiclass Classification Example",
+    "section": "Validating the Approach",
+    "text": "Validating the Approach\nSet aside 1,000 samples for validation:\nx_val = x_train[:1000]\npartial_x_train = x_train[1000:]\ny_val = y_train[:1000]\npartial_y_train = y_train[1000:]\n\nhistory = model.fit(\n    partial_x_train,\n    partial_y_train,\n    epochs=20,\n    batch_size=512,\n    validation_data=(x_val, y_val),\n)\nValidation performance typically peaks around epoch 9, then overfitting starts.\nTrain a fresh model for 9 epochs and evaluate:\nmodel = keras.Sequential(\n    [\n        layers.Dense(64, activation=\"relu\"),\n        layers.Dense(64, activation=\"relu\"),\n        layers.Dense(46, activation=\"softmax\"),\n    ]\n)\nmodel.compile(\n    optimizer=\"adam\",\n    loss=\"categorical_crossentropy\",\n    metrics=[\"accuracy\"],\n)\nmodel.fit(\n    x_train,\n    y_train,\n    epochs=9,\n    batch_size=512,\n)\nresults = model.evaluate(x_test, y_test)\n\n&gt;&gt;&gt; results\n[0.9565213431445807, 0.79697239536954589]\nThis corresponds to about 79.7% test accuracy."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#random-baseline",
+    "href": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#random-baseline",
+    "title": "Classifying Newswires: A Multiclass Classification Example",
+    "section": "Random Baseline",
+    "text": "Random Baseline\nA random baseline is much lower:\nimport copy\ntest_labels_copy = copy.copy(test_labels)\nnp.random.shuffle(test_labels_copy)\nhits_array = np.array(test_labels == test_labels_copy)\nhits_array.mean()\n\n0.18655387355298308\nSo random guessing is about 18.7%, far below the trained model."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#generating-predictions-on-new-data",
+    "href": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#generating-predictions-on-new-data",
+    "title": "Classifying Newswires: A Multiclass Classification Example",
+    "section": "Generating Predictions on New Data",
+    "text": "Generating Predictions on New Data\npredictions = model.predict(x_test)\n\n&gt;&gt;&gt; predictions[0].shape\n(46,)\n\n&gt;&gt;&gt; np.sum(predictions[0])\n1.0\n\n&gt;&gt;&gt; np.argmax(predictions[0])\n4\nEach prediction is a 46-dimensional probability vector, and argmax gives the predicted topic."
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#alternative-label-encoding-loss",
+    "href": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#alternative-label-encoding-loss",
+    "title": "Classifying Newswires: A Multiclass Classification Example",
+    "section": "Alternative Label Encoding + Loss",
+    "text": "Alternative Label Encoding + Loss\nYou can keep labels as integers:\ny_train = train_labels\ny_test = test_labels\nThen switch to sparse_categorical_crossentropy:\nmodel.compile(\n    optimizer=\"adam\",\n    loss=\"sparse_categorical_crossentropy\",\n    metrics=[\"accuracy\"],\n)"
+  },
+  {
+    "objectID": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#wrapping-up",
+    "href": "posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/index.html#wrapping-up",
+    "title": "Classifying Newswires: A Multiclass Classification Example",
+    "section": "Wrapping Up",
+    "text": "Wrapping Up\n\nFor classification into N classes, use a final Dense(N) layer.\nFor single-label multiclass tasks, use a softmax output.\ncategorical_crossentropy is the standard loss when labels are one-hot encoded.\nIf labels are integer indices, use sparse_categorical_crossentropy.\nAvoid hidden layers that are too small when class count is large, to reduce information bottlenecks."
   },
   {
     "objectID": "posts/deep learning/tensor-flow/index.html",

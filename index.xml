@@ -10,7 +10,1376 @@
 <atom:link href="https://jerryleung16.github.io/my-math-notes/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sun, 06 Sep 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 09 Sep 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Predicting House Prices: A Regression Example</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/deep learning/Predicting House Prices A Regression Example/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="regression-vs.-classification" class="level2">
+<h2 class="anchored" data-anchor-id="regression-vs.-classification">Regression vs.&nbsp;Classification</h2>
+<p>Regression predicts a continuous value rather than a discrete label. Typical examples include forecasting tomorrow’s temperature, estimating how long a project will take, or predicting the price of a house.</p>
+<p>In this example, the goal is to predict the median house value of a California district from census data.</p>
+</section>
+<section id="the-california-housing-price-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="the-california-housing-price-dataset">The California Housing Price Dataset</h2>
+<p>Keras provides the California housing dataset in two versions:</p>
+<ul>
+<li><strong>Small</strong>: 600 districts</li>
+<li><strong>Large</strong>: 20,640 districts</li>
+</ul>
+<p>Here we use the small version, which is useful because real-world datasets are often limited in size.</p>
+<p>Each sample describes one California district using 8 numerical features:</p>
+<ol type="1">
+<li>Longitude</li>
+<li>Latitude</li>
+<li>Median house age</li>
+<li>Total rooms</li>
+<li>Total bedrooms</li>
+<li>Population</li>
+<li>Households</li>
+<li>Median income</li>
+</ol>
+<p>The target is the district’s median house value in dollars.</p>
+</section>
+<section id="load-the-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="load-the-dataset">Load the Dataset</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> keras.datasets <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> california_housing</span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Make sure to request the small version.</span></span>
+<span id="cb1-4">(train_data, train_targets), (test_data, test_targets) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (</span>
+<span id="cb1-5">    california_housing.load_data(version<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"small"</span>)</span>
+<span id="cb1-6">)</span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> train_data.shape</span>
+<span id="cb2-2">(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">480</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb2-3"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> test_data.shape</span>
+<span id="cb2-4">(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">120</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span></code></pre></div></div>
+<p>There are 480 training samples and 120 test samples, each with 8 features.</p>
+<p>The targets are raw home prices:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> train_targets</span>
+<span id="cb3-2">array([<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">252300.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">146900.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">290900.</span>, ..., <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">140500.</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">217100.</span>],</span>
+<span id="cb3-3">      dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>float32)</span></code></pre></div></div>
+</section>
+<section id="preparing-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="preparing-the-data">Preparing the Data</h2>
+<section id="standardize-each-feature-independently" class="level3">
+<h3 class="anchored" data-anchor-id="standardize-each-feature-independently">Standardize Each Feature Independently</h3>
+<p>The 8 input features live on very different scales. For example, latitude is small, while the number of rooms may be in the thousands. A neural network trains much more reliably when each feature is centered and scaled.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">mean <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train_data.mean(axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb4-2">std <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train_data.std(axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb4-3"></span>
+<span id="cb4-4">x_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (train_data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> mean) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> std</span>
+<span id="cb4-5">x_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (test_data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> mean) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> std</span></code></pre></div></div>
+<p>It is important to use the <strong>training-set</strong> mean and standard deviation for both <code>x_train</code> and <code>x_test</code>.</p>
+</section>
+<section id="scale-the-targets" class="level3">
+<h3 class="anchored" data-anchor-id="scale-the-targets">Scale the Targets</h3>
+<p>The targets are also rescaled:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">y_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train_targets <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100000</span></span>
+<span id="cb5-2">y_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> test_targets <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100000</span></span></code></pre></div></div>
+<p>This makes the target values numerically smaller and easier to work with.</p>
+<p>For example, an MAE of <code>0.5</code> now means the predictions are off by about <strong>$50,000</strong> on average.</p>
+</section>
+</section>
+<section id="building-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-model">Building the Model</h2>
+<p>This is a scalar regression problem, so the network should output a single number.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> keras</span>
+<span id="cb6-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> keras <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> layers</span>
+<span id="cb6-3"></span>
+<span id="cb6-4"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> get_model():</span>
+<span id="cb6-5">    model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> keras.Sequential(</span>
+<span id="cb6-6">        [</span>
+<span id="cb6-7">            layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">64</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"relu"</span>),</span>
+<span id="cb6-8">            layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">64</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"relu"</span>),</span>
+<span id="cb6-9">            layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>),</span>
+<span id="cb6-10">        ]</span>
+<span id="cb6-11">    )</span>
+<span id="cb6-12">    model.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">compile</span>(</span>
+<span id="cb6-13">        optimizer<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"adam"</span>,</span>
+<span id="cb6-14">        loss<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mean_squared_error"</span>,</span>
+<span id="cb6-15">        metrics<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mean_absolute_error"</span>],</span>
+<span id="cb6-16">    )</span>
+<span id="cb6-17">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> model</span></code></pre></div></div>
+<section id="why-does-the-last-layer-have-one-unit-and-no-activation" class="level3">
+<h3 class="anchored" data-anchor-id="why-does-the-last-layer-have-one-unit-and-no-activation">Why Does the Last Layer Have One Unit and No Activation?</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span></code></pre></div></div>
+<p>This final layer is linear: it can output any real value. That is the standard choice for predicting a single continuous quantity.</p>
+<p>For scalar regression:</p>
+<ul>
+<li><strong>Loss</strong>: <code>mean_squared_error</code></li>
+<li><strong>Metric</strong>: <code>mean_absolute_error</code></li>
+</ul>
+<p>Accuracy does not make sense here because there are no classes to predict.</p>
+</section>
+</section>
+<section id="why-use-k-fold-validation" class="level2">
+<h2 class="anchored" data-anchor-id="why-use-k-fold-validation">Why Use K-Fold Validation?</h2>
+<p>With only 480 training samples, setting aside a normal validation split would leave very little data for both training and validation.</p>
+<p>That creates two problems:</p>
+<ul>
+<li>the validation set would be small</li>
+<li>the validation score would depend heavily on the particular split</li>
+</ul>
+<p>K-fold cross-validation reduces this instability.</p>
+<p>If <code>K = 4</code>, split the training data into 4 equal parts. Then:</p>
+<ol type="1">
+<li>use 1 fold for validation</li>
+<li>use the other 3 folds for training</li>
+<li>repeat until every fold has served once as validation</li>
+<li>average the validation scores</li>
+</ol>
+</section>
+<section id="k-fold-validation-with-50-epochs" class="level2">
+<h2 class="anchored" data-anchor-id="k-fold-validation-with-50-epochs">K-Fold Validation with 50 Epochs</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb8-2"></span>
+<span id="cb8-3">k <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span></span>
+<span id="cb8-4">num_val_samples <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(x_train) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">//</span> k</span>
+<span id="cb8-5">num_epochs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span></span>
+<span id="cb8-6">all_scores <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb8-7"></span>
+<span id="cb8-8"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(k):</span>
+<span id="cb8-9">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Processing fold #</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb8-10"></span>
+<span id="cb8-11">    fold_x_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x_train[i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> num_val_samples : (i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> num_val_samples]</span>
+<span id="cb8-12">    fold_y_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> y_train[i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> num_val_samples : (i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> num_val_samples]</span>
+<span id="cb8-13"></span>
+<span id="cb8-14">    fold_x_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.concatenate(</span>
+<span id="cb8-15">        [x_train[: i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> num_val_samples], x_train[(i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> num_val_samples :]],</span>
+<span id="cb8-16">        axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,</span>
+<span id="cb8-17">    )</span>
+<span id="cb8-18">    fold_y_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.concatenate(</span>
+<span id="cb8-19">        [y_train[: i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> num_val_samples], y_train[(i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> num_val_samples :]],</span>
+<span id="cb8-20">        axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,</span>
+<span id="cb8-21">    )</span>
+<span id="cb8-22"></span>
+<span id="cb8-23">    model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> get_model()</span>
+<span id="cb8-24">    model.fit(</span>
+<span id="cb8-25">        fold_x_train,</span>
+<span id="cb8-26">        fold_y_train,</span>
+<span id="cb8-27">        epochs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>num_epochs,</span>
+<span id="cb8-28">        batch_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>,</span>
+<span id="cb8-29">        verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,</span>
+<span id="cb8-30">    )</span>
+<span id="cb8-31">    scores <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model.evaluate(fold_x_val, fold_y_val, verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb8-32">    val_loss, val_mae <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> scores</span>
+<span id="cb8-33">    all_scores.append(val_mae)</span></code></pre></div></div>
+<p>Validation MAE for the 4 folds:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> [<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">round</span>(value, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> value <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> all_scores]</span>
+<span id="cb9-2">[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.298</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.349</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.232</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.305</span>]</span>
+<span id="cb9-3"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">round</span>(np.mean(all_scores), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb9-4"><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.296</span></span></code></pre></div></div>
+<p>So the model is off by about <strong>$29,600</strong> on average.</p>
+</section>
+<section id="how-folds-and-epochs-work-together" class="level2">
+<h2 class="anchored" data-anchor-id="how-folds-and-epochs-work-together">How Folds and Epochs Work Together</h2>
+<p>When <code>K = 4</code>, each iteration of the loop trains a <strong>fresh</strong> model on 3 folds and validates it on the remaining fold.</p>
+<p>Inside one fold:</p>
+<ol type="1">
+<li>the data split is fixed</li>
+<li>one epoch means the model sees every sample in <code>fold_x_train</code> once</li>
+<li><code>epochs = 50</code> means it repeats that process 50 times</li>
+<li>after that fold finishes, the model is discarded and rebuilt from scratch for the next fold</li>
+</ol>
+<p>So:</p>
+<ul>
+<li>the <strong>fold loop</strong> changes which data is used for validation</li>
+<li>the <strong>epoch loop</strong> keeps improving one model on one training split</li>
+</ul>
+</section>
+<section id="tracking-validation-mae-across-epochs" class="level2">
+<h2 class="anchored" data-anchor-id="tracking-validation-mae-across-epochs">Tracking Validation MAE Across Epochs</h2>
+<p>If you raise the training time to <code>num_epochs = 200</code>, a single final score is no longer enough. You want to watch how validation MAE changes over time.</p>
+<p>Instead of calling <code>model.evaluate()</code> only at the end, pass <code>validation_data</code> to <code>model.fit()</code> and collect the epoch-by-epoch history:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">k <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span></span>
+<span id="cb10-2">num_val_samples <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(x_train) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">//</span> k</span>
+<span id="cb10-3">num_epochs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">200</span></span>
+<span id="cb10-4">all_mae_histories <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb10-5"></span>
+<span id="cb10-6"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(k):</span>
+<span id="cb10-7">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Processing fold #</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb10-8"></span>
+<span id="cb10-9">    fold_x_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x_train[i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> num_val_samples : (i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> num_val_samples]</span>
+<span id="cb10-10">    fold_y_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> y_train[i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> num_val_samples : (i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> num_val_samples]</span>
+<span id="cb10-11"></span>
+<span id="cb10-12">    fold_x_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.concatenate(</span>
+<span id="cb10-13">        [x_train[: i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> num_val_samples], x_train[(i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> num_val_samples :]],</span>
+<span id="cb10-14">        axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,</span>
+<span id="cb10-15">    )</span>
+<span id="cb10-16">    fold_y_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.concatenate(</span>
+<span id="cb10-17">        [y_train[: i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> num_val_samples], y_train[(i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> num_val_samples :]],</span>
+<span id="cb10-18">        axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,</span>
+<span id="cb10-19">    )</span>
+<span id="cb10-20"></span>
+<span id="cb10-21">    model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> get_model()</span>
+<span id="cb10-22">    history <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model.fit(</span>
+<span id="cb10-23">        fold_x_train,</span>
+<span id="cb10-24">        fold_y_train,</span>
+<span id="cb10-25">        validation_data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(fold_x_val, fold_y_val),</span>
+<span id="cb10-26">        epochs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>num_epochs,</span>
+<span id="cb10-27">        batch_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>,</span>
+<span id="cb10-28">        verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,</span>
+<span id="cb10-29">    )</span>
+<span id="cb10-30">    mae_history <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> history.history[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"val_mean_absolute_error"</span>]</span>
+<span id="cb10-31">    all_mae_histories.append(mae_history)</span></code></pre></div></div>
+<section id="model.evaluate-vs.-history.historyval_mean_absolute_error" class="level3">
+<h3 class="anchored" data-anchor-id="model.evaluate-vs.-history.historyval_mean_absolute_error"><code>model.evaluate()</code> vs.&nbsp;<code>history.history["val_mean_absolute_error"]</code></h3>
+<p>These two approaches return different kinds of information:</p>
+<ul>
+<li><code>model.evaluate(...)</code> gives <strong>one final validation score</strong></li>
+<li><code>history.history["val_mean_absolute_error"]</code> gives <strong>one validation score per epoch</strong></li>
+</ul>
+<p>For example, if <code>num_epochs = 5</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">val_loss, val_mae <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model.evaluate(fold_x_val, fold_y_val)</span>
+<span id="cb11-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(val_mae)</span>
+<span id="cb11-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 2.85</span></span></code></pre></div></div>
+<p>This stores a single float.</p>
+<p>With validation history:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">mae_history <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> history.history[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"val_mean_absolute_error"</span>]</span>
+<span id="cb12-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(mae_history)</span>
+<span id="cb12-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># [4.10, 3.20, 2.10, 2.40, 2.85]</span></span></code></pre></div></div>
+<p>This stores the whole trajectory.</p>
+</section>
+</section>
+<section id="averaging-the-mae-curves-across-folds" class="level2">
+<h2 class="anchored" data-anchor-id="averaging-the-mae-curves-across-folds">Averaging the MAE Curves Across Folds</h2>
+<p>Each fold produces a list of length <code>num_epochs</code>. To average the curves:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">average_mae_history <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb13-2">    np.mean([x[i] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> x <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> all_mae_histories]) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(num_epochs)</span>
+<span id="cb13-3">]</span></code></pre></div></div>
+<p>If <code>K = 4</code> and <code>num_epochs = 5</code>, <code>all_mae_histories</code> looks like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1">[</span>
+<span id="cb14-2">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.85</span>],</span>
+<span id="cb14-3">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.90</span>],</span>
+<span id="cb14-4">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.80</span>],</span>
+<span id="cb14-5">    [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.9</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.95</span>],</span>
+<span id="cb14-6">]</span></code></pre></div></div>
+<p>For a fixed epoch index <code>i</code>, the list comprehension extracts the <code>i</code>-th MAE from each fold and averages them.</p>
+<p>So the result becomes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1">[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.15</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.15</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.05</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.45</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.875</span>]</span></code></pre></div></div>
+</section>
+<section id="plot-the-validation-curve" class="level2">
+<h2 class="anchored" data-anchor-id="plot-the-validation-curve">Plot the Validation Curve</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb16-2"></span>
+<span id="cb16-3">epochs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(average_mae_history) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb16-4">plt.plot(epochs, average_mae_history)</span>
+<span id="cb16-5">plt.xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Epochs"</span>)</span>
+<span id="cb16-6">plt.ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Validation MAE"</span>)</span>
+<span id="cb16-7">plt.show()</span></code></pre></div></div>
+<p>This curve helps identify when validation performance stops improving and overfitting begins.</p>
+<p>In this example, training for about <strong>130 epochs</strong> is a reasonable choice.</p>
+</section>
+<section id="train-the-final-model-and-evaluate-on-the-test-set" class="level2">
+<h2 class="anchored" data-anchor-id="train-the-final-model-and-evaluate-on-the-test-set">Train the Final Model and Evaluate on the Test Set</h2>
+<p>After choosing the number of epochs, train a fresh model on the full training set:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1">model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> get_model()</span>
+<span id="cb17-2">model.fit(x_train, y_train, epochs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">130</span>, batch_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>, verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb17-3"></span>
+<span id="cb17-4">test_mean_squared_error, test_mean_absolute_error <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model.evaluate(</span>
+<span id="cb17-5">    x_test, y_test</span>
+<span id="cb17-6">)</span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">round</span>(test_mean_absolute_error, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb18-2"><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.31</span></span></code></pre></div></div>
+<p>That means the predictions are off by about <strong>$31,000</strong> on average.</p>
+</section>
+<section id="generate-predictions-on-new-data" class="level2">
+<h2 class="anchored" data-anchor-id="generate-predictions-on-new-data">Generate Predictions on New Data</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> predictions <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model.predict(x_test)</span>
+<span id="cb19-2"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> predictions[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb19-3">array([<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.834494</span>], dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>float32)</span></code></pre></div></div>
+<p>Because the targets were divided by <code>100000</code>, this corresponds to roughly <strong>$283,000</strong>.</p>
+</section>
+<section id="wrapping-up" class="level2">
+<h2 class="anchored" data-anchor-id="wrapping-up">Wrapping Up</h2>
+<p>Here’s what this example shows:</p>
+<ul>
+<li>Regression uses different losses and metrics than classification.</li>
+<li><strong>Mean squared error (MSE)</strong> is a standard loss for regression.</li>
+<li><strong>Mean absolute error (MAE)</strong> is a useful human-readable evaluation metric.</li>
+<li>When features have different numeric ranges, standardize each feature independently.</li>
+<li>When data is scarce, <strong>K-fold validation</strong> gives a more reliable estimate of performance.</li>
+<li>With little data, small models with one or two hidden layers are usually safer because they overfit less easily.</li>
+</ul>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<ul>
+<li>The three common supervised learning tasks on vector data are:
+<ul>
+<li>binary classification</li>
+<li>multiclass classification</li>
+<li>scalar regression</li>
+</ul></li>
+<li>Each task uses a different loss:
+<ul>
+<li><code>binary_crossentropy</code> for binary classification</li>
+<li><code>categorical_crossentropy</code> for multiclass classification</li>
+<li><code>mean_squared_error</code> for scalar regression</li>
+</ul></li>
+<li>Raw data usually needs preprocessing before being fed to a neural network.</li>
+<li>Features with different ranges should be scaled independently.</li>
+<li>Neural networks eventually overfit as training continues.</li>
+<li>When the dataset is small, use a small model and rely on K-fold validation for a more reliable evaluation.</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>Deep Learning</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/deep learning/Predicting House Prices A Regression Example/</guid>
+  <pubDate>Wed, 09 Sep 2026 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Classifying Newswires: A Multiclass Classification Example</title>
+  <link>https://jerryleung16.github.io/my-math-notes/posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="single-label-multiclass-classification" class="level2">
+<h2 class="anchored" data-anchor-id="single-label-multiclass-classification">Single-Label, Multiclass Classification</h2>
+<p>This is a <strong>single-label, multiclass</strong> problem: each newswire belongs to exactly one topic, and there are 46 possible topics.</p>
+</section>
+<section id="the-reuters-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="the-reuters-dataset">The Reuters Dataset</h2>
+<p>The Reuters dataset contains short newswires and topic labels from 1986. It includes 46 topics, with at least 10 examples per topic in the training set.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> keras.datasets <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> reuters</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">(train_data, train_labels), (test_data, test_labels) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> reuters.load_data(</span>
+<span id="cb1-4">    num_words<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span></span>
+<span id="cb1-5">)</span></code></pre></div></div>
+<p>As in the IMDb example, <code>num_words=10000</code> keeps only the 10,000 most frequent words.</p>
+<ul>
+<li>Training samples: <code>8982</code></li>
+<li>Test samples: <code>2246</code></li>
+</ul>
+<p>Each sample is a list of word indices:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> train_data[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>]</span>
+<span id="cb2-2">[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">245</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">273</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">207</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">156</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">53</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">74</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">160</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">26</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">46</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">296</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">26</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">39</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">74</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2979</span>,</span>
+<span id="cb2-3"><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3554</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">46</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4689</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4329</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">86</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">61</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3499</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4795</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">61</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">451</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4329</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">17</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>]</span></code></pre></div></div>
+<p>You can decode a newswire back to words:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">word_index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> reuters.get_word_index()</span>
+<span id="cb3-2">reverse_word_index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>([(value, key) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> (key, value) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> word_index.items()])</span>
+<span id="cb3-3">decoded_newswire <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" "</span>.join(</span>
+<span id="cb3-4">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 0, 1, and 2 are reserved for padding/start/unknown.</span></span>
+<span id="cb3-5">    [reverse_word_index.get(i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"?"</span>) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> train_data[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>]]</span>
+<span id="cb3-6">)</span></code></pre></div></div>
+<p>Labels are integer topic indices from 0 to 45:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> train_labels[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>]</span>
+<span id="cb4-2"><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span></span></code></pre></div></div>
+</section>
+<section id="preparing-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="preparing-the-data">Preparing the Data</h2>
+<p>As before, multi-hot encode the input sequences:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Vectorized training data</span></span>
+<span id="cb5-2">x_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> multi_hot_encode(train_data, num_classes<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>)</span>
+<span id="cb5-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Vectorized test data</span></span>
+<span id="cb5-4">x_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> multi_hot_encode(test_data, num_classes<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>)</span></code></pre></div></div>
+<p>For labels, you can either one-hot encode or keep integer labels.</p>
+<section id="option-1-one-hot-labels" class="level3">
+<h3 class="anchored" data-anchor-id="option-1-one-hot-labels">Option 1: One-Hot Labels</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> one_hot_encode(labels, num_classes<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">46</span>):</span>
+<span id="cb6-2">    results <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.zeros((<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(labels), num_classes))</span>
+<span id="cb6-3">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i, label <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(labels):</span>
+<span id="cb6-4">        results[i, label] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span></span>
+<span id="cb6-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> results</span>
+<span id="cb6-6"></span>
+<span id="cb6-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Vectorized training labels</span></span>
+<span id="cb6-8">y_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> one_hot_encode(train_labels)</span>
+<span id="cb6-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Vectorized test labels</span></span>
+<span id="cb6-10">y_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> one_hot_encode(test_labels)</span></code></pre></div></div>
+<p>Equivalent Keras utility:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> keras.utils <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> to_categorical</span>
+<span id="cb7-2"></span>
+<span id="cb7-3">y_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> to_categorical(train_labels)</span>
+<span id="cb7-4">y_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> to_categorical(test_labels)</span></code></pre></div></div>
+</section>
+</section>
+<section id="building-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-model">Building the Model</h2>
+<p>A very small hidden representation can become an information bottleneck when separating 46 classes, so we use larger hidden layers:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> keras</span>
+<span id="cb8-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> keras <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> layers</span>
+<span id="cb8-3"></span>
+<span id="cb8-4">model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> keras.Sequential(</span>
+<span id="cb8-5">    [</span>
+<span id="cb8-6">        layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">64</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"relu"</span>),</span>
+<span id="cb8-7">        layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">64</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"relu"</span>),</span>
+<span id="cb8-8">        layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">46</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"softmax"</span>),</span>
+<span id="cb8-9">    ]</span>
+<span id="cb8-10">)</span></code></pre></div></div>
+<p>The final <code>softmax</code> layer outputs a probability distribution over 46 classes.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmathrm%7Bsoftmax%7D(z_i)%20=%20%5Cfrac%7Be%5E%7Bz_i%7D%7D%7B%5Csum_%7Bj=1%7D%5E%7B46%7D%20e%5E%7Bz_j%7D%7D%0A"></p>
+<p>So each output is between 0 and 1, and all 46 outputs sum to 1.</p>
+</section>
+<section id="loss-and-metrics" class="level2">
+<h2 class="anchored" data-anchor-id="loss-and-metrics">Loss and Metrics</h2>
+<p>With one-hot labels, use <code>categorical_crossentropy</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">top_3_accuracy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> keras.metrics.TopKCategoricalAccuracy(</span>
+<span id="cb9-2">    k<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"top_3_accuracy"</span></span>
+<span id="cb9-3">)</span>
+<span id="cb9-4">model.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">compile</span>(</span>
+<span id="cb9-5">    optimizer<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"adam"</span>,</span>
+<span id="cb9-6">    loss<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"categorical_crossentropy"</span>,</span>
+<span id="cb9-7">    metrics<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accuracy"</span>, top_3_accuracy],</span>
+<span id="cb9-8">)</span></code></pre></div></div>
+<p><code>accuracy</code> (top-1) is strict: it only counts a prediction as correct if the top prediction matches the true class.</p>
+<p>Top-k accuracy is often fairer. For example, if the true class is the model’s second-highest probability, top-1 gives 0 but top-3 gives 1.</p>
+</section>
+<section id="validating-the-approach" class="level2">
+<h2 class="anchored" data-anchor-id="validating-the-approach">Validating the Approach</h2>
+<p>Set aside 1,000 samples for validation:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">x_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x_train[:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>]</span>
+<span id="cb10-2">partial_x_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> x_train[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>:]</span>
+<span id="cb10-3">y_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> y_train[:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>]</span>
+<span id="cb10-4">partial_y_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> y_train[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>:]</span>
+<span id="cb10-5"></span>
+<span id="cb10-6">history <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model.fit(</span>
+<span id="cb10-7">    partial_x_train,</span>
+<span id="cb10-8">    partial_y_train,</span>
+<span id="cb10-9">    epochs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>,</span>
+<span id="cb10-10">    batch_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">512</span>,</span>
+<span id="cb10-11">    validation_data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(x_val, y_val),</span>
+<span id="cb10-12">)</span></code></pre></div></div>
+<p>Validation performance typically peaks around epoch 9, then overfitting starts.</p>
+<p>Train a fresh model for 9 epochs and evaluate:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> keras.Sequential(</span>
+<span id="cb11-2">    [</span>
+<span id="cb11-3">        layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">64</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"relu"</span>),</span>
+<span id="cb11-4">        layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">64</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"relu"</span>),</span>
+<span id="cb11-5">        layers.Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">46</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"softmax"</span>),</span>
+<span id="cb11-6">    ]</span>
+<span id="cb11-7">)</span>
+<span id="cb11-8">model.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">compile</span>(</span>
+<span id="cb11-9">    optimizer<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"adam"</span>,</span>
+<span id="cb11-10">    loss<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"categorical_crossentropy"</span>,</span>
+<span id="cb11-11">    metrics<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accuracy"</span>],</span>
+<span id="cb11-12">)</span>
+<span id="cb11-13">model.fit(</span>
+<span id="cb11-14">    x_train,</span>
+<span id="cb11-15">    y_train,</span>
+<span id="cb11-16">    epochs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>,</span>
+<span id="cb11-17">    batch_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">512</span>,</span>
+<span id="cb11-18">)</span>
+<span id="cb11-19">results <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model.evaluate(x_test, y_test)</span>
+<span id="cb11-20"></span>
+<span id="cb11-21"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> results</span>
+<span id="cb11-22">[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9565213431445807</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.79697239536954589</span>]</span></code></pre></div></div>
+<p>This corresponds to about <strong>79.7% test accuracy</strong>.</p>
+</section>
+<section id="random-baseline" class="level2">
+<h2 class="anchored" data-anchor-id="random-baseline">Random Baseline</h2>
+<p>A random baseline is much lower:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> copy</span>
+<span id="cb12-2">test_labels_copy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> copy.copy(test_labels)</span>
+<span id="cb12-3">np.random.shuffle(test_labels_copy)</span>
+<span id="cb12-4">hits_array <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array(test_labels <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> test_labels_copy)</span>
+<span id="cb12-5">hits_array.mean()</span>
+<span id="cb12-6"></span>
+<span id="cb12-7"><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.18655387355298308</span></span></code></pre></div></div>
+<p>So random guessing is about <strong>18.7%</strong>, far below the trained model.</p>
+</section>
+<section id="generating-predictions-on-new-data" class="level2">
+<h2 class="anchored" data-anchor-id="generating-predictions-on-new-data">Generating Predictions on New Data</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">predictions <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> model.predict(x_test)</span>
+<span id="cb13-2"></span>
+<span id="cb13-3"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> predictions[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>].shape</span>
+<span id="cb13-4">(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">46</span>,)</span>
+<span id="cb13-5"></span>
+<span id="cb13-6"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>(predictions[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>])</span>
+<span id="cb13-7"><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span></span>
+<span id="cb13-8"></span>
+<span id="cb13-9"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;&gt;</span> np.argmax(predictions[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>])</span>
+<span id="cb13-10"><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span></span></code></pre></div></div>
+<p>Each prediction is a 46-dimensional probability vector, and <code>argmax</code> gives the predicted topic.</p>
+</section>
+<section id="alternative-label-encoding-loss" class="level2">
+<h2 class="anchored" data-anchor-id="alternative-label-encoding-loss">Alternative Label Encoding + Loss</h2>
+<p>You can keep labels as integers:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1">y_train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train_labels</span>
+<span id="cb14-2">y_test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> test_labels</span></code></pre></div></div>
+<p>Then switch to <code>sparse_categorical_crossentropy</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1">model.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">compile</span>(</span>
+<span id="cb15-2">    optimizer<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"adam"</span>,</span>
+<span id="cb15-3">    loss<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sparse_categorical_crossentropy"</span>,</span>
+<span id="cb15-4">    metrics<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accuracy"</span>],</span>
+<span id="cb15-5">)</span></code></pre></div></div>
+</section>
+<section id="wrapping-up" class="level2">
+<h2 class="anchored" data-anchor-id="wrapping-up">Wrapping Up</h2>
+<ul>
+<li>For classification into <code>N</code> classes, use a final <code>Dense(N)</code> layer.</li>
+<li>For single-label multiclass tasks, use a <code>softmax</code> output.</li>
+<li><code>categorical_crossentropy</code> is the standard loss when labels are one-hot encoded.</li>
+<li>If labels are integer indices, use <code>sparse_categorical_crossentropy</code>.</li>
+<li>Avoid hidden layers that are too small when class count is large, to reduce information bottlenecks.</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>Deep Learning</category>
+  <guid>https://jerryleung16.github.io/my-math-notes/posts/deep learning/Deep Learning with Python Ch.5 Reuters Multiclass Classification/</guid>
+  <pubDate>Wed, 09 Sep 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Classifying Movie Reviews: A Binary Classification Example</title>
   <link>https://jerryleung16.github.io/my-math-notes/posts/deep learning/Deep Learning with Python Ch.4 IMDb Binary Classification/</link>
@@ -9922,620 +11291,6 @@ Note
   <category>Algorithms</category>
   <guid>https://jerryleung16.github.io/my-math-notes/posts/algorithms/big-and-small-o-or-theta/</guid>
   <pubDate>Fri, 07 Aug 2026 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>3. Flexible Arguments</title>
-  <link>https://jerryleung16.github.io/my-math-notes/posts/python/flexible-arguments/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="flexible-classes-with-args-and-kwargs" class="level1">
-<h1>Flexible Classes with <code>*args</code> and <code>**kwargs</code></h1>
-<p>Sometimes, when you build a class, you don’t know exactly how much information the user will provide.</p>
-<p>Imagine creating a <code>Pizza</code> class.</p>
-<p>One customer might order:</p>
-<pre class="text"><code>Medium + Extra Cheese</code></pre>
-<p>while another customer might order:</p>
-<pre class="text"><code>Large + Pepperoni + Sausage + Onions + Peppers</code></pre>
-<p>It would be inconvenient to create a separate parameter for every possible topping.</p>
-<p>Python gives us two powerful tools for handling an <strong>unlimited number of arguments</strong>:</p>
-<ul>
-<li><code>*args</code></li>
-<li><code>**kwargs</code></li>
-</ul>
-<p>The magic is in the <strong>asterisks (<code>*</code> and <code>**</code>)</strong>.</p>
-<p>The names <code>args</code> and <code>kwargs</code> are simply common naming conventions. They are not special keywords.</p>
-<p>For example, these work the same way:</p>
-<pre class="text"><code>*args
-*toppings
-*items</code></pre>
-<p>and:</p>
-<pre class="text"><code>**kwargs
-**options
-**settings</code></pre>
-<p>The asterisks are what matter.</p>
-<hr>
-</section>
-<section id="args-the-grab-bag" class="level1">
-<h1>1. <code>*args</code> — The Grab Bag</h1>
-<p><code>*args</code> allows you to pass any number of <strong>regular, unnamed arguments</strong> to a function or class.</p>
-<p>Python collects all those extra arguments and stores them in a <strong>tuple</strong>.</p>
-<p>A tuple is similar to a list, except that its contents cannot normally be changed after it is created.</p>
-<p>Think of <code>*args</code> like calling out pizza toppings:</p>
-<blockquote class="blockquote">
-<p>“Pepperoni, onions, olives!”</p>
-</blockquote>
-<p>These are individual values without labels.</p>
-<hr>
-<section id="example-pizza-with-any-number-of-toppings" class="level2">
-<h2 class="anchored" data-anchor-id="example-pizza-with-any-number-of-toppings">Example: Pizza with Any Number of Toppings</h2>
-<pre class="text"><code>class Pizza:
-
-    # size is required.
-    # *args catches all additional unnamed arguments.
-    def __init__(self, size, *args):
-        self.size = size
-        self.toppings = args
-
-    def describe(self):
-        print(f"A {self.size} pizza with:")
-
-        for topping in self.toppings:
-            print(f"- {topping}")
-
-
-# One topping
-cheese_pizza = Pizza("Medium", "Extra Cheese")
-
-
-# Four toppings
-supreme = Pizza(
-    "Large",
-    "Pepperoni",
-    "Sausage",
-    "Onions",
-    "Peppers"
-)
-
-supreme.describe()</code></pre>
-<p>The <code>*args</code> parameter collects the toppings into a tuple.</p>
-<p>Conceptually:</p>
-<pre class="text"><code>args
- ↓
-("Pepperoni", "Sausage", "Onions", "Peppers")</code></pre>
-<p>The output would be:</p>
-<pre class="text"><code>A Large pizza with:
-- Pepperoni
-- Sausage
-- Onions
-- Peppers</code></pre>
-<hr>
-</section>
-</section>
-<section id="kwargs-the-custom-order-form" class="level1">
-<h1>2. <code>**kwargs</code> — The Custom Order Form</h1>
-<p><code>**kwargs</code> stands for <strong>Keyword Arguments</strong>.</p>
-<p>It allows you to pass any number of <strong>labeled arguments</strong> using the <code>name=value</code> format.</p>
-<p>Python collects these labeled values into a <strong>dictionary</strong>.</p>
-<p>Think of <code>**kwargs</code> as filling out a custom order form:</p>
-<pre class="text"><code>crust = thin
-sauce = spicy
-well_done = True</code></pre>
-<p>Each value has a label, or <strong>key</strong>.</p>
-<hr>
-<section id="example-a-flexible-smartphone-class" class="level2">
-<h2 class="anchored" data-anchor-id="example-a-flexible-smartphone-class">Example: A Flexible Smartphone Class</h2>
-<pre class="text"><code>class SmartPhone:
-
-    # brand is required.
-    # **kwargs catches all custom specifications.
-    def __init__(self, brand, **kwargs):
-        self.brand = brand
-
-        # kwargs is a dictionary.
-        self.specs = kwargs
-
-    def show_specs(self):
-        print(f"--- {self.brand} Phone ---")
-
-        for key, value in self.specs.items():
-            print(f"{key}: {value}")
-
-
-# We can provide any number of custom specifications.
-my_phone = SmartPhone(
-    "Apple",
-    storage="256GB",
-    color="Midnight",
-    has_headphone_jack=False
-)
-
-my_phone.show_specs()</code></pre>
-<p>Conceptually, <code>kwargs</code> contains:</p>
-<pre class="text"><code>{
-    "storage": "256GB",
-    "color": "Midnight",
-    "has_headphone_jack": False
-}</code></pre>
-<p>The output would be:</p>
-<pre class="text"><code>--- Apple Phone ---
-storage: 256GB
-color: Midnight
-has_headphone_jack: False</code></pre>
-<p>The key advantage is flexibility.</p>
-<p>We don’t have to predict every possible specification when we create the class.</p>
-<hr>
-</section>
-</section>
-<section id="putting-args-and-kwargs-together" class="level1">
-<h1>Putting <code>*args</code> and <code>**kwargs</code> Together</h1>
-<p>You can use both <code>*args</code> and <code>**kwargs</code> in the same class.</p>
-<p>However, Python requires them to appear in a specific order.</p>
-<p>The general pattern is:</p>
-<ol type="1">
-<li><strong>Regular required parameters</strong></li>
-<li><strong><code>*args</code></strong></li>
-<li><strong><code>**kwargs</code></strong></li>
-</ol>
-<p>Think of it as:</p>
-<pre class="text"><code>Required → Unnamed extras → Named extras</code></pre>
-<hr>
-<section id="example-video-game-character" class="level2">
-<h2 class="anchored" data-anchor-id="example-video-game-character">Example: Video Game Character</h2>
-<pre class="text"><code>class VideoGameCharacter:
-
-    def __init__(self, name, *args, **kwargs):
-        self.name = name
-        self.inventory = args
-        self.stats = kwargs
-
-
-hero = VideoGameCharacter(
-    "Link",
-
-    # *args
-    "Sword",
-    "Shield",
-
-    # **kwargs
-    health=100,
-    magic=50
-)</code></pre>
-<p>The information is stored like this:</p>
-<pre class="text"><code>name
- ↓
-"Link"
-
-inventory
- ↓
-("Sword", "Shield")
-
-stats
- ↓
-{
-    "health": 100,
-    "magic": 50
-}</code></pre>
-<p>So one object can contain three different types of information:</p>
-<pre class="text"><code>VideoGameCharacter
-        │
-        ├── name
-        │     └── "Link"
-        │
-        ├── inventory
-        │     └── ("Sword", "Shield")
-        │
-        └── stats
-              ├── health = 100
-              └── magic = 50</code></pre>
-<p>This makes classes extremely flexible.</p>
-<hr>
-</section>
-</section>
-<section id="args-vs.-kwargs" class="level1">
-<h1><code>*args</code> vs.&nbsp;<code>**kwargs</code></h1>
-<p>It is helpful to compare the two directly.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Feature</th>
-<th style="text-align: left;"><code>*args</code></th>
-<th style="text-align: left;"><code>**kwargs</code></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Accepts</td>
-<td style="text-align: left;">Extra unnamed arguments</td>
-<td style="text-align: left;">Extra named arguments</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Stored as</td>
-<td style="text-align: left;">Tuple</td>
-<td style="text-align: left;">Dictionary</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Example</td>
-<td style="text-align: left;"><code>"Sword", "Shield"</code></td>
-<td style="text-align: left;"><code>health=100, magic=50</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Think of it as</td>
-<td style="text-align: left;">A grab bag</td>
-<td style="text-align: left;">A custom order form</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Asterisk</td>
-<td style="text-align: left;"><code>*</code></td>
-<td style="text-align: left;"><code>**</code></td>
-</tr>
-</tbody>
-</table>
-<p>For example:</p>
-<pre class="text"><code>*args</code></pre>
-<p>might collect:</p>
-<pre class="text"><code>("Sword", "Shield", "Potion")</code></pre>
-<p>while:</p>
-<pre class="text"><code>**kwargs</code></pre>
-<p>might collect:</p>
-<pre class="text"><code>{
-    "health": 100,
-    "magic": 50,
-    "level": 10
-}</code></pre>
-<hr>
-</section>
-<section id="the-big-picture-making-flexible-classes" class="level1">
-<h1>The Big Picture: Making Flexible Classes</h1>
-<p>We have now seen several ways to make classes flexible.</p>
-<section id="required-attributes" class="level3">
-<h3 class="anchored" data-anchor-id="required-attributes">Required attributes</h3>
-<p>These must be provided:</p>
-<pre class="text"><code>def __init__(self, name, age):</code></pre>
-</section>
-<section id="optional-attributes-with-default-values" class="level3">
-<h3 class="anchored" data-anchor-id="optional-attributes-with-default-values">Optional attributes with default values</h3>
-<p>These can be omitted:</p>
-<pre class="text"><code>def __init__(self, name, age=0):</code></pre>
-</section>
-<section id="optional-information-using-none" class="level3">
-<h3 class="anchored" data-anchor-id="optional-information-using-none">Optional information using <code>None</code></h3>
-<p>This represents information that may not exist:</p>
-<pre class="text"><code>def __init__(self, name, phone=None):</code></pre>
-</section>
-<section id="unlimited-unnamed-information-with-args" class="level3">
-<h3 class="anchored" data-anchor-id="unlimited-unnamed-information-with-args">Unlimited unnamed information with <code>*args</code></h3>
-<pre class="text"><code>def __init__(self, name, *items):</code></pre>
-</section>
-<section id="unlimited-named-information-with-kwargs" class="level3">
-<h3 class="anchored" data-anchor-id="unlimited-named-information-with-kwargs">Unlimited named information with <code>**kwargs</code></h3>
-<pre class="text"><code>def __init__(self, name, **options):</code></pre>
-</section>
-<section id="all-together" class="level3">
-<h3 class="anchored" data-anchor-id="all-together">All together</h3>
-<pre class="text"><code>def __init__(self, name, age=0, *args, **kwargs):</code></pre>
-<p>This gives us a powerful range of possibilities for designing classes.</p>
-<hr>
-</section>
-</section>
-<section id="a-real-world-example-bank-accounts" class="level1">
-<h1>A Real-World Example: Bank Accounts</h1>
-<p>Let’s apply everything we’ve learned to a practical example.</p>
-<p>A <strong>bank account</strong> is something we can easily understand in the real world.</p>
-<p>A bank account has:</p>
-<section id="attributes-what-the-account-has" class="level3">
-<h3 class="anchored" data-anchor-id="attributes-what-the-account-has">Attributes — What the account has</h3>
-<ul>
-<li>Owner’s name</li>
-<li>Current balance</li>
-</ul>
-</section>
-<section id="methods-what-the-account-can-do" class="level3">
-<h3 class="anchored" data-anchor-id="methods-what-the-account-can-do">Methods — What the account can do</h3>
-<ul>
-<li>Deposit money</li>
-<li>Withdraw money</li>
-<li>Check the balance</li>
-</ul>
-<p>Let’s build a <code>BankAccount</code> class step by step.</p>
-<hr>
-</section>
-</section>
-<section id="step-1-create-the-blueprint" class="level1">
-<h1>Step 1: Create the Blueprint</h1>
-<p>First, we define our class and its constructor.</p>
-<pre class="text"><code>class BankAccount:
-
-    # Create a new account
-    def __init__(self, owner, starting_balance=0.0):
-        self.owner = owner
-        self.balance = starting_balance</code></pre>
-<p>The parameter:</p>
-<pre class="text"><code>starting_balance=0.0</code></pre>
-<p>provides a <strong>default value</strong>.</p>
-<p>Therefore, if someone creates an account without specifying a starting balance, the account automatically starts with <code>$0.00</code>.</p>
-<p>For example:</p>
-<pre class="text"><code>alice_account = BankAccount("Alice", 100.0)</code></pre>
-<p>Alice starts with <code>$100</code>.</p>
-<p>But:</p>
-<pre class="text"><code>bob_account = BankAccount("Bob")</code></pre>
-<p>Bob starts with <code>$0</code>.</p>
-<hr>
-</section>
-<section id="step-2-add-methods" class="level1">
-<h1>Step 2: Add Methods</h1>
-<p>Now let’s teach our <code>BankAccount</code> class how to handle money.</p>
-<p>We will create three methods:</p>
-<ol type="1">
-<li><code>deposit()</code></li>
-<li><code>withdraw()</code></li>
-<li><code>check_balance()</code></li>
-</ol>
-<pre class="text"><code>class BankAccount:
-
-    def __init__(self, owner, starting_balance=0.0):
-        self.owner = owner
-        self.balance = starting_balance
-
-    # ACTION 1: Deposit money
-    def deposit(self, amount):
-
-        if amount &gt; 0:
-            self.balance += amount
-            print(
-                f"Deposited ${amount}. "
-                f"New balance is ${self.balance}."
-            )
-        else:
-            print("You must deposit a positive amount!")
-
-    # ACTION 2: Withdraw money
-    def withdraw(self, amount):
-
-        # Make sure there is enough money
-        if amount &gt; self.balance:
-            print(
-                f"Declined! You only have "
-                f"${self.balance} in your account."
-            )
-
-        elif amount &lt;= 0:
-            print("You must withdraw a positive amount!")
-
-        else:
-            self.balance -= amount
-            print(
-                f"Withdrew ${amount}. "
-                f"New balance is ${self.balance}."
-            )
-
-    # ACTION 3: Check the balance
-    def check_balance(self):
-        print(
-            f"Account Owner: {self.owner} | "
-            f"Current Balance: ${self.balance}"
-        )</code></pre>
-<p>Notice that <strong>every method has <code>self</code> as its first parameter</strong>.</p>
-<p>This is necessary because each method needs to know which particular bank account it is working with.</p>
-<p>For example:</p>
-<pre class="text"><code>self.balance</code></pre>
-<p>means:</p>
-<blockquote class="blockquote">
-<p>“The balance belonging to this particular account.”</p>
-</blockquote>
-<hr>
-</section>
-<section id="step-3-create-and-test-our-objects" class="level1">
-<h1>Step 3: Create and Test Our Objects</h1>
-<p>Our blueprint is now complete.</p>
-<p>Let’s create some actual bank account objects and test them.</p>
-<pre class="text"><code># Create an account for Alice with $100
-alice_account = BankAccount("Alice", 100.0)
-
-# Create an account for Bob with $0
-bob_account = BankAccount("Bob")</code></pre>
-<p>We now have two separate objects:</p>
-<pre class="text"><code>BankAccount class
-       ↓
- ┌─────┴─────┐
- ↓           ↓
-Alice       Bob
-$100         $0</code></pre>
-<p>Let’s make some transactions.</p>
-<pre class="text"><code># Alice deposits $50
-alice_account.deposit(50)
-# Deposited $50. New balance is $150.0.
-
-# Alice withdraws $20
-alice_account.withdraw(20)
-# Withdrew $20. New balance is $130.0.</code></pre>
-<p>Now let’s see what happens when Bob tries to withdraw more money than he has.</p>
-<pre class="text"><code>bob_account.withdraw(500)
-# Declined! You only have $0.0 in your account.</code></pre>
-<p>Finally, let’s check both accounts.</p>
-<pre class="text"><code>alice_account.check_balance()
-# Account Owner: Alice | Current Balance: $130.0
-
-bob_account.check_balance()
-# Account Owner: Bob | Current Balance: $0.0</code></pre>
-<hr>
-</section>
-<section id="putting-everything-together" class="level1">
-<h1>Putting Everything Together</h1>
-<p>Our <code>BankAccount</code> class combines <strong>data</strong> and <strong>actions</strong> into one organized structure.</p>
-<pre class="text"><code>                 BankAccount
-                      │
-          ┌───────────┴───────────┐
-          │                       │
-      Attributes               Methods
-          │                       │
-    ┌─────┴─────┐        ┌────────┼────────┐
-    │           │        │        │        │
-  owner      balance   deposit  withdraw  check_balance</code></pre>
-<p>Each object created from the class has its own attributes.</p>
-<pre class="text"><code>alice_account.owner
-# Alice
-
-alice_account.balance
-# 130.0</code></pre>
-<p>while:</p>
-<pre class="text"><code>bob_account.owner
-# Bob
-
-bob_account.balance
-# 0.0</code></pre>
-<p>The same class can therefore be used to create as many independent bank accounts as we need.</p>
-
-
-</section>
-
- ]]></description>
-  <category>Python</category>
-  <guid>https://jerryleung16.github.io/my-math-notes/posts/python/flexible-arguments/</guid>
-  <pubDate>Fri, 07 Aug 2026 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>2. Optional Attributes</title>
-  <link>https://jerryleung16.github.io/my-math-notes/posts/python/optional-attributes/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="optional-attributes" class="level1">
-<h1>Optional Attributes</h1>
-<p>An <strong>optional attribute</strong> simply means that when you create a new object, you <strong>don’t have to provide that particular piece of information</strong>.</p>
-<p>If you leave it out, Python uses a <strong>default value</strong> instead.</p>
-<p>We actually used an optional attribute earlier in our <code>BankAccount</code> example.</p>
-<p>Consider:</p>
-<pre class="text"><code>def __init__(self, owner, starting_balance=0.0):</code></pre>
-<p>Here:</p>
-<ul>
-<li><code>owner</code> is <strong>required</strong>.</li>
-<li><code>starting_balance</code> is <strong>optional</strong>.</li>
-<li>If no starting balance is provided, Python uses <code>0.0</code>.</li>
-</ul>
-<p>For example:</p>
-<pre class="text"><code>alice_account = BankAccount("Alice", 100.0)</code></pre>
-<p>Alice starts with <code>$100</code>.</p>
-<p>But:</p>
-<pre class="text"><code>bob_account = BankAccount("Bob")</code></pre>
-<p>Bob automatically starts with <code>$0</code>.</p>
-<p>This is the basic idea behind optional attributes.</p>
-<hr>
-<section id="the-default-value-method" class="level2">
-<h2 class="anchored" data-anchor-id="the-default-value-method">1. The “Default Value” Method</h2>
-<p>The most straightforward way to create an optional attribute is to give the parameter a <strong>default value</strong> inside <code>__init__</code>.</p>
-<p>You use the equals sign (<code>=</code>) to specify the default.</p>
-<pre class="text"><code>class Dog:
-
-    # name is REQUIRED.
-    # collar_color is OPTIONAL and defaults to "Red".
-    def __init__(self, name, collar_color="Red"):
-        self.name = name
-        self.collar_color = collar_color
-
-
-# We only provide the name.
-# Python automatically uses "Red".
-dog_1 = Dog("Buddy")
-
-print(f"{dog_1.name} has a {dog_1.collar_color} collar.")
-# Buddy has a Red collar.
-
-
-# We provide both values.
-# Python uses "Blue" instead of the default.
-dog_2 = Dog("Daisy", "Blue")
-
-print(f"{dog_2.name} has a {dog_2.collar_color} collar.")
-# Daisy has a Blue collar.</code></pre>
-<p>The important idea is:</p>
-<pre class="text"><code>collar_color="Red"</code></pre>
-<p>means:</p>
-<blockquote class="blockquote">
-<p>“If the user doesn’t provide a collar color, use <code>Red</code>.”</p>
-</blockquote>
-<p>But if the user does provide a value:</p>
-<pre class="text"><code>Dog("Daisy", "Blue")</code></pre>
-<p>Python uses <code>"Blue"</code> instead.</p>
-<hr>
-</section>
-<section id="the-none-method-when-information-is-missing" class="level2">
-<h2 class="anchored" data-anchor-id="the-none-method-when-information-is-missing">2. The <code>None</code> Method — When Information Is Missing</h2>
-<p>Sometimes an attribute is optional because the information <strong>might not exist yet</strong>.</p>
-<p>In Python, we can use the special value <code>None</code> to represent:</p>
-<blockquote class="blockquote">
-<p><strong>“There is currently no value.”</strong></p>
-</blockquote>
-<p>For example, imagine creating a user profile where a phone number is optional.</p>
-<pre class="text"><code>class UserProfile:
-
-    # phone_number is optional.
-    # If no number is provided, it is set to None.
-    def __init__(self, username, phone_number=None):
-        self.username = username
-        self.phone_number = phone_number
-
-    def show_profile(self):
-        print(f"User: {self.username}")
-
-        # Check whether a phone number was provided.
-        if self.phone_number is None:
-            print("Phone: No number provided.")
-        else:
-            print(f"Phone: {self.phone_number}")
-
-
-# Create a user without a phone number
-user_1 = UserProfile("CoolSkater99")
-
-user_1.show_profile()</code></pre>
-<p>The output would be:</p>
-<pre class="text"><code>User: CoolSkater99
-Phone: No number provided.</code></pre>
-<p>Here, <code>None</code> doesn’t mean that the phone number is zero or an empty string.</p>
-<p>It means:</p>
-<blockquote class="blockquote">
-<p><strong>“No phone number has been provided.”</strong></p>
-</blockquote>
-<hr>
-</section>
-</section>
-<section id="the-golden-rule-of-optional-attributes" class="level1">
-<h1>⚠️ The Golden Rule of Optional Attributes</h1>
-<p>When defining your <code>__init__</code> method, <strong>all required parameters must come before optional parameters</strong>.</p>
-<section id="correct" class="level3">
-<h3 class="anchored" data-anchor-id="correct">✅ Correct</h3>
-<pre class="text"><code>def __init__(self, name, age, color="Brown"):</code></pre>
-<p>Here:</p>
-<ul>
-<li><code>name</code> is required.</li>
-<li><code>age</code> is required.</li>
-<li><code>color</code> is optional.</li>
-</ul>
-</section>
-<section id="incorrect" class="level3">
-<h3 class="anchored" data-anchor-id="incorrect">❌ Incorrect</h3>
-<pre class="text"><code>def __init__(self, color="Brown", name, age):</code></pre>
-<p>This causes a <code>SyntaxError</code> because Python does not allow a required parameter to appear after a parameter with a default value.</p>
-<p>A simple rule to remember is:</p>
-<blockquote class="blockquote">
-<p><strong>Required first, optional last.</strong></p>
-</blockquote>
-
-
-</section>
-</section>
-
- ]]></description>
-  <category>Python</category>
-  <guid>https://jerryleung16.github.io/my-math-notes/posts/python/optional-attributes/</guid>
-  <pubDate>Thu, 06 Aug 2026 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
