@@ -1,0 +1,381 @@
+---
+title: "Predicting House Prices: A Regression Example"
+date: "2026-09-09"
+description: "California housing price regression with Keras: standardization, a small dense network, K-fold validation, and test-set prediction."
+categories: [Deep Learning]
+---
+
+## Regression vs. Classification
+
+Regression predicts a continuous value rather than a discrete label. Typical examples include forecasting tomorrow's temperature, estimating how long a project will take, or predicting the price of a house.
+
+In this example, the goal is to predict the median house value of a California district from census data.
+
+## The California Housing Price Dataset
+
+Keras provides the California housing dataset in two versions:
+
+- **Small**: 600 districts
+- **Large**: 20,640 districts
+
+Here we use the small version, which is useful because real-world datasets are often limited in size.
+
+Each sample describes one California district using 8 numerical features:
+
+1. Longitude
+2. Latitude
+3. Median house age
+4. Total rooms
+5. Total bedrooms
+6. Population
+7. Households
+8. Median income
+
+The target is the district's median house value in dollars.
+
+## Load the Dataset
+
+```python
+from keras.datasets import california_housing
+
+# Make sure to request the small version.
+(train_data, train_targets), (test_data, test_targets) = (
+    california_housing.load_data(version="small")
+)
+```
+
+```python
+>>> train_data.shape
+(480, 8)
+>>> test_data.shape
+(120, 8)
+```
+
+There are 480 training samples and 120 test samples, each with 8 features.
+
+The targets are raw home prices:
+
+```python
+>>> train_targets
+array([252300., 146900., 290900., ..., 140500., 217100.],
+      dtype=float32)
+```
+
+## Preparing the Data
+
+### Standardize Each Feature Independently
+
+The 8 input features live on very different scales. For example, latitude is small, while the number of rooms may be in the thousands. A neural network trains much more reliably when each feature is centered and scaled.
+
+```python
+mean = train_data.mean(axis=0)
+std = train_data.std(axis=0)
+
+x_train = (train_data - mean) / std
+x_test = (test_data - mean) / std
+```
+
+It is important to use the **training-set** mean and standard deviation for both `x_train` and `x_test`.
+
+### Scale the Targets
+
+The targets are also rescaled:
+
+```python
+y_train = train_targets / 100000
+y_test = test_targets / 100000
+```
+
+This makes the target values numerically smaller and easier to work with.
+
+For example, an MAE of `0.5` now means the predictions are off by about **$50,000** on average.
+
+## Building the Model
+
+This is a scalar regression problem, so the network should output a single number.
+
+```python
+import keras
+from keras import layers
+
+def get_model():
+    model = keras.Sequential(
+        [
+            layers.Dense(64, activation="relu"),
+            layers.Dense(64, activation="relu"),
+            layers.Dense(1),
+        ]
+    )
+    model.compile(
+        optimizer="adam",
+        loss="mean_squared_error",
+        metrics=["mean_absolute_error"],
+    )
+    return model
+```
+
+### Why Does the Last Layer Have One Unit and No Activation?
+
+```python
+layers.Dense(1)
+```
+
+This final layer is linear: it can output any real value. That is the standard choice for predicting a single continuous quantity.
+
+For scalar regression:
+
+- **Loss**: `mean_squared_error`
+- **Metric**: `mean_absolute_error`
+
+Accuracy does not make sense here because there are no classes to predict.
+
+## Why Use K-Fold Validation?
+
+With only 480 training samples, setting aside a normal validation split would leave very little data for both training and validation.
+
+That creates two problems:
+
+- the validation set would be small
+- the validation score would depend heavily on the particular split
+
+K-fold cross-validation reduces this instability.
+
+If `K = 4`, split the training data into 4 equal parts. Then:
+
+1. use 1 fold for validation
+2. use the other 3 folds for training
+3. repeat until every fold has served once as validation
+4. average the validation scores
+
+## K-Fold Validation with 50 Epochs
+
+```python
+import numpy as np
+
+k = 4
+num_val_samples = len(x_train) // k
+num_epochs = 50
+all_scores = []
+
+for i in range(k):
+    print(f"Processing fold #{i + 1}")
+
+    fold_x_val = x_train[i * num_val_samples : (i + 1) * num_val_samples]
+    fold_y_val = y_train[i * num_val_samples : (i + 1) * num_val_samples]
+
+    fold_x_train = np.concatenate(
+        [x_train[: i * num_val_samples], x_train[(i + 1) * num_val_samples :]],
+        axis=0,
+    )
+    fold_y_train = np.concatenate(
+        [y_train[: i * num_val_samples], y_train[(i + 1) * num_val_samples :]],
+        axis=0,
+    )
+
+    model = get_model()
+    model.fit(
+        fold_x_train,
+        fold_y_train,
+        epochs=num_epochs,
+        batch_size=16,
+        verbose=0,
+    )
+    scores = model.evaluate(fold_x_val, fold_y_val, verbose=0)
+    val_loss, val_mae = scores
+    all_scores.append(val_mae)
+```
+
+Validation MAE for the 4 folds:
+
+```python
+>>> [round(value, 3) for value in all_scores]
+[0.298, 0.349, 0.232, 0.305]
+>>> round(np.mean(all_scores), 3)
+0.296
+```
+
+So the model is off by about **$29,600** on average.
+
+## How Folds and Epochs Work Together
+
+When `K = 4`, each iteration of the loop trains a **fresh** model on 3 folds and validates it on the remaining fold.
+
+Inside one fold:
+
+1. the data split is fixed
+2. one epoch means the model sees every sample in `fold_x_train` once
+3. `epochs = 50` means it repeats that process 50 times
+4. after that fold finishes, the model is discarded and rebuilt from scratch for the next fold
+
+So:
+
+- the **fold loop** changes which data is used for validation
+- the **epoch loop** keeps improving one model on one training split
+
+## Tracking Validation MAE Across Epochs
+
+If you raise the training time to `num_epochs = 200`, a single final score is no longer enough. You want to watch how validation MAE changes over time.
+
+Instead of calling `model.evaluate()` only at the end, pass `validation_data` to `model.fit()` and collect the epoch-by-epoch history:
+
+```python
+k = 4
+num_val_samples = len(x_train) // k
+num_epochs = 200
+all_mae_histories = []
+
+for i in range(k):
+    print(f"Processing fold #{i + 1}")
+
+    fold_x_val = x_train[i * num_val_samples : (i + 1) * num_val_samples]
+    fold_y_val = y_train[i * num_val_samples : (i + 1) * num_val_samples]
+
+    fold_x_train = np.concatenate(
+        [x_train[: i * num_val_samples], x_train[(i + 1) * num_val_samples :]],
+        axis=0,
+    )
+    fold_y_train = np.concatenate(
+        [y_train[: i * num_val_samples], y_train[(i + 1) * num_val_samples :]],
+        axis=0,
+    )
+
+    model = get_model()
+    history = model.fit(
+        fold_x_train,
+        fold_y_train,
+        validation_data=(fold_x_val, fold_y_val),
+        epochs=num_epochs,
+        batch_size=16,
+        verbose=0,
+    )
+    mae_history = history.history["val_mean_absolute_error"]
+    all_mae_histories.append(mae_history)
+```
+
+### `model.evaluate()` vs. `history.history["val_mean_absolute_error"]`
+
+These two approaches return different kinds of information:
+
+- `model.evaluate(...)` gives **one final validation score**
+- `history.history["val_mean_absolute_error"]` gives **one validation score per epoch**
+
+For example, if `num_epochs = 5`:
+
+```python
+val_loss, val_mae = model.evaluate(fold_x_val, fold_y_val)
+print(val_mae)
+# 2.85
+```
+
+This stores a single float.
+
+With validation history:
+
+```python
+mae_history = history.history["val_mean_absolute_error"]
+print(mae_history)
+# [4.10, 3.20, 2.10, 2.40, 2.85]
+```
+
+This stores the whole trajectory.
+
+## Averaging the MAE Curves Across Folds
+
+Each fold produces a list of length `num_epochs`. To average the curves:
+
+```python
+average_mae_history = [
+    np.mean([x[i] for x in all_mae_histories]) for i in range(num_epochs)
+]
+```
+
+If `K = 4` and `num_epochs = 5`, `all_mae_histories` looks like this:
+
+```python
+[
+    [4.1, 3.2, 2.1, 2.4, 2.85],
+    [4.3, 3.1, 2.0, 2.5, 2.90],
+    [4.0, 3.3, 2.2, 2.3, 2.80],
+    [4.2, 3.0, 1.9, 2.6, 2.95],
+]
+```
+
+For a fixed epoch index `i`, the list comprehension extracts the `i`-th MAE from each fold and averages them.
+
+So the result becomes:
+
+```python
+[4.15, 3.15, 2.05, 2.45, 2.875]
+```
+
+## Plot the Validation Curve
+
+```python
+import matplotlib.pyplot as plt
+
+epochs = range(1, len(average_mae_history) + 1)
+plt.plot(epochs, average_mae_history)
+plt.xlabel("Epochs")
+plt.ylabel("Validation MAE")
+plt.show()
+```
+
+This curve helps identify when validation performance stops improving and overfitting begins.
+
+In this example, training for about **130 epochs** is a reasonable choice.
+
+## Train the Final Model and Evaluate on the Test Set
+
+After choosing the number of epochs, train a fresh model on the full training set:
+
+```python
+model = get_model()
+model.fit(x_train, y_train, epochs=130, batch_size=16, verbose=0)
+
+test_mean_squared_error, test_mean_absolute_error = model.evaluate(
+    x_test, y_test
+)
+```
+
+```python
+>>> round(test_mean_absolute_error, 3)
+0.31
+```
+
+That means the predictions are off by about **$31,000** on average.
+
+## Generate Predictions on New Data
+
+```python
+>>> predictions = model.predict(x_test)
+>>> predictions[0]
+array([2.834494], dtype=float32)
+```
+
+Because the targets were divided by `100000`, this corresponds to roughly **$283,000**.
+
+## Wrapping Up
+
+Here’s what this example shows:
+
+* Regression uses different losses and metrics than classification.
+* **Mean squared error (MSE)** is a standard loss for regression.
+* **Mean absolute error (MAE)** is a useful human-readable evaluation metric.
+* When features have different numeric ranges, standardize each feature independently.
+* When data is scarce, **K-fold validation** gives a more reliable estimate of performance.
+* With little data, small models with one or two hidden layers are usually safer because they overfit less easily.
+
+## Summary
+
+* The three common supervised learning tasks on vector data are:
+  * binary classification
+  * multiclass classification
+  * scalar regression
+* Each task uses a different loss:
+  * `binary_crossentropy` for binary classification
+  * `categorical_crossentropy` for multiclass classification
+  * `mean_squared_error` for scalar regression
+* Raw data usually needs preprocessing before being fed to a neural network.
+* Features with different ranges should be scaled independently.
+* Neural networks eventually overfit as training continues.
+* When the dataset is small, use a small model and rely on K-fold validation for a more reliable evaluation.
