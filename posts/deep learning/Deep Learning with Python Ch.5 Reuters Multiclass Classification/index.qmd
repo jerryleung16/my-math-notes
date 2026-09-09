@@ -1,0 +1,244 @@
+---
+title: "Classifying Newswires: A Multiclass Classification Example"
+date: "2026-09-09"
+description: "Reuters topic classification with Keras: multiclass preprocessing, softmax outputs, top-k accuracy, and categorical vs sparse categorical crossentropy."
+categories: [Deep Learning]
+---
+
+## Single-Label, Multiclass Classification
+
+This is a **single-label, multiclass** problem: each newswire belongs to exactly one topic, and there are 46 possible topics.
+
+## The Reuters Dataset
+
+The Reuters dataset contains short newswires and topic labels from 1986. It includes 46 topics, with at least 10 examples per topic in the training set.
+
+```python
+from keras.datasets import reuters
+
+(train_data, train_labels), (test_data, test_labels) = reuters.load_data(
+    num_words=10000
+)
+```
+
+As in the IMDb example, `num_words=10000` keeps only the 10,000 most frequent words.
+
+- Training samples: `8982`
+- Test samples: `2246`
+
+Each sample is a list of word indices:
+
+```python
+>>> train_data[10]
+[1, 245, 273, 207, 156, 53, 74, 160, 26, 14, 46, 296, 26, 39, 74, 2979,
+3554, 14, 46, 4689, 4329, 86, 61, 3499, 4795, 14, 61, 451, 4329, 17, 12]
+```
+
+You can decode a newswire back to words:
+
+```python
+word_index = reuters.get_word_index()
+reverse_word_index = dict([(value, key) for (key, value) in word_index.items()])
+decoded_newswire = " ".join(
+    # 0, 1, and 2 are reserved for padding/start/unknown.
+    [reverse_word_index.get(i - 3, "?") for i in train_data[10]]
+)
+```
+
+Labels are integer topic indices from 0 to 45:
+
+```python
+>>> train_labels[10]
+3
+```
+
+## Preparing the Data
+
+As before, multi-hot encode the input sequences:
+
+```python
+# Vectorized training data
+x_train = multi_hot_encode(train_data, num_classes=10000)
+# Vectorized test data
+x_test = multi_hot_encode(test_data, num_classes=10000)
+```
+
+For labels, you can either one-hot encode or keep integer labels.
+
+### Option 1: One-Hot Labels
+
+```python
+def one_hot_encode(labels, num_classes=46):
+    results = np.zeros((len(labels), num_classes))
+    for i, label in enumerate(labels):
+        results[i, label] = 1.0
+    return results
+
+# Vectorized training labels
+y_train = one_hot_encode(train_labels)
+# Vectorized test labels
+y_test = one_hot_encode(test_labels)
+```
+
+Equivalent Keras utility:
+
+```python
+from keras.utils import to_categorical
+
+y_train = to_categorical(train_labels)
+y_test = to_categorical(test_labels)
+```
+
+## Building the Model
+
+A very small hidden representation can become an information bottleneck when separating 46 classes, so we use larger hidden layers:
+
+```python
+import keras
+from keras import layers
+
+model = keras.Sequential(
+    [
+        layers.Dense(64, activation="relu"),
+        layers.Dense(64, activation="relu"),
+        layers.Dense(46, activation="softmax"),
+    ]
+)
+```
+
+The final `softmax` layer outputs a probability distribution over 46 classes.
+
+$$
+\mathrm{softmax}(z_i) = \frac{e^{z_i}}{\sum_{j=1}^{46} e^{z_j}}
+$$
+
+So each output is between 0 and 1, and all 46 outputs sum to 1.
+
+## Loss and Metrics
+
+With one-hot labels, use `categorical_crossentropy`:
+
+```python
+top_3_accuracy = keras.metrics.TopKCategoricalAccuracy(
+    k=3, name="top_3_accuracy"
+)
+model.compile(
+    optimizer="adam",
+    loss="categorical_crossentropy",
+    metrics=["accuracy", top_3_accuracy],
+)
+```
+
+`accuracy` (top-1) is strict: it only counts a prediction as correct if the top prediction matches the true class.
+
+Top-k accuracy is often fairer. For example, if the true class is the model's second-highest probability, top-1 gives 0 but top-3 gives 1.
+
+## Validating the Approach
+
+Set aside 1,000 samples for validation:
+
+```python
+x_val = x_train[:1000]
+partial_x_train = x_train[1000:]
+y_val = y_train[:1000]
+partial_y_train = y_train[1000:]
+
+history = model.fit(
+    partial_x_train,
+    partial_y_train,
+    epochs=20,
+    batch_size=512,
+    validation_data=(x_val, y_val),
+)
+```
+
+Validation performance typically peaks around epoch 9, then overfitting starts.
+
+Train a fresh model for 9 epochs and evaluate:
+
+```python
+model = keras.Sequential(
+    [
+        layers.Dense(64, activation="relu"),
+        layers.Dense(64, activation="relu"),
+        layers.Dense(46, activation="softmax"),
+    ]
+)
+model.compile(
+    optimizer="adam",
+    loss="categorical_crossentropy",
+    metrics=["accuracy"],
+)
+model.fit(
+    x_train,
+    y_train,
+    epochs=9,
+    batch_size=512,
+)
+results = model.evaluate(x_test, y_test)
+
+>>> results
+[0.9565213431445807, 0.79697239536954589]
+```
+
+This corresponds to about **79.7% test accuracy**.
+
+## Random Baseline
+
+A random baseline is much lower:
+
+```python
+import copy
+test_labels_copy = copy.copy(test_labels)
+np.random.shuffle(test_labels_copy)
+hits_array = np.array(test_labels == test_labels_copy)
+hits_array.mean()
+
+0.18655387355298308
+```
+
+So random guessing is about **18.7%**, far below the trained model.
+
+## Generating Predictions on New Data
+
+```python
+predictions = model.predict(x_test)
+
+>>> predictions[0].shape
+(46,)
+
+>>> np.sum(predictions[0])
+1.0
+
+>>> np.argmax(predictions[0])
+4
+```
+
+Each prediction is a 46-dimensional probability vector, and `argmax` gives the predicted topic.
+
+## Alternative Label Encoding + Loss
+
+You can keep labels as integers:
+
+```python
+y_train = train_labels
+y_test = test_labels
+```
+
+Then switch to `sparse_categorical_crossentropy`:
+
+```python
+model.compile(
+    optimizer="adam",
+    loss="sparse_categorical_crossentropy",
+    metrics=["accuracy"],
+)
+```
+
+## Wrapping Up
+
+- For classification into `N` classes, use a final `Dense(N)` layer.
+- For single-label multiclass tasks, use a `softmax` output.
+- `categorical_crossentropy` is the standard loss when labels are one-hot encoded.
+- If labels are integer indices, use `sparse_categorical_crossentropy`.
+- Avoid hidden layers that are too small when class count is large, to reduce information bottlenecks.
